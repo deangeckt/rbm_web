@@ -36,7 +36,7 @@ const Design = (props:any) => {
 	}, [])
 
   return (
-	<div>
+	<div className='Design'>
 		<canvas ref={canvasRef} className="Canvas" onMouseDown={onMouseDown}
 		onMouseMove={onMouseMove} onMouseUp={onMouseUp} {...props} />
 		design page
