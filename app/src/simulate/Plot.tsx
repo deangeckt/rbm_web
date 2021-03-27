@@ -1,44 +1,68 @@
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label } from 'recharts';
+import HighchartsReact from 'highcharts-react-official';
+import Highcharts from 'highcharts';
 
-function randomData() {
-    var data = []
-    for (var i = 0; i < 50; i++) {
-        var a = Math.floor(Math.random() * 10);
-        var b = Math.floor(Math.random() * 10);
 
-        data.push({'time': i, "A": a, "B": b})
-    }
-    return data;
+function calculateY(x: number) {
+    return Math.sin(x);
 }
+
+function calc() {
+    var y = [];
+    var v = []
+    var timeArr = linespace(-5,5,300);
+    console.log(timeArr);
+    for (var i = 0; i < timeArr.length; i++) {
+        y[i] = calculateY(timeArr[i]);
+        v[i] = [timeArr[i], y[i]];
+    }
+    return v;
+}
+
+function linespace(start: number, stop: number, cardinality: number) {
+    var arr = [];
+    var step = (stop - start) / (cardinality - 1);
+    for (var i = 0; i < cardinality; i++) {
+        arr.push(start + (step * i));
+    }
+    return arr;
+}
+
+
+const options = {
+    chart: {
+      type: 'spline',
+      zoomType: 'xy'
+    },
+    title: {
+        text: ''
+    },
+    tooltip: {
+        valueDecimals: 2
+    },
+    xAxis: {
+        type: 'time',
+        title: {text: "Time [mS]"}
+    },
+    yAxis: {
+        title: {text: "Voltage [mV]"}
+    },
+    series: [
+      {
+        data: calc(),
+        lineWidth: 0.75,
+        name: 'A',
+        marker: {
+            enabled: false
+        }
+      }
+    ]
+  };
 
 function Plot() {
 
     return (
-      <ResponsiveContainer width={500} height={300}>
-        <LineChart
-          width={500}
-          height={300}
-          data={randomData()}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="time">
-            <Label value="Time [mS]" offset={0} position="insideBottom" />
-          </XAxis>
-          <YAxis label={{ value: 'Voltage [mV]', angle: -90, position: 'insideLeft' }}/>
-          <Tooltip />
-          <Legend verticalAlign="top" height={0}/>
-          <Line type="basis" dataKey="A" stroke="#8884d8" dot={false}/>
-          <Line type="basis" dataKey="B" stroke="#228B22" dot={false}/>
-
-        </LineChart>
-      </ResponsiveContainer>
+        <HighchartsReact highcharts={Highcharts} options={options} />
     );
 }
 
