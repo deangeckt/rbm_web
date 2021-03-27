@@ -7,16 +7,17 @@ import './App.css';
 function App() {
 	const history = useHistory();
 	return (
+	<>
 		<div className="App">
 			<Button className="Button" variant="outlined" color="primary" onClick={() => history.push( {pathname: '/design'} )}>
 				New Neuron
 			</Button>
-
+			<div className="Divider"/>
 			<Button className="Button" variant="outlined" color="primary" onClick={() => console.log('fgsf')}>
 				Import Neuron
 			</Button>
 		</div>
-
+	</>
   );
 }
 

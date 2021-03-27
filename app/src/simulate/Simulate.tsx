@@ -5,10 +5,9 @@ import './Simulate.css';
 
 function Simulate() {
 	return (
-		<div className="Simulate">
-            Simulate
-            <Plot />
-            <Forms />
+	      <div className="Simulate">
+                  <Plot />
+                  <Forms />
 		</div>
   );
 }

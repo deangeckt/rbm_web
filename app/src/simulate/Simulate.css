@@ -1,7 +1,10 @@
 .Simulate {
-	text-align: center;
-	width: 400px;
-	height: 400px;
-	margin: 0 auto;
-	display: flex;
+    text-align: center;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+	align-content: space-between;
 }

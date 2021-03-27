@@ -49,7 +49,7 @@ const data = [
 function Plot() {
 
     return (
-      <ResponsiveContainer >
+      <ResponsiveContainer width={500} height={300}>
         <LineChart
           width={500}
           height={300}
