@@ -15,13 +15,13 @@ function Simulate() {
       useEffect(() => {
             const interval = setInterval(() => {
                   let copy = [...data];
-                  copy.push([copy[copy.length - 1][0] + 1, Math.random()])
+                  copy.push([copy[copy.length - 1][0] + 1, Math.random() * -5])
                   setData(copy);
 
                   let copy2 = [...data2];
-                  copy2.push([copy2[copy2.length - 1][0] + 1, Math.random()])
+                  copy2.push([copy2[copy2.length - 1][0] + 1, Math.random() * 5])
                   setData2(copy2);
-            }, 1000);
+            }, 100);
             return () => clearInterval(interval);
       }, [data, data2]);
 
