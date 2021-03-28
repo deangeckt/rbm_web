@@ -7,33 +7,45 @@ export interface IData {
       data: number[][];
       name: string;
 }
+export interface ISimulationState {
+      running: boolean;
+      p1: number;
+      p2: number;
+}
 
 function Simulate() {
       const [data, setData] = React.useState([[0, 0]])
-      const [data2, setData2] = React.useState([[0, 0]])
+
+      const initState: ISimulationState = {
+            running: false,
+            p1: 1.5,
+            p2: 0.5
+      }
+      const [state, setState] = React.useState(initState);
+
 
       useEffect(() => {
+            if (!state.running) {
+                  return;
+            }
             const interval = setInterval(() => {
                   let copy = [...data];
                   copy.push([copy[copy.length - 1][0] + 1, Math.random() * -5])
                   setData(copy);
 
-                  let copy2 = [...data2];
-                  copy2.push([copy2[copy2.length - 1][0] + 1, Math.random() * 5])
-                  setData2(copy2);
             }, 100);
             return () => clearInterval(interval);
-      }, [data, data2]);
+      }, [data, state.running]);
 
 	return (
 	      <div className="Simulate">
                   <div className="Container">
                         <div className="LeftSide">
                               <div className="LeftSideTop">
-                                    <Plot data={[{data: data, name: 'A'}, {data: data2, name: 'B'}]}/>
+                                    <Plot data={[{data: data, name: 'A'}]}/>
                               </div>
                               <div className="LeftSideBottom">
-                                    <Forms />
+                                    <Forms setSimulationState={setState} simulationState={state}/>
                               </div>
                         </div>
                         <div className="RightSide">

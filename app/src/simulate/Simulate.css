@@ -43,6 +43,7 @@
 .RightSide {
     flex-basis: 50%;
     min-width: 50%;
+    height: 100%;
     text-align: left;
     padding: 12px;
     border-left: 1px solid #efefef;
