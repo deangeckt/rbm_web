@@ -8,3 +8,43 @@
     flex-direction: column;
 	align-content: space-between;
 }
+
+.Container {
+    width: 90vw;
+    height: 90vh;
+    box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.1);
+    margin: 0 auto;
+    display: flex;
+    background: url('http://www.ansonika.com/magnifica/img/pattern_1.png');
+}
+
+.LeftSide {
+    flex-basis: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+}
+
+.LeftSideTop {
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.LeftSideBottom {
+    flex-basis: 50%;
+    width: 100%;
+}
+
+.RightSide {
+    flex-basis: 50%;
+    min-width: 50%;
+    text-align: left;
+    padding: 12px;
+    border-left: 1px solid #efefef;
+    position: relative;
+}

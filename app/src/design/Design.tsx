@@ -56,13 +56,13 @@ const Design = (props:any) => {
 	}, [])
 
   return (
-	<>
 		<div className='Design'>
-			<canvas ref={canvasRef} className="Canvas" onMouseDown={onMouseDown}
-			onMouseMove={onMouseMove} onMouseUp={onMouseUp} {...props} />
+			<div className="Container">
+				<canvas ref={canvasRef} className="Canvas" onMouseDown={onMouseDown}
+				onMouseMove={onMouseMove} onMouseUp={onMouseUp} {...props} />
+			</div>
 		</div>
-	</>
-  )
+  );
 }
 
 export default Design

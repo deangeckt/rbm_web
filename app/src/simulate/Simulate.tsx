@@ -27,8 +27,19 @@ function Simulate() {
 
 	return (
 	      <div className="Simulate">
-                  <Plot data={[{data: data, name: 'A'}, {data: data2, name: 'B'}]}/>
-                  <Forms />
+                  <div className="Container">
+                        <div className="LeftSide">
+                              <div className="LeftSideTop">
+                                    <Plot data={[{data: data, name: 'A'}, {data: data2, name: 'B'}]}/>
+                              </div>
+                              <div className="LeftSideBottom">
+                                    <Forms />
+                              </div>
+                        </div>
+                        <div className="RightSide">
+                              right side
+                        </div>
+                  </div>
 		</div>
   );
 }
