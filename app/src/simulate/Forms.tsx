@@ -4,7 +4,8 @@ import StopIcon from '@material-ui/icons/Stop';
 import './Forms.css';
 import { ISimulationState } from './Simulate';
 import { Dispatch, SetStateAction } from 'react';
-import TextField from '@material-ui/core/TextField';
+import FormInput from './FormInput';
+
 
 export interface IFormsProps {
 	setSimulationState: Dispatch<SetStateAction<ISimulationState>>;
@@ -24,10 +25,8 @@ function Forms(props: IFormsProps) {
 				<Button variant="outlined" color="primary" onClick={() => toggleSimluation(false)} startIcon={<StopIcon />}>Stop</Button>
 			</div>
 			<div className="BottomPanel">
-				<TextField id="p1" label="Param1" variant="filled" type="number" defaultValue={props.simulationState.p1}
-					onChange={(e) => props.setSimulationState({...props.simulationState, p1: Number(e.target.value)})} />
-				<TextField id="p2" label="Param2" variant="filled" type="number" defaultValue={props.simulationState.p2}
-					onChange={(e) => props.setSimulationState({...props.simulationState, p2: Number(e.target.value)})} />
+				<FormInput {...props.simulationState.inputs[0]}/>
+				<FormInput {...props.simulationState.inputs[1]}/>
 			</div>
 		</div>
   );

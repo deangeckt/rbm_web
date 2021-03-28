@@ -7,10 +7,16 @@ export interface IData {
       data: number[][];
       name: string;
 }
+
+export interface IFormInput {
+      name: string;
+      value: number;
+      tooltip: string;
+      update: Function;
+}
 export interface ISimulationState {
       running: boolean;
-      p1: number;
-      p2: number;
+      inputs: IFormInput[]
 }
 
 function Simulate() {
@@ -18,14 +24,27 @@ function Simulate() {
 
       const initState: ISimulationState = {
             running: false,
-            p1: 1.5,
-            p2: 0.5
+            inputs: [
+                  {
+                        name: 'p1',
+                        value: 0.5,
+                        tooltip: 'p1 explained',
+                        update: (v: number) => ({value: v}) // doesnt update
+                  },
+                  {
+                        name: 'p2',
+                        value: 1.5,
+                        tooltip: 'p2 explained',
+                        update: (v: number) => v // doesnt update
+                  }
+            ]
       }
       const [state, setState] = React.useState(initState);
 
 
       useEffect(() => {
             if (!state.running) {
+                  console.log(state.inputs)
                   return;
             }
             const interval = setInterval(() => {
@@ -35,7 +54,7 @@ function Simulate() {
 
             }, 100);
             return () => clearInterval(interval);
-      }, [data, state.running]);
+      }, [data, state.inputs, state.running]);
 
 	return (
 	      <div className="Simulate">
