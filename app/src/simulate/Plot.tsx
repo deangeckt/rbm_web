@@ -20,7 +20,6 @@ function options(data: IData[]) {
             valueDecimals: 2
         },
         xAxis: {
-            type: 'time',
             title: {text: "Time [mS]"}
         },
         yAxis: {

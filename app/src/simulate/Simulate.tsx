@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { Engine } from '../engine/Engine';
 import Forms from './Forms';
 import Plot from './Plot';
 import './Simulate.css';
@@ -35,6 +36,13 @@ const initState: ISimulationState = {
       ]
 }
 
+// TODO:
+// a. update engine params on the run in a more convient way - using keys maybe?
+// b. maybe init the state here with engine state - no need to hold the init config twice.
+// c. don't await engine to finish run() -
+//    rather render the data that is already ready.
+// d. support multiple data[][] arrays / plots retrived from engine
+
 function Simulate() {
       const [data, setData] = React.useState([[0, 0]])
       const [running, setRunning] = React.useState(initState.running);
@@ -47,18 +55,23 @@ function Simulate() {
             setInputs(updateInputs);
       }
 
-      useEffect(() => {
-            if (!running) {
-                  return;
-            }
-            const interval = setInterval(() => {
-                  let copy = [...data];
-                  copy.push([copy[copy.length - 1][0] + 1, Math.random() * -5])
-                  setData(copy);
+      const runEngine = useCallback(
+            async () => {
+                  const engine = new Engine();
+                  engine.param1 = inputs[0].value;
+                  console.log('running engine');
+                  setData(await engine.run());
+            },
+            [inputs],
+      );
 
-            }, 100);
-            return () => clearInterval(interval);
-      }, [data, running]);
+      useEffect(() => {
+            if (running) {
+                  runEngine()
+            }
+
+      }, [runEngine, running]);
+
 
 	return (
 	      <div className="Simulate">
