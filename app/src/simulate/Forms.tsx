@@ -2,31 +2,28 @@ import { Button } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
 import './Forms.css';
-import { ISimulationState } from './Simulate';
 import { Dispatch, SetStateAction } from 'react';
 import FormInput from './FormInput';
+import { IFormInput } from './Simulate';
 
 
 export interface IFormsProps {
-	setSimulationState: Dispatch<SetStateAction<ISimulationState>>;
-	simulationState: ISimulationState;
+	setRunning: Dispatch<SetStateAction<boolean>>;
+	inputs: IFormInput[];
+	updateInput: (idx: number, val: number) => void;
 }
 
 function Forms(props: IFormsProps) {
-
-	const toggleSimluation = (val: boolean) => {
-		props.setSimulationState({ ...props.simulationState, running: val });
-	}
-
 	return (
 		<div className="Forms">
 			<div className="TopPanel">
-				<Button variant="outlined" color="primary" onClick={() => toggleSimluation(true)} startIcon={<PlayArrowIcon />}>Start</Button>
-				<Button variant="outlined" color="primary" onClick={() => toggleSimluation(false)} startIcon={<StopIcon />}>Stop</Button>
+				<Button variant="outlined" color="primary" onClick={() => props.setRunning(true)} startIcon={<PlayArrowIcon />}>Start</Button>
+				<Button variant="outlined" color="primary" onClick={() => props.setRunning(false)} startIcon={<StopIcon />}>Stop</Button>
 			</div>
 			<div className="BottomPanel">
-				<FormInput {...props.simulationState.inputs[0]}/>
-				<FormInput {...props.simulationState.inputs[1]}/>
+				{props.inputs.map((input, i) => (
+          			<FormInput input={input} updateInput={props.updateInput} idx={i}/>
+        		))}
 			</div>
 		</div>
   );
