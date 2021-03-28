@@ -14,7 +14,7 @@ function FormInput(props: IFormsInputProps) {
 			<Tooltip title={props.input.tooltip}>
 				<TextField label={props.input.name} variant="filled" type="number" defaultValue={props.input.value}
 					onChange={(e) => props.updateInput(props.idx, Number(e.target.value))} />
-            </Tooltip>
+				</Tooltip>
 		</>
   );
 }
