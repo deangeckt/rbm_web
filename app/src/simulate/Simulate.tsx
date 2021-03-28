@@ -19,7 +19,6 @@ export interface ISimulationState {
       inputs: IFormInput[]
 }
 
-
 const initState: ISimulationState = {
       running: false,
       inputs: [
@@ -50,7 +49,6 @@ function Simulate() {
 
       useEffect(() => {
             if (!running) {
-                  console.log(inputs)
                   return;
             }
             const interval = setInterval(() => {
@@ -60,7 +58,7 @@ function Simulate() {
 
             }, 100);
             return () => clearInterval(interval);
-      }, [data, inputs, running]);
+      }, [data, running]);
 
 	return (
 	      <div className="Simulate">

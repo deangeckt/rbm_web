@@ -22,7 +22,7 @@ function Forms(props: IFormsProps) {
 			</div>
 			<div className="BottomPanel">
 				{props.inputs.map((input, i) => (
-          			<FormInput input={input} updateInput={props.updateInput} idx={i}/>
+					<FormInput key={i} input={input} updateInput={props.updateInput} idx={i}/>
         		))}
 			</div>
 		</div>
