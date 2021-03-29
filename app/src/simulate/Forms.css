@@ -1,23 +1,4 @@
 .Forms {
-    text-align: center;
-    display: flex;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-	align-content: space-between;
-}
-
-.TopPanel {
-    flex-basis: 20%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.BottomPanel {
     flex-basis: 80%;
     display: flex;
     flex-direction: column;

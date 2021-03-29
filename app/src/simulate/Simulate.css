@@ -19,25 +19,14 @@
 }
 
 .LeftSide {
-    flex-basis: 50%;
+    text-align: center;
+    display: flex;
+    width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding: 0;
-}
-
-.LeftSideTop {
-    flex-basis: 50%;
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-.LeftSideBottom {
-    flex-basis: 50%;
-    width: 100%;
+	align-content: space-between;
 }
 
 .RightSide {
@@ -48,4 +37,27 @@
     padding: 12px;
     border-left: 1px solid #efefef;
     position: relative;
+}
+
+.Plot {
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.Graph {
+    flex-basis: 50%;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+
+.ControlPanel {
+    flex-basis: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }

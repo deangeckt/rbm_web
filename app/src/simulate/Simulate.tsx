@@ -3,8 +3,9 @@ import { Engine } from '../engine/Engine';
 import Forms from './Forms';
 import Plot from './Plot';
 import './Simulate.css';
-// import update from 'immutability-helper';
-
+import { Button } from '@material-ui/core';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import StopIcon from '@material-ui/icons/Stop';
 export interface IData {
       data: number[][];
       name: string;
@@ -48,6 +49,11 @@ function Simulate() {
       const [running, setRunning] = React.useState(initState.running);
       const [inputs, setInputs] = React.useState(initState.inputs);
 
+      const toggleRunning = () => {
+            console.log('running ', running);
+            setRunning(!running);
+      }
+
       // works - state is updated. not sure its efficent.
       const updateInput = (idx: number, val: number) => {
             const updateInputs = [...inputs];
@@ -74,21 +80,27 @@ function Simulate() {
 
 
 	return (
-	      <div className="Simulate">
-                  <div className="Container">
-                        <div className="LeftSide">
-                              <div className="LeftSideTop">
-                                    <Plot data={[{data: data, name: 'A'}]}/>
-                              </div>
-                              <div className="LeftSideBottom">
-                                    <Forms setRunning={setRunning} inputs={inputs} updateInput={updateInput}/>
-                              </div>
+      <div className="Simulate">
+            <div className="Container">
+                  <div className="LeftSide">
+                  <div className="ControlPanel">
+                        {!running ?
+			      <Button variant="outlined" color="primary" onClick={() => toggleRunning()} startIcon={<PlayArrowIcon />}>Start</Button> :
+                        <Button variant="outlined" color="primary" onClick={() => toggleRunning()} startIcon={<StopIcon />}>Stop</Button>
+                        }
+		      </div>
+                        <Forms inputs={inputs} updateInput={updateInput}/>
+                  </div>
+                  <div className="RightSide">
+                        <div className="Plot">
+                              <Plot data={[{data: data, name: 'A'}]}/>
                         </div>
-                        <div className="RightSide">
-                              right side
+                        <div className="Graph">
+                              3D
                         </div>
                   </div>
-		</div>
+            </div>
+      </div>
   );
 }
 
