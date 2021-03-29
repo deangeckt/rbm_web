@@ -5,17 +5,40 @@ export interface IPoint {
 	y: number;
 }
 
+
+const pointsInit: IPoint[] = [];
+
+
 const Design = () => {
   	const canvasRef = useRef(null);
-	const points: IPoint[] = [];
-
 	const [isDrawing, setIsDrawing] = useState(false);
 	const [isMoving, setIsMoving] = useState(false);
+	const [points, setPoints] = useState(pointsInit);
+	const [size, setSize] = useState(0);
+
+	const addPoint = (x: number, y: number) => {
+		const currPoints = [...points];
+		currPoints.push({x:x, y:y});
+		setPoints(currPoints);
+		setSize(size + 1);
+	}
+
+	const swapLastPoint = (x: number, y: number) => {
+		const currPoints = [...points];
+		currPoints[size] = {x:x, y:y};
+		setPoints(currPoints);
+	}
+
+	const removeLastPoint = () => {
+		const currPoints = [...points];
+		currPoints.splice(size, 1);
+		setPoints(currPoints);
+	}
 
 	const draw = () => {
 		const canvas = canvasRef.current as any;
 		var ctx = canvas.getContext("2d");
-		// ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		for (let i = 0; i < points.length; i++) {
 			if (i % 2 === 0) {
@@ -39,7 +62,7 @@ const Design = () => {
 
 	const onMouseDown = (e: any) => {
 		const [x, y] = getCoords(e);
-		points.push({x: x, y: y});
+		addPoint(x,y);
 		setIsDrawing(true);
 	}
 
@@ -49,7 +72,7 @@ const Design = () => {
 
 		setIsMoving(true);
 		const [x, y] = getCoords(e);
-		points[points.length] = ({x: x, y:y});
+		swapLastPoint(x,y);
 		draw();
 	}
 
@@ -58,7 +81,7 @@ const Design = () => {
 		if (isMoving) {
 			setIsMoving(false);
 		} else {
-			points.pop();
+			removeLastPoint();
 		}
 		console.log(points);
 	}
