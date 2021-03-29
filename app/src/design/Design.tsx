@@ -1,63 +1,35 @@
 import React from 'react';
-import { Stage, Layer, Line, Transformer } from 'react-konva';
+import { Stage, Layer, Circle } from 'react-konva';
+import TransformerLine from './TransformerLine';
 
-interface ILine {
+interface IRenderLine {
 	id: string;
 	points: number[];
-	rotation: number;
 }
 
-interface TransLineProps {
-	shapeProps: any;
-	isSelected: boolean;
-	onSelect: Function;
+interface ISwcLine {
+	id: string;
+	tid: string; // enum for user
+	x: number;
+	y: number;
+	z: number;
+	r: number;
+	pid: string;
 }
 
-const INITIAL_STATE: ILine[] = [
+
+const init_render_lines: IRenderLine[] = [
 	{
-		points: [10,50, 10,100],
-		id: '0',
-		rotation: 0
-	},
-	{
-		points: [100,50, 100,100],
+		points: [window.innerWidth / 2,
+				 window.innerHeight / 2 + 50,
+				 window.innerWidth / 2,
+				 window.innerHeight / 2 - 50],
 		id: '1',
-		rotation: 0
 	},
 ]
 
-const TransLine = ({ shapeProps: shareProps, isSelected, onSelect }: TransLineProps) => {
-	const shapeRef = React.useRef();
-	const trRef = React.useRef<any>();
-
-	React.useEffect(() => {
-		if (isSelected) {
-			trRef.current!.nodes([shapeRef.current]);
-			trRef.current!.getLayer().batchDraw();
-		}
-	}, [isSelected]);
-
-	return (
-		<React.Fragment>
-			<Line
-				onClick={onSelect}
-				onTap={onSelect}
-				ref={shapeRef}
-				stroke={'red'}
-				strokeWidth={5}
-				{...shareProps}
-				draggable
-			/>
-			{isSelected && (
-        		<Transformer ref={trRef} />
-      		)}
-    </React.Fragment>
-  );
-};
-
-
 const Design = () => {
-	const [lines, setLines] = React.useState(INITIAL_STATE);
+	const [renderLines, setRenderLines] = React.useState(init_render_lines);
 	const [selectedId, setSelectedId] = React.useState('');
 
 	const checkDeselect = (e: any) => {
@@ -65,25 +37,28 @@ const Design = () => {
 		const clickedOnEmpty = e.target === e.target.getStage();
 		if (clickedOnEmpty) {
 			setSelectedId('');
-			console.log(lines);
+			console.log(renderLines);
 		}
 	};
 
 	return (
+	<>
+	<div>
+		side panel
+	</div>
 	<Stage width={window.innerWidth} height={window.innerHeight}
 		   onMouseDown={checkDeselect} onTouchStart={checkDeselect}>
 		<Layer>
-			<TransLine
-				key={'0'}
-				shapeProps={INITIAL_STATE}
-				isSelected={'0' === selectedId}
-				onSelect={() => {
-					setSelectedId('0');
-				}}
+			<Circle
+				radius={10}
+				fill={'red'}
+				opacity={0.5}
+				x={window.innerWidth / 2}
+				y={window.innerHeight / 2 + 50+10}
+				draggable={false}
 			/>
-
-			{lines.map((l) => (
-				<TransLine
+			{renderLines.map((l) => (
+				<TransformerLine
 					key={l.id}
 					shapeProps={l}
 					isSelected={l.id === selectedId}
@@ -94,6 +69,7 @@ const Design = () => {
 			))}
 		</Layer>
 	</Stage>
+	</>
   );
 };
 export default Design;
