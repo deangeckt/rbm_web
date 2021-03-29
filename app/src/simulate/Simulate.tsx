@@ -5,6 +5,8 @@ import Plot from './Plot';
 import './Simulate.css';
 import { Button } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import Alert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
 import StopIcon from '@material-ui/icons/Stop';
 export interface IData {
       data: number[][];
@@ -46,13 +48,22 @@ const initState: ISimulationState = {
 
 function Simulate() {
       const [data, setData] = React.useState([[0, 0]])
+      const [error, setError] = React.useState(false);
       const [running, setRunning] = React.useState(initState.running);
       const [inputs, setInputs] = React.useState(initState.inputs);
 
       const toggleRunning = () => {
-            console.log('running ', running);
+            // TODO: validate all inputs exist here OR input should not be empty..
             setRunning(!running);
+            // TODO: stop engine + stop plot
       }
+
+      const closeError = (_event?: React.SyntheticEvent, reason?: string) => {
+            if (reason === 'clickaway') {
+                  return;
+            }
+            setError(false);
+      };
 
       // works - state is updated. not sure its efficent.
       const updateInput = (idx: number, val: number) => {
@@ -81,6 +92,12 @@ function Simulate() {
 
 	return (
       <div className="Simulate">
+            <Snackbar open={error} autoHideDuration={6000} onClose={closeError}>
+                  <Alert variant="outlined" severity="error" onClose={closeError}>
+                        This is an error alert — check it out!
+                  </Alert>
+            </Snackbar>
+
             <div className="Container">
                   <div className="LeftSide">
                   <div className="ControlPanel">
