@@ -1,0 +1,18 @@
+.ControlPanel {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #efefef;
+
+}
+
+.EditPanel {
+    text-align: center;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    flex-direction: column;
+}

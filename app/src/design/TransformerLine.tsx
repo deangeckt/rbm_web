@@ -24,7 +24,7 @@ const TransformerLine = ({ shapeProps: shareProps, isSelected, onSelect }: Trans
 				onClick={onSelect}
 				onTap={onSelect}
 				ref={shapeRef}
-				stroke={'red'}
+				stroke={'#677be9'}
 				strokeWidth={shareProps.radius + 3}
 				{...shareProps}
 				draggable={false}

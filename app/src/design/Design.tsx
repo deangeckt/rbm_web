@@ -1,9 +1,8 @@
 import React from 'react';
 import { Stage, Layer, Circle } from 'react-konva';
 import TransformerLine from './TransformerLine';
-import { Button, InputAdornment, MenuItem, TextField } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
+import ControlPanel from './ControlPanel';
+import './Design.css';
 
 interface IRenderLine {
 	id: number;
@@ -15,32 +14,19 @@ interface IRenderLine {
 	alpha: number;
 }
 
-const types = [
-	{
-	  value: 0,
-	  label: 'undefined',
-	},
-	{
-	  value: '2',
-	  label: 'axon',
-	},
-	{
-	  value: '3',
-	  label: 'basal dendrite',
-	},
-	{
-	  value: '4',
-	  label: 'apical dendrite',
-	},
-];
+
+const canvas_part_size = 1;
+const canvas_width = window.innerWidth * canvas_part_size;
+const canvas_hegiht = window.innerHeight;
 
 const default_radius = 0.1;
 const default_tid = 0;
 const default_length = 100;
-const default_alpha = Math.PI * 0.1;
+export const default_alpha = Math.PI * 0.1;
+
 const none_selected = -1;
 const root_id = 1;
-const [rootX, rootY] = [window.innerWidth / 2, window.innerHeight / 2 + 50];
+const [rootX, rootY] = [canvas_width / 2, canvas_hegiht / 2 + 50];
 const init_render_lines: IRenderLine[] = [];
 
 const Design = () => {
@@ -204,67 +190,44 @@ const Design = () => {
 		setRenderLines(lines);
 	}
 
-	// TODO add all text fields to control panel component
 	// TODO radius validation > 0 - maybe show err
 	// TODO - new line - make sure alpha is spare
 	// TODO at export / finish -> fix spaces in ID's due to deletes - recur fix
 	return (
-	<>
-	<div>
-		<Button variant="outlined" color="primary" startIcon={<AddIcon />}
-				disabled={selectedId === none_selected} onClick={() => addNew()}>
-			Add Line
-		</Button>
-		<TextField label={'Length [µM]'} variant="filled" type="number" value={getSelectedLength()}
-					disabled={selectedId === none_selected || selectedId === root_id}
-					onChange={(e) => updateLength(Number(e.target.value))} />
-		<TextField label={'α [Rad]'} variant="filled" type="number" value={getSelectedAlpha()}
-					disabled={selectedId === none_selected || selectedId === root_id}
-					onChange={(e) => updateAlpha(Number(e.target.value))}
-					InputProps={{	inputProps: { min: 0, max: 2 * Math.PI, step: default_alpha * 0.1,  },
-									endAdornment: <InputAdornment position="end">PI</InputAdornment>, }} />
-		<TextField label={'Radius [µM]'} variant="filled" type="number" value={getSelectedRadius()}
-					disabled={selectedId === none_selected || selectedId === root_id}
-					onChange={(e) => updateSimpleField('radius', Number(e.target.value))} />
-		<TextField select label="Type" variant="filled"  value={getSelectedType()}
-					onChange={(e) => updateSimpleField('tid', Number(e.target.value))}
-					disabled={selectedId === none_selected || selectedId === root_id} >
-        	{types.map((option) => (
-				<MenuItem key={option.value} value={option.value}>
-					{option.label}
-				</MenuItem>
-        	))}
-        </TextField>
-		<Button variant="outlined" color="primary" startIcon={<DeleteIcon />}
-				disabled={selectedId === none_selected || selectedId === root_id} onClick={() => Delete()}>
-			Delete Line
-		</Button>
-	</div>
-	<Stage width={window.innerWidth} height={window.innerHeight}
-		   onMouseDown={checkDeselect} onTouchStart={checkDeselect}>
-		<Layer>
-			<Circle
-				radius={10}
-				fill={'black'}
-				opacity={selectedId === root_id ? 0.8 : 0.3}
-				x={rootX}
-				y={rootY}
-				draggable={false}
-				onClick={() => setSelectedId(root_id)}
-			/>
-			{renderLines.map((l) => (
-				<TransformerLine
-					key={l.id}
-					shapeProps={l}
-					isSelected={l.id === selectedId}
-					onSelect={() => {
-						setSelectedId(l.id);
-					}}
-				/>
-			))}
-		</Layer>
-	</Stage>
-	</>
+	<div className="Design">
+		<div className="Canvas">
+			<Stage width={canvas_width} height={canvas_hegiht} draggable
+				onMouseDown={checkDeselect} onTouchStart={checkDeselect}>
+				<Layer>
+					<Circle
+						radius={10}
+						fill={'#3f51b5'}
+						opacity={selectedId === root_id ? 0.8 : 0.3}
+						x={rootX}
+						y={rootY}
+						draggable={false}
+						onClick={() => setSelectedId(root_id)}
+					/>
+					{renderLines.map((l) => (
+						<TransformerLine
+							key={l.id}
+							shapeProps={l}
+							isSelected={l.id === selectedId}
+							onSelect={() => {
+								setSelectedId(l.id);
+							}}
+						/>
+					))}
+				</Layer>
+			</Stage>
+		</div>
+			<ControlPanel addNew={addNew} Delete={Delete} getSelectedLength={getSelectedLength}
+							getSelectedAlpha={getSelectedAlpha} getSelectedRadius={getSelectedRadius}
+							getSelectedType={getSelectedType} updateSimpleField={updateSimpleField}
+							updateAlpha={updateAlpha} updateLength={updateLength}
+							canAdd={selectedId === none_selected}
+							canEdit={selectedId === none_selected || selectedId === root_id}/>
+s	</div>
   );
 };
 export default Design;
