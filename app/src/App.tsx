@@ -14,7 +14,7 @@ function App() {
 					New Neuron
 				</Button>
 				<div className="Divider"/>
-				<Button className="Button" variant="outlined" color="primary" onClick={() => console.log('fgsf')}>
+				<Button className="Button" variant="outlined" color="primary">
 					Import Neuron
 				</Button>
 			</div>
