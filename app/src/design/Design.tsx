@@ -5,8 +5,9 @@ import ControlPanel from './ControlPanel';
 import { Button } from '@material-ui/core';
 import './Design.css';
 import { colors } from '../colors';
+import { exportFile, lengthToPoint, pointToLength } from '../Utils/SwcUtils';
 
-interface IRenderLine {
+export interface IRenderLine {
 	id: number;
 	tid: number; // enum for user
 	points: number[]; // [x1,y1, x2,y2]
@@ -16,19 +17,18 @@ interface IRenderLine {
 	alpha: number;
 }
 
-
 const canvas_part_size = 0.7;
 const canvas_width = window.innerWidth * canvas_part_size;
 const canvas_hegiht = window.innerHeight;
 
 const default_radius = 0.1;
 const default_tid = 0;
-const default_length = 100;
+const default_length = 10;
 export const default_alpha = Math.PI * 0.1;
 
 const none_selected = -1;
 const root_id = 1;
-const [rootX, rootY] = [canvas_width / 2, canvas_hegiht / 2 + 50];
+export const [rootX, rootY] = [canvas_width / 2, canvas_hegiht / 2 + 50];
 const init_render_lines: IRenderLine[] = [];
 
 const Design = () => {
@@ -59,7 +59,7 @@ const Design = () => {
 		newPoints.push(prevY);
 
 		const newAngle = (childrenCound + 1) * default_alpha;
-		const [newX, newY] = lengthAlphaToXy(default_length, newAngle, prevX, prevY);
+		const [newX, newY] = lengthAlphaToXy(lengthToPoint(default_length), newAngle, prevX, prevY);
 		newPoints.push(newX);
 		newPoints.push(newY);
 		return {newPoints, newAngle};
@@ -89,7 +89,7 @@ const Design = () => {
 			newId = lines[lines.length - 1].id + 1;
 			newPid = selectedLine.id;
 		}
-		lines.push({id: newId, points: newPoints, pid: newPid, radius: default_radius, tid: default_tid, length: default_length, alpha: newAlpha});
+		lines.push({id: newId, points: newPoints, pid: newPid, radius: default_radius, tid: default_tid, length: lengthToPoint(default_length), alpha: newAlpha});
 		setRenderLines(lines);
 		setSelectedId(newId);
 	}
@@ -135,7 +135,7 @@ const Design = () => {
 	const getSelectedLength = () => {
 		const lines = [...renderLines];
 		const selectedLine = lines.find((line) => line.id === selectedId);
-		return selectedLine ? selectedLine.length : default_length;
+		return selectedLine ? pointToLength(selectedLine.length) : default_length;
 	}
 
 	const updateChildsRecur = (father: IRenderLine): void => {
@@ -176,7 +176,7 @@ const Design = () => {
 		if (!selectedLine)
 			return;
 
-		selectedLine.length = value;
+		selectedLine.length = lengthToPoint(value);
 		updateLinePoint(selectedLine);
 		updateChildsRecur(selectedLine);
 		setRenderLines(lines);
@@ -192,13 +192,23 @@ const Design = () => {
 		setRenderLines(lines);
 	}
 
+	const downloadFile = () => {
+		// TODO remove redundant element created
+		const element = document.createElement("a");
+		const file = new Blob(exportFile(renderLines) ,{type: 'text/plain;charset=utf-8'});
+		element.href = URL.createObjectURL(file);
+		element.download = "swcTree.swc";
+		document.body.appendChild(element);
+		element.click();
+	}
+
 	// TODO radius validation > 0 - maybe show err
 	// TODO - new line - make sure alpha is spare
 	// TODO at export / finish -> fix spaces in ID's due to deletes - recur fix
 	return (
 	<div className="Design">
 		<div className="TopPanel">
-			<Button className="NoCapsButton" color="primary" variant="contained" onClick={() => null}
+			<Button className="NoCapsButton" color="primary" variant="contained" onClick={() => downloadFile()}
 					style={{marginLeft: '24px'}}>
 				Export
 			</Button>
