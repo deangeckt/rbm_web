@@ -44,8 +44,8 @@ function ControlPanel({addNew, Delete, getSelectedLength,
                        getSelectedAlpha, getSelectedRadius, getSelectedType,
                        updateSimpleField, updateAlpha, updateLength, canAdd, canEdit  }: IControlPanelProps) {
 	return (
-    <div className="ControlPanel">
-		<Button variant="outlined" color="primary" startIcon={<AddIcon />}
+    <>
+		<Button className="NoCapsButton" variant="outlined" color="primary" startIcon={<AddIcon />}
 				disabled={canAdd} onClick={() => addNew()}>
 			Add Line
 		</Button>
@@ -75,7 +75,7 @@ function ControlPanel({addNew, Delete, getSelectedLength,
                 Delete Line
             </Button>
         </div>
-    </div>
+    </>
   );
 }
 

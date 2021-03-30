@@ -2,7 +2,9 @@ import React from 'react';
 import { Stage, Layer, Circle } from 'react-konva';
 import TransformerLine from './TransformerLine';
 import ControlPanel from './ControlPanel';
+import { Button } from '@material-ui/core';
 import './Design.css';
+import { colors } from '../colors';
 
 interface IRenderLine {
 	id: number;
@@ -15,7 +17,7 @@ interface IRenderLine {
 }
 
 
-const canvas_part_size = 1;
+const canvas_part_size = 0.7;
 const canvas_width = window.innerWidth * canvas_part_size;
 const canvas_hegiht = window.innerHeight;
 
@@ -195,39 +197,57 @@ const Design = () => {
 	// TODO at export / finish -> fix spaces in ID's due to deletes - recur fix
 	return (
 	<div className="Design">
-		<div className="Canvas">
-			<Stage width={canvas_width} height={canvas_hegiht} draggable
-				onMouseDown={checkDeselect} onTouchStart={checkDeselect}>
-				<Layer>
-					<Circle
-						radius={10}
-						fill={'#3f51b5'}
-						opacity={selectedId === root_id ? 0.8 : 0.3}
-						x={rootX}
-						y={rootY}
-						draggable={false}
-						onClick={() => setSelectedId(root_id)}
-					/>
-					{renderLines.map((l) => (
-						<TransformerLine
-							key={l.id}
-							shapeProps={l}
-							isSelected={l.id === selectedId}
-							onSelect={() => {
-								setSelectedId(l.id);
-							}}
-						/>
-					))}
-				</Layer>
-			</Stage>
+		<div className="TopPanel">
+			<Button className="NoCapsButton" color="primary" variant="contained" onClick={() => null}
+					style={{marginLeft: '24px'}}>
+				Export
+			</Button>
+			<big style={{color: 'black', display: 'block', fontSize: '26px'}}>
+				RBM - Create your Neuron
+			</big>
+			<Button className="NoCapsButton" color="primary" variant="contained" onClick={() => null}
+					style={{marginRight: '24px'}}>
+				Start Simulate
+			</Button>
 		</div>
-			<ControlPanel addNew={addNew} Delete={Delete} getSelectedLength={getSelectedLength}
-							getSelectedAlpha={getSelectedAlpha} getSelectedRadius={getSelectedRadius}
-							getSelectedType={getSelectedType} updateSimpleField={updateSimpleField}
-							updateAlpha={updateAlpha} updateLength={updateLength}
-							canAdd={selectedId === none_selected}
-							canEdit={selectedId === none_selected || selectedId === root_id}/>
-s	</div>
+		<div className="MainPanel">
+			<div className="Canvas">
+				<Stage width={canvas_width} height={canvas_hegiht} draggable
+					onMouseDown={checkDeselect} onTouchStart={checkDeselect}>
+					<Layer>
+						<Circle
+							radius={10}
+							fill={colors.primary}
+							opacity={selectedId === root_id ? 0.8 : 0.3}
+							x={rootX}
+							y={rootY}
+							draggable={false}
+							onClick={() => setSelectedId(root_id)}
+						/>
+						{renderLines.map((l) => (
+							<TransformerLine
+								key={l.id}
+								shapeProps={l}
+								isSelected={l.id === selectedId}
+								onSelect={() => {
+									setSelectedId(l.id);
+								}}
+							/>
+						))}
+					</Layer>
+				</Stage>
+			</div>
+			<div className="ControlPanel">
+				<ControlPanel addNew={addNew} Delete={Delete} getSelectedLength={getSelectedLength}
+								getSelectedAlpha={getSelectedAlpha} getSelectedRadius={getSelectedRadius}
+								getSelectedType={getSelectedType} updateSimpleField={updateSimpleField}
+								updateAlpha={updateAlpha} updateLength={updateLength}
+								canAdd={selectedId === none_selected}
+								canEdit={selectedId === none_selected || selectedId === root_id}
+				/>
+			</div>
+		</div>
+	</div>
   );
 };
 export default Design;

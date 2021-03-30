@@ -1,5 +1,6 @@
 import React from "react";
 import { Line, Transformer } from "react-konva";
+import { colors } from '../colors';
 
 interface TransLineProps {
 	shapeProps: any;
@@ -24,7 +25,7 @@ const TransformerLine = ({ shapeProps: shareProps, isSelected, onSelect }: Trans
 				onClick={onSelect}
 				onTap={onSelect}
 				ref={shapeRef}
-				stroke={'#677be9'}
+				stroke={colors.line}
 				strokeWidth={shareProps.radius + 3}
 				{...shareProps}
 				draggable={false}

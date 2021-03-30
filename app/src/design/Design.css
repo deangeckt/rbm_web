@@ -1,16 +1,47 @@
 .Design {
-    text-align: center;
+    /* text-align: center; */
     display: flex;
     width: 100vw;
     height: 100vh;
-    flex-direction: row;
+    flex-direction: column;
     margin: 0 auto;
 }
 
-.Canvas {
+.TopPanel {
     text-align: center;
     display: flex;
     width: 100%;
+    flex-basis: 10%;
+    min-height: 10%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #efefef;
+}
+
+.MainPanel {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+}
+
+
+.Canvas {
+    /* text-align: center; */
+    display: flex;
     height: 100%;
-    /* background: url('../assests/desgin_grid.png'); */
+    flex-basis: 70%;
+    min-width: 70%;
+}
+
+.ControlPanel {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #efefef;
+}
+
+.NoCapsButton {
+	text-transform: none !important;
 }
