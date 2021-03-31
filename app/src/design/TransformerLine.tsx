@@ -1,7 +1,7 @@
 import React from "react";
 import { Line, Transformer } from "react-konva";
 import { colors } from '../colors';
-import { radiusAddition } from "../Utils/SwcUtils";
+import { lineRadiusAddition } from "../Utils/SwcUtils";
 
 interface TransLineProps {
 	shapeProps: any;
@@ -27,7 +27,7 @@ const TransformerLine = ({ shapeProps: shareProps, isSelected, onSelect }: Trans
 				onTap={onSelect}
 				ref={shapeRef}
 				stroke={colors.line}
-				strokeWidth={shareProps.radius + radiusAddition}
+				strokeWidth={shareProps.radius + lineRadiusAddition}
 				{...shareProps}
 				draggable={false}
 			/>

@@ -16,8 +16,10 @@ export interface IControlPanelProps {
     updateSimpleField: Function;
     updateAlpha: Function;
     updateLength: Function;
-    canAdd: boolean;
-    canEdit: boolean;
+	NeuronRad: number;
+	updateNeuronRad: Function;
+    neuronSelected: boolean;
+    lineSelected: boolean;
 }
 
 export const types = [
@@ -42,39 +44,47 @@ export const types = [
 
 function ControlPanel({addNew, Delete, getSelectedLength,
                        getSelectedAlpha, getSelectedRadius, getSelectedType,
-                       updateSimpleField, updateAlpha, updateLength, canAdd, canEdit  }: IControlPanelProps) {
+                       updateSimpleField, updateAlpha, updateLength, neuronSelected, lineSelected,
+					   NeuronRad, updateNeuronRad  }: IControlPanelProps) {
 	return (
     <>
-		<Button className="NoCapsButton" variant="outlined" color="primary" startIcon={<AddIcon />}
-				disabled={canAdd} onClick={() => addNew()}>
-			Add Line
-		</Button>
-        <div className="EditPanel">
-            <TextField label={'Length [µM]'} variant="filled" type="number" value={getSelectedLength()}
-                        disabled={canEdit}
-                        onChange={(e) => updateLength(Number(e.target.value))} />
-            <TextField label={'α [Rad]'} variant="filled" type="number" value={getSelectedAlpha()}
-                        disabled={canEdit}
-                        onChange={(e) => updateAlpha(Number(e.target.value))}
-                        InputProps={{	inputProps: { min: 0, max: 2 * Math.PI, step: default_alpha * 0.1,  },
-                                        endAdornment: <InputAdornment position="end">PI</InputAdornment>, }} />
-            <TextField label={'Radius [µM]'} variant="filled" type="number" value={getSelectedRadius()}
-                        disabled={canEdit}
-                        onChange={(e) => updateSimpleField('radius', Number(e.target.value))} />
-            <TextField select label="Type" variant="filled"  value={getSelectedType()}
-                        onChange={(e) => updateSimpleField('tid', Number(e.target.value))}
-                        disabled={canEdit} >
-                {types.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                    </MenuItem>
-                ))}
-            </TextField>
-            <Button variant="outlined" color="primary" startIcon={<DeleteIcon />}
-                    disabled={canEdit} onClick={() => Delete()}>
-                Delete Line
-            </Button>
-        </div>
+    {!neuronSelected && !lineSelected ? (
+		<big style={{color: 'black', alignSelf: 'center', fontSize: '16px', marginTop: '16px'}}>
+				Select an object to add tree lines
+		</big> ) : (
+		<div className="EditPanel">
+			<Button className="NoCapsButton" variant="outlined" color="primary" startIcon={<AddIcon />} onClick={() => addNew()}>
+				Add Line
+			</Button>
+			{lineSelected ? (
+				<>
+				<TextField label={'Length [µM]'} variant="filled" type="number" value={getSelectedLength()}
+							onChange={(e) => updateLength(Number(e.target.value))} />
+				<TextField label={'α [Rad]'} variant="filled" type="number" value={getSelectedAlpha()}
+							onChange={(e) => updateAlpha(Number(e.target.value))}
+							InputProps={{	inputProps: { min: 0, max: 2 * Math.PI, step: default_alpha * 0.1,  },
+											endAdornment: <InputAdornment position="end">PI</InputAdornment>, }} />
+				<TextField label={'Radius [µM]'} variant="filled" type="number" value={getSelectedRadius()}
+							onChange={(e) => updateSimpleField('radius', Number(e.target.value))}
+							InputProps={{inputProps: { step: 0.1,  }}} />
+				<TextField select label="Type" variant="filled"  value={getSelectedType()}
+							onChange={(e) => updateSimpleField('tid', Number(e.target.value))} >
+					{types.map((option) => (
+						<MenuItem key={option.value} value={option.value}>
+							{option.label}
+						</MenuItem>
+					))}
+				</TextField>
+				<Button variant="outlined" color="primary" startIcon={<DeleteIcon />} onClick={() => Delete()}>
+					Delete Line
+				</Button>
+				</>
+				) : (
+				<TextField label={'Neuron Radius [µM]'} variant="filled" type="number" value={NeuronRad}
+							onChange={(e) => updateNeuronRad(Number(e.target.value))} />
+			)}
+		</div>
+	)}
     </>
   );
 }

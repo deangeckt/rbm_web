@@ -5,9 +5,9 @@ import ControlPanel from './ControlPanel';
 import { Button } from '@material-ui/core';
 import './Design.css';
 import { colors } from '../colors';
-import { exportFile, lengthToPoint, pointToLength } from '../Utils/SwcUtils';
+import { exportFile, lengthToPoint, pointToLength, neuronRadToSize } from '../Utils/SwcUtils';
 
-export interface IRenderLine {
+export interface ILine {
 	id: number;
 	tid: number; // enum for user
 	points: number[]; // [x1,y1, x2,y2]
@@ -20,20 +20,22 @@ export interface IRenderLine {
 const canvas_part_size = 0.7;
 const canvas_width = window.innerWidth * canvas_part_size;
 const canvas_hegiht = window.innerHeight;
+export const [rootX, rootY] = [canvas_width / 2, canvas_hegiht / 2 + 50];
 
-const default_radius = 0.1;
+const default_radius = 0.1; // in micro
 const default_tid = 0;
-const default_length = 10;
+const default_length = 10; //in micro
+const default_neuron_rad = 5; // in micro
 export const default_alpha = Math.PI * 0.1;
 
 const none_selected = -1;
 const root_id = 1;
-export const [rootX, rootY] = [canvas_width / 2, canvas_hegiht / 2 + 50];
-const init_render_lines: IRenderLine[] = [];
+const init_render_lines: ILine[] = [];
 
 const Design = () => {
 	const [renderLines, setRenderLines] = React.useState(init_render_lines);
 	const [selectedId, setSelectedId] = React.useState(root_id);
+	const [neuronRad, setNeuronRad] = React.useState(default_neuron_rad);
 
 	const checkDeselect = (e: any) => {
 		const clickedOnEmpty = e.target === e.target.getStage();
@@ -43,7 +45,7 @@ const Design = () => {
 		}
 	};
 
-	const getLineChildren = (selectedLine: IRenderLine) => {
+	const getLineChildren = (selectedLine: ILine) => {
 		const lines = [...renderLines];
 		return lines.filter((line) => line.pid === selectedLine.id);
 	}
@@ -107,6 +109,8 @@ const Design = () => {
 	}
 
 	const updateSimpleField = (field: "tid" | "radius", value: number) => {
+		if (field === 'radius' && value <= 0)
+			return;
 		const lines = [...renderLines];
 		const selectedLine = lines.find((line) => line.id === selectedId);
 		(selectedLine as any)[field] = value;
@@ -117,7 +121,7 @@ const Design = () => {
 		return [prevX + d * Math.cos(alpha), (prevY - d * Math.sin(alpha))];
 	}
 
-	const updateLinePoint = (line: IRenderLine) =>{
+	const updateLinePoint = (line: ILine) =>{
 		const prevX = line.points[0];
 		const prevY = line.points[1];
 		const [newX, newY] = lengthAlphaToXy(line.length, line.alpha, prevX, prevY);
@@ -138,7 +142,7 @@ const Design = () => {
 		return selectedLine ? pointToLength(selectedLine.length) : default_length;
 	}
 
-	const updateChildsRecur = (father: IRenderLine): void => {
+	const updateChildsRecur = (father: ILine): void => {
 		const childs = getLineChildren(father);
 		childs.forEach(child => {
 			child.points[0] = father.points[2];
@@ -148,7 +152,7 @@ const Design = () => {
 		});
 	}
 
-	const deleteChildsRecur = (lines: IRenderLine[], fatherIdx: number): void => {
+	const deleteChildsRecur = (lines: ILine[], fatherIdx: number): void => {
 		const childs = lines.filter((line) => line.pid === lines[fatherIdx].id); //use map to return idx?
 		console.log('childs', childs);
 		childs.forEach(child => {
@@ -171,6 +175,8 @@ const Design = () => {
 	}
 
 	const updateLength = (value: number) => {
+		if (value <= 0)
+			return;
 		const lines = [...renderLines];
 		const selectedLine = lines.find((line) => line.id === selectedId);
 		if (!selectedLine)
@@ -195,14 +201,13 @@ const Design = () => {
 	const downloadFile = () => {
 		// TODO remove redundant element created
 		const element = document.createElement("a");
-		const file = new Blob(exportFile(renderLines) ,{type: 'text/plain;charset=utf-8'});
+		const file = new Blob(exportFile(renderLines, neuronRad) ,{type: 'text/plain;charset=utf-8'});
 		element.href = URL.createObjectURL(file);
 		element.download = "swcTree.swc";
 		document.body.appendChild(element);
 		element.click();
 	}
 
-	// TODO radius validation > 0 - maybe show err
 	// TODO - new line - make sure alpha is spare
 	// TODO at export / finish -> fix spaces in ID's due to deletes - recur fix
 	return (
@@ -226,7 +231,7 @@ const Design = () => {
 					onMouseDown={checkDeselect} onTouchStart={checkDeselect}>
 					<Layer>
 						<Circle
-							radius={10}
+							radius={neuronRadToSize(neuronRad)}
 							fill={colors.primary}
 							opacity={selectedId === root_id ? 0.8 : 0.3}
 							x={rootX}
@@ -252,8 +257,9 @@ const Design = () => {
 								getSelectedAlpha={getSelectedAlpha} getSelectedRadius={getSelectedRadius}
 								getSelectedType={getSelectedType} updateSimpleField={updateSimpleField}
 								updateAlpha={updateAlpha} updateLength={updateLength}
-								canAdd={selectedId === none_selected}
-								canEdit={selectedId === none_selected || selectedId === root_id}
+								NeuronRad={neuronRad} updateNeuronRad={(v: number) => v > 0 && setNeuronRad(v)}
+								neuronSelected={selectedId === root_id}
+								lineSelected={selectedId !== none_selected && selectedId !== root_id}
 				/>
 			</div>
 		</div>
