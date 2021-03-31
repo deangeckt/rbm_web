@@ -8,6 +8,9 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import StopIcon from '@material-ui/icons/Stop';
+import { default_neuron_rad, ILine, root_id } from '../design/Design';
+import DesignCanvas from '../design/DesignCanvas';
+
 export interface IData {
       data: number[][];
       name: string;
@@ -18,6 +21,7 @@ export interface IFormInput {
       value: number;
       tooltip: string;
 }
+
 export interface ISimulationState {
       running: boolean;
       inputs: IFormInput[]
@@ -46,7 +50,14 @@ const initState: ISimulationState = {
 //    rather render the data that is already ready.
 // d. support multiple data[][] arrays / plots retrived from engine
 
-function Simulate() {
+function Simulate(props: any) {
+      // canvas props
+      const init_lines = props.history.location.state.lines ?? [];
+	const init_neuron_rad = props.history.location.state.neuronRadius ?? default_neuron_rad;
+	const [renderLines] = React.useState(init_lines as ILine[]);
+	const [neuronRad] = React.useState(init_neuron_rad as number);
+
+      // simulate props
       const [data, setData] = React.useState([[0, 0]])
       const [error, setError] = React.useState(false);
       const [running, setRunning] = React.useState(initState.running);
@@ -112,8 +123,10 @@ function Simulate() {
                         <div className="Plot">
                               <Plot data={[{data: data, name: 'A'}]}/>
                         </div>
-                        <div className="Graph">
-                              3D
+                        <div className="Graph" id={"Canvas"}>
+                              <DesignCanvas lines={renderLines} neuronRad={neuronRad}
+							  selectedId={root_id}
+							  setSelectedId={() => null}/>
                         </div>
                   </div>
             </div>

@@ -59,7 +59,6 @@ function textLineToILine(ilines: ILine[], line: string): ILine | {id: number, ra
     let x0: number;
     let y0: number;
 
-
     if (pid === root_id) {
         x0 = initialStage.rootX;
         y0 = initialStage.rootY;

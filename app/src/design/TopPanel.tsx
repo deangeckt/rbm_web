@@ -32,7 +32,8 @@ function TopPanel({lines, neuronRad}: ITopPanelProps) {
 			RBM - Create your Neuron
 		</big>
 		<Button className="NoCapsButton" color="primary" variant="contained"
-				onClick={() => history.push( {pathname: '/simulate'} )}
+				onClick={() => history.push( {pathname: '/simulate',
+											  state: {lines: lines, neuronRadius: neuronRad}} )}
 				style={{marginRight: '24px'}}>
 			Start Simulate
 		</Button>
