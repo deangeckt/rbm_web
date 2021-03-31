@@ -24,7 +24,7 @@ export const default_alpha = Math.PI * 0.1;
 export const root_id = 1;
 const none_selected = -1;
 
-// TODO add typing somehow - use ISwcFileRead interface
+// TODO: add typing somehow - use ISwcFileRead interface
 const Design = (props: any) => {
 	const init_lines = props.history.location.state.lines ?? [];
 	const init_neuron_rad = props.history.location.state.neuronRadius ?? default_neuron_rad;
@@ -192,8 +192,8 @@ const Design = (props: any) => {
 		setRenderLines(lines);
 	}
 
-	// TODO - new line - make sure alpha is spare
-	// TODO at export / finish -> fix spaces in ID's due to deletes - recur fix
+	// TODO: - new line - make sure alpha is spare
+	// TODO: at export / finish -> fix spaces in ID's due to deletes - recur fix
 	return (
 	<div className="Design">
 		<div className="TopPanel">

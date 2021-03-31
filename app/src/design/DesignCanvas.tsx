@@ -39,7 +39,7 @@ export interface IDesignCanvasProps {
 function DesignCanvas({lines, neuronRad, checkDeselect, selectedId, setSelectedId}: IDesignCanvasProps) {
     const [stage, setStage] = React.useState(initialStage);
 
-    // TODO FIX Stage Size in case screen is getting bigger/ smaller
+    // TODO: FIX Stage Size in case screen is getting bigger/ smaller
 	const widSize = window.document.getElementById("Canvas")?.offsetWidth;
 	useEffect(() => {
 		if (widSize) {

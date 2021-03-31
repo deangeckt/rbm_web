@@ -10,7 +10,7 @@ export interface ITopPanelProps {
 }
 
 const downloadFile = (lines: ILine[], neuronRad: number) => {
-	// TODO remove redundant element created
+	// TODO: remove redundant element created
 	const element = document.createElement("a");
 	const file = new Blob(exportFile(lines, neuronRad) ,{type: 'text/plain;charset=utf-8'});
 	element.href = URL.createObjectURL(file);
