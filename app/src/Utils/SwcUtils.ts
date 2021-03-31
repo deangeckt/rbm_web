@@ -1,4 +1,5 @@
-import { ILine, initialStage, root_id } from "../design/Design";
+import { ILine, root_id } from "../design/Design";
+import { initialStage } from "../design/DesignCanvas";
 
 export const lenPointRatio = 5;
 export const neuronRadiusRatio = 2.5;

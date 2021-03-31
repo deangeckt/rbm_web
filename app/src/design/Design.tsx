@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
-import { Stage, Layer, Circle } from 'react-konva';
-import TransformerLine from './TransformerLine';
+import React from 'react';
 import ControlPanel from './ControlPanel';
-import './Design.css';
-import { colors } from '../colors';
-import { lengthToPoint, pointToLength, neuronRadToSize } from '../Utils/SwcUtils';
+import { lengthToPoint, pointToLength } from '../Utils/SwcUtils';
 import TopPanel from './TopPanel';
+import DesignCanvas, { initialStage } from './DesignCanvas';
+import './Design.css';
 
 export interface ILine {
 	id: number;
@@ -16,26 +14,6 @@ export interface ILine {
 	length: number;
 	alpha: number;
 }
-
-export interface IStageSize {
-	width: number;
-	height: number;
-	rootX: number;
-	rootY: number;
-}
-
-export const updateStage = (): IStageSize => {
-	const canvas_part_size = 0.7;
-	const canvas_hegiht = window.document.getElementById("Canvas")?.offsetHeight ?? window.innerHeight;
-	const canvas_width = window.document.getElementById("Canvas")?.offsetWidth ?? window.innerWidth * canvas_part_size;
-	return {
-		width: canvas_width,
-		height: canvas_hegiht,
-		rootX: canvas_width / 2,
-		rootY: canvas_hegiht / 2 + 50
-	}
-}
-export const initialStage: IStageSize = updateStage();
 
 const default_radius = 0.1; // in micro
 const default_tid = 0;
@@ -53,7 +31,6 @@ const Design = (props: any) => {
 	const [renderLines, setRenderLines] = React.useState(init_lines as ILine[]);
 	const [neuronRad, setNeuronRad] = React.useState(init_neuron_rad as number);
 	const [selectedId, setSelectedId] = React.useState(root_id);
-	const [stage, setStage] = React.useState(initialStage);
 
 	const checkDeselect = (e: any) => {
 		const clickedOnEmpty = e.target === e.target.getStage();
@@ -94,7 +71,7 @@ const Design = (props: any) => {
 
 		if (!selectedLine) {
 			const rootChilds = getRootChildren().length;
-			const r = addNewPoints(stage.rootX, stage.rootY, rootChilds);
+			const r = addNewPoints(initialStage.rootX, initialStage.rootY, rootChilds);
 			newPoints = r.newPoints;
 			newAlpha = r.newAngle;
 			newPid = root_id;
@@ -214,19 +191,6 @@ const Design = (props: any) => {
 		deleteChildsRecur(lines, index);
 		setRenderLines(lines);
 	}
-	// TODO FIX Stage Size in case screen is getting bigger/ smaller
-	const widSize = window.document.getElementById("Canvas")?.offsetWidth;
-	useEffect(() => {
-		if (widSize) {
-			console.log('main render');
-			setStage(updateStage());
-			// BUG HERE!
-			// getRootChildren().forEach(c => {
-			// 	updateChildsRecur(c);
-			// });
-		}
-  }, [widSize]);
-
 
 	// TODO - new line - make sure alpha is spare
 	// TODO at export / finish -> fix spaces in ID's due to deletes - recur fix
@@ -237,30 +201,9 @@ const Design = (props: any) => {
 		</div>
 		<div className="MainPanel">
 			<div className="Canvas" id={"Canvas"}>
-				<Stage width={stage.width} height={stage.height} draggable
-					onMouseDown={checkDeselect} onTouchStart={checkDeselect}>
-					<Layer>
-						<Circle
-							radius={neuronRadToSize(neuronRad)}
-							fill={colors.primary}
-							opacity={selectedId === root_id ? 0.8 : 0.3}
-							x={stage.rootX}
-							y={stage.rootY}
-							draggable={false}
-							onClick={() => setSelectedId(root_id)}
-						/>
-						{renderLines.map((l) => (
-							<TransformerLine
-								key={l.id}
-								shapeProps={l}
-								isSelected={l.id === selectedId}
-								onSelect={() => {
-									setSelectedId(l.id);
-								}}
-							/>
-						))}
-					</Layer>
-				</Stage>
+				<DesignCanvas lines={renderLines} neuronRad={neuronRad}
+							  checkDeselect={checkDeselect} selectedId={selectedId}
+							  setSelectedId={setSelectedId}/>
 			</div>
 			<div className="ControlPanel">
 				<ControlPanel addNew={addNew} Delete={Delete} getSelectedLength={getSelectedLength}
