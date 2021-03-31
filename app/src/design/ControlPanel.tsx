@@ -50,7 +50,7 @@ function ControlPanel({addNew, Delete, getSelectedLength,
     <>
     {!neuronSelected && !lineSelected ? (
 		<big style={{color: 'black', alignSelf: 'center', fontSize: '16px', marginTop: '16px'}}>
-				Select an object to add tree lines
+				Select an object to edit it
 		</big> ) : (
 		<div className="EditPanel">
 			<Button className="NoCapsButton" variant="outlined" color="primary" startIcon={<AddIcon />} onClick={() => addNew()}>

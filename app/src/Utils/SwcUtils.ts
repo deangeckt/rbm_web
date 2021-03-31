@@ -1,4 +1,4 @@
-import { ILine, rootX, rootY, root_id } from "../design/Design";
+import { ILine, initialStage, root_id } from "../design/Design";
 
 export const lenPointRatio = 5;
 export const neuronRadiusRatio = 2.5;
@@ -30,8 +30,8 @@ export function exportFile(lines: ILine[], neuronRadius = 1.0): BlobPart[] {
     let res = '# SWC tree generated using RBM software\n';
     res = res.concat(`1 1 0.0 0.0 0.0 ${neuronRadius.toFixed(2)} -1\n`);
     lines.forEach(line => {
-        const x = pointToLength(line.points[2] - rootX).toFixed(2);
-        const y = pointToLength(rootY - line.points[3]).toFixed(2);
+        const x = pointToLength(line.points[2] - initialStage.rootX).toFixed(2);
+        const y = pointToLength(initialStage.rootY - line.points[3]).toFixed(2);
         const lineStr = `${line.id} ${line.tid} ${x} ${y} 0.0 ${line.radius} ${line.pid}\n`;
         res = res.concat(lineStr);
     });
@@ -40,10 +40,9 @@ export function exportFile(lines: ILine[], neuronRadius = 1.0): BlobPart[] {
 
 function textLineToILine(ilines: ILine[], line: string): ILine | {id: number, radius: number} {
     var fields = line.split(' ');
-    if (fields.length !== swcAttr) {
-        console.error(fields);
+    if (fields.length !== swcAttr)
         throw new Error('SWC file bad format');
-    }
+
     const id =  Number(fields[0]);
     const tid = Number(fields[1]);
     const pid = Number(fields[6]);
@@ -54,21 +53,20 @@ function textLineToILine(ilines: ILine[], line: string): ILine | {id: number, ra
     }
 
     let points: number[] = [];
-    const x1 = lengthToPoint(Number(fields[2])) + rootX;
-    const y1 = rootY - lengthToPoint(Number(fields[3]));
+    const x1 = lengthToPoint(Number(fields[2])) + initialStage.rootX;
+    const y1 = initialStage.rootY - lengthToPoint(Number(fields[3]));
     let x0: number;
     let y0: number;
 
 
     if (pid === root_id) {
-        x0 = rootX;
-        y0 = rootY;
+        x0 = initialStage.rootX;
+        y0 = initialStage.rootY;
     } else {
         const father = ilines.find((l) => l.id === pid);
-        if (!father){
-            console.log(fields);
+        if (!father)
             throw new Error('SWC file bad format');
-        }
+
         x0 = father.points[2];
         y0 = father.points[3]
     }
@@ -98,7 +96,6 @@ export function importFile(text: string): ISwcFileRead {
             continue;
         }
         ilines.push(iline as ILine);
-        console.log('pushing', ilines);
     }
     if (neuronRad === -1) {
         throw new Error('SWC file bad format - missing neuron line');
