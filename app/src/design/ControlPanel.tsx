@@ -28,15 +28,15 @@ export const types = [
 	  label: 'undefined',
 	},
 	{
-	  value: '2',
+	  value: 2,
 	  label: 'axon',
 	},
 	{
-	  value: '3',
+	  value: 3,
 	  label: 'basal dendrite',
 	},
 	{
-	  value: '4',
+	  value: 4,
 	  label: 'apical dendrite',
 	},
 ];

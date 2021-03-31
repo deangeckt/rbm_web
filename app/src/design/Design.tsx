@@ -2,10 +2,10 @@ import React from 'react';
 import { Stage, Layer, Circle } from 'react-konva';
 import TransformerLine from './TransformerLine';
 import ControlPanel from './ControlPanel';
-import { Button } from '@material-ui/core';
 import './Design.css';
 import { colors } from '../colors';
-import { exportFile, lengthToPoint, pointToLength, neuronRadToSize } from '../Utils/SwcUtils';
+import { lengthToPoint, pointToLength, neuronRadToSize, ISwcFileRead } from '../Utils/SwcUtils';
+import TopPanel from './TopPanel';
 
 export interface ILine {
 	id: number;
@@ -25,17 +25,20 @@ export const [rootX, rootY] = [canvas_width / 2, canvas_hegiht / 2 + 50];
 const default_radius = 0.1; // in micro
 const default_tid = 0;
 const default_length = 10; //in micro
-const default_neuron_rad = 5; // in micro
+export const default_neuron_rad = 5; // in micro
 export const default_alpha = Math.PI * 0.1;
 
+export const root_id = 1;
 const none_selected = -1;
-const root_id = 1;
-const init_render_lines: ILine[] = [];
 
-const Design = () => {
-	const [renderLines, setRenderLines] = React.useState(init_render_lines);
+// TODO add typing somehow - use ISwcFileRead interface
+const Design = (props: any) => {
+	const init_lines = props.history.location.state.lines ?? [];
+	const init_neuron_rad = props.history.location.state.neuronRadius ?? default_neuron_rad;
+
+	const [renderLines, setRenderLines] = React.useState(init_lines as ILine[]);
+	const [neuronRad, setNeuronRad] = React.useState(init_neuron_rad as number);
 	const [selectedId, setSelectedId] = React.useState(root_id);
-	const [neuronRad, setNeuronRad] = React.useState(default_neuron_rad);
 
 	const checkDeselect = (e: any) => {
 		const clickedOnEmpty = e.target === e.target.getStage();
@@ -198,32 +201,12 @@ const Design = () => {
 		setRenderLines(lines);
 	}
 
-	const downloadFile = () => {
-		// TODO remove redundant element created
-		const element = document.createElement("a");
-		const file = new Blob(exportFile(renderLines, neuronRad) ,{type: 'text/plain;charset=utf-8'});
-		element.href = URL.createObjectURL(file);
-		element.download = "swcTree.swc";
-		document.body.appendChild(element);
-		element.click();
-	}
-
 	// TODO - new line - make sure alpha is spare
 	// TODO at export / finish -> fix spaces in ID's due to deletes - recur fix
 	return (
 	<div className="Design">
 		<div className="TopPanel">
-			<Button className="NoCapsButton" color="primary" variant="contained" onClick={() => downloadFile()}
-					style={{marginLeft: '24px'}}>
-				Export
-			</Button>
-			<big style={{color: 'black', display: 'block', fontSize: '26px'}}>
-				RBM - Create your Neuron
-			</big>
-			<Button className="NoCapsButton" color="primary" variant="contained" onClick={() => null}
-					style={{marginRight: '24px'}}>
-				Start Simulate
-			</Button>
+			<TopPanel lines={renderLines} neuronRad={neuronRad}/>
 		</div>
 		<div className="MainPanel">
 			<div className="Canvas">
