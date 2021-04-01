@@ -176,8 +176,10 @@ const Design = (props: any) => {
 		if (index === -1)
 			return;
 
+		const parentId = lines[index].pid;
 		deleteChildsRecur(lines, index);
 		setRenderLines(lines);
+		setSelectedId(parentId);
 	}
 
 	const setNextChildSelected = () => {
