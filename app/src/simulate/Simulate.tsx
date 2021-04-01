@@ -3,7 +3,7 @@ import { Engine } from '../engine/Engine';
 import Forms from './Forms';
 import Plot from './Plot';
 import './Simulate.css';
-import { Button } from '@material-ui/core';
+import { Button, Dialog, DialogTitle } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -63,6 +63,11 @@ function Simulate(props: any) {
       const [running, setRunning] = React.useState(initState.running);
       const [inputs, setInputs] = React.useState(initState.inputs);
 
+      // dialog - tooltip props
+      const [dialogState, setDialogState] = React.useState(false);
+      const [dialogTitle, setDialogTitle] = React.useState('');
+
+
       const toggleRunning = () => {
             // TODO: validate all inputs exist here OR input should not be empty..
             setRunning(!running);
@@ -76,7 +81,12 @@ function Simulate(props: any) {
             setError(false);
       };
 
-      // works - state is updated. not sure its efficent.
+      const updateDialog = (idx: number) => {
+            const tooltip = inputs[idx].tooltip;
+            setDialogTitle(tooltip);
+            setDialogState(true);
+      }
+
       const updateInput = (idx: number, val: number) => {
             const updateInputs = [...inputs];
             updateInputs[idx].value = val;
@@ -103,6 +113,10 @@ function Simulate(props: any) {
 
 	return (
       <div className="Simulate">
+            <Dialog onClose={() => setDialogState(false)} open={dialogState}>
+                  <DialogTitle > {dialogTitle} </DialogTitle>
+            </Dialog>
+
             <Snackbar open={error} autoHideDuration={6000} onClose={closeError}>
                   <Alert variant="outlined" severity="error" onClose={closeError}>
                         This is an error alert — check it out!
@@ -111,13 +125,13 @@ function Simulate(props: any) {
 
             <div className="Container">
                   <div className="LeftSide">
-                  <div className="ControlPanel">
+                  <div className="SimulatePanel">
                         {!running ?
-			      <Button variant="outlined" color="primary" onClick={() => toggleRunning()} startIcon={<PlayArrowIcon />}>Start</Button> :
+                        <Button variant="outlined" color="primary" onClick={() => toggleRunning()} startIcon={<PlayArrowIcon />}>Start</Button> :
                         <Button variant="outlined" color="primary" onClick={() => toggleRunning()} startIcon={<StopIcon />}>Stop</Button>
                         }
-		      </div>
-                        <Forms inputs={inputs} updateInput={updateInput}/>
+                  </div>
+                        <Forms inputs={inputs} updateInput={updateInput} openTooltip={updateDialog}/>
                   </div>
                   <div className="RightSide">
                         <div className="Plot">
@@ -125,8 +139,8 @@ function Simulate(props: any) {
                         </div>
                         <div className="Graph" id={"Canvas"}>
                               <DesignCanvas lines={renderLines} neuronRad={neuronRad}
-							  selectedId={root_id}
-							  setSelectedId={() => null}/>
+                                          selectedId={root_id}
+                                          setSelectedId={() => null}/>
                         </div>
                   </div>
             </div>
