@@ -5,6 +5,7 @@
     height: 100vh;
     flex-direction: column;
     margin: 0 auto;
+    overflow: hidden;
 }
 
 .TopPanel {
