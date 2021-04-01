@@ -39,16 +39,18 @@ export interface IDesignCanvasProps {
 function DesignCanvas({lines, neuronRad, checkDeselect, selectedId, setSelectedId}: IDesignCanvasProps) {
     const [stage, setStage] = React.useState(initialStage);
 
-    // TODO: FIX Stage Size in case screen is getting bigger/ smaller
+    // BUG HERE!
+    // TODO: FIX Stage Size in case screen is getting bigger/ smaller -> speically in simulation page
 	const widSize = window.document.getElementById("Canvas")?.offsetWidth;
 	useEffect(() => {
 		if (widSize) {
 			console.log('main render');
 			setStage(getStage());
-			// BUG HERE! also fix the usage of rootX in designer - addNew()
+            // basically need to update children recur like below, react call backs :(
 			// getRootChildren().forEach(c => {
 			// 	updateChildsRecur(c);
 			// });
+            // also need to fix the usage of rootX in designer - in addNew()
 		}
   }, [widSize]);
 	return (
