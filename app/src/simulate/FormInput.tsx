@@ -13,7 +13,7 @@ export interface IFormsInputProps {
 function FormInput(props: IFormsInputProps) {
 	return (
         <>
-			<div style={{display: 'flex', flexDirection: 'row', border: '1px solid #efefef'}}>
+			<div style={{display: 'flex', flexDirection: 'row'}}>
 				<Button variant="outlined" color="primary"
 						onClick={() => props.openTooltip(props.idx)} startIcon={<InfoIcon />}>
 				</Button>

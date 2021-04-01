@@ -19,29 +19,89 @@ export interface IData {
 export interface IFormInput {
       name: string;
       value: number;
-      tooltip: string;
+      tooltipTitle: string;
+      group?: number;
+      // TODO: add tooltip explained / forumla / image
 }
 
-export interface ISimulationState {
-      running: boolean;
-      inputs: IFormInput[]
-}
+const initInputs: IFormInput[] = [
+{
+      name: 'p1',
+      value: 0.5,
+      tooltipTitle: 'p1 explained',
+      group: 1,
+},
+{
+      name: 'p2',
+      value: 1.5,
+      tooltipTitle: 'p2 explained',
+      group: 1,
+},
+{
+      name: 'long param name [Kg]',
+      value: 1.5,
+      tooltipTitle: 'long param namelong param namelong param namelong param namelong param namelong param namelong param namelong param namelong param namelong param name',
+},
+{
+      name: 'p9',
+      value: 0.5,
+      tooltipTitle: 'p9 explained',
+      group:1,
+},
+{
+      name: 'p8',
+      value: 1.5,
+      tooltipTitle: 'p8 explained',
+      group:1,
+},
+{
+      name: 'p1',
+      value: 0.5,
+      tooltipTitle: 'p1 explained',
+},
+{
+      name: 'p2',
+      value: 1.5,
+      tooltipTitle: 'p2 explained',
+},
+{
+      name: 'long param name [Kg]',
+      value: 1.5,
+      tooltipTitle: 'long param namelong param namelong param namelong param namelong param namelong param namelong param namelong param namelong param namelong param name',
+},
+{
+      name: 'p9',
+      value: 0.5,
+      tooltipTitle: 'p9 explained',
+},
+{
+      name: 'p8',
+      value: 1.5,
+      tooltipTitle: 'p8 explained',
+},
+{
+      name: 'p2',
+      value: 1.5,
+      tooltipTitle: 'p2 explained',
+},
+{
+      name: 'long param name [Kg]',
+      value: 1.5,
+      tooltipTitle: 'long param namelong param namelong param namelong param namelong param namelong param namelong param namelong param namelong param namelong param name',
+},
+{
+      name: 'p9',
+      value: 0.5,
+      tooltipTitle: 'p9 explained',
+},
+{
+      name: 'p8',
+      value: 1.5,
+      tooltipTitle: 'p8 explained',
+},
 
-const initState: ISimulationState = {
-      running: false,
-      inputs: [
-            {
-                  name: 'p1',
-                  value: 0.5,
-                  tooltip: 'p1 explained',
-            },
-            {
-                  name: 'p2',
-                  value: 1.5,
-                  tooltip: 'p2 explained',
-            }
-      ]
-}
+]
+
 
 // TODO:
 // a. update engine params on the run in a more convient way - using keys maybe?
@@ -60,8 +120,8 @@ function Simulate(props: any) {
       // simulate props
       const [data, setData] = React.useState([[0, 0]])
       const [error, setError] = React.useState(false);
-      const [running, setRunning] = React.useState(initState.running);
-      const [inputs, setInputs] = React.useState(initState.inputs);
+      const [running, setRunning] = React.useState(false);
+      const [inputs, setInputs] = React.useState(initInputs);
 
       // dialog - tooltip props
       const [dialogState, setDialogState] = React.useState(false);
@@ -82,8 +142,8 @@ function Simulate(props: any) {
       };
 
       const updateDialog = (idx: number) => {
-            const tooltip = inputs[idx].tooltip;
-            setDialogTitle(tooltip);
+            const title = inputs[idx].tooltipTitle;
+            setDialogTitle(title);
             setDialogState(true);
       }
 
@@ -123,7 +183,7 @@ function Simulate(props: any) {
                   </Alert>
             </Snackbar>
 
-            <div className="Container">
+            <div className="SimulateContainer">
                   <div className="LeftSide">
                   <div className="SimulatePanel">
                         {!running ?

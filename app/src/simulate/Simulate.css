@@ -7,15 +7,15 @@
     align-items: center;
     flex-direction: column;
 	align-content: space-between;
+    overflow: hidden;
 }
 
-.Container {
+.SimulateContainer {
     width: 90vw;
     height: 90vh;
     box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.1);
     margin: 0 auto;
     display: flex;
-    background: url('http://www.ansonika.com/magnifica/img/pattern_1.png');
 }
 
 .LeftSide {
@@ -34,7 +34,6 @@
     min-width: 50%;
     height: 100%;
     text-align: left;
-    padding: 12px;
     border-left: 1px solid #efefef;
     position: relative;
 }
@@ -45,6 +44,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    border-bottom: 1px solid #efefef;
 }
 
 .Graph {
@@ -61,4 +61,6 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    border-bottom: 1px solid #efefef;
+
 }
