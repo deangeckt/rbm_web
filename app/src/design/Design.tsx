@@ -84,14 +84,12 @@ const Design = (props: any) => {
 	}
 
 	const getSelectedRadius = () => {
-		const lines = [...renderLines];
-		const selectedLine = lines.find((line) => line.id === selectedId);
+		const selectedLine = renderLines.find((line) => line.id === selectedId);
 		return selectedLine ? selectedLine.radius : default_radius;
 	}
 
 	const getSelectedType = () => {
-		const lines = [...renderLines];
-		const selectedLine = lines.find((line) => line.id === selectedId);
+		const selectedLine = renderLines.find((line) => line.id === selectedId);
 		return selectedLine ? selectedLine.tid : default_tid;
 	}
 
@@ -117,15 +115,13 @@ const Design = (props: any) => {
 	}
 
 	const getSelectedAlpha = () => {
-		const lines = [...renderLines];
-		const selectedLine = lines.find((line) => line.id === selectedId);
+		const selectedLine = renderLines.find((line) => line.id === selectedId);
 		const alpha = selectedLine ? selectedLine.alpha : default_alpha;
 		return (alpha / Math.PI);
 	}
 
 	const getSelectedLength = () => {
-		const lines = [...renderLines];
-		const selectedLine = lines.find((line) => line.id === selectedId);
+		const selectedLine = renderLines.find((line) => line.id === selectedId);
 		return selectedLine ? pointToLength(selectedLine.length) : default_length;
 	}
 
