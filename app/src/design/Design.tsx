@@ -4,6 +4,7 @@ import { lengthToPoint, pointToLength } from '../Utils/SwcUtils';
 import TopPanel from './TopPanel';
 import DesignCanvas, { initialStage } from './DesignCanvas';
 import './Design.css';
+import Navigation from './Navigation';
 
 export interface ILine {
 	id: number;
@@ -183,8 +184,62 @@ const Design = (props: any) => {
 		setRenderLines(lines);
 	}
 
+	const setNextChildSelected = () => {
+		if (selectedId === none_selected)
+			return;
+
+		let childs: ILine[];
+		if (selectedId === root_id) {
+			childs = getChildren(root_id)
+		} else {
+			const selectedLine = renderLines.find((line) => line.id === selectedId);
+			childs = getChildren(selectedLine!.id);
+		}
+
+		if (childs.length === 0)
+			return;
+
+		setSelectedId(childs[0].id);
+	}
+
+	const setBackChildSelected = () => {
+		if (selectedId === none_selected || selectedId === root_id)
+			return;
+
+		const selectedLine = renderLines.find((line) => line.id === selectedId);
+		setSelectedId(selectedLine!.pid);
+	}
+
+	const setBrotherChildSelected = () => {
+		if (selectedId === none_selected || selectedId === root_id)
+			return;
+
+		const selectedLine = renderLines.find((line) => line.id === selectedId);
+		const childs = getChildren(selectedLine!.pid);
+
+		if (childs.length === 1)
+			return;
+
+		const nextIdx = childs.findIndex((l) => l.id === selectedLine!.id) + 1;
+		const nextId = childs[nextIdx % childs.length].id;
+
+		setSelectedId(nextId);
+	}
+
+	// TODO: Need react use effect? buggy when clicking alot, check console...
+	// if keeping it add tool tip to nav buttons
+	window.addEventListener('keydown', (e) => {
+		if (e.key === '1') {
+			setNextChildSelected();
+		} else if (e.key === '2' ) {
+			setBackChildSelected();
+		} else if (e.key === '3') {
+			setBrotherChildSelected();
+		}
+	});
+
 	return (
-	<div className="Design">
+	<div className="Design" >
 		<div className="TopPanel">
 			<TopPanel lines={renderLines} neuronRad={neuronRad}/>
 		</div>
@@ -203,6 +258,11 @@ const Design = (props: any) => {
 								neuronSelected={selectedId === root_id}
 								lineSelected={selectedId !== none_selected && selectedId !== root_id}
 				/>
+				{selectedId !== none_selected ? (
+					<Navigation setNext={setNextChildSelected}
+								setBack={setBackChildSelected}
+								setBrother={setBrotherChildSelected}/>
+				): null }
 			</div>
 		</div>
 	</div>
