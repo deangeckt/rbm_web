@@ -7,7 +7,7 @@ import './Design.css';
 
 export interface ILine {
 	id: number;
-	tid: number; // enum for user
+	tid: number;
 	points: number[]; // [x1,y1, x2,y2]
 	radius: number
 	pid: number;
@@ -39,25 +39,17 @@ const Design = (props: any) => {
 		}
 	};
 
-	const getLineChildren = (selectedLine: ILine) => {
+	const getChildren = (lid: number) => {
 		const lines = [...renderLines];
-		return lines.filter((line) => line.pid === selectedLine.id);
+		return lines.filter((line) => line.pid === lid);
 	}
 
-	const getRootChildren = () => {
-		const lines = [...renderLines];
-		return lines.filter((line) => line.pid === root_id);
-	}
-
-	const addNewPoints = (prevX: number, prevY: number, childrenCound: number) => {
-		let newPoints: number[] = [];
-		newPoints.push(prevX);
-		newPoints.push(prevY);
-
-		const newAngle = (childrenCound + 1) * default_alpha;
+	const addNewPoints = (prevX: number, prevY: number, childs: ILine[]) => {
+		const alphas = childs.map((c) => c.alpha);
+		const max_alpha = alphas.length > 0 ? Math.max.apply(Math, alphas) : 0;
+		const newAngle = max_alpha + default_alpha;
 		const [newX, newY] = lengthAlphaToXy(lengthToPoint(default_length), newAngle, prevX, prevY);
-		newPoints.push(newX);
-		newPoints.push(newY);
+		const newPoints = [prevX, prevY, newX, newY];
 		return {newPoints, newAngle};
 	}
 
@@ -69,17 +61,17 @@ const Design = (props: any) => {
 		let newPoints: number[] = [];
 		let newAlpha: number;
 
-		if (!selectedLine) {
-			const rootChilds = getRootChildren().length;
+		if (!selectedLine) { //new line at root
+			const rootChilds = getChildren(root_id);
 			const r = addNewPoints(initialStage.rootX, initialStage.rootY, rootChilds);
 			newPoints = r.newPoints;
 			newAlpha = r.newAngle;
 			newPid = root_id;
-			newId = rootChilds === 0 ? root_id + 1 :lines[lines.length - 1].id + 1;
+			newId = rootChilds.length === 0 ? root_id + 1 :lines[lines.length - 1].id + 1;
 		} else {
 			const prevX = selectedLine.points[2];
 			const prevY = selectedLine.points[3];
-			const r = addNewPoints(prevX, prevY, getLineChildren(selectedLine).length);
+			const r = addNewPoints(prevX, prevY, getChildren(selectedLine.id));
 			newPoints = r.newPoints;
 			newAlpha = r.newAngle;
 			newId = lines[lines.length - 1].id + 1;
@@ -137,7 +129,7 @@ const Design = (props: any) => {
 	}
 
 	const updateChildsRecur = (father: ILine): void => {
-		const childs = getLineChildren(father);
+		const childs = getChildren(father.id);
 		childs.forEach(child => {
 			child.points[0] = father.points[2];
 			child.points[1] = father.points[3];
@@ -148,7 +140,6 @@ const Design = (props: any) => {
 
 	const deleteChildsRecur = (lines: ILine[], fatherIdx: number): void => {
 		const childs = lines.filter((line) => line.pid === lines[fatherIdx].id); //use map to return idx?
-		console.log('childs', childs);
 		childs.forEach(child => {
 			const childIdx = lines.findIndex((line) => line.id === child.id);
 			deleteChildsRecur(lines, childIdx);
@@ -192,8 +183,6 @@ const Design = (props: any) => {
 		setRenderLines(lines);
 	}
 
-	// TODO: - new line - make sure alpha is spare
-	// TODO: at export / finish -> fix spaces in ID's due to deletes - recur fix
 	return (
 	<div className="Design">
 		<div className="TopPanel">

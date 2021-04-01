@@ -24,20 +24,28 @@ export interface IControlPanelProps {
 
 export const types = [
 	{
-	  value: 0,
-	  label: 'undefined',
+		value: 0,
+		label: 'undefined',
 	},
 	{
-	  value: 2,
-	  label: 'axon',
+		value: 1,
+		label: 'soma',
 	},
 	{
-	  value: 3,
-	  label: 'basal dendrite',
+		value: 2,
+		label: 'axon',
 	},
 	{
-	  value: 4,
-	  label: 'apical dendrite',
+		value: 3,
+		label: 'basal dendrite',
+	},
+	{
+		value: 4,
+		label: 'apical dendrite',
+	},
+	{
+		value: 5,
+		label: 'custom',
 	},
 ];
 
