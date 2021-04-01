@@ -29,7 +29,7 @@ export function sizeToNeuronRad(s: number) {
 
 export function exportFile(lines: ILine[], neuronRadius = 1.0): BlobPart[] {
     let res = '# SWC tree generated using RBM software\n';
-    res = res.concat(`1 1 0.0 0.0 0.0 ${neuronRadius.toFixed(2)} -1\n`);
+    res = res.concat(`1 1 0.0 0.0 0.0 ${neuronRadius} -1\n`);
     lines.forEach(line => {
         const x = pointToLength(line.points[2] - initialStage.rootX).toFixed(2);
         const y = pointToLength(initialStage.rootY - line.points[3]).toFixed(2);
