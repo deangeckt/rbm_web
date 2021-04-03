@@ -18,7 +18,6 @@ export interface IStageSize {
 	rootY: number;
 }
 
-
 export interface IAppState {
     stage: IStageSize,
     lines: ILine[],
@@ -26,14 +25,15 @@ export interface IAppState {
 }
 
 export const getStage = (): IStageSize => {
-	const canvas_part_size = 0.7; //this is the css value of the partial width
+    //TODO: this is the css value of the partial width in design.tsx component, not simulation.tsx
+	const canvas_part_size = 0.7;
 	const canvas_hegiht = window.document.getElementById("Canvas")?.offsetHeight ?? window.innerHeight;
 	const canvas_width = window.document.getElementById("Canvas")?.offsetWidth ?? window.innerWidth * canvas_part_size;
 	return {
 		width: canvas_width,
 		height: canvas_hegiht,
 		rootX: canvas_width / 2,
-		rootY: canvas_hegiht / 2 + 50
+		rootY: canvas_hegiht / 2
 	}
 }
 

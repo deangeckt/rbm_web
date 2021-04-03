@@ -17,6 +17,7 @@ export interface IDesignCanvasProps {
 function DesignCanvas({checkDeselect, selectedId, setSelectedId}: IDesignCanvasProps) {
 	const {state, setState} = useContext(AppContext);
     const {updateChildsRecur, updateLinePoint} = useDesignCanvas();
+    //TODO: handle zoom and catch this event and render right after
 	const widSize = window.document.getElementById("Canvas")?.offsetWidth;
 
 	useEffect(() => {
@@ -34,6 +35,7 @@ function DesignCanvas({checkDeselect, selectedId, setSelectedId}: IDesignCanvasP
             setState({...state, lines: lines, stage: newStage});
 		}
   }, [setState, state, state.lines, updateChildsRecur, updateLinePoint, widSize]);
+
 	return (
 	<>
         <Stage width={state.stage.width} height={state.stage.height} draggable
