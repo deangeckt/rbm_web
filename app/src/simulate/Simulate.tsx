@@ -10,7 +10,6 @@ import StopIcon from '@material-ui/icons/Stop';
 import { default_neuron_rad, ILine, root_id } from '../design/Design';
 import DesignCanvas from '../design/DesignCanvas';
 import { run } from '../api/api';
-import axios, { AxiosResponse, AxiosError } from 'axios';
 
 export interface IData {
       data: number[][];
@@ -129,30 +128,7 @@ function Simulate(props: any) {
             // TODO: validate all inputs exist here OR input should not be empty..
             setRunning(!running);
             if (!running) {
-				// const result = run();
-				axios.request({
-					url: 'http://localhost:8080/api/v1/run',
-					method: 'POST',
-					params: {bla: 'bla'}
-				}).then((response) => {
-					const t = response.data['time'] as number[];
-					const v = response.data['volt'] as number[];
-					const r = [];
-					for (var i = 0 ; i<t.length; i++)
-						r.push([ t[i], v[i]]);
-					setData(r);
-				});
-				// axios.post('http://localhost:8080/api/v1/run', {}, options)
-				// .then((response: AxiosResponse) => {
-				// 	const t = response.data['time'] as number[];
-				// 	const v = response.data['volt'] as number[];
-				// 	const r = [];
-				// 	for (var i = 0 ; i<t.length; i++)
-				// 		r.push([ t[i], v[i]]);
-				// 	setData(r);
-				// }).catch((_error: AxiosError) => {
-				// 	console.log('err');
-				// });
+				run(setData);
             } else {
 				setData(init_data.data);
 			}
