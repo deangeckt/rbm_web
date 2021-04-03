@@ -1,5 +1,4 @@
 import { root_id } from "../design/Design";
-import { initialStage } from "../design/DesignCanvas";
 import { IAppState, ILine } from "../Wrapper";
 
 export const lenPointRatio = 5;
@@ -23,19 +22,19 @@ export function sizeToNeuronRad(s: number) {
     return s / neuronRadiusRatio;
 }
 
-export function exportFile(lines: ILine[], neuronRadius = 1.0): BlobPart[] {
+export function exportFile(lines: ILine[], neuronRadius: number, rootX: number, rootY: number): BlobPart[] {
     let res = '# SWC tree generated using RBM software\n';
     res = res.concat(`1 1 0.0 0.0 0.0 ${neuronRadius} -1\n`);
     lines.forEach(line => {
-        const x = pointToLength(line.points[2] - initialStage.rootX).toFixed(2);
-        const y = pointToLength(initialStage.rootY - line.points[3]).toFixed(2);
+        const x = pointToLength(line.points[2] - rootX).toFixed(2);
+        const y = pointToLength(rootY - line.points[3]).toFixed(2);
         const lineStr = `${line.id} ${line.tid} ${x} ${y} 0.0 ${line.radius} ${line.pid}\n`;
         res = res.concat(lineStr);
     });
     return [res];
 }
 
-function textLineToILine(ilines: ILine[], line: string): ILine | {id: number, radius: number} {
+function textLineToILine(ilines: ILine[], line: string, rootX: number, rootY: number): ILine | {id: number, radius: number} {
     var fields = line.split(' ');
     if (fields.length !== swcAttr)
         throw new Error('SWC file bad format');
@@ -50,14 +49,14 @@ function textLineToILine(ilines: ILine[], line: string): ILine | {id: number, ra
     }
 
     let points: number[] = [];
-    const x1 = lengthToPoint(Number(fields[2])) + initialStage.rootX;
-    const y1 = initialStage.rootY - lengthToPoint(Number(fields[3]));
+    const x1 = lengthToPoint(Number(fields[2])) + rootX;
+    const y1 = rootY - lengthToPoint(Number(fields[3]));
     let x0: number;
     let y0: number;
 
     if (pid === root_id) {
-        x0 = initialStage.rootX;
-        y0 = initialStage.rootY;
+        x0 = rootX;
+        y0 = rootY;
     } else {
         const father = ilines.find((l) => l.id === pid);
         if (!father)
@@ -75,7 +74,7 @@ function textLineToILine(ilines: ILine[], line: string): ILine | {id: number, ra
             length: length, alpha: alpha }
 }
 
-export function importFile(text: string): IAppState {
+export function importFile(text: string, rootX: number, rootY: number): Partial<IAppState> {
     const ilines: ILine[] = [];
     let neuronRad: number = -1;
 
@@ -86,7 +85,7 @@ export function importFile(text: string): IAppState {
             continue;
         if (line === '')
             continue;
-        var iline = textLineToILine(ilines, line);
+        var iline = textLineToILine(ilines, line, rootX, rootY);
         if (iline.id === root_id) {
             neuronRad = iline.radius;
             continue;

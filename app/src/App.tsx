@@ -16,7 +16,7 @@ function App() {
 		reader.onload = async (e) => {
 			const text = e?.target?.result;
 			if (text) {
-				const r = importFile(text as string);
+				const r = importFile(text as string, state.stage.rootX, state.stage.rootY);
 				setState({...state, r});
 				history.push({pathname: '/design'});
 			}

@@ -2,16 +2,16 @@ import React, { useContext } from 'react';
 import ControlPanel from './ControlPanel';
 import { lengthToPoint, pointToLength } from '../Utils/SwcUtils';
 import TopPanel from './TopPanel';
-import DesignCanvas, { initialStage } from './DesignCanvas';
+import DesignCanvas from './DesignCanvas';
 import './Design.css';
 import Navigation from './Navigation';
 import { ILine } from '../Wrapper';
 import { AppContext } from '../Contexts/AppContext';
+import { useDesignCanvas } from './useDesignCanvas';
 
 const default_radius = 0.1; // in micro
 const default_tid = 0;
 const default_length = 10; //in micro
-export const default_neuron_rad = 5; // in micro
 export const default_alpha = Math.PI * 0.1;
 export const root_id = 1;
 const none_selected = -1;
@@ -19,6 +19,7 @@ const none_selected = -1;
 const Design = () => {
 	const {state, setState} = useContext(AppContext);
 	const [selectedId, setSelectedId] = React.useState(root_id);
+	const {getChildren, updateChildsRecur, updateLinePoint, lengthAlphaToXy} = useDesignCanvas();
 
 	const checkDeselect = (e: any) => {
 		const clickedOnEmpty = e.target === e.target.getStage();
@@ -26,11 +27,6 @@ const Design = () => {
 			setSelectedId(none_selected);
 		}
 	};
-
-	const getChildren = (lid: number) => {
-		const lines = state.lines;
-		return lines.filter((line) => line.pid === lid);
-	}
 
 	const addNewPoints = (prevX: number, prevY: number, childs: ILine[]) => {
 		const alphas = childs.map((c) => c.alpha);
@@ -49,9 +45,9 @@ const Design = () => {
 		let newPoints: number[] = [];
 		let newAlpha: number;
 
-		if (!selectedLine) { //new line at root
+		if (!selectedLine) {
 			const rootChilds = getChildren(root_id);
-			const r = addNewPoints(initialStage.rootX, initialStage.rootY, rootChilds);
+			const r = addNewPoints(state.stage.rootX, state.stage.rootY, rootChilds);
 			newPoints = r.newPoints;
 			newAlpha = r.newAngle;
 			newPid = root_id;
@@ -89,18 +85,6 @@ const Design = () => {
 		setState({...state, lines: lines});
 	}
 
-	const lengthAlphaToXy = (d: number, alpha: number, prevX: number, prevY: number) => {
-		return [prevX + d * Math.cos(alpha), (prevY - d * Math.sin(alpha))];
-	}
-
-	const updateLinePoint = (line: ILine) =>{
-		const prevX = line.points[0];
-		const prevY = line.points[1];
-		const [newX, newY] = lengthAlphaToXy(line.length, line.alpha, prevX, prevY);
-		line.points[2] = newX;
-		line.points[3] = newY;
-	}
-
 	const getSelectedAlpha = () => {
 		const selectedLine = state.lines.find((line) => line.id === selectedId);
 		const alpha = selectedLine ? selectedLine.alpha : default_alpha;
@@ -110,16 +94,6 @@ const Design = () => {
 	const getSelectedLength = () => {
 		const selectedLine = state.lines.find((line) => line.id === selectedId);
 		return selectedLine ? pointToLength(selectedLine.length) : default_length;
-	}
-
-	const updateChildsRecur = (father: ILine): void => {
-		const childs = getChildren(father.id);
-		childs.forEach(child => {
-			child.points[0] = father.points[2];
-			child.points[1] = father.points[3];
-			updateLinePoint(child);
-			updateChildsRecur(child);
-		});
 	}
 
 	const deleteChildsRecur = (lines: ILine[], fatherIdx: number): void => {
