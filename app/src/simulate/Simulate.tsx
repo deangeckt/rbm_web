@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Forms from './Forms';
 import Plot from './Plot';
 import './Simulate.css';
@@ -9,8 +9,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import StopIcon from '@material-ui/icons/Stop';
 import { default_neuron_rad, ILine, root_id } from '../design/Design';
 import DesignCanvas from '../design/DesignCanvas';
-import { run } from '../api/api';
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import { AppContext } from '../Contexts/AppContext'
+import axios, { AxiosResponse } from 'axios';
 
 export interface IData {
       data: number[][];
@@ -109,6 +109,8 @@ const initInputs: IFormInput[] = [
 ]
 
 function Simulate(props: any) {
+
+      const {state, setState} = useContext(AppContext);
       // canvas props
       const init_lines = props.history.location.state.lines ?? [];
 	const init_neuron_rad = props.history.location.state.neuronRadius ?? default_neuron_rad;
@@ -125,23 +127,27 @@ function Simulate(props: any) {
       const [dialogState, setDialogState] = React.useState(false);
       const [dialogTitle, setDialogTitle] = React.useState('');
 
+      const postRequest = () => {
+            axios.request({
+                  url: 'http://localhost:8080/api/v1/run',
+                  method: 'POST',
+                  params: {bla: 'bla'}
+            }).then((response: AxiosResponse) => {
+                  const t = response.data['time'] as number[];
+                  const v = response.data['volt'] as number[];
+                  const r = [];
+                  for (var i = 0 ; i<t.length; i++)
+                        r.push([ t[i], v[i]]);
+                  setData(r);
+            });
+      }
+
       const toggleRunning = () => {
             // TODO: validate all inputs exist here OR input should not be empty..
             setRunning(!running);
             if (!running) {
 				// const result = run();
-				axios.request({
-					url: 'http://localhost:8080/api/v1/run',
-					method: 'POST',
-					params: {bla: 'bla'}
-				}).then((response) => {
-					const t = response.data['time'] as number[];
-					const v = response.data['volt'] as number[];
-					const r = [];
-					for (var i = 0 ; i<t.length; i++)
-						r.push([ t[i], v[i]]);
-					setData(r);
-				});
+				postRequest();
 				// axios.post('http://localhost:8080/api/v1/run', {}, options)
 				// .then((response: AxiosResponse) => {
 				// 	const t = response.data['time'] as number[];
@@ -155,6 +161,7 @@ function Simulate(props: any) {
 				// });
             } else {
 				setData(init_data.data);
+                        setState({...state, data: {}})
 			}
       }
 
@@ -180,6 +187,10 @@ function Simulate(props: any) {
 
 	return (
       <div className="Simulate">
+            <h1 onClick={()=>setState({
+                  ...state,
+                  fname: 'Moshe'
+            })}>{state.fname}</h1>
             <Dialog onClose={() => setDialogState(false)} open={dialogState}>
                   <DialogTitle > {dialogTitle} </DialogTitle>
             </Dialog>
