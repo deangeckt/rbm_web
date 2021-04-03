@@ -26,11 +26,9 @@ const Wrapper = (props: any) => {
 	const [state, setState] = useState<IAppState>(init_app_state);
 
     return (
-        <>
             <AppContext.Provider value={{state, setState}}>
                 {props.children}
             </AppContext.Provider>
-        </>
     )
 }
 
