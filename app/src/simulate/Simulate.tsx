@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
-import { Engine } from '../engine/Engine';
+import React from 'react';
 import Forms from './Forms';
 import Plot from './Plot';
 import './Simulate.css';
@@ -10,10 +9,17 @@ import Snackbar from '@material-ui/core/Snackbar';
 import StopIcon from '@material-ui/icons/Stop';
 import { default_neuron_rad, ILine, root_id } from '../design/Design';
 import DesignCanvas from '../design/DesignCanvas';
+import { run } from '../api/api';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 
 export interface IData {
       data: number[][];
       name: string;
+}
+
+const init_data: IData = {
+	data: [],
+	name: 'Soma'
 }
 
 export interface IFormInput {
@@ -102,14 +108,6 @@ const initInputs: IFormInput[] = [
 
 ]
 
-
-// TODO:
-// a. update engine params on the run in a more convient way - using keys maybe?
-// b. maybe init the state here with engine state - no need to hold the init config twice.
-// c. don't await engine to finish run() -
-//    rather render the data that is already ready.
-// d. support multiple data[][] arrays / plots retrived from engine
-
 function Simulate(props: any) {
       // canvas props
       const init_lines = props.history.location.state.lines ?? [];
@@ -118,7 +116,7 @@ function Simulate(props: any) {
 	const [neuronRad] = React.useState(init_neuron_rad as number);
 
       // simulate props
-      const [data, setData] = React.useState([[0, 0]])
+      const [data, setData] = React.useState(init_data.data);
       const [error, setError] = React.useState(false);
       const [running, setRunning] = React.useState(false);
       const [inputs, setInputs] = React.useState(initInputs);
@@ -127,11 +125,37 @@ function Simulate(props: any) {
       const [dialogState, setDialogState] = React.useState(false);
       const [dialogTitle, setDialogTitle] = React.useState('');
 
-
       const toggleRunning = () => {
             // TODO: validate all inputs exist here OR input should not be empty..
             setRunning(!running);
-            // TODO: stop engine + stop plot
+            if (!running) {
+				// const result = run();
+				axios.request({
+					url: 'http://localhost:8080/api/v1/run',
+					method: 'POST',
+					params: {bla: 'bla'}
+				}).then((response) => {
+					const t = response.data['time'] as number[];
+					const v = response.data['volt'] as number[];
+					const r = [];
+					for (var i = 0 ; i<t.length; i++)
+						r.push([ t[i], v[i]]);
+					setData(r);
+				});
+				// axios.post('http://localhost:8080/api/v1/run', {}, options)
+				// .then((response: AxiosResponse) => {
+				// 	const t = response.data['time'] as number[];
+				// 	const v = response.data['volt'] as number[];
+				// 	const r = [];
+				// 	for (var i = 0 ; i<t.length; i++)
+				// 		r.push([ t[i], v[i]]);
+				// 	setData(r);
+				// }).catch((_error: AxiosError) => {
+				// 	console.log('err');
+				// });
+            } else {
+				setData(init_data.data);
+			}
       }
 
       const closeError = (_event?: React.SyntheticEvent, reason?: string) => {
@@ -152,23 +176,6 @@ function Simulate(props: any) {
             updateInputs[idx].value = val;
             setInputs(updateInputs);
       }
-
-      const runEngine = useCallback(
-            async () => {
-                  const engine = new Engine();
-                  engine.param1 = inputs[0].value;
-                  console.log('running engine');
-                  setData(await engine.run());
-            },
-            [inputs],
-      );
-
-      useEffect(() => {
-            if (running) {
-                  runEngine()
-            }
-
-      }, [runEngine, running]);
 
 
 	return (
