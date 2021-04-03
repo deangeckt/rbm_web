@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
-import { ILine, root_id } from './Design';
+import React, { useContext, useEffect } from 'react';
+import { root_id } from './Design';
 import { neuronRadToSize } from '../Utils/SwcUtils';
 import { Stage, Layer, Circle } from 'react-konva';
 import TransformerLine from './TransformerLine';
 import { colors } from '../colors';
+import { AppContext } from '../Contexts/AppContext';
 
 
 export interface IStageSize {
@@ -14,7 +15,7 @@ export interface IStageSize {
 }
 
 export const getStage = (): IStageSize => {
-	const canvas_part_size = 0.7;
+	const canvas_part_size = 0.7; //this is the css value of the partial width
 	const canvas_hegiht = window.document.getElementById("Canvas")?.offsetHeight ?? window.innerHeight;
 	const canvas_width = window.document.getElementById("Canvas")?.offsetWidth ?? window.innerWidth * canvas_part_size;
 	return {
@@ -28,16 +29,15 @@ export const getStage = (): IStageSize => {
 export const initialStage: IStageSize = getStage();
 
 export interface IDesignCanvasProps {
-	lines: ILine[];
-	neuronRad: number;
     // edit mode
     checkDeselect?: (e: any) => void;
     selectedId: number;
     setSelectedId: Function;
 }
 
-function DesignCanvas({lines, neuronRad, checkDeselect, selectedId, setSelectedId}: IDesignCanvasProps) {
+function DesignCanvas({checkDeselect, selectedId, setSelectedId}: IDesignCanvasProps) {
     const [stage, setStage] = React.useState(initialStage);
+	const {state} = useContext(AppContext);
 
     // BUG HERE!
     // TODO: FIX Stage Size in case screen is getting bigger/ smaller -> speically in simulation page
@@ -59,7 +59,7 @@ function DesignCanvas({lines, neuronRad, checkDeselect, selectedId, setSelectedI
             onMouseDown={checkDeselect} onTouchStart={checkDeselect}>
             <Layer>
                 <Circle
-                    radius={neuronRadToSize(neuronRad)}
+                    radius={neuronRadToSize(state.neuronRadius)}
                     fill={colors.primary}
                     opacity={selectedId === root_id ? 0.8 : 0.3}
                     x={stage.rootX}
@@ -67,7 +67,7 @@ function DesignCanvas({lines, neuronRad, checkDeselect, selectedId, setSelectedI
                     draggable={false}
                     onClick={() => setSelectedId(root_id)}
                 />
-                {lines.map((l) => (
+                {state.lines.map((l) => (
                     <TransformerLine
                         key={l.id}
                         shapeProps={l}

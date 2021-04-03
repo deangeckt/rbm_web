@@ -1,36 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ControlPanel from './ControlPanel';
 import { lengthToPoint, pointToLength } from '../Utils/SwcUtils';
 import TopPanel from './TopPanel';
 import DesignCanvas, { initialStage } from './DesignCanvas';
 import './Design.css';
 import Navigation from './Navigation';
-
-export interface ILine {
-	id: number;
-	tid: number;
-	points: number[]; // [x1,y1, x2,y2]
-	radius: number
-	pid: number;
-	length: number;
-	alpha: number;
-}
+import { ILine } from '../Wrapper';
+import { AppContext } from '../Contexts/AppContext';
 
 const default_radius = 0.1; // in micro
 const default_tid = 0;
 const default_length = 10; //in micro
 export const default_neuron_rad = 5; // in micro
 export const default_alpha = Math.PI * 0.1;
-
 export const root_id = 1;
 const none_selected = -1;
 
-// TODO: add typing somehow - use ISwcFileRead interface
-const Design = (props: any) => {
-	const init_lines = props.history.location.state.lines ?? [];
-	const init_neuron_rad = props.history.location.state.neuronRadius ?? default_neuron_rad;
-	const [renderLines, setRenderLines] = React.useState(init_lines as ILine[]);
-	const [neuronRad, setNeuronRad] = React.useState(init_neuron_rad as number);
+const Design = () => {
+	const {state, setState} = useContext(AppContext);
 	const [selectedId, setSelectedId] = React.useState(root_id);
 
 	const checkDeselect = (e: any) => {
@@ -41,7 +28,7 @@ const Design = (props: any) => {
 	};
 
 	const getChildren = (lid: number) => {
-		const lines = [...renderLines];
+		const lines = state.lines;
 		return lines.filter((line) => line.pid === lid);
 	}
 
@@ -55,7 +42,7 @@ const Design = (props: any) => {
 	}
 
 	const addNew = () => {
-		const lines = [...renderLines];
+		const lines = [...state.lines];
 		const selectedLine = lines.find((line) => line.id === selectedId);
 		let newId: number;
 		let newPid: number;
@@ -79,27 +66,27 @@ const Design = (props: any) => {
 			newPid = selectedLine.id;
 		}
 		lines.push({id: newId, points: newPoints, pid: newPid, radius: default_radius, tid: default_tid, length: lengthToPoint(default_length), alpha: newAlpha});
-		setRenderLines(lines);
+		setState({...state, lines: lines});
 		setSelectedId(newId);
 	}
 
 	const getSelectedRadius = () => {
-		const selectedLine = renderLines.find((line) => line.id === selectedId);
+		const selectedLine = state.lines.find((line) => line.id === selectedId);
 		return selectedLine ? selectedLine.radius : default_radius;
 	}
 
 	const getSelectedType = () => {
-		const selectedLine = renderLines.find((line) => line.id === selectedId);
+		const selectedLine = state.lines.find((line) => line.id === selectedId);
 		return selectedLine ? selectedLine.tid : default_tid;
 	}
 
 	const updateSimpleField = (field: "tid" | "radius", value: number) => {
 		if (field === 'radius' && value <= 0)
 			return;
-		const lines = [...renderLines];
+		const lines = [...state.lines];
 		const selectedLine = lines.find((line) => line.id === selectedId);
 		(selectedLine as any)[field] = value;
-		setRenderLines(lines);
+		setState({...state, lines: lines});
 	}
 
 	const lengthAlphaToXy = (d: number, alpha: number, prevX: number, prevY: number) => {
@@ -115,13 +102,13 @@ const Design = (props: any) => {
 	}
 
 	const getSelectedAlpha = () => {
-		const selectedLine = renderLines.find((line) => line.id === selectedId);
+		const selectedLine = state.lines.find((line) => line.id === selectedId);
 		const alpha = selectedLine ? selectedLine.alpha : default_alpha;
 		return (alpha / Math.PI);
 	}
 
 	const getSelectedLength = () => {
-		const selectedLine = renderLines.find((line) => line.id === selectedId);
+		const selectedLine = state.lines.find((line) => line.id === selectedId);
 		return selectedLine ? pointToLength(selectedLine.length) : default_length;
 	}
 
@@ -145,7 +132,7 @@ const Design = (props: any) => {
 	}
 
 	const updateAlpha = (value: number) => {
-		const lines = [...renderLines];
+		const lines = [...state.lines];
 		const selectedLine = lines.find((line) => line.id === selectedId);
 		if (!selectedLine)
 			return;
@@ -153,32 +140,32 @@ const Design = (props: any) => {
 		selectedLine.alpha = value * Math.PI;
 		updateLinePoint(selectedLine);
 		updateChildsRecur(selectedLine);
-		setRenderLines(lines);
+		setState({...state, lines: lines});
 	}
 
 	const updateLength = (value: number) => {
 		if (value <= 0)
 			return;
-		const lines = [...renderLines];
-		const selectedLine = lines.find((line) => line.id === selectedId);
+		const lines = [...state.lines];
+		const selectedLine = state.lines.find((line) => line.id === selectedId);
 		if (!selectedLine)
 			return;
 
 		selectedLine.length = lengthToPoint(value);
 		updateLinePoint(selectedLine);
 		updateChildsRecur(selectedLine);
-		setRenderLines(lines);
+		setState({...state, lines: lines});
 	}
 
 	const Delete = () => {
-		const lines = [...renderLines];
+		const lines = [...state.lines];
 		const index = lines.findIndex((line) => line.id === selectedId);
 		if (index === -1)
 			return;
 
 		const parentId = lines[index].pid;
 		deleteChildsRecur(lines, index);
-		setRenderLines(lines);
+		setState({...state, lines: lines});
 		setSelectedId(parentId);
 	}
 
@@ -190,7 +177,7 @@ const Design = (props: any) => {
 		if (selectedId === root_id) {
 			childs = getChildren(root_id)
 		} else {
-			const selectedLine = renderLines.find((line) => line.id === selectedId);
+			const selectedLine = state.lines.find((line) => line.id === selectedId);
 			childs = getChildren(selectedLine!.id);
 		}
 
@@ -204,7 +191,7 @@ const Design = (props: any) => {
 		if (selectedId === none_selected || selectedId === root_id)
 			return;
 
-		const selectedLine = renderLines.find((line) => line.id === selectedId);
+		const selectedLine = state.lines.find((line) => line.id === selectedId);
 		setSelectedId(selectedLine!.pid);
 	}
 
@@ -212,7 +199,7 @@ const Design = (props: any) => {
 		if (selectedId === none_selected || selectedId === root_id)
 			return;
 
-		const selectedLine = renderLines.find((line) => line.id === selectedId);
+		const selectedLine = state.lines.find((line) => line.id === selectedId);
 		const childs = getChildren(selectedLine!.pid);
 
 		if (childs.length === 1)
@@ -224,27 +211,15 @@ const Design = (props: any) => {
 		setSelectedId(nextId);
 	}
 
-	// TODO: Need react use effect? buggy when clicking alot, check console...
-	// if keeping it add tool tip to nav buttons
-	window.addEventListener('keydown', (e) => {
-		if (e.key === '1') {
-			setNextChildSelected();
-		} else if (e.key === '2' ) {
-			setBackChildSelected();
-		} else if (e.key === '3') {
-			setBrotherChildSelected();
-		}
-	});
 
 	return (
 	<div className="Design" >
 		<div className="TopPanel">
-			<TopPanel lines={renderLines} neuronRad={neuronRad}/>
+			<TopPanel />
 		</div>
 		<div className="MainPanel">
 			<div className="Canvas" id={"Canvas"}>
-				<DesignCanvas lines={renderLines} neuronRad={neuronRad}
-							  checkDeselect={checkDeselect} selectedId={selectedId}
+				<DesignCanvas checkDeselect={checkDeselect} selectedId={selectedId}
 							  setSelectedId={setSelectedId}/>
 			</div>
 			<div className="ControlPanel">
@@ -252,7 +227,6 @@ const Design = (props: any) => {
 								getSelectedAlpha={getSelectedAlpha} getSelectedRadius={getSelectedRadius}
 								getSelectedType={getSelectedType} updateSimpleField={updateSimpleField}
 								updateAlpha={updateAlpha} updateLength={updateLength}
-								NeuronRad={neuronRad} updateNeuronRad={(v: number) => v > 0 && setNeuronRad(v)}
 								neuronSelected={selectedId === root_id}
 								lineSelected={selectedId !== none_selected && selectedId !== root_id}
 				/>

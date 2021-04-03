@@ -6,7 +6,7 @@ import { IData } from './Simulate';
 function options(data: IData[]) {
     var series: { data: number[][]; lineWidth: number; name: string; marker: { enabled: boolean; }; }[] = []
     data.forEach(d => {
-        series.push({data: d.data, lineWidth: 0.75, name: d.name, marker: {enabled: false}})
+        series.push({data: d.plot, lineWidth: 0.75, name: d.name, marker: {enabled: false}})
     });
     return {
         chart: {

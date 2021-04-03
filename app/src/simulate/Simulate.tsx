@@ -7,19 +7,9 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import StopIcon from '@material-ui/icons/Stop';
-import { default_neuron_rad, ILine, root_id } from '../design/Design';
+import { root_id } from '../design/Design';
 import DesignCanvas from '../design/DesignCanvas';
 import { run } from '../api/api';
-
-export interface IData {
-      data: number[][];
-      name: string;
-}
-
-const init_data: IData = {
-	data: [],
-	name: 'Soma'
-}
 
 export interface IFormInput {
       name: string;
@@ -28,6 +18,17 @@ export interface IFormInput {
       group?: number;
       // TODO: add tooltip explained / forumla / image
 }
+
+export interface IData {
+    plot: number[][];
+    name: string;
+}
+
+const init_data: IData = {
+	plot: [],
+	name: 'Soma'
+}
+
 
 const initInputs: IFormInput[] = [
 {
@@ -107,52 +108,49 @@ const initInputs: IFormInput[] = [
 
 ]
 
-function Simulate(props: any) {
-      // canvas props
-      const init_lines = props.history.location.state.lines ?? [];
-	const init_neuron_rad = props.history.location.state.neuronRadius ?? default_neuron_rad;
-	const [renderLines] = React.useState(init_lines as ILine[]);
-	const [neuronRad] = React.useState(init_neuron_rad as number);
+function Simulate() {
+	// simulate props
+	const [error, setError] = React.useState(false);
+	const [running, setRunning] = React.useState(false);
+	const [inputs, setInputs] = React.useState(initInputs);
+	const [data, setData] = React.useState(init_data);
 
-      // simulate props
-      const [data, setData] = React.useState(init_data.data);
-      const [error, setError] = React.useState(false);
-      const [running, setRunning] = React.useState(false);
-      const [inputs, setInputs] = React.useState(initInputs);
+	// dialog - tooltip props
+	const [dialogState, setDialogState] = React.useState(false);
+	const [dialogTitle, setDialogTitle] = React.useState('');
 
-      // dialog - tooltip props
-      const [dialogState, setDialogState] = React.useState(false);
-      const [dialogTitle, setDialogTitle] = React.useState('');
+	const updateData = (newData: number[][]) => {
+		setData({...data, plot: newData});
+	}
 
-      const toggleRunning = () => {
-            // TODO: validate all inputs exist here OR input should not be empty..
-            setRunning(!running);
-            if (!running) {
-				run(setData);
-            } else {
-				setData(init_data.data);
-			}
-      }
+	const toggleRunning = () => {
+		// TODO: validate all inputs exist here OR input should not be empty..
+		setRunning(!running);
+		if (!running) {
+			run(updateData);
+		} else {
+			updateData([[]]);
+		}
+	}
 
-      const closeError = (_event?: React.SyntheticEvent, reason?: string) => {
-            if (reason === 'clickaway') {
-                  return;
-            }
-            setError(false);
-      };
+	const closeError = (_event?: React.SyntheticEvent, reason?: string) => {
+		if (reason === 'clickaway')
+				return;
 
-      const updateDialog = (idx: number) => {
-            const title = inputs[idx].tooltipTitle;
-            setDialogTitle(title);
-            setDialogState(true);
-      }
+		setError(false);
+	};
 
-      const updateInput = (idx: number, val: number) => {
-            const updateInputs = [...inputs];
-            updateInputs[idx].value = val;
-            setInputs(updateInputs);
-      }
+	const updateDialog = (idx: number) => {
+		const title = inputs[idx].tooltipTitle;
+		setDialogTitle(title);
+		setDialogState(true);
+	}
 
+	const updateInput = (idx: number, val: number) => {
+		const updateInputs = [...inputs];
+		updateInputs[idx].value = val;
+		setInputs(updateInputs);
+	}
 
 	return (
       <div className="Simulate">
@@ -178,12 +176,10 @@ function Simulate(props: any) {
                   </div>
                   <div className="RightSide">
                         <div className="Plot">
-                              <Plot data={[{data: data, name: 'A'}]}/>
+                              <Plot data={[data]}/>
                         </div>
                         <div className="Graph" id={"Canvas"}>
-                              <DesignCanvas lines={renderLines} neuronRad={neuronRad}
-                                          selectedId={root_id}
-                                          setSelectedId={() => null}/>
+                              <DesignCanvas selectedId={root_id} setSelectedId={() => null}/>
                         </div>
                   </div>
             </div>

@@ -4,10 +4,12 @@ import sys
 import traceback
 from flask import Flask
 from flask import request
+from flask_cors import CORS
 
 from neuronWrapper import run
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.route('/api/v1/run', methods=['POST'])

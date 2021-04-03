@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
-import { ILine } from './Design';
 import { exportFile } from '../Utils/SwcUtils';
+import { AppContext } from '../Contexts/AppContext';
+import { ILine } from '../Wrapper';
 
-export interface ITopPanelProps {
-	lines: ILine[];
-	neuronRad: number;
-}
 
 const downloadFile = (lines: ILine[], neuronRad: number) => {
 	// TODO: remove redundant element created
@@ -19,12 +16,13 @@ const downloadFile = (lines: ILine[], neuronRad: number) => {
 	element.click();
 }
 
-function TopPanel({lines, neuronRad}: ITopPanelProps) {
+function TopPanel() {
+	const {state} = useContext(AppContext);
 	const history = useHistory();
 	return (
 	<>
 		<Button className="NoCapsButton" color="primary" variant="contained"
-				onClick={() => downloadFile(lines, neuronRad)}
+				onClick={() => downloadFile(state.lines, state.neuronRadius)}
 				style={{marginLeft: '24px'}}>
 			Export
 		</Button>
@@ -32,8 +30,7 @@ function TopPanel({lines, neuronRad}: ITopPanelProps) {
 			RBM - Create your Neuron
 		</big>
 		<Button className="NoCapsButton" color="primary" variant="contained"
-				onClick={() => history.push( {pathname: '/simulate',
-											  state: {lines: lines, neuronRadius: neuronRad}} )}
+				onClick={() => history.push({pathname: '/simulate'})}
 				style={{marginRight: '24px'}}>
 			Start Simulate
 		</Button>

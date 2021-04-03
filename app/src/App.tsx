@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button} from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import { importFile } from './Utils/SwcUtils';
 import './App.css';
-import { default_neuron_rad, ILine } from './design/Design';
+import { AppContext } from './Contexts/AppContext';
+import { init_app_state } from './Wrapper';
 
 function App() {
 	const history = useHistory();
-	const ilines: ILine[] = [];
+	const {state, setState} = useContext(AppContext);
 
 	const uploadFile = async (e: any) => {
 		e.preventDefault()
@@ -16,7 +17,8 @@ function App() {
 			const text = e?.target?.result;
 			if (text) {
 				const r = importFile(text as string);
-				history.push( {pathname: '/design', state: {lines: r.lines, neuronRadius: r.neuronRadius}});
+				setState({...state, r});
+				history.push({pathname: '/design'});
 			}
 		};
 		reader.readAsText(e?.target?.files[0])
@@ -26,7 +28,11 @@ function App() {
 		<div className="App">
 				<div className="Container">
 				<Button className="Button" variant="outlined" color="primary"
-						onClick={() => history.push( {pathname: '/design', state: {lines: ilines, neuronRadius: default_neuron_rad}} )}>
+						onClick={() => {
+							// TODO: bug -> from design getting back here & clicking new neuron doesnt reset state
+							setState({...state, init_app_state});
+							history.push({pathname: '/design'})
+						}}>
 					New Neuron
 				</Button>
 				<div className="Divider"/>

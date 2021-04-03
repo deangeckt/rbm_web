@@ -10,10 +10,9 @@ export const run = (setData: Function): void => {
             const v = response.data['volt'] as number[];
             const r = [];
             for (var i = 0 ; i<t.length; i++)
-                r.push([ t[i], v[i]]);
-            console.log(r);
+                r.push([t[i], v[i]]);
             setData(r);
     }).catch((error: AxiosError) => {
-            console.log('err');
+            console.error('err');
     });
 }

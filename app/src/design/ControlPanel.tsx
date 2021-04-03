@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, InputAdornment, MenuItem, TextField } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { default_alpha } from './Design';
+import { AppContext } from '../Contexts/AppContext';
+
 import './ControlPanel.css';
 
 
@@ -16,8 +18,6 @@ export interface IControlPanelProps {
     updateSimpleField: Function;
     updateAlpha: Function;
     updateLength: Function;
-	NeuronRad: number;
-	updateNeuronRad: Function;
     neuronSelected: boolean;
     lineSelected: boolean;
 }
@@ -52,8 +52,11 @@ export const types = [
 
 function ControlPanel({addNew, Delete, getSelectedLength,
                        getSelectedAlpha, getSelectedRadius, getSelectedType,
-                       updateSimpleField, updateAlpha, updateLength, neuronSelected, lineSelected,
-					   NeuronRad, updateNeuronRad  }: IControlPanelProps) {
+                       updateSimpleField, updateAlpha, updateLength, neuronSelected, lineSelected
+					   }: IControlPanelProps) {
+
+	const {state, setState} = useContext(AppContext);
+
 	return (
     <>
     {!neuronSelected && !lineSelected ? (
@@ -88,8 +91,8 @@ function ControlPanel({addNew, Delete, getSelectedLength,
 				</Button>
 				</>
 				) : (
-				<TextField label={'Neuron Radius [µM]'} variant="filled" type="number" value={NeuronRad}
-							onChange={(e) => updateNeuronRad(Number(e.target.value))} />
+				<TextField label={'Neuron Radius [µM]'} variant="filled" type="number" value={state.neuronRadius}
+							onChange={(e) => Number(e.target.value) > 0 && 	setState({...state, neuronRadius: Number(e.target.value)})} />
 			)}
 		</div>
 	)}

@@ -1,15 +1,11 @@
-import { ILine, root_id } from "../design/Design";
+import { root_id } from "../design/Design";
 import { initialStage } from "../design/DesignCanvas";
+import { IAppState, ILine } from "../Wrapper";
 
 export const lenPointRatio = 5;
 export const neuronRadiusRatio = 2.5;
 export const lineRadiusAddition = 3;
 export const swcAttr = 7;
-
-export interface ISwcFileRead {
-    lines: ILine[];
-    neuronRadius: number;
-}
 
 export function lengthToPoint(length: number) {
     return length * lenPointRatio;
@@ -79,7 +75,7 @@ function textLineToILine(ilines: ILine[], line: string): ILine | {id: number, ra
             length: length, alpha: alpha }
 }
 
-export function importFile(text: string): ISwcFileRead {
+export function importFile(text: string): IAppState {
     const ilines: ILine[] = [];
     let neuronRad: number = -1;
 
