@@ -2,13 +2,13 @@ import axios, { AxiosResponse } from 'axios';
 import { IFormInput, init_form } from '../simulate/Simulate';
 
 export const run = async (setData: Function, setError: Function, inputs: IFormInput[]) => {
-    const data = inputs.map((input) => {
-        return { id: input.id, value: input.value };
-    });
-
-    const none_default_data = data.filter((input, index) => {
-        return init_form[index].value !== input.value;
-    });
+    const none_default_data = inputs
+        .map((input) => {
+            return { id: input.id, value: input.value };
+        })
+        .filter((input, index) => {
+            return init_form[index].value !== input.value;
+        });
 
     try {
         const response = (await axios.request({
