@@ -2,30 +2,29 @@ import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
 import { IData } from './Simulate';
 
-
 function options(data: IData[]) {
-    var series: { data: number[][]; lineWidth: number; name: string; marker: { enabled: boolean; }; }[] = []
-    data.forEach(d => {
-        series.push({data: d.plot, lineWidth: 0.75, name: d.name, marker: {enabled: false}})
+    const series: { data: number[][]; lineWidth: number; name: string; marker: { enabled: boolean } }[] = [];
+    data.forEach((d) => {
+        series.push({ data: d.plot, lineWidth: 0.75, name: d.name, marker: { enabled: false } });
     });
     return {
         chart: {
             type: 'spline',
-            zoomType: 'xy'
+            zoomType: 'xy',
         },
         title: {
-            text: ''
+            text: '',
         },
         tooltip: {
-            valueDecimals: 2
+            valueDecimals: 2,
         },
         xAxis: {
-            title: {text: "Time [mS]"}
+            title: { text: 'Time [mS]' },
         },
         yAxis: {
-            title: {text: "Voltage [mV]"}
+            title: { text: 'Voltage [mV]' },
         },
-        series: series
+        series: series,
     };
 }
 
@@ -34,10 +33,7 @@ export interface IPlotProps {
 }
 
 function Plot(props: IPlotProps) {
-
-    return (
-        <HighchartsReact highcharts={Highcharts} options={options(props.data)} />
-    );
+    return <HighchartsReact highcharts={Highcharts} options={options(props.data)} />;
 }
 
 export default Plot;
