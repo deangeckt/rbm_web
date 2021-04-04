@@ -13,8 +13,9 @@ import { run } from '../api/api';
 
 export interface IFormInput {
     name: string;
-    value: number;
+    value: any;
     tooltipTitle: string;
+    id: string;
     group?: number;
     // TODO: add tooltip explained / forumla / image
 }
@@ -31,81 +32,31 @@ const init_data: IData = {
 
 const initInputs: IFormInput[] = [
     {
-        name: 'p1',
-        value: 0.5,
-        tooltipTitle: 'p1 explained',
+        id: 'sim_time',
+        name: 'Simulation time [mS]',
+        value: 100,
+        tooltipTitle: 'Total run time of the simulation',
         group: 1,
     },
     {
-        name: 'p2',
-        value: 1.5,
-        tooltipTitle: 'p2 explained',
+        id: 'dt',
+        name: 'dt [mS]',
+        value: 0.025,
+        tooltipTitle: 'Granularity of the time vector:\n lower value => higher Granularity',
         group: 1,
     },
     {
-        name: 'long param name [Kg]',
-        value: 1.5,
-        tooltipTitle:
-            'long param namelong param namelong param namelong param namelong param namelong param namelong param namelong param namelong param namelong param name',
-    },
-    {
-        name: 'p9',
-        value: 0.5,
-        tooltipTitle: 'p9 explained',
+        id: 'rest_volt',
+        name: 'Resting voltage [mV]',
+        value: -65,
+        tooltipTitle: 'The resting membrane potential',
         group: 1,
     },
     {
-        name: 'p8',
-        value: 1.5,
-        tooltipTitle: 'p8 explained',
-        group: 1,
-    },
-    {
-        name: 'p1',
-        value: 0.5,
-        tooltipTitle: 'p1 explained',
-    },
-    {
-        name: 'p2',
-        value: 1.5,
-        tooltipTitle: 'p2 explained',
-    },
-    {
-        name: 'long param name [Kg]',
-        value: 1.5,
-        tooltipTitle:
-            'long param namelong param namelong param namelong param namelong param namelong param namelong param namelong param namelong param namelong param name',
-    },
-    {
-        name: 'p9',
-        value: 0.5,
-        tooltipTitle: 'p9 explained',
-    },
-    {
-        name: 'p8',
-        value: 1.5,
-        tooltipTitle: 'p8 explained',
-    },
-    {
-        name: 'p2',
-        value: 1.5,
-        tooltipTitle: 'p2 explained',
-    },
-    {
-        name: 'long param name [Kg]',
-        value: 1.5,
-        tooltipTitle:
-            'long param namelong param namelong param namelong param namelong param namelong param namelong param namelong param namelong param namelong param name',
-    },
-    {
-        name: 'p9',
-        value: 0.5,
-        tooltipTitle: 'p9 explained',
-    },
-    {
-        name: 'p8',
-        value: 1.5,
-        tooltipTitle: 'p8 explained',
+        id: 'celsius',
+        name: 'Celsius [℃]',
+        value: 6.3,
+        tooltipTitle: 'Celsius degree',
     },
 ];
 
@@ -148,15 +99,21 @@ function Simulate() {
         setError('');
     };
 
-    const updateDialog = (idx: number) => {
-        const title = inputs[idx].tooltipTitle;
+    const updateDialog = (id: string) => {
+        const currInput = inputs.find((ele) => ele.id === id);
+        if (!currInput) return;
+
+        const title = currInput.tooltipTitle;
         setDialogTitle(title);
         setDialogState(true);
     };
 
-    const updateInput = (idx: number, val: number) => {
+    const updateInput = (id: string, val: number) => {
         const updateInputs = [...inputs];
-        updateInputs[idx].value = val;
+        const currInput = updateInputs.find((ele) => ele.id === id);
+        if (!currInput) return;
+
+        currInput.value = val;
         setInputs(updateInputs);
     };
 

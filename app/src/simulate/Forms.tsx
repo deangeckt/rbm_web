@@ -8,8 +8,8 @@ import Grid from '@material-ui/core/Grid';
 
 export interface IFormsProps {
     inputs: IFormInput[];
-    updateInput: (idx: number, val: number) => void;
-    openTooltip: (idx: number) => void;
+    updateInput: (id: string, val: number) => void;
+    openTooltip: (id: string) => void;
 }
 
 function Forms(props: IFormsProps) {
@@ -27,7 +27,6 @@ function Forms(props: IFormsProps) {
                                     input={input}
                                     updateInput={props.updateInput}
                                     openTooltip={props.openTooltip}
-                                    idx={i}
                                 />
                             </ListItem>
                         ))}
@@ -42,7 +41,6 @@ function Forms(props: IFormsProps) {
                                     input={input}
                                     updateInput={props.updateInput}
                                     openTooltip={props.openTooltip}
-                                    idx={i}
                                 />
                             </ListItem>
                         ))}

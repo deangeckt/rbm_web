@@ -5,9 +5,8 @@ import { Button, TextField } from '@material-ui/core';
 
 export interface IFormsInputProps {
     input: IFormInput;
-    idx: number;
-    updateInput: (idx: number, val: number) => void;
-    openTooltip: (idx: number) => void;
+    updateInput: (id: string, val: number) => void;
+    openTooltip: (id: string) => void;
 }
 
 function FormInput(props: IFormsInputProps) {
@@ -17,7 +16,7 @@ function FormInput(props: IFormsInputProps) {
                 <Button
                     variant="outlined"
                     color="primary"
-                    onClick={() => props.openTooltip(props.idx)}
+                    onClick={() => props.openTooltip(props.input.id)}
                     startIcon={<InfoIcon />}
                 ></Button>
                 <TextField
@@ -25,7 +24,7 @@ function FormInput(props: IFormsInputProps) {
                     variant="filled"
                     type="number"
                     defaultValue={props.input.value}
-                    onChange={(e: any) => props.updateInput(props.idx, Number(e.target.value))}
+                    onChange={(e: any) => props.updateInput(props.input.id, Number(e.target.value))}
                 />
             </div>
         </>

@@ -26,6 +26,7 @@ export interface IAppState {
 
 export const getStage = (): IStageSize => {
     //TODO: this is the css value of the partial width in design.tsx component, not simulation.tsx
+    console.log(window.document.getElementById('Canvas')?.offsetWidth);
     const canvas_part_size = 0.7;
     const canvas_hegiht = window.document.getElementById('Canvas')?.offsetHeight ?? window.innerHeight;
     const canvas_width = window.document.getElementById('Canvas')?.offsetWidth ?? window.innerWidth * canvas_part_size;
