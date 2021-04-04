@@ -111,8 +111,9 @@ const initInputs: IFormInput[] = [
 
 function Simulate() {
     // simulate props
-    const [error, setError] = React.useState(false);
+    const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
     const [inputs, setInputs] = React.useState(initInputs);
     const [data, setData] = React.useState(init_data);
 
@@ -122,13 +123,21 @@ function Simulate() {
 
     const updateData = (newData: number[][]) => {
         setData({ ...data, plot: newData });
+        setLoading(false);
+    };
+
+    const updateError = (err: string) => {
+        setError(err);
+        setLoading(false);
+        setRunning(false);
     };
 
     const toggleRunning = () => {
         // TODO: validate all inputs exist here OR input should not be empty..
         setRunning(!running);
         if (!running) {
-            run(updateData);
+            setLoading(true);
+            run(updateData, updateError);
         } else {
             updateData([[]]);
         }
@@ -136,8 +145,7 @@ function Simulate() {
 
     const closeError = (_event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') return;
-
-        setError(false);
+        setError('');
     };
 
     const updateDialog = (idx: number) => {
@@ -154,13 +162,14 @@ function Simulate() {
 
     return (
         <div className="Simulate">
+            {loading ? <div>Loading</div> : null}
             <Dialog onClose={() => setDialogState(false)} open={dialogState}>
                 <DialogTitle> {dialogTitle} </DialogTitle>
             </Dialog>
 
-            <Snackbar open={error} autoHideDuration={6000} onClose={closeError}>
+            <Snackbar open={error !== ''} autoHideDuration={6000} onClose={closeError}>
                 <Alert variant="outlined" severity="error" onClose={closeError}>
-                    This is an error alert — check it out!
+                    {error}
                 </Alert>
             </Snackbar>
 

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-export const run = async (setData: Function) => {
+export const run = async (setData: Function, setError: Function) => {
     try {
         const response = (await axios.request({
             url: 'http://localhost:8080/api/v1/run',
@@ -13,6 +13,6 @@ export const run = async (setData: Function) => {
         for (let i = 0; i < t.length; i++) r.push([t[i], v[i]]);
         setData(r);
     } catch (error: any) {
-        console.error('error');
+        setError('Failed to start simulation');
     }
 };
