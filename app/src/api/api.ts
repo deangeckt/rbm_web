@@ -1,16 +1,20 @@
 import axios, { AxiosResponse } from 'axios';
-import { IFormInput } from '../simulate/Simulate';
+import { IFormInput, init_form } from '../simulate/Simulate';
 
-export const run = async (setData: Function, setError: Function, config: IFormInput[]) => {
-    // TODO: create share (client + server) and pass only none default elements
-    const data = config.map((element) => {
-        return { id: element.id, value: element.value };
+export const run = async (setData: Function, setError: Function, inputs: IFormInput[]) => {
+    const data = inputs.map((input) => {
+        return { id: input.id, value: input.value };
     });
+
+    const none_default_data = data.filter((input, index) => {
+        return init_form[index].value !== input.value;
+    });
+
     try {
         const response = (await axios.request({
             url: 'http://localhost:8080/api/v1/run',
             method: 'POST',
-            data: data,
+            data: none_default_data,
         })) as AxiosResponse;
         const t = response.data['time'] as number[];
         const v = response.data['volt'] as number[];

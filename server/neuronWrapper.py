@@ -8,8 +8,11 @@ from pylab import *
 
 class NeuronWrapper:
     def __init__(self):
-        with open('config.json') as f_:
-            self.default_config = json.load(f_)
+        self.default_config = {}
+        with open('../app/src/share/config.json') as f_:
+            default_form = json.load(f_)['default_form']
+            for form in default_form:
+                self.default_config[form['id']] = form['value']
         self.config = None
         self.reset_config()
 

@@ -10,6 +10,7 @@ import StopIcon from '@material-ui/icons/Stop';
 import { root_id } from '../design/Design';
 import DesignCanvas from '../design/DesignCanvas';
 import { run } from '../api/api';
+import config from '../share/config.json';
 
 export interface IFormInput {
     name: string;
@@ -30,42 +31,14 @@ const init_data: IData = {
     name: 'Soma',
 };
 
-const initInputs: IFormInput[] = [
-    {
-        id: 'sim_time',
-        name: 'Simulation time [mS]',
-        value: 100,
-        tooltipTitle: 'Total run time of the simulation',
-        group: 1,
-    },
-    {
-        id: 'dt',
-        name: 'dt [mS]',
-        value: 0.025,
-        tooltipTitle: 'Granularity of the time vector:\n lower value => higher Granularity',
-        group: 1,
-    },
-    {
-        id: 'rest_volt',
-        name: 'Resting voltage [mV]',
-        value: -65,
-        tooltipTitle: 'The resting membrane potential',
-        group: 1,
-    },
-    {
-        id: 'celsius',
-        name: 'Celsius [℃]',
-        value: 6.3,
-        tooltipTitle: 'Celsius degree',
-    },
-];
+export const init_form = config.default_form as ReadonlyArray<IFormInput>;
 
 function Simulate() {
     // simulate props
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
-    const [inputs, setInputs] = React.useState(initInputs);
+    const [inputs, setInputs] = React.useState(JSON.parse(JSON.stringify(init_form)) as IFormInput[]);
     const [data, setData] = React.useState(init_data);
 
     // dialog - tooltip props

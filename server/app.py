@@ -18,16 +18,13 @@ wrapper = NeuronWrapper()
 def score():
     try:
         data = request.get_json()
-        print(data)
         for d in data:
             if 'id' not in d or 'value' not in d:
                 msg = "Data params - bad format"
                 raise ValueError(msg)
 
         res = wrapper.run(data)
-        return json.dumps(res), 200, {'Content-Type': 'application/json',
-                                      'Access-Control-Allow-Origin': '*',
-                                      "Access-Control-Allow-Methods": "GET, POST"}
+        return json.dumps(res), 200, {'Content-Type': 'application/json'}
 
     except:
         exctype, _, exctb = sys.exc_info()
