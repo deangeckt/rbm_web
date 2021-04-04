@@ -1,7 +1,7 @@
 import React from "react";
 import { Line, Transformer } from "react-konva";
 import { colors } from '../colors';
-import { lineRadiusAddition } from "../Utils/SwcUtils";
+import { lineRadiusAddition } from "../utils/SwcUtils";
 
 interface TransLineProps {
 	shapeProps: any;

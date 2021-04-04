@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { importFile } from './Utils/SwcUtils';
+import { importFile } from './utils/SwcUtils';
 import './App.css';
 import { AppContext } from './Contexts/AppContext';
 import { init_app_state } from './Wrapper';

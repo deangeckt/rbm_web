@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import ControlPanel from './ControlPanel';
-import { lengthToPoint, pointToLength } from '../Utils/SwcUtils';
+import { lengthToPoint, pointToLength } from '../utils/SwcUtils';
 import TopPanel from './TopPanel';
 import DesignCanvas from './DesignCanvas';
 import './Design.css';

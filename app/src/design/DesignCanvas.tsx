@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { root_id } from './Design';
-import { neuronRadToSize } from '../Utils/SwcUtils';
+import { neuronRadToSize } from '../utils/SwcUtils';
 import { Stage, Layer, Circle } from 'react-konva';
 import TransformerLine from './TransformerLine';
 import { colors } from '../colors';
