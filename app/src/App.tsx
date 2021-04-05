@@ -17,7 +17,7 @@ function App(): JSX.Element {
             const text = e?.target?.result;
             if (text) {
                 const r = importFile(text as string, state.stage.rootX, state.stage.rootY);
-                setState({ ...state, r });
+                setState({ ...state, ...r });
                 history.push({ pathname: '/design' });
             }
         };
@@ -32,8 +32,7 @@ function App(): JSX.Element {
                     variant="outlined"
                     color="primary"
                     onClick={() => {
-                        // TODO: bug -> from design getting back here & clicking new neuron doesnt reset state
-                        setState({ ...state, init_app_state });
+                        setState({ ...state, ...init_app_state });
                         history.push({ pathname: '/design' });
                     }}
                 >

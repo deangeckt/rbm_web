@@ -34,33 +34,37 @@ export function exportFile(lines: ILine[], neuronRadius: number, rootX: number, 
     return [res];
 }
 
+function lineSplitToFields(line: string) {
+    const fields = line.split(' ');
+    if (fields.length !== swcAttr) throw new Error('SWC file bad format');
+    return fields;
+}
+
 function textLineToILine(
     ilines: ILine[],
     line: string,
+    screenRootX: number,
+    screenRootY: number,
     rootX: number,
     rootY: number,
-): ILine | { id: number; radius: number } {
-    const fields = line.split(' ');
-    if (fields.length !== swcAttr) throw new Error('SWC file bad format');
-
+): ILine {
+    const fields = lineSplitToFields(line);
     const id = Number(fields[0]);
     const tid = Number(fields[1]);
-    const pid = Number(fields[6]);
+    const x = Number(fields[2]);
+    const y = Number(fields[3]);
     const radius = Number(fields[5]);
-
-    if (id === root_id) {
-        return { id: root_id, radius: radius };
-    }
+    const pid = Number(fields[6]);
 
     let points: number[] = [];
-    const x1 = lengthToPoint(Number(fields[2])) + rootX;
-    const y1 = rootY - lengthToPoint(Number(fields[3]));
+    const x1 = lengthToPoint(x - rootX) + screenRootX;
+    const y1 = screenRootY - lengthToPoint(y - rootY);
     let x0: number;
     let y0: number;
 
     if (pid === root_id) {
-        x0 = rootX;
-        y0 = rootY;
+        x0 = screenRootX;
+        y0 = screenRootY;
     } else {
         const father = ilines.find((l) => l.id === pid);
         if (!father) throw new Error('SWC file bad format');
@@ -76,21 +80,32 @@ function textLineToILine(
     return { id: id, tid: tid, points: points, radius: radius, pid: pid, length: length, alpha: alpha };
 }
 
-export function importFile(text: string, rootX: number, rootY: number): Partial<IAppState> {
+export function importFile(text: string, screenRootX: number, screenRootY: number): Partial<IAppState> {
     const ilines: ILine[] = [];
+    let found_root = false;
     let neuronRad = -1;
+    let x = 0;
+    let y = 0;
 
     const lines = text.split('\n');
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
         if (line.startsWith('#')) continue;
         if (line === '') continue;
-        const iline = textLineToILine(ilines, line, rootX, rootY);
-        if (iline.id === root_id) {
-            neuronRad = iline.radius;
-            continue;
+
+        if (!found_root) {
+            const fields = lineSplitToFields(line);
+            const id = Number(fields[0]);
+            if (id === root_id) {
+                found_root = true;
+                x = Number(fields[2]);
+                y = Number(fields[3]);
+                neuronRad = Number(fields[5]);
+            }
+        } else {
+            const iline = textLineToILine(ilines, line, screenRootX, screenRootY, x, y);
+            ilines.push(iline as ILine);
         }
-        ilines.push(iline as ILine);
     }
     if (neuronRad === -1) {
         throw new Error('SWC file bad format - missing neuron line');
