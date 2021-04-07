@@ -1,25 +1,15 @@
-import React from 'react';
-import Forms from './Forms';
+import React, { useContext } from 'react';
 import Plot from './Plot';
 import './Simulate.css';
 import { Button, Dialog, DialogTitle } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
-import StopIcon from '@material-ui/icons/Stop';
 import { root_id } from '../design/Design';
 import DesignCanvas from '../design/DesignCanvas';
 import { run } from '../api/api';
-import config from '../share/config.json';
-
-export interface IFormInput {
-    name: string;
-    value: any;
-    tooltipTitle: string;
-    id: string;
-    group?: number;
-    // TODO: add tooltip explained / forumla / image
-}
+import { AppContext } from '../Contexts/AppContext';
+import SimulateTabs from './SimulateTabs';
 
 export interface IData {
     plot: number[][];
@@ -31,14 +21,13 @@ const init_data: IData = {
     name: 'Soma',
 };
 
-export const init_form = config.default_form as ReadonlyArray<IFormInput>;
-
 function Simulate() {
+    const { state } = useContext(AppContext);
+
     // simulate props
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
-    const [inputs, setInputs] = React.useState(JSON.parse(JSON.stringify(init_form)) as IFormInput[]);
     const [data, setData] = React.useState(init_data);
 
     // dialog - tooltip props
@@ -61,7 +50,7 @@ function Simulate() {
         setRunning(!running);
         if (!running) {
             setLoading(true);
-            run(updateData, updateError, inputs);
+            run(updateData, updateError, state.inputs);
         } else {
             updateData([[]]);
         }
@@ -73,21 +62,12 @@ function Simulate() {
     };
 
     const updateDialog = (id: string) => {
-        const currInput = inputs.find((ele) => ele.id === id);
+        const currInput = state.inputs.find((ele) => ele.id === id);
         if (!currInput) return;
 
         const title = currInput.tooltipTitle;
         setDialogTitle(title);
         setDialogState(true);
-    };
-
-    const updateInput = (id: string, val: number) => {
-        const updateInputs = [...inputs];
-        const currInput = updateInputs.find((ele) => ele.id === id);
-        if (!currInput) return;
-
-        currInput.value = val;
-        setInputs(updateInputs);
     };
 
     return (
@@ -96,7 +76,6 @@ function Simulate() {
             <Dialog onClose={() => setDialogState(false)} open={dialogState}>
                 <DialogTitle> {dialogTitle} </DialogTitle>
             </Dialog>
-
             <Snackbar open={error !== ''} autoHideDuration={6000} onClose={closeError}>
                 <Alert variant="outlined" severity="error" onClose={closeError}>
                     {error}
@@ -106,27 +85,16 @@ function Simulate() {
             <div className="SimulateContainer">
                 <div className="LeftSide">
                     <div className="SimulatePanel">
-                        {!running ? (
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                onClick={() => toggleRunning()}
-                                startIcon={<PlayArrowIcon />}
-                            >
-                                Start
-                            </Button>
-                        ) : (
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                onClick={() => toggleRunning()}
-                                startIcon={<StopIcon />}
-                            >
-                                Stop
-                            </Button>
-                        )}
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            onClick={() => toggleRunning()}
+                            startIcon={<PlayArrowIcon />}
+                        >
+                            {!running ? 'Start' : 'Reset'}
+                        </Button>
                     </div>
-                    <Forms inputs={inputs} updateInput={updateInput} openTooltip={updateDialog} />
+                    <SimulateTabs updateDialog={updateDialog} />
                 </div>
                 <div className="RightSide">
                     <div className="Plot">

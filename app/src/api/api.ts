@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { IFormInput, init_form } from '../simulate/Simulate';
+import { IFormInput, init_form } from '../Wrapper';
 
 export const run = async (setData: Function, setError: Function, inputs: IFormInput[]) => {
     const none_default_data = inputs
@@ -22,6 +22,6 @@ export const run = async (setData: Function, setError: Function, inputs: IFormIn
         for (let i = 0; i < t.length; i++) r.push([t[i], v[i]]);
         setData(r);
     } catch (error: any) {
-        setError('Failed to start simulation');
+        setError('Simulation Failed');
     }
 };

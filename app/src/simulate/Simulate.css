@@ -61,5 +61,14 @@
     justify-content: center;
     width: 100%;
     border-bottom: 1px solid #efefef;
+}
 
+.Tabs {
+    flex-basis: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }

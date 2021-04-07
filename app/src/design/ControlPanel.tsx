@@ -4,7 +4,7 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { default_alpha } from './Design';
 import { AppContext } from '../Contexts/AppContext';
-
+import { types } from '../Wrapper';
 import './ControlPanel.css';
 
 export interface IControlPanelProps {
@@ -20,33 +20,6 @@ export interface IControlPanelProps {
     neuronSelected: boolean;
     lineSelected: boolean;
 }
-
-export const types = [
-    {
-        value: 0,
-        label: 'undefined',
-    },
-    {
-        value: 1,
-        label: 'soma',
-    },
-    {
-        value: 2,
-        label: 'axon',
-    },
-    {
-        value: 3,
-        label: 'basal dendrite',
-    },
-    {
-        value: 4,
-        label: 'apical dendrite',
-    },
-    {
-        value: 5,
-        label: 'custom',
-    },
-];
 
 function ControlPanel({
     addNew,

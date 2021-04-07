@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AppContext } from './Contexts/AppContext';
+import config from '../src/share/config.json';
 
 export interface ILine {
     id: number;
@@ -18,10 +19,57 @@ export interface IStageSize {
     rootY: number;
 }
 
+export const types = [
+    {
+        value: 0,
+        label: 'undefined',
+    },
+    {
+        value: 1,
+        label: 'soma',
+    },
+    {
+        value: 2,
+        label: 'axon',
+    },
+    {
+        value: 3,
+        label: 'basal dendrite',
+    },
+    {
+        value: 4,
+        label: 'apical dendrite',
+    },
+    {
+        value: 5,
+        label: 'custom',
+    },
+];
+
+export interface IStimInput {
+    delay: number;
+    duration: number;
+    amplitude: number;
+    type: number; // based on types
+    id: number;
+    section: number;
+}
+
+export interface IFormInput {
+    name: string;
+    value: any;
+    tooltipTitle: string;
+    id: string;
+    group?: number;
+    // TODO: add tooltip explained / forumla / image
+}
+
 export interface IAppState {
     stage: IStageSize;
     lines: ILine[];
     neuronRadius: number;
+    stims: IStimInput[];
+    inputs: IFormInput[];
 }
 
 export const getStage = (): IStageSize => {
@@ -39,11 +87,14 @@ export const getStage = (): IStageSize => {
 };
 
 export const default_neuron_rad = 5; // in micro
+export const init_form = config.default_form as ReadonlyArray<IFormInput>;
 
 export const init_app_state: IAppState = {
     stage: getStage(),
     lines: [],
+    stims: [],
     neuronRadius: default_neuron_rad,
+    inputs: JSON.parse(JSON.stringify(init_form)) as IFormInput[],
 };
 
 const Wrapper = (props: any) => {
