@@ -19,7 +19,7 @@ const none_selected = -1;
 const Design = () => {
     const { state, setState } = useContext(AppContext);
     const [selectedId, setSelectedId] = React.useState(root_id);
-    const { getChildren, updateChildsRecur, updateLinePoint, lengthAlphaToXy } = useDesignCanvas();
+    const { getChildren, updateLinePoint, lengthAlphaToXy, updateChildsBelow } = useDesignCanvas();
 
     const checkDeselect = (e: any) => {
         const clickedOnEmpty = e.target === e.target.getStage();
@@ -119,7 +119,7 @@ const Design = () => {
 
         selectedLine.alpha = value * Math.PI;
         updateLinePoint(selectedLine);
-        updateChildsRecur(selectedLine);
+        updateChildsBelow(lines, selectedLine.id, state.stage.rootX, state.stage.rootY);
         setState({ ...state, lines: lines });
     };
 
@@ -131,7 +131,7 @@ const Design = () => {
 
         selectedLine.length = lengthToPoint(value);
         updateLinePoint(selectedLine);
-        updateChildsRecur(selectedLine);
+        updateChildsBelow(lines, selectedLine.id, state.stage.rootX, state.stage.rootY);
         setState({ ...state, lines: lines });
     };
 

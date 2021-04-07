@@ -16,7 +16,7 @@ export interface IDesignCanvasProps {
 
 function DesignCanvas({ checkDeselect, selectedId, setSelectedId }: IDesignCanvasProps) {
     const { state, setState } = useContext(AppContext);
-    const { updateChildsRecur, updateLinePoint } = useDesignCanvas();
+    const { updateLinePoint, updateChildsBelow } = useDesignCanvas();
     //TODO: handle zoom and catch this event and render right after
     const widSize = window.document.getElementById('Canvas')?.offsetWidth;
 
@@ -25,16 +25,12 @@ function DesignCanvas({ checkDeselect, selectedId, setSelectedId }: IDesignCanva
             console.log('changing stage size');
             const newStage = getStage();
             const lines = [...state.lines];
-            const root_childs = lines.filter((line) => line.pid === root_id);
-            root_childs.forEach((c) => {
-                c.points[0] = newStage.rootX;
-                c.points[1] = newStage.rootY;
-                updateLinePoint(c);
-                updateChildsRecur(c);
-            });
+            if (lines.length > 0) {
+                updateChildsBelow(lines, lines[0].id, newStage.rootX, newStage.rootY);
+            }
             setState({ ...state, lines: lines, stage: newStage });
         }
-    }, [setState, state, state.lines, updateChildsRecur, updateLinePoint, widSize]);
+    }, [setState, state, state.lines, updateLinePoint, widSize]);
 
     return (
         <>

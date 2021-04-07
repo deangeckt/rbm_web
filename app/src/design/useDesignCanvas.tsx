@@ -10,14 +10,21 @@ export function useDesignCanvas() {
         return lines.filter((line) => line.pid === lid);
     };
 
-    const updateChildsRecur = (father: ILine): void => {
-        const childs = getChildren(father.id);
-        childs.forEach((child) => {
-            child.points[0] = father.points[2];
-            child.points[1] = father.points[3];
-            updateLinePoint(child);
-            updateChildsRecur(child);
-        });
+    const updateChildsBelow = (ilines: ILine[], startId: number, rootX: number, rootY: number): void => {
+        for (let i = 0; i < ilines.length; i++) {
+            const currLine = ilines[i];
+            if (currLine.id < startId) continue;
+            const father = ilines.find((l) => l.id === currLine.pid);
+            if (!father) {
+                console.log('looking for root');
+                currLine.points[0] = rootX;
+                currLine.points[1] = rootY;
+            } else {
+                currLine.points[0] = father.points[2];
+                currLine.points[1] = father.points[3];
+            }
+            updateLinePoint(currLine);
+        }
     };
 
     const updateLinePoint = (line: ILine) => {
@@ -32,5 +39,5 @@ export function useDesignCanvas() {
         return [prevX + d * Math.cos(alpha), prevY - d * Math.sin(alpha)];
     };
 
-    return { getChildren, updateChildsRecur, updateLinePoint, lengthAlphaToXy };
+    return { getChildren, updateLinePoint, lengthAlphaToXy, updateChildsBelow };
 }
