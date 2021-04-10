@@ -1,5 +1,4 @@
-import { root_id } from '../design/Design';
-import { IAppState, ILine } from '../Wrapper';
+import { IAppState, ILine, root_id } from '../Wrapper';
 
 export const lenPointRatio = 5;
 export const neuronRadiusRatio = 2.5;
@@ -77,7 +76,7 @@ function textLineToILine(
     const length = Number(Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2)).toFixed(2));
     const alpha = -Math.atan((y1 - y0) / (x1 - x0));
 
-    return { id: id, tid: tid, points: points, radius: radius, pid: pid, length: length, alpha: alpha };
+    return { id: id, tid: tid, points: points, radius: radius, pid: pid, length: length, alpha: alpha, internalId: 0 };
 }
 
 export function importFile(text: string, screenRootX: number, screenRootY: number): Partial<IAppState> {

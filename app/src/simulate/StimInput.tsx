@@ -1,7 +1,8 @@
 import React from 'react';
-import { MenuItem, TextField } from '@material-ui/core';
+import { Button, MenuItem, TextField } from '@material-ui/core';
 import { IStimInput, types } from '../Wrapper';
 import { useSimulate } from './useSimulate';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 export interface IStimInputProps {
     stim: IStimInput;
@@ -9,7 +10,7 @@ export interface IStimInputProps {
 }
 
 function StimInput({ stim, idx }: IStimInputProps) {
-    const { updateStim } = useSimulate();
+    const { updateStim, deleteStim } = useSimulate();
 
     return (
         <>
@@ -67,6 +68,15 @@ function StimInput({ stim, idx }: IStimInputProps) {
                     InputProps={{ inputProps: { min: 0 } }}
                     onChange={(e) => updateStim('amplitude', Number(e.target.value), idx)}
                 />
+                <Button
+                    className="NoCapsButton"
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<DeleteIcon />}
+                    onClick={() => deleteStim(idx)}
+                >
+                    Delete
+                </Button>
             </div>
         </>
     );

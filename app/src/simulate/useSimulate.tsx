@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../Contexts/AppContext';
+import { none_selected, root_id } from '../Wrapper';
 
 export function useSimulate() {
     const { state, setState } = useContext(AppContext);
@@ -21,12 +22,22 @@ export function useSimulate() {
 
     const addStim = () => {
         const stims = [...state.stims];
+        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
+        let newStimId;
+        let newStimType;
+        if (!selectedLine || state.selectedId === none_selected) {
+            newStimType = root_id;
+            newStimId = 0;
+        } else {
+            newStimType = selectedLine.tid;
+            newStimId = selectedLine.internalId;
+        }
         stims.push({
             delay: 0,
             duration: 20,
             amplitude: 20,
-            type: 1,
-            id: 0,
+            type: newStimType,
+            id: newStimId,
             section: 0.5,
         });
         setState({ ...state, stims: stims });

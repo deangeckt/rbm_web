@@ -4,6 +4,7 @@ import config from '../src/share/config.json';
 
 export interface ILine {
     id: number;
+    internalId: number;
     tid: number;
     points: number[]; // [x1,y1, x2,y2]
     radius: number;
@@ -70,6 +71,7 @@ export interface IAppState {
     neuronRadius: number;
     stims: IStimInput[];
     inputs: IFormInput[];
+    selectedId: number;
 }
 
 export const getStage = (): IStageSize => {
@@ -88,6 +90,8 @@ export const getStage = (): IStageSize => {
 
 export const default_neuron_rad = 5; // in micro
 export const init_form = config.default_form as ReadonlyArray<IFormInput>;
+export const root_id = 1;
+export const none_selected = -1;
 
 export const init_app_state: IAppState = {
     stage: getStage(),
@@ -95,6 +99,7 @@ export const init_app_state: IAppState = {
     stims: [],
     neuronRadius: default_neuron_rad,
     inputs: JSON.parse(JSON.stringify(init_form)) as IFormInput[],
+    selectedId: none_selected,
 };
 
 const Wrapper = (props: any) => {

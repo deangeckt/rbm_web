@@ -6,22 +6,22 @@ import Grid from '@material-ui/core/Grid';
 import { AppContext } from '../Contexts/AppContext';
 
 export interface IFormsProps {
-    updateDialog: (id: string) => void;
+    updateDialogInfo: (id: string) => void;
 }
 
-function Forms({ updateDialog }: IFormsProps) {
+function Forms({ updateDialogInfo }: IFormsProps) {
     const { state } = useContext(AppContext);
 
     const g1 = state.inputs.filter((input) => input.group === 1);
     const g2 = state.inputs.filter((input) => input.group !== 1);
     return (
-        <div>
+        <div style={{ border: '1px solid red' }}>
             <Grid container spacing={0}>
                 <Grid item xs={6}>
                     <List>
                         {g1.map((input, i) => (
                             <ListItem key={i} button>
-                                <FormInput key={i} input={input} updateDialog={updateDialog} />
+                                <FormInput key={i} input={input} updateDialogInfo={updateDialogInfo} />
                             </ListItem>
                         ))}
                     </List>
@@ -30,7 +30,7 @@ function Forms({ updateDialog }: IFormsProps) {
                     <List>
                         {g2.map((input, i) => (
                             <ListItem key={i} button>
-                                <FormInput key={i} input={input} updateDialog={updateDialog} />
+                                <FormInput key={i} input={input} updateDialogInfo={updateDialogInfo} />
                             </ListItem>
                         ))}
                     </List>

@@ -7,7 +7,9 @@ import Stim from './Stim';
 import './Simulate.css';
 
 export interface ISimulateTabsProps {
-    updateDialog: (id: string) => void;
+    updateDialogInfo: (id: string) => void;
+    tab: number;
+    setTab: Function;
 }
 
 interface TabPanelProps {
@@ -36,9 +38,7 @@ function TabPanel(props: TabPanelProps) {
     );
 }
 
-function SimulateTabs({ updateDialog }: ISimulateTabsProps) {
-    const [tab, setTab] = React.useState(0);
-
+function SimulateTabs({ updateDialogInfo, tab, setTab }: ISimulateTabsProps) {
     return (
         <div className="Tabs">
             <AppBar position="static">
@@ -54,7 +54,7 @@ function SimulateTabs({ updateDialog }: ISimulateTabsProps) {
                 </Tabs>
             </AppBar>
             <TabPanel value={tab} index={0}>
-                <Forms updateDialog={updateDialog} />
+                <Forms updateDialogInfo={updateDialogInfo} />
             </TabPanel>
             <TabPanel value={tab} index={1}>
                 <Stim />

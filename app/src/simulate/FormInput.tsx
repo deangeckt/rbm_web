@@ -6,7 +6,7 @@ import { useSimulate } from './useSimulate';
 
 export interface IFormsInputProps {
     input: IFormInput;
-    updateDialog: (id: string) => void;
+    updateDialogInfo: (id: string) => void;
 }
 
 function FormInput(props: IFormsInputProps) {
@@ -18,7 +18,7 @@ function FormInput(props: IFormsInputProps) {
                 <Button
                     variant="outlined"
                     color="primary"
-                    onClick={() => props.updateDialog(props.input.id)}
+                    onClick={() => props.updateDialogInfo(props.input.id)}
                     startIcon={<InfoIcon />}
                 ></Button>
                 <TextField

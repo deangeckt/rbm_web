@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { AppContext } from '../Contexts/AppContext';
-import { ILine } from '../Wrapper';
+import { ILine, none_selected } from '../Wrapper';
 
 export function useDesignCanvas() {
-    const { state } = useContext(AppContext);
+    const { state, setState } = useContext(AppContext);
 
     const getChildren = (lid: number) => {
         const lines = state.lines;
@@ -39,5 +39,16 @@ export function useDesignCanvas() {
         return [prevX + d * Math.cos(alpha), prevY - d * Math.sin(alpha)];
     };
 
-    return { getChildren, updateLinePoint, lengthAlphaToXy, updateChildsBelow };
+    const setSelectedId = (id: number) => {
+        setState({ ...state, selectedId: id });
+    };
+
+    const checkDeselect = (e: any) => {
+        const clickedOnEmpty = e.target === e.target.getStage();
+        if (clickedOnEmpty) {
+            setSelectedId(none_selected);
+        }
+    };
+
+    return { getChildren, updateLinePoint, lengthAlphaToXy, updateChildsBelow, setSelectedId, checkDeselect };
 }

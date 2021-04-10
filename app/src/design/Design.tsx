@@ -5,7 +5,7 @@ import TopPanel from './TopPanel';
 import DesignCanvas from './DesignCanvas';
 import './Design.css';
 import Navigation from './Navigation';
-import { ILine } from '../Wrapper';
+import { ILine, none_selected, root_id } from '../Wrapper';
 import { AppContext } from '../Contexts/AppContext';
 import { useDesignCanvas } from './useDesignCanvas';
 
@@ -13,20 +13,10 @@ const default_radius = 0.1; // in micro
 const default_tid = 0;
 const default_length = 10; //in micro
 export const default_alpha = Math.PI * 0.1;
-export const root_id = 1;
-const none_selected = -1;
 
 const Design = () => {
     const { state, setState } = useContext(AppContext);
-    const [selectedId, setSelectedId] = React.useState(root_id);
-    const { getChildren, updateLinePoint, lengthAlphaToXy, updateChildsBelow } = useDesignCanvas();
-
-    const checkDeselect = (e: any) => {
-        const clickedOnEmpty = e.target === e.target.getStage();
-        if (clickedOnEmpty) {
-            setSelectedId(none_selected);
-        }
-    };
+    const { getChildren, updateLinePoint, lengthAlphaToXy, updateChildsBelow, setSelectedId } = useDesignCanvas();
 
     const addNewPoints = (prevX: number, prevY: number, childs: ILine[]) => {
         const alphas = childs.map((c) => c.alpha);
@@ -39,7 +29,7 @@ const Design = () => {
 
     const addNew = () => {
         const lines = [...state.lines];
-        const selectedLine = lines.find((line) => line.id === selectedId);
+        const selectedLine = lines.find((line) => line.id === state.selectedId);
         let newId: number;
         let newPid: number;
         let newPoints: number[] = [];
@@ -69,37 +59,37 @@ const Design = () => {
             tid: default_tid,
             length: lengthToPoint(default_length),
             alpha: newAlpha,
+            internalId: 0,
         });
-        setState({ ...state, lines: lines });
-        setSelectedId(newId);
+        setState({ ...state, lines: lines, selectedId: newId });
     };
 
     const getSelectedRadius = () => {
-        const selectedLine = state.lines.find((line) => line.id === selectedId);
+        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
         return selectedLine ? selectedLine.radius : default_radius;
     };
 
     const getSelectedType = () => {
-        const selectedLine = state.lines.find((line) => line.id === selectedId);
+        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
         return selectedLine ? selectedLine.tid : default_tid;
     };
 
     const updateSimpleField = (field: 'tid' | 'radius', value: number) => {
         if (field === 'radius' && value <= 0) return;
         const lines = [...state.lines];
-        const selectedLine = lines.find((line) => line.id === selectedId);
+        const selectedLine = lines.find((line) => line.id === state.selectedId);
         (selectedLine as any)[field] = value;
         setState({ ...state, lines: lines });
     };
 
     const getSelectedAlpha = () => {
-        const selectedLine = state.lines.find((line) => line.id === selectedId);
+        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
         const alpha = selectedLine ? selectedLine.alpha : default_alpha;
         return alpha / Math.PI;
     };
 
     const getSelectedLength = () => {
-        const selectedLine = state.lines.find((line) => line.id === selectedId);
+        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
         return selectedLine ? pointToLength(selectedLine.length) : default_length;
     };
 
@@ -114,7 +104,7 @@ const Design = () => {
 
     const updateAlpha = (value: number) => {
         const lines = [...state.lines];
-        const selectedLine = lines.find((line) => line.id === selectedId);
+        const selectedLine = lines.find((line) => line.id === state.selectedId);
         if (!selectedLine) return;
 
         selectedLine.alpha = value * Math.PI;
@@ -126,7 +116,7 @@ const Design = () => {
     const updateLength = (value: number) => {
         if (value <= 0) return;
         const lines = [...state.lines];
-        const selectedLine = state.lines.find((line) => line.id === selectedId);
+        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
         if (!selectedLine) return;
 
         selectedLine.length = lengthToPoint(value);
@@ -137,23 +127,22 @@ const Design = () => {
 
     const Delete = () => {
         const lines = [...state.lines];
-        const index = lines.findIndex((line) => line.id === selectedId);
+        const index = lines.findIndex((line) => line.id === state.selectedId);
         if (index === -1) return;
 
         const parentId = lines[index].pid;
         deleteChildsRecur(lines, index);
-        setState({ ...state, lines: lines });
-        setSelectedId(parentId);
+        setState({ ...state, lines: lines, selectedId: parentId });
     };
 
     const setNextChildSelected = () => {
-        if (selectedId === none_selected) return;
+        if (state.selectedId === none_selected) return;
 
         let childs: ILine[];
-        if (selectedId === root_id) {
+        if (state.selectedId === root_id) {
             childs = getChildren(root_id);
         } else {
-            const selectedLine = state.lines.find((line) => line.id === selectedId);
+            const selectedLine = state.lines.find((line) => line.id === state.selectedId);
             childs = getChildren(selectedLine!.id);
         }
 
@@ -163,16 +152,16 @@ const Design = () => {
     };
 
     const setBackChildSelected = () => {
-        if (selectedId === none_selected || selectedId === root_id) return;
+        if (state.selectedId === none_selected || state.selectedId === root_id) return;
 
-        const selectedLine = state.lines.find((line) => line.id === selectedId);
+        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
         setSelectedId(selectedLine!.pid);
     };
 
     const setBrotherChildSelected = () => {
-        if (selectedId === none_selected || selectedId === root_id) return;
+        if (state.selectedId === none_selected || state.selectedId === root_id) return;
 
-        const selectedLine = state.lines.find((line) => line.id === selectedId);
+        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
         const childs = getChildren(selectedLine!.pid);
 
         if (childs.length === 1) return;
@@ -190,7 +179,7 @@ const Design = () => {
             </div>
             <div className="MainPanel">
                 <div className="Canvas" id={'Canvas'}>
-                    <DesignCanvas checkDeselect={checkDeselect} selectedId={selectedId} setSelectedId={setSelectedId} />
+                    <DesignCanvas />
                 </div>
                 <div className="ControlPanel">
                     <ControlPanel
@@ -203,10 +192,10 @@ const Design = () => {
                         updateSimpleField={updateSimpleField}
                         updateAlpha={updateAlpha}
                         updateLength={updateLength}
-                        neuronSelected={selectedId === root_id}
-                        lineSelected={selectedId !== none_selected && selectedId !== root_id}
+                        neuronSelected={state.selectedId === root_id}
+                        lineSelected={state.selectedId !== none_selected && state.selectedId !== root_id}
                     />
-                    {selectedId !== none_selected ? (
+                    {state.selectedId !== none_selected ? (
                         <Navigation
                             setNext={setNextChildSelected}
                             setBack={setBackChildSelected}

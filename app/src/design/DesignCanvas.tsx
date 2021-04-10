@@ -1,22 +1,15 @@
 import React, { useContext, useEffect } from 'react';
-import { root_id } from './Design';
 import { neuronRadToSize } from '../utils/SwcUtils';
 import { Stage, Layer, Circle } from 'react-konva';
 import TransformerLine from './TransformerLine';
 import { colors } from '../colors';
 import { AppContext } from '../Contexts/AppContext';
 import { useDesignCanvas } from './useDesignCanvas';
-import { getStage } from '../Wrapper';
+import { getStage, root_id } from '../Wrapper';
 
-export interface IDesignCanvasProps {
-    checkDeselect?: (e: any) => void;
-    selectedId: number;
-    setSelectedId: Function;
-}
-
-function DesignCanvas({ checkDeselect, selectedId, setSelectedId }: IDesignCanvasProps) {
+function DesignCanvas() {
     const { state, setState } = useContext(AppContext);
-    const { updateLinePoint, updateChildsBelow } = useDesignCanvas();
+    const { updateLinePoint, updateChildsBelow, checkDeselect, setSelectedId } = useDesignCanvas();
     //TODO: handle zoom and catch this event and render right after
     const widSize = window.document.getElementById('Canvas')?.offsetWidth;
 
@@ -45,7 +38,7 @@ function DesignCanvas({ checkDeselect, selectedId, setSelectedId }: IDesignCanva
                     <Circle
                         radius={neuronRadToSize(state.neuronRadius)}
                         fill={colors.primary}
-                        opacity={selectedId === root_id ? 0.8 : 0.3}
+                        opacity={state.selectedId === root_id ? 0.8 : 0.3}
                         x={state.stage.rootX}
                         y={state.stage.rootY}
                         draggable={false}
@@ -55,7 +48,7 @@ function DesignCanvas({ checkDeselect, selectedId, setSelectedId }: IDesignCanva
                         <TransformerLine
                             key={l.id}
                             shapeProps={l}
-                            isSelected={l.id === selectedId}
+                            isSelected={l.id === state.selectedId}
                             onSelect={() => {
                                 setSelectedId(l.id);
                             }}

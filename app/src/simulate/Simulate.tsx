@@ -5,11 +5,13 @@ import { Button, Dialog, DialogTitle } from '@material-ui/core';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
-import { root_id } from '../design/Design';
 import DesignCanvas from '../design/DesignCanvas';
 import { run } from '../api/api';
 import { AppContext } from '../Contexts/AppContext';
 import SimulateTabs from './SimulateTabs';
+import { useSimulate } from './useSimulate';
+import AddIcon from '@material-ui/icons/Add';
+import { none_selected } from '../Wrapper';
 
 export interface IData {
     plot: number[][];
@@ -23,6 +25,7 @@ const init_data: IData = {
 
 function Simulate() {
     const { state } = useContext(AppContext);
+    const { addStim } = useSimulate();
 
     // simulate props
     const [error, setError] = React.useState('');
@@ -30,9 +33,11 @@ function Simulate() {
     const [loading, setLoading] = React.useState(false);
     const [data, setData] = React.useState(init_data);
 
-    // dialog - tooltip props
-    const [dialogState, setDialogState] = React.useState(false);
-    const [dialogTitle, setDialogTitle] = React.useState('');
+    // dialog props
+    const [dialogInfo, setDialogInfo] = React.useState(false);
+    const [dialogChoise, setDialogChoise] = React.useState(false);
+    const [dialogInfoTitle, setDialogInfoTitle] = React.useState('');
+    const [tab, setTab] = React.useState(0);
 
     const updateData = (newData: number[][]) => {
         setData({ ...data, plot: newData });
@@ -61,20 +66,53 @@ function Simulate() {
         setError('');
     };
 
-    const updateDialog = (id: string) => {
+    const updateDialogInfo = (id: string) => {
         const currInput = state.inputs.find((ele) => ele.id === id);
         if (!currInput) return;
 
         const title = currInput.tooltipTitle;
-        setDialogTitle(title);
-        setDialogState(true);
+        setDialogInfoTitle(title);
+        setDialogInfo(true);
     };
+
+    React.useEffect(() => {
+        if (state.selectedId != none_selected) {
+            setDialogChoise(true);
+        }
+    }, [state.selectedId]);
 
     return (
         <div className="Simulate">
             {loading ? <div>Loading</div> : null}
-            <Dialog onClose={() => setDialogState(false)} open={dialogState}>
-                <DialogTitle> {dialogTitle} </DialogTitle>
+            <Dialog onClose={() => setDialogInfo(false)} open={dialogInfo}>
+                <DialogTitle> {dialogInfoTitle} </DialogTitle>
+            </Dialog>
+            <Dialog onClose={() => setDialogChoise(false)} open={dialogChoise}>
+                <Button
+                    className="NoCapsButton"
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => {
+                        addStim();
+                        setDialogChoise(false);
+                        setTab(1);
+                    }}
+                    startIcon={<AddIcon />}
+                >
+                    Add New Stimulus
+                </Button>
+                <Button
+                    className="NoCapsButton"
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => {
+                        setDialogChoise(false);
+                        setTab(2);
+                    }}
+                    startIcon={<AddIcon />}
+                >
+                    Add New Recording
+                </Button>
             </Dialog>
             <Snackbar open={error !== ''} autoHideDuration={6000} onClose={closeError}>
                 <Alert variant="outlined" severity="error" onClose={closeError}>
@@ -94,14 +132,14 @@ function Simulate() {
                             {!running ? 'Start' : 'Reset'}
                         </Button>
                     </div>
-                    <SimulateTabs updateDialog={updateDialog} />
+                    <SimulateTabs updateDialogInfo={updateDialogInfo} tab={tab} setTab={setTab} />
                 </div>
                 <div className="RightSide">
                     <div className="Plot">
                         <Plot data={[data]} />
                     </div>
                     <div className="Graph" id={'Canvas'}>
-                        <DesignCanvas selectedId={root_id} setSelectedId={() => null} />
+                        <DesignCanvas />
                     </div>
                 </div>
             </div>
