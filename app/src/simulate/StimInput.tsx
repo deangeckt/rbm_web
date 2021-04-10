@@ -75,7 +75,7 @@ function StimInput({ stim, idx }: IStimInputProps) {
                     startIcon={<DeleteIcon />}
                     onClick={() => deleteStim(idx)}
                 >
-                    Delete
+                    Delete {idx}
                 </Button>
             </div>
         </>

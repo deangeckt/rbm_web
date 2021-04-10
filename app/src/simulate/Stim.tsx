@@ -10,7 +10,7 @@ function Stim() {
     const { addStim } = useSimulate();
 
     return (
-        <div style={{ border: '1px solid green' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                 <Button
                     className="NoCapsButton"
@@ -27,10 +27,10 @@ function Stim() {
             </div>
 
             <Grid container spacing={0}>
-                <Grid item xs={6}>
+                <Grid item xs>
                     <List>
                         {state.stims
-                            .filter((_stim, i) => i % 2 === 0)
+                            .filter((_stim, i) => i % 2 === 0) //TODO: bug on idex..
                             .map((stim, i) => (
                                 <ListItem key={i}>
                                     <StimInput key={i} idx={i} stim={stim} />
@@ -38,7 +38,7 @@ function Stim() {
                             ))}
                     </List>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs>
                     <List>
                         {state.stims
                             .filter((_stim, i) => i % 2 !== 0)

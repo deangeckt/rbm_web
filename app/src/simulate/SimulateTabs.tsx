@@ -5,6 +5,7 @@ import { AppBar, Tab, Tabs } from '@material-ui/core';
 import Forms from './Forms';
 import Stim from './Stim';
 import './Simulate.css';
+import { makeStyles } from '@material-ui/core/styles';
 
 export interface ISimulateTabsProps {
     updateDialogInfo: (id: string) => void;
@@ -38,30 +39,44 @@ function TabPanel(props: TabPanelProps) {
     );
 }
 
+const useStyles = makeStyles(() => ({
+    tab: {
+        '& .MuiBox-root': {
+            padding: '0px',
+            display: 'flex',
+            width: '100%',
+        },
+    },
+}));
+
 function SimulateTabs({ updateDialogInfo, tab, setTab }: ISimulateTabsProps) {
+    const classes = useStyles();
+
     return (
         <div className="Tabs">
-            <AppBar position="static">
-                <Tabs
-                    value={tab}
-                    onChange={(_event: React.ChangeEvent<{}>, newValue: number) => {
-                        setTab(newValue);
-                    }}
-                >
-                    <Tab label="General" />
-                    <Tab label="Stimulus" />
-                    <Tab label="Recordings" />
-                </Tabs>
-            </AppBar>
-            <TabPanel value={tab} index={0}>
-                <Forms updateDialogInfo={updateDialogInfo} />
-            </TabPanel>
-            <TabPanel value={tab} index={1}>
-                <Stim />
-            </TabPanel>
-            <TabPanel value={tab} index={2}>
-                Recordings
-            </TabPanel>
+            <div className={classes.tab}>
+                <AppBar position="static">
+                    <Tabs
+                        value={tab}
+                        onChange={(_event: React.ChangeEvent<{}>, newValue: number) => {
+                            setTab(newValue);
+                        }}
+                    >
+                        <Tab label="General" />
+                        <Tab label="Stimulus" />
+                        <Tab label="Recordings" />
+                    </Tabs>
+                </AppBar>
+                <TabPanel value={tab} index={0}>
+                    <Forms updateDialogInfo={updateDialogInfo} />
+                </TabPanel>
+                <TabPanel value={tab} index={1}>
+                    <Stim />
+                </TabPanel>
+                <TabPanel value={tab} index={2}>
+                    Recordings
+                </TabPanel>
+            </div>
         </div>
     );
 }
