@@ -20,7 +20,7 @@ function Forms({ updateDialogInfo }: IFormsProps) {
                 <Grid item xs={6}>
                     <List>
                         {g1.map((input, i) => (
-                            <ListItem key={i} button>
+                            <ListItem key={i}>
                                 <FormInput key={i} input={input} updateDialogInfo={updateDialogInfo} />
                             </ListItem>
                         ))}
@@ -29,7 +29,7 @@ function Forms({ updateDialogInfo }: IFormsProps) {
                 <Grid item xs={6}>
                     <List>
                         {g2.map((input, i) => (
-                            <ListItem key={i} button>
+                            <ListItem key={i}>
                                 <FormInput key={i} input={input} updateDialogInfo={updateDialogInfo} />
                             </ListItem>
                         ))}

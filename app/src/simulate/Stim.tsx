@@ -32,7 +32,7 @@ function Stim() {
                         {state.stims
                             .filter((_stim, i) => i % 2 === 0)
                             .map((stim, i) => (
-                                <ListItem key={i} button>
+                                <ListItem key={i}>
                                     <StimInput key={i} idx={i} stim={stim} />
                                 </ListItem>
                             ))}
@@ -43,7 +43,7 @@ function Stim() {
                         {state.stims
                             .filter((_stim, i) => i % 2 !== 0)
                             .map((stim, i) => (
-                                <ListItem key={i} button>
+                                <ListItem key={i}>
                                     <StimInput key={i} idx={i} stim={stim} />
                                 </ListItem>
                             ))}
