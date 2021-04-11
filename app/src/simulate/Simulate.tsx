@@ -55,7 +55,7 @@ function Simulate() {
         setRunning(!running);
         if (!running) {
             setLoading(true);
-            run(updateData, updateError, state.inputs);
+            run(updateData, updateError, state.inputs, state.stims);
         } else {
             updateData([[]]);
         }

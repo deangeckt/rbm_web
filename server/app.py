@@ -22,14 +22,15 @@ def score():
             if 'id' not in d or 'value' not in d:
                 msg = "Data params - bad format"
                 raise ValueError(msg)
-
         res = wrapper.run(data)
         return json.dumps(res), 200, {'Content-Type': 'application/json'}
 
+    except ValueError as e:
+        return str(e), 505,
     except:
         exctype, _, exctb = sys.exc_info()
         print(str(traceback.format_tb(exctb)))
-        return "Server error", 500
+        return "", 500
 
 
 if __name__ == "__main__":
