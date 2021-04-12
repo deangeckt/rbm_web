@@ -30,7 +30,7 @@ export function useSimulate() {
             newStimId = 0;
         } else {
             newStimType = selectedLine.tid;
-            newStimId = selectedLine.internalId;
+            newStimId = selectedLine.cid!; //TODO: calculate cid per line when Sim.tsx is up
         }
         stims.push({
             delay: 0,

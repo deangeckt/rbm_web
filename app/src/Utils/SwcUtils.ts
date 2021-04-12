@@ -25,8 +25,8 @@ export function exportFile(lines: ILine[], neuronRadius: number, rootX: number, 
     let res = '# SWC tree generated using RBM software\n';
     res = res.concat(`1 1 0.0 0.0 0.0 ${neuronRadius} -1\n`);
     lines.forEach((line) => {
-        const x = pointToLength(line.points[2] - rootX).toFixed(2);
-        const y = pointToLength(rootY - line.points[3]).toFixed(2);
+        const x = pointToLength(line.points[2] - rootX);
+        const y = pointToLength(rootY - line.points[3]);
         const lineStr = `${line.id} ${line.tid} ${x} ${y} 0.0 ${line.radius} ${line.pid}\n`;
         res = res.concat(lineStr);
     });
@@ -76,7 +76,7 @@ function textLineToILine(
     const length = Number(Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2)).toFixed(2));
     const alpha = -Math.atan((y1 - y0) / (x1 - x0));
 
-    return { id: id, tid: tid, points: points, radius: radius, pid: pid, length: length, alpha: alpha, internalId: 0 };
+    return { id: id, tid: tid, points: points, radius: radius, pid: pid, length: length, alpha: alpha };
 }
 
 export function importFile(text: string, screenRootX: number, screenRootY: number): Partial<IAppState> {

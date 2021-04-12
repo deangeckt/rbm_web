@@ -59,7 +59,6 @@ const Design = () => {
             tid: default_tid,
             length: lengthToPoint(default_length),
             alpha: newAlpha,
-            internalId: 0,
         });
         setState({ ...state, lines: lines, selectedId: newId });
     };

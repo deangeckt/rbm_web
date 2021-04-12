@@ -4,11 +4,11 @@ import config from '../src/share/config.json';
 
 export interface ILine {
     id: number;
-    internalId: number;
+    cid?: number;
     tid: number;
+    pid: number;
     points: number[]; // [x1,y1, x2,y2]
     radius: number;
-    pid: number;
     length: number;
     alpha: number;
 }
