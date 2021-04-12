@@ -92,6 +92,10 @@ export const default_neuron_rad = 5; // in micro
 export const init_form = config.default_form as ReadonlyArray<IFormInput>;
 export const root_id = 1;
 export const none_selected = -1;
+export const default_radius = 0.1; // in micro
+export const default_tid = 0;
+export const default_length = 10; //in micro
+export const default_alpha = Math.PI * 0.1;
 
 export const init_app_state: IAppState = {
     stage: getStage(),

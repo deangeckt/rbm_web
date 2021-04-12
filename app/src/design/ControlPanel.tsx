@@ -2,39 +2,26 @@ import React, { useContext } from 'react';
 import { Button, InputAdornment, MenuItem, TextField } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { default_alpha } from './Design';
 import { AppContext } from '../Contexts/AppContext';
-import { types } from '../Wrapper';
+import { none_selected, types, root_id, default_alpha } from '../Wrapper';
 import './ControlPanel.css';
+import { useDesignCanvas } from './useDesignCanvas';
 
-export interface IControlPanelProps {
-    addNew: Function;
-    Delete: Function;
-    getSelectedLength: Function;
-    getSelectedAlpha: Function;
-    getSelectedRadius: Function;
-    getSelectedType: Function;
-    updateSimpleField: Function;
-    updateAlpha: Function;
-    updateLength: Function;
-    neuronSelected: boolean;
-    lineSelected: boolean;
-}
-
-function ControlPanel({
-    addNew,
-    Delete,
-    getSelectedLength,
-    getSelectedAlpha,
-    getSelectedRadius,
-    getSelectedType,
-    updateSimpleField,
-    updateAlpha,
-    updateLength,
-    neuronSelected,
-    lineSelected,
-}: IControlPanelProps) {
+function ControlPanel() {
     const { state, setState } = useContext(AppContext);
+    const neuronSelected = state.selectedId === root_id;
+    const lineSelected = state.selectedId !== none_selected && state.selectedId !== root_id;
+    const {
+        addNew,
+        Delete,
+        getSelectedLength,
+        getSelectedAlpha,
+        getSelectedRadius,
+        getSelectedType,
+        updateSimpleField,
+        updateAlpha,
+        updateLength,
+    } = useDesignCanvas();
 
     return (
         <>

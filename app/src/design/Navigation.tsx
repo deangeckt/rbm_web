@@ -4,14 +4,11 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
 import './ControlPanel.css';
+import { useTreeNavigation } from './useTreeNavigation';
 
-export interface INavigationProps {
-    setNext: Function;
-    setBack: Function;
-    setBrother: Function;
-}
+function Navigation() {
+    const { setNextChildSelected, setBackChildSelected, setBrotherChildSelected } = useTreeNavigation();
 
-function Navigation({ setNext, setBack, setBrother }: INavigationProps) {
     return (
         <div className="NavPanel">
             <Button
@@ -19,7 +16,7 @@ function Navigation({ setNext, setBack, setBrother }: INavigationProps) {
                 variant="outlined"
                 color="primary"
                 startIcon={<NavigateNextIcon />}
-                onClick={() => setNext()}
+                onClick={() => setNextChildSelected()}
             >
                 Select Child
             </Button>
@@ -28,7 +25,7 @@ function Navigation({ setNext, setBack, setBrother }: INavigationProps) {
                 variant="outlined"
                 color="primary"
                 startIcon={<NavigateBeforeIcon />}
-                onClick={() => setBack()}
+                onClick={() => setBackChildSelected()}
             >
                 Select Parent
             </Button>
@@ -37,7 +34,7 @@ function Navigation({ setNext, setBack, setBrother }: INavigationProps) {
                 variant="outlined"
                 color="primary"
                 startIcon={<CallSplitIcon />}
-                onClick={() => setBrother()}
+                onClick={() => setBrotherChildSelected()}
             >
                 Select Sibling
             </Button>
