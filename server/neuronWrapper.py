@@ -177,8 +177,9 @@ class NeuronWrapper:
         dummy = self.h.Section(name='dummy')
         point_mechanism_list = self.__read_mechanism(0)
         point_processes = self.__read_mechanism(1)
-        mechanism_global = {}  # e.g
+        mechanism_global = {}
         mechanism_global_with_value = {}
+
         exclude_mechanism = ['morphology', 'capacitance']
         for mech in point_mechanism_list:
             if mech in exclude_mechanism:
@@ -197,7 +198,8 @@ class NeuronWrapper:
         with io.StringIO() as buf, redirect_stdout(buf):
             self.h.psection(sec=dummy)
             point_mechanism_str = buf.getvalue()
-            point_mechanism_dict = self.__read_parse_section_attr_str(point_mechanism_str)
+
+        point_mechanism_dict = self.__read_parse_section_attr_str(point_mechanism_str)
 
         result['point_processes'] = point_processes  # e.g IClamp -> h.IClamp(sec[id_](section_))
         result['point_mechanism'] = point_mechanism_dict  # e.g hh -> sec.insert('hh'), sec.gnabar_hh = X
