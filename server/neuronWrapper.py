@@ -1,4 +1,7 @@
+import io
 import json
+from contextlib import redirect_stdout
+
 from pylab import *
 
 
@@ -46,13 +49,13 @@ class NeuronWrapper:
             for form in default_form:
                 self.config[form['id']] = form['value']
 
-    def init_params(self, params):
+    def __init_params(self, params):
         for tup in params:
             id_ = tup['id']
             val_ = tup['value']
             self.config[id_] = val_
 
-    def init_swc(self):
+    def __init_swc(self):
         if 'swc_path' not in self.config:
             raise ValueError('Missing SWC file param')
 
@@ -65,7 +68,7 @@ class NeuronWrapper:
         i3d = self.h.Import3d_GUI(cell, False)
         i3d.instantiate(None)
 
-    def add_stim(self):
+    def __add_stim(self):
         if 'stim' not in self.config:
             return
         stims = []
@@ -82,7 +85,7 @@ class NeuronWrapper:
             stims.append(new_stim)
         return stims
 
-    def add_record(self):
+    def __add_record(self):
         if 'record' not in self.config:
             raise ValueError('Missing Recordings')
         recordings = {}
@@ -104,15 +107,15 @@ class NeuronWrapper:
         return recordings
 
     def run(self, params):
-        self.init_params(params)
-        self.init_swc()
+        self.__init_params(params)
+        self.__init_swc()
 
         self.h.celsius = self.config['celsius']
 
         self.h.soma[0].insert('hh')  # insert a Hodgkin-Huxley channel
 
-        stims = self.add_stim()
-        recordings = self.add_record()
+        stims = self.__add_stim()
+        recordings = self.__add_record()
 
         trec = self.h.Vector()
         trec.record(self.h._ref_t)  # record time variable
@@ -124,6 +127,81 @@ class NeuronWrapper:
         result = {'time': np.array(trec).tolist()}
         for record_key in recordings:
             result[record_key] = np.array(recordings[record_key]).tolist()
+
+        return result
+
+    def __read_mechanism(self, type_):
+        """
+        :param type_: 0 || 1
+        :return: []
+        """
+        mechanism = []
+        mt = self.h.MechanismType(type_)
+        mname = self.h.ref('')
+        for i in range(mt.count()):
+            mt.select(i)
+            mt.selected(mname)
+            mechanism.append(mname[0])
+        return mechanism
+
+    def __read_mech_globals(self, mechname):
+        ms = self.h.MechanismStandard(mechname, -1)
+        name = self.h.ref('')
+        mech_globals = []
+        for j in range(ms.count()):
+            ms.name(name, j)
+            mech_globals.append(name[0])
+        return mech_globals
+
+    @staticmethod
+    def __read_parse_section_attr_str(section_attr_str):
+        result = {}
+        lines = section_attr_str.split('\n')
+        for line in lines:
+            if line.startswith('\tinsert'):
+                sep_line = line.split(' ')
+                attr = sep_line[1]
+                vals = []
+                others = sep_line[2:]
+                for other in others:
+                    if other == '{}' or other == '{':
+                        continue
+                    val_split = other.split('=')
+                    vals.append({val_split[0]: val_split[1].replace('}', '')})
+                if vals:
+                    result[attr] = vals
+        return result
+
+    def read(self):
+        result = {}
+        dummy = self.h.Section(name='dummy')
+        point_mechanism_list = self.__read_mechanism(0)
+        point_processes = self.__read_mechanism(1)
+        mechanism_global = {}  # e.g
+        mechanism_global_with_value = {}
+        exclude_mechanism = ['morphology', 'capacitance']
+        for mech in point_mechanism_list:
+            if mech in exclude_mechanism:
+                continue
+            dummy.insert(mech)
+            mechanism_global[mech] = self.__read_mech_globals(mech)
+
+        for mg in mechanism_global:
+            if not mechanism_global[mg]:
+                continue
+            vals = []
+            for attr in mechanism_global[mg]:
+                vals.append({attr: getattr(self.h, attr)})
+            mechanism_global_with_value[mg] = vals
+
+        with io.StringIO() as buf, redirect_stdout(buf):
+            self.h.psection(sec=dummy)
+            point_mechanism_str = buf.getvalue()
+            point_mechanism_dict = self.__read_parse_section_attr_str(point_mechanism_str)
+
+        result['point_processes'] = point_processes  # e.g IClamp -> h.IClamp(sec[id_](section_))
+        result['point_mechanism'] = point_mechanism_dict  # e.g hh -> sec.insert('hh'), sec.gnabar_hh = X
+        result['global_mechanism'] = mechanism_global_with_value  # e.g  h('celsius = X')
 
         return result
 
