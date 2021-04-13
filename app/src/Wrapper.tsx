@@ -20,7 +20,7 @@ export interface IStageSize {
     rootY: number;
 }
 
-export const types = [
+export const section_types = [
     {
         value: 0,
         label: 'undefined',
@@ -47,15 +47,25 @@ export const types = [
     },
 ];
 
-export interface IStimInput {
-    delay: number;
-    duration: number;
-    amplitude: number;
+export const recording_types = ['volt', 'ina', 'ik'];
+
+export interface ISection {
     type: number; // based on types
     id: number;
     section: number;
 }
 
+export interface IStimInput {
+    delay: number;
+    duration: number;
+    amplitude: number;
+    section: ISection;
+}
+
+export interface IRecordInput {
+    section: ISection;
+    type: string;
+}
 export interface IFormInput {
     name: string;
     value: any;
@@ -70,6 +80,7 @@ export interface IAppState {
     lines: ILine[];
     neuronRadius: number;
     stims: IStimInput[];
+    records: IRecordInput[];
     inputs: IFormInput[];
     selectedId: number;
 }
@@ -101,6 +112,7 @@ export const init_app_state: IAppState = {
     stage: getStage(),
     lines: [],
     stims: [],
+    records: [],
     neuronRadius: default_neuron_rad,
     inputs: JSON.parse(JSON.stringify(init_form)) as IFormInput[],
     selectedId: none_selected,

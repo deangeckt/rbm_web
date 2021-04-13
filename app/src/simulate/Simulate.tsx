@@ -25,7 +25,7 @@ const init_data: IData = {
 
 function Simulate() {
     const { state } = useContext(AppContext);
-    const { addStim } = useSimulate();
+    const { addStim, addRecord } = useSimulate();
 
     // simulate props
     const [error, setError] = React.useState('');
@@ -106,6 +106,7 @@ function Simulate() {
                     variant="outlined"
                     color="primary"
                     onClick={() => {
+                        addRecord();
                         setDialogChoise(false);
                         setTab(2);
                     }}

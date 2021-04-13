@@ -1,7 +1,6 @@
 import io
 import json
 from contextlib import redirect_stdout
-
 from pylab import *
 
 

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../Contexts/AppContext';
-import { none_selected, root_id } from '../Wrapper';
+import { ISection, none_selected, recording_types, root_id } from '../Wrapper';
 
 export function useSimulate() {
     const { state, setState } = useContext(AppContext);
@@ -14,14 +14,31 @@ export function useSimulate() {
         setState({ ...state, inputs: updateInputs });
     };
 
-    const updateStim = (field: string, value: number, idx: number) => {
+    const updateStimSimple = (field: string, value: number, idx: number) => {
         const stims = [...state.stims];
         (stims[idx] as any)[field] = value;
         setState({ ...state, stims: stims });
     };
 
-    const addStim = () => {
+    const updateStimSection = (field: string, value: number, idx: number) => {
         const stims = [...state.stims];
+        (stims[idx].section as any)[field] = value;
+        setState({ ...state, stims: stims });
+    };
+
+    const updateRecordSimple = (field: string, value: any, idx: number) => {
+        const records = [...state.records];
+        (records[idx] as any)[field] = value;
+        setState({ ...state, records: records });
+    };
+
+    const updateRecordSection = (field: string, value: number, idx: number) => {
+        const records = [...state.records];
+        (records[idx].section as any)[field] = value;
+        setState({ ...state, records: records });
+    };
+
+    const newSection = (): ISection => {
         const selectedLine = state.lines.find((line) => line.id === state.selectedId);
         let newStimId;
         let newStimType;
@@ -30,17 +47,33 @@ export function useSimulate() {
             newStimId = 0;
         } else {
             newStimType = selectedLine.tid;
-            newStimId = selectedLine.cid!; //TODO: calculate cid per line when Sim.tsx is up
+            newStimId = selectedLine.cid ?? 0; //TODO: calculate cid per line when Sim.tsx is up
         }
-        stims.push({
-            delay: 0,
-            duration: 20,
-            amplitude: 20,
+        return {
             type: newStimType,
             id: newStimId,
             section: 0.5,
+        };
+    };
+
+    const addStim = () => {
+        const stims = [...state.stims];
+        stims.push({
+            delay: 0,
+            duration: 20,
+            amplitude: 5,
+            section: newSection(),
         });
         setState({ ...state, stims: stims });
+    };
+
+    const addRecord = () => {
+        const records = [...state.records];
+        records.push({
+            section: newSection(),
+            type: recording_types[0],
+        });
+        setState({ ...state, records: records });
     };
 
     const deleteStim = (idx: number) => {
@@ -49,5 +82,21 @@ export function useSimulate() {
         setState({ ...state, stims: stims });
     };
 
-    return { addStim, updateInput, updateStim, deleteStim };
+    const deleteRecord = (idx: number) => {
+        const records = [...state.records];
+        records.splice(idx, 1);
+        setState({ ...state, records: records });
+    };
+
+    return {
+        addStim,
+        addRecord,
+        updateInput,
+        updateStimSimple,
+        updateStimSection,
+        updateRecordSimple,
+        updateRecordSection,
+        deleteStim,
+        deleteRecord,
+    };
 }

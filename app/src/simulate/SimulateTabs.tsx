@@ -62,7 +62,7 @@ function SimulateTabs({ updateDialogInfo, tab, setTab }: ISimulateTabsProps) {
                             setTab(newValue);
                         }}
                     >
-                        <Tab label="General" />
+                        <Tab label="Global" />
                         <Tab label="Stimulus" />
                         <Tab label="Recordings" />
                     </Tabs>

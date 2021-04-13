@@ -3,7 +3,7 @@ import { Button, InputAdornment, MenuItem, TextField } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { AppContext } from '../Contexts/AppContext';
-import { none_selected, types, root_id, default_alpha } from '../Wrapper';
+import { none_selected, section_types, root_id, default_alpha } from '../Wrapper';
 import './ControlPanel.css';
 import { useDesignCanvas } from './useDesignCanvas';
 
@@ -75,7 +75,7 @@ function ControlPanel() {
                                 value={getSelectedType()}
                                 onChange={(e) => updateSimpleField('tid', Number(e.target.value))}
                             >
-                                {types.map((option) => (
+                                {section_types.map((option) => (
                                     <MenuItem key={option.value} value={option.value}>
                                         {option.label}
                                     </MenuItem>
