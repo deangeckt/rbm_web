@@ -1,15 +1,11 @@
 import React, { useContext } from 'react';
-import FormInput from './FormInput';
+import GlobalInput from './GlobalInput';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
-import { AppContext } from '../Contexts/AppContext';
+import { AppContext } from '../../Contexts/AppContext';
 
-export interface IFormsProps {
-    updateDialogInfo: (id: string) => void;
-}
-
-function Forms({ updateDialogInfo }: IFormsProps) {
+function GlobalForm() {
     const { state } = useContext(AppContext);
 
     const g1 = state.inputs.filter((input) => input.group === 1);
@@ -21,7 +17,7 @@ function Forms({ updateDialogInfo }: IFormsProps) {
                     <List>
                         {g1.map((input, i) => (
                             <ListItem key={i}>
-                                <FormInput key={i} input={input} updateDialogInfo={updateDialogInfo} />
+                                <GlobalInput key={i} input={input} />
                             </ListItem>
                         ))}
                     </List>
@@ -30,7 +26,7 @@ function Forms({ updateDialogInfo }: IFormsProps) {
                     <List>
                         {g2.map((input, i) => (
                             <ListItem key={i}>
-                                <FormInput key={i} input={input} updateDialogInfo={updateDialogInfo} />
+                                <GlobalInput key={i} input={input} />
                             </ListItem>
                         ))}
                     </List>
@@ -40,4 +36,4 @@ function Forms({ updateDialogInfo }: IFormsProps) {
     );
 }
 
-export default Forms;
+export default GlobalForm;

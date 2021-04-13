@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, MenuItem, TextField } from '@material-ui/core';
-import { IRecordInput, recording_types } from '../Wrapper';
-import { useSimulate } from './useSimulate';
+import { IRecordInput, recording_types } from '../../Wrapper';
+import { useSimulate } from '../useSimulate';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SectionInput from './SectionInput';
 
@@ -37,7 +37,7 @@ function RecordInput({ record, idx }: IRecordInputProps) {
                     startIcon={<DeleteIcon />}
                     onClick={() => deleteRecord(idx)}
                 >
-                    Delete {idx}
+                    Delete
                 </Button>
             </div>
         </>

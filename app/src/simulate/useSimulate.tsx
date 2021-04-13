@@ -57,6 +57,7 @@ export function useSimulate() {
     };
 
     const addStim = () => {
+        console.log('adding new stm');
         const stims = [...state.stims];
         stims.push({
             delay: 0,

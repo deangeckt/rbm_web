@@ -66,7 +66,7 @@ export interface IRecordInput {
     section: ISection;
     type: string;
 }
-export interface IFormInput {
+export interface IGlobalInput {
     name: string;
     value: any;
     tooltipTitle: string;
@@ -75,14 +75,21 @@ export interface IFormInput {
     // TODO: add tooltip explained / forumla / image
 }
 
+export interface IDialogs {
+    dialogInfo: boolean;
+    dialogInfoTitle: string;
+    dialogNewForm: boolean;
+}
+
 export interface IAppState {
     stage: IStageSize;
     lines: ILine[];
     neuronRadius: number;
     stims: IStimInput[];
     records: IRecordInput[];
-    inputs: IFormInput[];
+    inputs: IGlobalInput[];
     selectedId: number;
+    dialogs: IDialogs;
 }
 
 export const getStage = (): IStageSize => {
@@ -100,7 +107,7 @@ export const getStage = (): IStageSize => {
 };
 
 export const default_neuron_rad = 5; // in micro
-export const init_form = config.default_form as ReadonlyArray<IFormInput>;
+export const init_form = config.default_form as ReadonlyArray<IGlobalInput>;
 export const root_id = 1;
 export const none_selected = -1;
 export const default_radius = 0.1; // in micro
@@ -114,8 +121,13 @@ export const init_app_state: IAppState = {
     stims: [],
     records: [],
     neuronRadius: default_neuron_rad,
-    inputs: JSON.parse(JSON.stringify(init_form)) as IFormInput[],
+    inputs: JSON.parse(JSON.stringify(init_form)) as IGlobalInput[],
     selectedId: none_selected,
+    dialogs: {
+        dialogInfo: false,
+        dialogInfoTitle: '',
+        dialogNewForm: false,
+    },
 };
 
 const Wrapper = (props: any) => {

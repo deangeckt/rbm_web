@@ -96,10 +96,8 @@ function ControlPanel() {
                             variant="filled"
                             type="number"
                             value={state.neuronRadius}
-                            onChange={(e) =>
-                                Number(e.target.value) > 0 &&
-                                setState({ ...state, neuronRadius: Number(e.target.value) })
-                            }
+                            InputProps={{ inputProps: { min: 0 } }}
+                            onChange={(e) => setState({ ...state, neuronRadius: Number(e.target.value) })}
                         />
                     )}
                 </div>

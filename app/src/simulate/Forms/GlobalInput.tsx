@@ -1,16 +1,17 @@
 import InfoIcon from '@material-ui/icons/Info';
 import React from 'react';
 import { Button, TextField } from '@material-ui/core';
-import { IFormInput } from '../Wrapper';
-import { useSimulate } from './useSimulate';
+import { IGlobalInput } from '../../Wrapper';
+import { useSimulate } from '../useSimulate';
+import { useDialogs } from '../Dialogs/useDialogs';
 
-export interface IFormsInputProps {
-    input: IFormInput;
-    updateDialogInfo: (id: string) => void;
+export interface IGlobalInputProps {
+    input: IGlobalInput;
 }
 
-function FormInput(props: IFormsInputProps) {
+function GlobalInput({ input }: IGlobalInputProps) {
     const { updateInput } = useSimulate();
+    const { updateDialogInfo } = useDialogs();
 
     return (
         <>
@@ -18,19 +19,19 @@ function FormInput(props: IFormsInputProps) {
                 <Button
                     variant="outlined"
                     color="primary"
-                    onClick={() => props.updateDialogInfo(props.input.id)}
+                    onClick={() => updateDialogInfo(input.id)}
                     startIcon={<InfoIcon />}
                 ></Button>
                 <TextField
-                    label={props.input.name}
+                    label={input.name}
                     variant="filled"
                     type="number"
-                    defaultValue={props.input.value}
-                    onChange={(e: any) => updateInput(props.input.id, Number(e.target.value))}
+                    defaultValue={input.value}
+                    onChange={(e: any) => updateInput(input.id, Number(e.target.value))}
                 />
             </div>
         </>
     );
 }
 
-export default FormInput;
+export default GlobalInput;

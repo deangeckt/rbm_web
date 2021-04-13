@@ -1,6 +1,6 @@
 import React from 'react';
 import { MenuItem, TextField } from '@material-ui/core';
-import { ISection, section_types } from '../Wrapper';
+import { ISection, section_types } from '../../Wrapper';
 
 export interface ISectionInputProps {
     section: ISection;

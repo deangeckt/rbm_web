@@ -2,13 +2,16 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { AppBar, Tab, Tabs } from '@material-ui/core';
-import Forms from './Forms';
-import Stim from './Stim';
+import GlobalForm from './Forms/GlobalForm';
+import StimRecordForm from './Forms/StimRecordForm';
 import './Simulate.css';
 import { makeStyles } from '@material-ui/core/styles';
 
+export const global_tab = 0;
+export const stim_tab = 1;
+export const record_tab = 2;
+
 export interface ISimulateTabsProps {
-    updateDialogInfo: (id: string) => void;
     tab: number;
     setTab: Function;
 }
@@ -49,7 +52,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-function SimulateTabs({ updateDialogInfo, tab, setTab }: ISimulateTabsProps) {
+function SimulateTabs({ tab, setTab }: ISimulateTabsProps) {
     const classes = useStyles();
 
     return (
@@ -67,14 +70,14 @@ function SimulateTabs({ updateDialogInfo, tab, setTab }: ISimulateTabsProps) {
                         <Tab label="Recordings" />
                     </Tabs>
                 </AppBar>
-                <TabPanel value={tab} index={0}>
-                    <Forms updateDialogInfo={updateDialogInfo} />
+                <TabPanel value={tab} index={global_tab}>
+                    <GlobalForm />
                 </TabPanel>
-                <TabPanel value={tab} index={1}>
-                    <Stim />
+                <TabPanel value={tab} index={stim_tab}>
+                    <StimRecordForm stim={true} />
                 </TabPanel>
-                <TabPanel value={tab} index={2}>
-                    Recordings
+                <TabPanel value={tab} index={record_tab}>
+                    <StimRecordForm stim={false} />
                 </TabPanel>
             </div>
         </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, TextField } from '@material-ui/core';
-import { IStimInput } from '../Wrapper';
-import { useSimulate } from './useSimulate';
+import { IStimInput } from '../../Wrapper';
+import { useSimulate } from '../useSimulate';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SectionInput from './SectionInput';
 
@@ -48,7 +48,7 @@ function StimInput({ stim, idx }: IStimInputProps) {
                     startIcon={<DeleteIcon />}
                     onClick={() => deleteStim(idx)}
                 >
-                    Delete {idx}
+                    Delete
                 </Button>
             </div>
         </>

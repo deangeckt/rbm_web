@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
-import { IFormInput, init_form, IStimInput } from '../Wrapper';
+import { IGlobalInput, init_form, IStimInput } from '../Wrapper';
 
 // const record_key_parse = (recordKey: string) => {
 //     // return '{}_{}_{}_{}'.format(recording_type_, type_, id_, section_)
 //     const keys = recordKey.split('_');
 // };
 
-export const run = async (setData: Function, setError: Function, form: IFormInput[], stim: IStimInput[]) => {
+export const run = async (setData: Function, setError: Function, form: IGlobalInput[], stim: IStimInput[]) => {
     let data: { id: string; value: any }[] = [];
     const none_default_form = form
         .map((input) => {
@@ -31,8 +31,9 @@ export const run = async (setData: Function, setError: Function, form: IFormInpu
         for (let i = 0; i < t.length; i++) r.push([t[i], v[i]]);
         setData(r);
     } catch (error: any) {
-        console.error(error.response);
-        setError('Simulation Failed ' + error.response.data);
+        console.error(error);
+        const msg = !error.response ? '' : error.response.data;
+        setError('Simulation Failed ' + msg);
     }
 };
 
@@ -49,7 +50,8 @@ export const read = async (setError: Function) => {
         // const point_mechanism = response.data['point_mechanism'];
         // const global_mechanism = response.data['global_mechanism'];
     } catch (error: any) {
-        console.error(error.response);
-        setError('Failed to read Neuron attributes ' + error.response.data);
+        console.error(error);
+        const msg = !error.response ? '' : error.response.data;
+        setError('Failed to read Neuron attributes ' + msg);
     }
 };

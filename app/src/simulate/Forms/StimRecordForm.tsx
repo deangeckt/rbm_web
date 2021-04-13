@@ -1,13 +1,18 @@
 import { Button, Grid, List, ListItem } from '@material-ui/core';
 import React, { useContext } from 'react';
-import { AppContext } from '../Contexts/AppContext';
+import { AppContext } from '../../Contexts/AppContext';
 import StimInput from './StimInput';
-import { useSimulate } from './useSimulate';
+import { useSimulate } from '../useSimulate';
 import AddIcon from '@material-ui/icons/Add';
+import RecordInput from './RecordInput';
 
-function Stim() {
+export interface IStimRecordProps {
+    stim: boolean;
+}
+
+function StimRecordForm({ stim }: IStimRecordProps) {
     const { state } = useContext(AppContext);
-    const { addStim } = useSimulate();
+    const { addStim, addRecord } = useSimulate();
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -16,7 +21,7 @@ function Stim() {
                     className="NoCapsButton"
                     variant="outlined"
                     color="primary"
-                    onClick={() => addStim()}
+                    onClick={() => (stim ? addStim() : addRecord())}
                     startIcon={<AddIcon />}
                 >
                     Add
@@ -27,26 +32,19 @@ function Stim() {
             </div>
 
             <Grid container spacing={0}>
-                <Grid item xs>
+                <Grid item xs={12}>
                     <List>
-                        {state.stims
-                            .filter((_stim, i) => i % 2 === 0) //TODO: bug on idex..
-                            .map((stim, i) => (
-                                <ListItem key={i}>
-                                    <StimInput key={i} idx={i} stim={stim} />
-                                </ListItem>
-                            ))}
-                    </List>
-                </Grid>
-                <Grid item xs>
-                    <List>
-                        {state.stims
-                            .filter((_stim, i) => i % 2 !== 0)
-                            .map((stim, i) => (
-                                <ListItem key={i}>
-                                    <StimInput key={i} idx={i} stim={stim} />
-                                </ListItem>
-                            ))}
+                        {stim
+                            ? state.stims.map((stim, i) => (
+                                  <ListItem key={i}>
+                                      <StimInput key={i} idx={i} stim={stim} />
+                                  </ListItem>
+                              ))
+                            : state.records.map((record, i) => (
+                                  <ListItem key={i}>
+                                      <RecordInput key={i} idx={i} record={record} />
+                                  </ListItem>
+                              ))}
                     </List>
                 </Grid>
             </Grid>
@@ -54,4 +52,4 @@ function Stim() {
     );
 }
 
-export default Stim;
+export default StimRecordForm;
