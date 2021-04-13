@@ -1,12 +1,19 @@
 import axios, { AxiosResponse } from 'axios';
-import { IGlobalInput, init_form, IStimInput } from '../Wrapper';
+import { IData } from '../simulate/Simulate';
+import { IGlobalInput, init_form, IRecordInput, IStimInput } from '../Wrapper';
 
 // const record_key_parse = (recordKey: string) => {
 //     // return '{}_{}_{}_{}'.format(recording_type_, type_, id_, section_)
 //     const keys = recordKey.split('_');
 // };
 
-export const run = async (setData: Function, setError: Function, form: IGlobalInput[], stim: IStimInput[]) => {
+export const run = async (
+    setData: Function,
+    setError: Function,
+    form: IGlobalInput[],
+    stim: IStimInput[],
+    records: IRecordInput[],
+) => {
     let data: { id: string; value: any }[] = [];
     const none_default_form = form
         .map((input) => {
@@ -18,6 +25,7 @@ export const run = async (setData: Function, setError: Function, form: IGlobalIn
 
     data.push({ id: 'swc_path', value: 'C:/Users/t-deangeckt/Downloads/swcTree.swc' });
     data.push({ id: 'stim', value: stim });
+    data.push({ id: 'record', value: records });
     data = data.concat(none_default_form);
     try {
         const response = (await axios.request({
@@ -25,11 +33,14 @@ export const run = async (setData: Function, setError: Function, form: IGlobalIn
             method: 'POST',
             data: data,
         })) as AxiosResponse;
-        const t = response.data['time'] as number[];
-        const v = response.data['volt'] as number[];
-        const r = [];
-        for (let i = 0; i < t.length; i++) r.push([t[i], v[i]]);
-        setData(r);
+
+        const idata: IData[] = [];
+        for (const key in response.data) {
+            console.log(key);
+            idata.push({ name: key, plot: response.data[key] as number[] });
+        }
+
+        setData(idata);
     } catch (error: any) {
         console.error(error);
         const msg = !error.response ? '' : error.response.data;

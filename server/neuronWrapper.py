@@ -72,9 +72,9 @@ class NeuronWrapper:
             return
         stims = []
         for stim in self.config['stim']:
-            id_ = stim['id']
-            section_ = stim['section']
-            type_ = stim['type']
+            id_ = stim['section']['id']
+            section_ = stim['section']['section']
+            type_ = stim['section']['type']
             h_ref = num_to_type(type_, self.h)
 
             new_stim = self.h.IClamp(h_ref[id_](section_))
@@ -85,14 +85,14 @@ class NeuronWrapper:
         return stims
 
     def __add_record(self):
-        if 'record' not in self.config:
+        if 'record' not in self.config or self.config['record'] == []:
             raise ValueError('Missing Recordings')
         recordings = {}
         for record_ in self.config['record']:
-            id_ = record_['id']
-            section_ = record_['section']
-            type_ = record_['type']
-            recording_type_ = record_['record_type']
+            id_ = record_['section']['id']
+            section_ = record_['section']['section']
+            type_ = record_['section']['type']
+            recording_type_ = record_['type']
             recording_key_ = recording_key(recording_type_, type_, id_, section_)
 
             h_ref = num_to_type(type_, self.h)
@@ -209,11 +209,14 @@ class NeuronWrapper:
 
 if __name__ == "__main__":
     wrap = NeuronWrapper('../app/src/share/config.json')
+    section_soma = {'id': 0, 'section': 0.5, 'type': 1}
+    section_undef = {'id': 0, 'section': 0.5, 'type': 0}
 
-    stim = [{'id': 0, 'section': 0.5, 'type': 0, 'delay': 20, 'duration': 25, 'amplitude': 0.5},
+    stim = [{'section': section_soma, 'delay': 20, 'duration': 25, 'amplitude': 0.5},
+            {'section': section_undef, 'delay': 60, 'duration': 25, 'amplitude': 0.5}
             ]
-    record = [{'id': 0, 'section': 0.5, 'type': 1, 'record_type': 'volt'},
-              {'id': 0, 'section': 0.5, 'type': 0, 'record_type': 'volt'}
+    record = [{'section': section_soma, 'type': 'volt'},
+              {'section': section_undef, 'type': 'volt'}
               ]
 
     res = wrap.run(

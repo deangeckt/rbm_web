@@ -14,15 +14,11 @@ import { useDialogs } from './Dialogs/useDialogs';
 import SimulatePanel from './SimulatePanel';
 
 export interface IData {
-    plot: number[][];
+    plot: number[];
     name: string;
 }
 
-const init_data: IData = {
-    plot: [],
-    name: 'Soma',
-};
-
+const init_data: IData[] = [];
 function Simulate() {
     const { state } = useContext(AppContext);
     const { setDialogNewForm } = useDialogs();
@@ -34,8 +30,8 @@ function Simulate() {
     const [data, setData] = React.useState(init_data);
     const [tab, setTab] = React.useState(0);
 
-    const updateData = (newData: number[][]) => {
-        setData({ ...data, plot: newData });
+    const updateData = (newData: IData[]) => {
+        setData(newData);
         setLoading(false);
     };
 
@@ -49,9 +45,9 @@ function Simulate() {
         setRunning(!running);
         if (!running) {
             setLoading(true);
-            run(updateData, updateError, state.inputs, state.stims);
+            run(updateData, updateError, state.inputs, state.stims, state.records);
         } else {
-            updateData([[]]);
+            updateData([]);
         }
     };
 
@@ -92,7 +88,7 @@ function Simulate() {
                 </div>
                 <div className="RightSide">
                     <div className="Plot">
-                        <Plot data={[data]} />
+                        <Plot data={data} />
                     </div>
                     <div className="Graph" id={'Canvas'}>
                         <DesignCanvas />
