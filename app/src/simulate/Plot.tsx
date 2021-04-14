@@ -2,6 +2,16 @@ import React from 'react';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
 import { IData } from './Simulate';
+import { section_types } from '../Wrapper';
+
+const record_key_parse = (recordKey: string) => {
+    const keys = recordKey.split('_');
+    const type_ = keys[1];
+    const id_ = keys[2];
+    const section_ = keys[3];
+    const sec_type = section_types.find((t) => t.value == Number(type_));
+    return `${sec_type!.label}[${id_}](${section_})`;
+};
 
 function oneD2d(data: IData[]) {
     const t = data.find((d) => d.name == 'time');
@@ -15,7 +25,7 @@ function oneD2d(data: IData[]) {
         .map((d) => {
             const r = [];
             for (let i = 0; i < t.plot.length; i++) r.push([t.plot[i], d.plot[i]]);
-            return { name: d.name, plot: r };
+            return { name: record_key_parse(d.name), plot: r };
         });
 }
 
@@ -24,7 +34,6 @@ function options(data: IData[]) {
     if (data.length === 0) {
         series.push({ data: [], name: '' });
     } else {
-        console.log(data);
         oneD2d(data).forEach((d: { plot: number[][]; name: string }) => {
             series.push({ data: d.plot, lineWidth: 0.75, name: d.name, marker: { enabled: false } });
         });

@@ -2,11 +2,6 @@ import axios, { AxiosResponse } from 'axios';
 import { IData } from '../simulate/Simulate';
 import { IGlobalInput, init_form, IRecordInput, IStimInput } from '../Wrapper';
 
-// const record_key_parse = (recordKey: string) => {
-//     // return '{}_{}_{}_{}'.format(recording_type_, type_, id_, section_)
-//     const keys = recordKey.split('_');
-// };
-
 export const run = async (
     setData: Function,
     setError: Function,
@@ -36,10 +31,8 @@ export const run = async (
 
         const idata: IData[] = [];
         for (const key in response.data) {
-            console.log(key);
             idata.push({ name: key, plot: response.data[key] as number[] });
         }
-
         setData(idata);
     } catch (error: any) {
         console.error(error);
