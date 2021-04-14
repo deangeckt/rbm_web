@@ -1,6 +1,6 @@
 import React from 'react';
 import { Line, Transformer } from 'react-konva';
-import { colors } from '../colors';
+import { section_color } from '../colors';
 import { lineRadiusAddition } from '../utils/SwcUtils';
 
 interface TransLineProps {
@@ -9,9 +9,10 @@ interface TransLineProps {
     onSelect: Function;
 }
 
-const TransformerLine = ({ shapeProps: shareProps, isSelected, onSelect }: TransLineProps) => {
+const TransformerLine = ({ shapeProps, isSelected, onSelect }: TransLineProps) => {
     const shapeRef = React.useRef();
     const trRef = React.useRef<any>();
+    const color = section_color[shapeProps.tid];
 
     React.useEffect(() => {
         if (isSelected) {
@@ -26,9 +27,9 @@ const TransformerLine = ({ shapeProps: shareProps, isSelected, onSelect }: Trans
                 onClick={onSelect}
                 onTap={onSelect}
                 ref={shapeRef}
-                stroke={colors.line}
-                strokeWidth={shareProps.radius + lineRadiusAddition}
-                {...shareProps}
+                stroke={color}
+                strokeWidth={shapeProps.radius + lineRadiusAddition}
+                {...shapeProps}
                 draggable={false}
             />
             {isSelected && <Transformer ref={trRef} resizeEnabled={false} rotateEnabled={false} padding={10} />}

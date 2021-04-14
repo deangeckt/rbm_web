@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { AppContext } from './Contexts/AppContext';
 import config from '../src/share/config.json';
 
+export interface Dictionary<T> {
+    [Key: string]: T;
+}
+
 export interface ILine {
     id: number;
     cid?: number;
