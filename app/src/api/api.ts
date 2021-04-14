@@ -18,7 +18,6 @@ export const run = async (
             return init_form[index].value !== input.value;
         });
 
-    data.push({ id: 'swc_path', value: 'C:/Users/t-deangeckt/Downloads/TracesNumber_121-129Final2.swc' });
     data.push({ id: 'stim', value: stim });
     data.push({ id: 'record', value: records });
     data = data.concat(none_default_form);
@@ -42,13 +41,10 @@ export const run = async (
 };
 
 export const read = async (setError: Function) => {
-    const data = { neuron_path: 'f' };
-
     try {
         const response = (await axios.request({
             url: 'http://localhost:8080/api/v1/read',
             method: 'GET',
-            data: data,
         })) as AxiosResponse;
         // const point_processes = response.data['point_processes'];
         // const point_mechanism = response.data['point_mechanism'];

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Plot from './Plot';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
-import { run } from '../api/api';
+import { run, read } from '../api/api';
 import { AppContext } from '../Contexts/AppContext';
 import SimulateTabs from './SimulateTabs';
 import InfoDialog from './Dialogs/InfoDialog';
@@ -56,7 +56,8 @@ function Simulate() {
 
     React.useEffect(() => {
         setSimulationTreeCids();
-        // TODO: call read api
+        // read(updateError, updateDynForms);
+        // setLoading(true);
     }, []);
 
     return (

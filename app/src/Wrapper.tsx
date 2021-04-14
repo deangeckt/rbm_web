@@ -87,11 +87,11 @@ export interface IDialogs {
 export interface IAppState {
     stage: IStageSize;
     lines: ILine[];
+    selectedId: number;
     neuronRadius: number;
     stims: IStimInput[];
     records: IRecordInput[];
     inputs: IGlobalInput[];
-    selectedId: number;
     dialogs: IDialogs;
 }
 
