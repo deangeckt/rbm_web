@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import ControlPanel from './ControlPanel';
+import DesignControlPanel from './DesignControlPanel';
 import TopPanel from './TopPanel';
 import DesignCanvas from './DesignCanvas';
 import './Design.css';
@@ -20,8 +20,10 @@ const Design = () => {
                     <DesignCanvas />
                 </div>
                 <div className="ControlPanel">
-                    <ControlPanel />
-                    {state.selectedId !== none_selected ? <Navigation /> : null}
+                    <DesignControlPanel />
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                        {state.selectedId !== none_selected ? <Navigation /> : null}
+                    </div>
                 </div>
             </div>
         </div>

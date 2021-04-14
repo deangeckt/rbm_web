@@ -4,10 +4,10 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { AppContext } from '../Contexts/AppContext';
 import { none_selected, section_types, root_id, default_alpha } from '../Wrapper';
-import './ControlPanel.css';
+import './DesignControlPanel.css';
 import { useDesignCanvas } from './useDesignCanvas';
 
-function ControlPanel() {
+function DesignControlPanel() {
     const { state, setState } = useContext(AppContext);
     const neuronSelected = state.selectedId === root_id;
     const lineSelected = state.selectedId !== none_selected && state.selectedId !== root_id;
@@ -27,7 +27,7 @@ function ControlPanel() {
         <>
             {!neuronSelected && !lineSelected ? (
                 <big style={{ color: 'black', alignSelf: 'center', fontSize: '16px', marginTop: '16px' }}>
-                    Select an object to edit it
+                    Select a section to edit it
                 </big>
             ) : (
                 <div className="EditPanel">
@@ -38,7 +38,7 @@ function ControlPanel() {
                         startIcon={<AddIcon />}
                         onClick={() => addNew()}
                     >
-                        Add Line
+                        Add Section
                     </Button>
                     {lineSelected ? (
                         <>
@@ -87,7 +87,7 @@ function ControlPanel() {
                                 startIcon={<DeleteIcon />}
                                 onClick={() => Delete()}
                             >
-                                Delete Line
+                                Delete Section
                             </Button>
                         </>
                     ) : (
@@ -106,4 +106,4 @@ function ControlPanel() {
     );
 }
 
-export default ControlPanel;
+export default DesignControlPanel;

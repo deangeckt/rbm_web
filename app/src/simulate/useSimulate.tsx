@@ -1,13 +1,31 @@
 import { useContext } from 'react';
 import { AppContext } from '../Contexts/AppContext';
-import { ISection, none_selected, recording_types, root_id } from '../Wrapper';
+import { TreeLines } from '../utils/linesTree';
+import { ISection, none_selected, recording_types, root_id, section_types } from '../Wrapper';
 
 export function useSimulate() {
     const { state, setState } = useContext(AppContext);
 
-    const setSimulationTree = () => {
+    const setSimulationTreeCids = () => {
         const lines = [...state.lines];
-        console.log(lines);
+        if (lines.length === 0) return;
+
+        section_types.forEach((sec_type) => {
+            const sec_lines = lines.filter((l) => l.tid === sec_type.value);
+            if (sec_lines.length > 0) {
+                const tree = new TreeLines(root_id);
+                sec_lines.forEach((line) => {
+                    tree.insert(line);
+                });
+                tree.setCid();
+            }
+        });
+        setState({ ...state, lines: lines });
+    };
+
+    const getSelectedCid = () => {
+        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
+        return selectedLine ? selectedLine.cid ?? 0 : 0;
     };
 
     const updateInput = (id: string, val: number) => {
@@ -61,7 +79,7 @@ export function useSimulate() {
         };
     };
 
-    const addStim = (closeDialogForm = false) => {
+    const addStim = () => {
         const stims = [...state.stims];
         stims.push({
             delay: 0,
@@ -70,21 +88,17 @@ export function useSimulate() {
             section: newSection(),
         });
 
-        const dialogs = { ...state.dialogs };
-        closeDialogForm && (dialogs.dialogNewForm = false);
-        setState({ ...state, stims: stims, dialogs: dialogs });
+        setState({ ...state, stims: stims });
     };
 
-    const addRecord = (closeDialogForm = false) => {
+    const addRecord = () => {
         const records = [...state.records];
         records.push({
             section: newSection(),
             type: recording_types[0],
         });
 
-        const dialogs = { ...state.dialogs };
-        closeDialogForm && (dialogs.dialogNewForm = false);
-        setState({ ...state, records: records, dialogs: dialogs });
+        setState({ ...state, records: records });
     };
 
     const deleteStim = (idx: number) => {
@@ -100,7 +114,8 @@ export function useSimulate() {
     };
 
     return {
-        setSimulationTree,
+        setSimulationTreeCids,
+        getSelectedCid,
         addStim,
         addRecord,
         updateInput,

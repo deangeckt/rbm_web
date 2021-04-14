@@ -6,8 +6,3 @@
     flex-direction: column;
     margin-top: 16px;
 }
-
-.NavPanel {
-    display: flex;
-    flex-direction: row;
-}

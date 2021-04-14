@@ -21,11 +21,5 @@ export function useDialogs() {
         setState({ ...state, dialogs: dialogs });
     };
 
-    const setDialogNewForm = (val: boolean) => {
-        const dialogs = { ...state.dialogs };
-        dialogs.dialogNewForm = val;
-        setState({ ...state, dialogs: dialogs });
-    };
-
-    return { updateDialogInfo, setDialogInfo, setDialogNewForm };
+    return { updateDialogInfo, setDialogInfo };
 }

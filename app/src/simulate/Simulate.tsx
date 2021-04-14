@@ -1,18 +1,15 @@
 import React, { useContext } from 'react';
 import Plot from './Plot';
-import './Simulate.css';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
-import DesignCanvas from '../design/DesignCanvas';
 import { run } from '../api/api';
 import { AppContext } from '../Contexts/AppContext';
 import SimulateTabs from './SimulateTabs';
-import { none_selected } from '../Wrapper';
 import InfoDialog from './Dialogs/InfoDialog';
-import NewFormDialog from './Dialogs/NewFormDialog';
-import { useDialogs } from './Dialogs/useDialogs';
 import SimulatePanel from './SimulatePanel';
 import { useSimulate } from './useSimulate';
+import SimulateCanvas from './SimulateCanvas';
+import './Simulate.css';
 
 export interface IData {
     plot: number[];
@@ -22,8 +19,7 @@ export interface IData {
 const init_data: IData[] = [];
 function Simulate() {
     const { state } = useContext(AppContext);
-    const { setDialogNewForm } = useDialogs();
-    const { setSimulationTree } = useSimulate();
+    const { setSimulationTreeCids } = useSimulate();
 
     // simulate props
     const [error, setError] = React.useState('');
@@ -59,15 +55,7 @@ function Simulate() {
     };
 
     React.useEffect(() => {
-        if (state.selectedId != none_selected) {
-            setDialogNewForm(true);
-        }
-    }, [state.selectedId]);
-
-    React.useEffect(() => {
-        console.log('init sim');
-        setSimulationTree();
-        // TODO: change lines state so cid are avilable
+        setSimulationTreeCids();
         // TODO: call read api
     }, []);
 
@@ -75,7 +63,6 @@ function Simulate() {
         <div className="Simulate">
             {loading ? <div>Loading</div> : null}
             <InfoDialog />
-            <NewFormDialog setTab={setTab} />
             <Snackbar open={error !== ''} autoHideDuration={6000} onClose={closeError}>
                 <Alert variant="outlined" severity="error" onClose={closeError}>
                     {error}
@@ -93,8 +80,8 @@ function Simulate() {
                     <div className="Plot">
                         <Plot data={data} />
                     </div>
-                    <div className="Graph" id={'Canvas'}>
-                        <DesignCanvas />
+                    <div className="SimulateCanvas">
+                        <SimulateCanvas setTab={setTab} />
                     </div>
                 </div>
             </div>

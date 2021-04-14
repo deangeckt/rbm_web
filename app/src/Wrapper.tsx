@@ -78,7 +78,6 @@ export interface IGlobalInput {
 export interface IDialogs {
     dialogInfo: boolean;
     dialogInfoTitle: string;
-    dialogNewForm: boolean;
 }
 
 export interface IAppState {
@@ -126,7 +125,6 @@ export const init_app_state: IAppState = {
     dialogs: {
         dialogInfo: false,
         dialogInfoTitle: '',
-        dialogNewForm: false,
     },
 };
 

@@ -3,14 +3,15 @@ import { Button } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
-import './ControlPanel.css';
+import './DesignControlPanel.css';
 import { useTreeNavigation } from './useTreeNavigation';
 
 function Navigation() {
     const { setNextChildSelected, setBackChildSelected, setBrotherChildSelected } = useTreeNavigation();
 
     return (
-        <div className="NavPanel">
+        <>
+            {' '}
             <Button
                 className="Button"
                 variant="outlined"
@@ -38,7 +39,7 @@ function Navigation() {
             >
                 Select Sibling
             </Button>
-        </div>
+        </>
     );
 }
 
