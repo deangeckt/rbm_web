@@ -5,6 +5,11 @@ import { ISection, none_selected, recording_types, root_id } from '../Wrapper';
 export function useSimulate() {
     const { state, setState } = useContext(AppContext);
 
+    const setSimulationTree = () => {
+        const lines = [...state.lines];
+        console.log(lines);
+    };
+
     const updateInput = (id: string, val: number) => {
         const updateInputs = [...state.inputs];
         const currInput = updateInputs.find((ele) => ele.id === id);
@@ -47,7 +52,7 @@ export function useSimulate() {
             newStimId = 0;
         } else {
             newStimType = selectedLine.tid;
-            newStimId = selectedLine.cid ?? 0; //TODO: calculate cid per line when Sim.tsx is up
+            newStimId = selectedLine.cid ?? 0;
         }
         return {
             type: newStimType,
@@ -95,6 +100,7 @@ export function useSimulate() {
     };
 
     return {
+        setSimulationTree,
         addStim,
         addRecord,
         updateInput,

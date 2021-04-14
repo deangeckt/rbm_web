@@ -3,7 +3,8 @@ import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { exportFile } from '../utils/SwcUtils';
 import { AppContext } from '../Contexts/AppContext';
-import { IAppState } from '../Wrapper';
+import { IAppState, none_selected } from '../Wrapper';
+import { useDesignCanvas } from './useDesignCanvas';
 
 const downloadFile = (state: IAppState) => {
     // TODO: remove redundant element created
@@ -19,7 +20,9 @@ const downloadFile = (state: IAppState) => {
 
 function TopPanel() {
     const { state } = useContext(AppContext);
+    const { setSelectedId } = useDesignCanvas();
     const history = useHistory();
+
     return (
         <>
             <Button
@@ -36,7 +39,10 @@ function TopPanel() {
                 className="NoCapsButton"
                 color="primary"
                 variant="contained"
-                onClick={() => history.push({ pathname: '/simulate' })}
+                onClick={() => {
+                    setSelectedId(none_selected);
+                    history.push({ pathname: '/simulate' });
+                }}
                 style={{ marginRight: '24px' }}
             >
                 Start Simulate

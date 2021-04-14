@@ -12,6 +12,7 @@ import InfoDialog from './Dialogs/InfoDialog';
 import NewFormDialog from './Dialogs/NewFormDialog';
 import { useDialogs } from './Dialogs/useDialogs';
 import SimulatePanel from './SimulatePanel';
+import { useSimulate } from './useSimulate';
 
 export interface IData {
     plot: number[];
@@ -22,6 +23,7 @@ const init_data: IData[] = [];
 function Simulate() {
     const { state } = useContext(AppContext);
     const { setDialogNewForm } = useDialogs();
+    const { setSimulationTree } = useSimulate();
 
     // simulate props
     const [error, setError] = React.useState('');
@@ -61,6 +63,13 @@ function Simulate() {
             setDialogNewForm(true);
         }
     }, [state.selectedId]);
+
+    React.useEffect(() => {
+        console.log('init sim');
+        setSimulationTree();
+        // TODO: change lines state so cid are avilable
+        // TODO: call read api
+    }, []);
 
     return (
         <div className="Simulate">
