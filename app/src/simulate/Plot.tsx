@@ -35,7 +35,7 @@ function options(data: IData[]) {
         series.push({ data: [], name: '' });
     } else {
         oneD2d(data).forEach((d: { plot: number[][]; name: string }) => {
-            series.push({ data: d.plot, lineWidth: 0.75, name: d.name, marker: { enabled: false } });
+            series.push({ data: d.plot, lineWidth: 1.5, name: d.name, marker: { enabled: false } });
         });
     }
     return {

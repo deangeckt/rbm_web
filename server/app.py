@@ -9,9 +9,17 @@ from neuronWrapper import NeuronWrapper
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
+
 config_path = '../app/src/share/config.json'
 base_cwd = os.getcwd()
 config_full_path = os.path.join(base_cwd, config_path)
+
+
+def read_paths():
+    neuron_path = 'C:/Users/t-deangeckt/Desktop/NEURON 7.8 AMD64/larkumEtAl2009_2'
+    # swc_path = 'C:/Users/t-deangeckt/Downloads/swcTree.swc'
+    swc_path = 'C:/Users/t-deangeckt/Downloads/neuromorpho_cnic_001.CNG.swc'
+    return neuron_path, swc_path
 
 
 @app.route('/api/v1/run', methods=['POST'])
@@ -22,10 +30,8 @@ def score():
             if 'id' not in d or 'value' not in d:
                 msg = "Data params - bad format"
                 raise ValueError(msg)
-            if 'neuron_path' in d:
-                print('Changing dir to: ', d['value'])
-                os.chdir(d['value'])
 
+        data.append({'id': 'swc_path', 'value': read_paths()[1]})
         wrapper = NeuronWrapper(config_full_path)
         res = wrapper.run(data)
         return json.dumps(res), 200, {'Content-Type': 'application/json'}
@@ -41,10 +47,10 @@ def score():
 @app.route('/api/v1/read', methods=['GET'])
 def read():
     try:
-        data = request.get_json()
-        if 'neuron_path' in data:
-            print('Changing dir to: ', data['neuron_path'])
-            os.chdir(data['neuron_path'])
+        neuron_path = read_paths()[0]
+        if neuron_path is not None:
+            print('Changing dir to: ', neuron_path)
+            os.chdir(neuron_path)
 
         wrapper = NeuronWrapper(config_full_path)
         res = wrapper.read()

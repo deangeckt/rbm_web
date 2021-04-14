@@ -220,7 +220,7 @@ if __name__ == "__main__":
               ]
 
     res = wrap.run(
-        [{'id': 'swc_path', 'value': 'C:/Users/t-deangeckt/Downloads/swcTree.swc'},
+        [{'id': 'swc_path', 'value': 'C:/Users/t-deangeckt/Downloads/neuromorpho_cnic_001.CNG.swc'},
          {'id': 'sim_time', 'value': 200},
          {'id': 'rest_volt', 'value': -65},
          {'id': 'stim', 'value': stim},
