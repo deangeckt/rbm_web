@@ -18,7 +18,7 @@ export const run = async (
             return init_form[index].value !== input.value;
         });
 
-    data.push({ id: 'swc_path', value: 'C:/Users/t-deangeckt/Downloads/swcTree.swc' });
+    data.push({ id: 'swc_path', value: 'C:/Users/t-deangeckt/Downloads/TracesNumber_121-129Final2.swc' });
     data.push({ id: 'stim', value: stim });
     data.push({ id: 'record', value: records });
     data = data.concat(none_default_form);

@@ -56,14 +56,8 @@ function Simulate() {
         setError('');
     };
 
-    const newStimRecord = (tab_id: number) => {
-        setDialogNewForm(false);
-        setTab(tab_id);
-    };
-
     React.useEffect(() => {
         if (state.selectedId != none_selected) {
-            console.log('new id');
             setDialogNewForm(true);
         }
     }, [state.selectedId]);
@@ -72,7 +66,7 @@ function Simulate() {
         <div className="Simulate">
             {loading ? <div>Loading</div> : null}
             <InfoDialog />
-            <NewFormDialog newStimRecord={newStimRecord} />
+            <NewFormDialog setTab={setTab} />
             <Snackbar open={error !== ''} autoHideDuration={6000} onClose={closeError}>
                 <Alert variant="outlined" severity="error" onClose={closeError}>
                     {error}

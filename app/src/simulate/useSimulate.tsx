@@ -56,8 +56,7 @@ export function useSimulate() {
         };
     };
 
-    const addStim = () => {
-        console.log('adding new stm');
+    const addStim = (closeDialogForm = false) => {
         const stims = [...state.stims];
         stims.push({
             delay: 0,
@@ -65,16 +64,22 @@ export function useSimulate() {
             amplitude: 5,
             section: newSection(),
         });
-        setState({ ...state, stims: stims });
+
+        const dialogs = { ...state.dialogs };
+        closeDialogForm && (dialogs.dialogNewForm = false);
+        setState({ ...state, stims: stims, dialogs: dialogs });
     };
 
-    const addRecord = () => {
+    const addRecord = (closeDialogForm = false) => {
         const records = [...state.records];
         records.push({
             section: newSection(),
             type: recording_types[0],
         });
-        setState({ ...state, records: records });
+
+        const dialogs = { ...state.dialogs };
+        closeDialogForm && (dialogs.dialogNewForm = false);
+        setState({ ...state, records: records, dialogs: dialogs });
     };
 
     const deleteStim = (idx: number) => {

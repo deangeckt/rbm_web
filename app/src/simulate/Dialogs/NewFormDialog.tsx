@@ -7,10 +7,10 @@ import { AppContext } from '../../Contexts/AppContext';
 import { useSimulate } from '../useSimulate';
 
 export interface INewFormDialogProps {
-    newStimRecord: (tab_id: number) => void;
+    setTab: (tab_id: number) => void;
 }
 
-function NewFormDialog({ newStimRecord }: INewFormDialogProps) {
+function NewFormDialog({ setTab }: INewFormDialogProps) {
     const { setDialogNewForm } = useDialogs();
     const { state } = useContext(AppContext);
     const { addStim, addRecord } = useSimulate();
@@ -22,9 +22,8 @@ function NewFormDialog({ newStimRecord }: INewFormDialogProps) {
                 variant="outlined"
                 color="primary"
                 onClick={() => {
-                    // BUG HERE!
-                    addStim();
-                    // newStimRecord(stim_tab);
+                    setTab(stim_tab);
+                    addStim(true);
                 }}
                 startIcon={<AddIcon />}
             >
@@ -35,8 +34,8 @@ function NewFormDialog({ newStimRecord }: INewFormDialogProps) {
                 variant="outlined"
                 color="primary"
                 onClick={() => {
-                    addRecord();
-                    newStimRecord(record_tab);
+                    setTab(record_tab);
+                    addRecord(true);
                 }}
                 startIcon={<AddIcon />}
             >

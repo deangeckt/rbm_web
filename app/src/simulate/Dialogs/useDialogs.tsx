@@ -9,14 +9,9 @@ export function useDialogs() {
         if (!currInput) return;
 
         const title = currInput.tooltipTitle;
-        setDialogInfoTitle(title);
-        setDialogInfo(true);
-    };
-
-    // TODO: make those 1 liner
-    const setDialogInfoTitle = (title: string) => {
         const dialogs = { ...state.dialogs };
         dialogs.dialogInfoTitle = title;
+        dialogs.dialogInfo = true;
         setState({ ...state, dialogs: dialogs });
     };
 
@@ -32,5 +27,5 @@ export function useDialogs() {
         setState({ ...state, dialogs: dialogs });
     };
 
-    return { updateDialogInfo, setDialogInfo, setDialogInfoTitle, setDialogNewForm };
+    return { updateDialogInfo, setDialogInfo, setDialogNewForm };
 }
