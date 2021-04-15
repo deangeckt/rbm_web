@@ -82,6 +82,7 @@ function DesignControlPanel() {
                                 ))}
                             </TextField>
                             <Button
+                                className="NoCapsButton"
                                 variant="outlined"
                                 color="primary"
                                 startIcon={<DeleteIcon />}

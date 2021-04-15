@@ -153,13 +153,15 @@ class NeuronWrapper:
         return mech_globals
 
     @staticmethod
-    def __read_parse_section_attr_str(section_attr_str):
+    def __read_parse_section_attr_str(section_attr_str, exclude: list):
         result = {}
         lines = section_attr_str.split('\n')
         for line in lines:
             if line.startswith('\tinsert'):
                 sep_line = line.split(' ')
                 attr = sep_line[1]
+                if attr in exclude:
+                    continue
                 vals = []
                 others = sep_line[2:]
                 for other in others:
@@ -198,7 +200,7 @@ class NeuronWrapper:
             self.h.psection(sec=dummy)
             point_mechanism_str = buf.getvalue()
 
-        point_mechanism_dict = self.__read_parse_section_attr_str(point_mechanism_str)
+        point_mechanism_dict = self.__read_parse_section_attr_str(point_mechanism_str, exclude_mechanism)
 
         result['point_processes'] = point_processes  # e.g IClamp -> h.IClamp(sec[id_](section_))
         result['point_mechanism'] = point_mechanism_dict  # e.g hh -> sec.insert('hh'), sec.gnabar_hh = X

@@ -16,10 +16,10 @@ config_full_path = os.path.join(base_cwd, config_path)
 
 
 def read_paths():
-    neuron_path = 'C:/Users/t-deangeckt/Desktop/NEURON 7.8 AMD64/larkumEtAl2009_2'
+    # neuron_path = 'C:/Users/t-deangeckt/Desktop/NEURON 7.8 AMD64/larkumEtAl2009_2'
     # swc_path = 'C:/Users/t-deangeckt/Downloads/swcTree.swc'
     swc_path = 'C:/Users/t-deangeckt/Downloads/neuromorpho_cnic_001.CNG.swc'
-    return neuron_path, swc_path
+    return None, swc_path
 
 
 @app.route('/api/v1/run', methods=['POST'])
