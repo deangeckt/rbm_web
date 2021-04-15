@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { exportFile } from '../utils/SwcUtils';
 import { AppContext } from '../Contexts/AppContext';
 import { IAppState, none_selected } from '../Wrapper';
-import { useDesignCanvas } from './useDesignCanvas';
+import { useTreeCanvas } from '../share/useTreeCanvas';
 
 const downloadFile = (state: IAppState) => {
     // TODO: remove redundant element created
@@ -20,7 +20,7 @@ const downloadFile = (state: IAppState) => {
 
 function TopPanel() {
     const { state } = useContext(AppContext);
-    const { setSelectedId } = useDesignCanvas();
+    const { setSelectedId } = useTreeCanvas();
     const history = useHistory();
 
     return (

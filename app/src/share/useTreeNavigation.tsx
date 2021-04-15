@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { AppContext } from '../Contexts/AppContext';
 import { none_selected, ILine, root_id } from '../Wrapper';
-import { useDesignCanvas } from './useDesignCanvas';
+import { useTreeCanvas } from './useTreeCanvas';
 
 export function useTreeNavigation() {
     const { state } = useContext(AppContext);
-    const { getChildren, setSelectedId } = useDesignCanvas();
+    const { getChildren, setSelectedId } = useTreeCanvas();
 
     const setNextChildSelected = () => {
         if (state.selectedId === none_selected) return;

@@ -1,16 +1,16 @@
 import React, { useContext, useEffect } from 'react';
 import { neuronRadToSize } from '../utils/SwcUtils';
 import { Stage, Layer, Circle } from 'react-konva';
-import TransformerLine from './TransformerLine';
+import TransformerLine from '../design/TransformerLine';
 import { colors } from '../colors';
 import { AppContext } from '../Contexts/AppContext';
-import { useDesignCanvas } from './useDesignCanvas';
+import { useTreeCanvas } from './useTreeCanvas';
 import { getStage, root_id } from '../Wrapper';
 
-function DesignCanvas() {
+function TreeCanvas() {
     const { state, setState } = useContext(AppContext);
-    const { updateChildsBelow, checkDeselect, setSelectedId } = useDesignCanvas();
-    //TODO: handle zoom and catch this event and render right after
+    const { updateChildsBelow, checkDeselect, setSelectedId } = useTreeCanvas();
+    //TODO: handle zoom
     const widSize = window.document.getElementById('Canvas')?.offsetWidth;
 
     useEffect(() => {
@@ -60,4 +60,4 @@ function DesignCanvas() {
     );
 }
 
-export default DesignCanvas;
+export default TreeCanvas;

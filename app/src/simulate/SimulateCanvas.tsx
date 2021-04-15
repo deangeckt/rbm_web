@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { none_selected, root_id } from '../Wrapper';
 import { AppContext } from '../Contexts/AppContext';
-import DesignCanvas from '../design/DesignCanvas';
-import Navigation from '../design/Navigation';
+import TreeCanvas from '../share/TreeCanvas';
+import TreeNavigation from '../share/TreeNavigation';
 import AddIcon from '@material-ui/icons/Add';
 import { Button } from '@material-ui/core';
 import { record_tab, stim_tab } from './SimulateTabs';
@@ -30,7 +30,7 @@ const SimulateCanvas = ({ setTab }: ISimulateCanvasProps) => {
                     borderLeft: '1px solid #efefef',
                 }}
             >
-                <DesignCanvas />
+                <TreeCanvas />
             </div>
             <div style={{ flexBasis: '20%', minHeight: '20%', width: '100%' }}>
                 {!neuronSelected && !lineSelected ? (
@@ -41,7 +41,7 @@ const SimulateCanvas = ({ setTab }: ISimulateCanvasProps) => {
                     <>
                         <div>cid: {selectedCid} </div>
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
-                            {state.selectedId !== none_selected ? <Navigation /> : null}
+                            {state.selectedId !== none_selected ? <TreeNavigation /> : null}
                             <Button
                                 className="NoCapsButton"
                                 variant="outlined"

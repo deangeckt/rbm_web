@@ -3,10 +3,9 @@ import { Button } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
-import './DesignControlPanel.css';
 import { useTreeNavigation } from './useTreeNavigation';
 
-function Navigation() {
+function TreeNavigation() {
     const { setNextChildSelected, setBackChildSelected, setBrotherChildSelected } = useTreeNavigation();
 
     return (
@@ -43,4 +42,4 @@ function Navigation() {
     );
 }
 
-export default Navigation;
+export default TreeNavigation;

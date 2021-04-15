@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import { Button } from '@material-ui/core';
 

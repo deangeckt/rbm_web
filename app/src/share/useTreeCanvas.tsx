@@ -3,7 +3,7 @@ import { AppContext } from '../Contexts/AppContext';
 import { lengthToPoint, pointToLength } from '../utils/SwcUtils';
 import { default_alpha, default_length, default_radius, default_tid, ILine, none_selected, root_id } from '../Wrapper';
 
-export function useDesignCanvas() {
+export function useTreeCanvas() {
     const { state, setState } = useContext(AppContext);
 
     const getChildren = (lid: number) => {
