@@ -9,7 +9,7 @@ import { getStage, root_id } from '../Wrapper';
 
 function DesignCanvas() {
     const { state, setState } = useContext(AppContext);
-    const { updateLinePoint, updateChildsBelow, checkDeselect, setSelectedId } = useDesignCanvas();
+    const { updateChildsBelow, checkDeselect, setSelectedId } = useDesignCanvas();
     //TODO: handle zoom and catch this event and render right after
     const widSize = window.document.getElementById('Canvas')?.offsetWidth;
 
@@ -23,7 +23,7 @@ function DesignCanvas() {
             }
             setState({ ...state, lines: lines, stage: newStage });
         }
-    }, [setState, state, state.lines, updateLinePoint, widSize]);
+    }, [setState, state, state.lines, widSize]);
 
     return (
         <>

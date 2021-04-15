@@ -39,6 +39,23 @@ function lineSplitToFields(line: string) {
     return fields;
 }
 
+function convertAlpha(y0: number, y1: number, x0: number, x1: number) {
+    const delta_x = x1 - x0;
+    const delta_y = y0 - y1;
+
+    if (delta_x === 0) return delta_y > 0 ? 0.5 : 1.5;
+    if (delta_y === 0) return delta_x > 0 ? 0 : 1;
+
+    let radianAlpha = Math.atan(delta_y / delta_x);
+
+    if (delta_y > 0 && delta_x > 0) radianAlpha += 0;
+    else if (delta_y < 0 && delta_x > 0) radianAlpha += 2 * Math.PI;
+    else radianAlpha += 1 * Math.PI;
+
+    const alpha = radianAlpha / Math.PI;
+    return alpha % 2;
+}
+
 function textLineToILine(
     ilines: ILine[],
     line: string,
@@ -67,15 +84,13 @@ function textLineToILine(
     } else {
         const father = ilines.find((l) => l.id === pid);
         if (!father) throw new Error('SWC file bad format');
-
         x0 = father.points[2];
         y0 = father.points[3];
     }
 
     points = [x0, y0, x1, y1];
     const length = Number(Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2)).toFixed(2));
-    const alpha = -Math.atan((y1 - y0) / (x1 - x0));
-
+    const alpha = convertAlpha(y0, y1, x0, x1);
     return { id: id, tid: tid, points: points, radius: radius, pid: pid, length: length, alpha: alpha };
 }
 

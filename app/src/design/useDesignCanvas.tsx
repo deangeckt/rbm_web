@@ -37,7 +37,7 @@ export function useDesignCanvas() {
     };
 
     const lengthAlphaToXy = (d: number, alpha: number, prevX: number, prevY: number) => {
-        return [prevX + d * Math.cos(alpha), prevY - d * Math.sin(alpha)];
+        return [prevX + d * Math.cos(alpha * Math.PI), prevY - d * Math.sin(alpha * Math.PI)];
     };
 
     const setSelectedId = (id: number) => {
@@ -117,7 +117,7 @@ export function useDesignCanvas() {
     const getSelectedAlpha = () => {
         const selectedLine = state.lines.find((line) => line.id === state.selectedId);
         const alpha = selectedLine ? selectedLine.alpha : default_alpha;
-        return alpha / Math.PI;
+        return alpha;
     };
 
     const getSelectedLength = () => {
@@ -139,7 +139,7 @@ export function useDesignCanvas() {
         const selectedLine = lines.find((line) => line.id === state.selectedId);
         if (!selectedLine) return;
 
-        selectedLine.alpha = value * Math.PI;
+        selectedLine.alpha = value;
         updateLinePoint(selectedLine);
         updateChildsBelow(lines, selectedLine.id, state.stage.rootX, state.stage.rootY);
         setState({ ...state, lines: lines });
@@ -169,8 +169,6 @@ export function useDesignCanvas() {
 
     return {
         getChildren,
-        updateLinePoint,
-        lengthAlphaToXy,
         updateChildsBelow,
         setSelectedId,
         checkDeselect,

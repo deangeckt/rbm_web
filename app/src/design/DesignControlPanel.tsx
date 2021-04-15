@@ -56,7 +56,7 @@ function DesignControlPanel() {
                                 value={getSelectedAlpha()}
                                 onChange={(e) => updateAlpha(Number(e.target.value))}
                                 InputProps={{
-                                    inputProps: { min: 0, max: 2 * Math.PI, step: default_alpha * 0.1 },
+                                    inputProps: { min: 0, max: 2, step: default_alpha },
                                     endAdornment: <InputAdornment position="end">PI</InputAdornment>,
                                 }}
                             />

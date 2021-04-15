@@ -51,10 +51,8 @@ export const section_types = [
     },
 ];
 
-export const recording_types = ['volt', 'ina', 'ik'];
-
 export interface ISection {
-    type: number; // based on types
+    type: number; // section_types value
     id: number;
     section: number;
 }
@@ -66,10 +64,17 @@ export interface IStimInput {
     section: ISection;
 }
 
+export const recording_types = ['volt', 'ina', 'ik'];
 export interface IRecordInput {
     section: ISection;
-    type: string;
+    type: string; // recording_types
 }
+
+export interface IMechanismInput {
+    section: ISection;
+    enable: boolean;
+}
+
 export interface IGlobalInput {
     name: string;
     value: any;
@@ -116,7 +121,7 @@ export const none_selected = -1;
 export const default_radius = 0.1; // in micro
 export const default_tid = 0;
 export const default_length = 10; //in micro
-export const default_alpha = Math.PI * 0.1;
+export const default_alpha = 0.1; // in rad [PI]
 
 export const init_app_state: IAppState = {
     stage: getStage(),
