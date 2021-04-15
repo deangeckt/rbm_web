@@ -9,8 +9,9 @@ import InfoDialog from './Dialogs/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import { useSimulate } from './useSimulate';
 import SimulateCanvas from './SimulateCanvas';
-import './Simulate.css';
 import { IMechanism } from '../Wrapper';
+import './Simulate.css';
+import ReadLoading from '../anim/ReadLoading';
 
 export interface IPlotData {
     plot: number[];
@@ -23,36 +24,29 @@ function Simulate() {
     // simulate props
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
-    const [loading, setLoading] = React.useState(false);
+    const [readLoading, setReadLoading] = React.useState(false);
     const [plotData, setPlotData] = React.useState([] as IPlotData[]);
     const [tab, setTab] = React.useState(0);
 
     const updatePlotData = (newData: IPlotData[]) => {
         setPlotData(newData);
-        setLoading(false);
+        setRunning(false);
     };
 
-    const updateDynForms = (newPointMech: IMechanism[]) => {
-        setState({ ...state, pointMechanism: newPointMech });
+    const updateDynForms = (newPointMech: IMechanism[], newGlobalMech: IMechanism[]) => {
+        setState({ ...state, pointMechanism: newPointMech, globalMechanism: newGlobalMech });
         console.log(newPointMech);
-
-        setLoading(false);
+        setReadLoading(false);
     };
 
     const updateError = (err: string) => {
         setError(err);
-        setLoading(false);
         setRunning(false);
     };
 
-    const toggleRunning = () => {
-        setRunning(!running);
-        if (!running) {
-            setLoading(true);
-            run(updatePlotData, updateError, state.inputs, state.stims, state.records);
-        } else {
-            updatePlotData([]);
-        }
+    const StartRunning = () => {
+        setRunning(true);
+        run(updatePlotData, updateError, state.inputs, state.stims, state.records);
     };
 
     const closeError = (_event?: React.SyntheticEvent, reason?: string) => {
@@ -61,37 +55,42 @@ function Simulate() {
     };
 
     React.useEffect(() => {
+        setReadLoading(true);
         setSimulationTreeCids();
         read(updateError, updateDynForms);
-        setLoading(true);
     }, []);
 
     return (
         <div className="Simulate">
-            {loading ? <div>Loading</div> : null}
-            <InfoDialog />
-            <Snackbar open={error !== ''} autoHideDuration={6000} onClose={closeError}>
-                <Alert variant="outlined" severity="error" onClose={closeError}>
-                    {error}
-                </Alert>
-            </Snackbar>
+            {readLoading ? (
+                <ReadLoading />
+            ) : (
+                <>
+                    <InfoDialog />
+                    <Snackbar open={error !== ''} autoHideDuration={6000} onClose={closeError}>
+                        <Alert variant="outlined" severity="error" onClose={closeError}>
+                            {error}
+                        </Alert>
+                    </Snackbar>
 
-            <div className="SimulateContainer">
-                <div className="LeftSide">
-                    <div className="SimulatePanel">
-                        <SimulatePanel running={running} toggleRunning={toggleRunning} />
+                    <div className="SimulateContainer">
+                        <div className="LeftSide">
+                            <div className="SimulatePanel">
+                                <SimulatePanel running={running} start={StartRunning} />
+                            </div>
+                            <SimulateTabs tab={tab} setTab={setTab} />
+                        </div>
+                        <div className="RightSide">
+                            <div className="Plot">
+                                <Plot data={plotData} />
+                            </div>
+                            <div className="SimulateCanvas">
+                                <SimulateCanvas setTab={setTab} />
+                            </div>
+                        </div>
                     </div>
-                    <SimulateTabs tab={tab} setTab={setTab} />
-                </div>
-                <div className="RightSide">
-                    <div className="Plot">
-                        <Plot data={plotData} />
-                    </div>
-                    <div className="SimulateCanvas">
-                        <SimulateCanvas setTab={setTab} />
-                    </div>
-                </div>
-            </div>
+                </>
+            )}
         </div>
     );
 }

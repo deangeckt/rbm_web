@@ -1,17 +1,24 @@
 import React from 'react';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import { Button } from '@material-ui/core';
+import ReadLoading from '../anim/ReadLoading';
 
 export interface ISimulatePanelProps {
     running: boolean;
-    toggleRunning: Function;
+    start: Function;
 }
 
-function SimulatePanel({ running, toggleRunning }: ISimulatePanelProps) {
+function SimulatePanel({ running, start }: ISimulatePanelProps) {
     return (
-        <Button variant="outlined" color="primary" onClick={() => toggleRunning()} startIcon={<PlayArrowIcon />}>
-            {!running ? 'Start' : 'Reset'}
-        </Button>
+        <>
+            {!running ? (
+                <Button variant="outlined" color="primary" onClick={() => start()} startIcon={<PlayArrowIcon />}>
+                    Start
+                </Button>
+            ) : (
+                <ReadLoading />
+            )}
+        </>
     );
 }
 
