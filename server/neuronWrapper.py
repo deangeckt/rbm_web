@@ -153,9 +153,9 @@ class NeuronWrapper:
         return mech_globals
 
     @staticmethod
-    def __read_parse_section_attr_str(section_attr_str, exclude: list):
+    def __parse_point_mech_str(attr_str, exclude: list):
         result = {}
-        lines = section_attr_str.split('\n')
+        lines = attr_str.split('\n')
         for line in lines:
             if line.startswith('\tinsert'):
                 sep_line = line.split(' ')
@@ -168,7 +168,7 @@ class NeuronWrapper:
                     if other == '{}' or other == '{':
                         continue
                     val_split = other.split('=')
-                    vals.append({val_split[0]: val_split[1].replace('}', '')})
+                    vals.append({val_split[0]: float(val_split[1].replace('}', ''))})
                 if vals:
                     result[attr] = vals
         return result
@@ -179,7 +179,18 @@ class NeuronWrapper:
         point_mechanism_list = self.__read_mechanism(0)
         point_processes = self.__read_mechanism(1)
         mechanism_global = {}
-        mechanism_global_with_value = {}
+        mechanism_global_dict = {}
+        point_processes_dict = {}
+
+        exclude_processes = ['loc', 'has_loc', 'get_loc', 'get_segment']
+        for proc in point_processes:
+            point_processes_dict[proc] = []
+            attrs = vars(getattr(self.h, proc))
+            for attr in attrs:
+                if attr in exclude_processes:
+                    continue
+                value = 0 if (attrs[attr] is None) else attrs[attr]
+                point_processes_dict[proc].append({attr: value})
 
         exclude_mechanism = ['morphology', 'capacitance']
         for mech in point_mechanism_list:
@@ -194,17 +205,20 @@ class NeuronWrapper:
             vals = []
             for attr in mechanism_global[mg]:
                 vals.append({attr: getattr(self.h, attr)})
-            mechanism_global_with_value[mg] = vals
+            mechanism_global_dict[mg] = vals
 
         with io.StringIO() as buf, redirect_stdout(buf):
             self.h.psection(sec=dummy)
             point_mechanism_str = buf.getvalue()
 
-        point_mechanism_dict = self.__read_parse_section_attr_str(point_mechanism_str, exclude_mechanism)
-
-        result['point_processes'] = point_processes  # e.g IClamp -> h.IClamp(sec[id_](section_))
-        result['point_mechanism'] = point_mechanism_dict  # e.g hh -> sec.insert('hh'), sec.gnabar_hh = X
-        result['global_mechanism'] = mechanism_global_with_value  # e.g  h('celsius = X')
+        point_mechanism_dict = self.__parse_point_mech_str(point_mechanism_str,
+                                                           exclude_mechanism)
+        # e.g IClamp -> h.IClamp(sec[id_](section_))
+        result['point_processes'] = point_processes_dict
+        # e.g hh -> sec.insert('hh'), sec.gnabar_hh = X
+        result['point_mechanism'] = point_mechanism_dict
+        # e.g  h('celsius = X')
+        result['global_mechanism'] = mechanism_global_dict
 
         return result
 
