@@ -43,10 +43,15 @@ function TabPanel(props: TabPanelProps) {
 }
 
 const useStyles = makeStyles(() => ({
-    tab: {
+    root: {
         '& .MuiBox-root': {
+            margin: '0',
             padding: '0px',
-            display: 'flex',
+            width: '100%',
+            border: '1px solid',
+            flexGrow: 1,
+        },
+        '& .MuiTabs-root': {
             width: '100%',
         },
     },
@@ -57,13 +62,15 @@ function SimulateTabs({ tab, setTab }: ISimulateTabsProps) {
 
     return (
         <div className="Tabs">
-            <div className={classes.tab}>
+            <div className={classes.root}>
                 <AppBar position="static">
                     <Tabs
                         value={tab}
                         onChange={(_event: React.ChangeEvent<{}>, newValue: number) => {
                             setTab(newValue);
                         }}
+                        centered
+                        variant="fullWidth"
                     >
                         <Tab label="Global" />
                         <Tab label="Stimulus" />

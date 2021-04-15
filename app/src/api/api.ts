@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
-import { IData } from '../simulate/Simulate';
-import { IGlobalInput, init_form, IRecordInput, IStimInput } from '../Wrapper';
+import { IPlotData } from '../simulate/Simulate';
+import { IGlobalInput, init_form, IMechanism, IRecordInput, IStimInput } from '../Wrapper';
+import { pointMechanismMock } from './readMock';
 
 export const run = async (
     setData: Function,
@@ -28,7 +29,7 @@ export const run = async (
             data: data,
         })) as AxiosResponse;
 
-        const idata: IData[] = [];
+        const idata: IPlotData[] = [];
         for (const key in response.data) {
             idata.push({ name: key, plot: response.data[key] as number[] });
         }
@@ -40,18 +41,22 @@ export const run = async (
     }
 };
 
-export const read = async (setError: Function) => {
+export const read = async (setError: Function, setData: Function) => {
     try {
         const response = (await axios.request({
             url: 'http://localhost:8080/api/v1/read',
             method: 'GET',
         })) as AxiosResponse;
+        const ipointMech = response.data['point_mechanism'] as IMechanism[];
+        setData(ipointMech);
         // const point_processes = response.data['point_processes'];
-        // const point_mechanism = response.data['point_mechanism'];
         // const global_mechanism = response.data['global_mechanism'];
     } catch (error: any) {
-        console.error(error);
-        const msg = !error.response ? '' : error.response.data;
+        let msg;
+        if (!error.response) {
+            msg = ' - Using mocks';
+            setData(pointMechanismMock);
+        } else msg = error.response.data;
         setError('Failed to read Neuron attributes ' + msg);
     }
 };

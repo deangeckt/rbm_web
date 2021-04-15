@@ -15,7 +15,7 @@ function StimRecordForm({ stim }: IStimRecordProps) {
     const { addStim, addRecord } = useSimulate();
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                 <Button
                     className="NoCapsButton"

@@ -57,6 +57,13 @@ export interface ISection {
     section: number;
 }
 
+// THE NEW FORM
+export interface ISectionInput {
+    section: ISection;
+    mechanism: IMechanism[];
+    // process e.g ICLAMP == Stim
+}
+
 export interface IStimInput {
     delay: number;
     duration: number;
@@ -70,9 +77,14 @@ export interface IRecordInput {
     type: string; // recording_types
 }
 
-export interface IMechanismInput {
-    section: ISection;
-    enable: boolean;
+interface IMechanismAttr {
+    attr: string;
+    value: number;
+}
+
+export interface IMechanism {
+    mech: string;
+    attrs: IMechanismAttr[];
 }
 
 export interface IGlobalInput {
@@ -98,6 +110,8 @@ export interface IAppState {
     records: IRecordInput[];
     inputs: IGlobalInput[];
     dialogs: IDialogs;
+    pointMechanism: IMechanism[];
+    globalMechanism: IMechanism[];
 }
 
 export const getStage = (): IStageSize => {
@@ -135,6 +149,8 @@ export const init_app_state: IAppState = {
         dialogInfo: false,
         dialogInfoTitle: '',
     },
+    pointMechanism: [],
+    globalMechanism: [],
 };
 
 const Wrapper = (props: any) => {

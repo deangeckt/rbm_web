@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import DesignControlPanel from './DesignControlPanel';
 import TopPanel from './TopPanel';
 import TreeCanvas from '../share/TreeCanvas';
-import './Design.css';
 import TreeNavigation from '../share/TreeNavigation';
 import { none_selected } from '../Wrapper';
 import { AppContext } from '../Contexts/AppContext';
+import './Design.css';
 
 const Design = () => {
     const { state } = useContext(AppContext);

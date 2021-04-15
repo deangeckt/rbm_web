@@ -10,26 +10,32 @@ import SimulatePanel from './SimulatePanel';
 import { useSimulate } from './useSimulate';
 import SimulateCanvas from './SimulateCanvas';
 import './Simulate.css';
+import { IMechanism } from '../Wrapper';
 
-export interface IData {
+export interface IPlotData {
     plot: number[];
     name: string;
 }
-
-const init_data: IData[] = [];
 function Simulate() {
-    const { state } = useContext(AppContext);
+    const { state, setState } = useContext(AppContext);
     const { setSimulationTreeCids } = useSimulate();
 
     // simulate props
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
-    const [data, setData] = React.useState(init_data);
+    const [plotData, setPlotData] = React.useState([] as IPlotData[]);
     const [tab, setTab] = React.useState(0);
 
-    const updateData = (newData: IData[]) => {
-        setData(newData);
+    const updatePlotData = (newData: IPlotData[]) => {
+        setPlotData(newData);
+        setLoading(false);
+    };
+
+    const updateDynForms = (newPointMech: IMechanism[]) => {
+        setState({ ...state, pointMechanism: newPointMech });
+        console.log(newPointMech);
+
         setLoading(false);
     };
 
@@ -43,9 +49,9 @@ function Simulate() {
         setRunning(!running);
         if (!running) {
             setLoading(true);
-            run(updateData, updateError, state.inputs, state.stims, state.records);
+            run(updatePlotData, updateError, state.inputs, state.stims, state.records);
         } else {
-            updateData([]);
+            updatePlotData([]);
         }
     };
 
@@ -56,8 +62,8 @@ function Simulate() {
 
     React.useEffect(() => {
         setSimulationTreeCids();
-        // read(updateError, updateDynForms);
-        // setLoading(true);
+        read(updateError, updateDynForms);
+        setLoading(true);
     }, []);
 
     return (
@@ -79,7 +85,7 @@ function Simulate() {
                 </div>
                 <div className="RightSide">
                     <div className="Plot">
-                        <Plot data={data} />
+                        <Plot data={plotData} />
                     </div>
                     <div className="SimulateCanvas">
                         <SimulateCanvas setTab={setTab} />

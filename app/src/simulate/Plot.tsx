@@ -1,7 +1,7 @@
 import React from 'react';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
-import { IData } from './Simulate';
+import { IPlotData } from './Simulate';
 import { section_types } from '../Wrapper';
 
 const record_key_parse = (recordKey: string) => {
@@ -13,7 +13,7 @@ const record_key_parse = (recordKey: string) => {
     return `${sec_type!.label}[${id_}](${section_})`;
 };
 
-function oneD2d(data: IData[]) {
+function oneD2d(data: IPlotData[]) {
     const t = data.find((d) => d.name == 'time');
     if (!t) {
         return [{ plot: [], name: '' }];
@@ -29,7 +29,7 @@ function oneD2d(data: IData[]) {
         });
 }
 
-function options(data: IData[]) {
+function options(data: IPlotData[]) {
     const series: { data: number[][]; lineWidth?: number; name: string; marker?: { enabled: boolean } }[] = [];
     if (data.length === 0) {
         series.push({ data: [], name: '' });
@@ -60,7 +60,7 @@ function options(data: IData[]) {
 }
 
 export interface IPlotProps {
-    data: IData[];
+    data: IPlotData[];
 }
 
 function Plot(props: IPlotProps) {
