@@ -1,6 +1,6 @@
 import React from 'react';
 import { Line, Transformer } from 'react-konva';
-import { section_color } from '../colors';
+import { section_color } from '../utils/colors';
 import { lineRadiusAddition } from '../utils/SwcUtils';
 
 interface TransLineProps {

@@ -3,7 +3,7 @@ import Plot from './Plot';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import { run, read } from '../api/api';
-import { AppContext } from '../Contexts/AppContext';
+import { AppContext } from '../AppContext';
 import SimulateTabs from './SimulateTabs';
 import InfoDialog from './Dialogs/InfoDialog';
 import SimulatePanel from './SimulatePanel';
@@ -54,7 +54,6 @@ function Simulate() {
     };
 
     const StartRunning = () => {
-        console.log(state.globalMechanism);
         setRunning(true);
         run(updatePlotData, updateError, state.inputs, state.stims, state.records);
     };
@@ -65,6 +64,7 @@ function Simulate() {
     };
 
     React.useEffect(() => {
+        console.log('eading first tme!!!!!!!!!');
         setReadLoading(true);
         setSimulationTreeCids();
         read(updateError, updateDynForms);

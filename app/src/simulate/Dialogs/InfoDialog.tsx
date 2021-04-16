@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Dialog, DialogTitle } from '@material-ui/core';
 import { useDialogs } from './useDialogs';
-import { AppContext } from '../../Contexts/AppContext';
+import { AppContext } from '../../AppContext';
 
 function InfoDialog() {
     const { setDialogInfo } = useDialogs();

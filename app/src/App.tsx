@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { importFile } from './utils/SwcUtils';
 import './App.css';
-import { AppContext } from './Contexts/AppContext';
+import { AppContext } from './AppContext';
 import { init_app_state } from './Wrapper';
 
 function App(): JSX.Element {

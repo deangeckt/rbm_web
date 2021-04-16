@@ -3,7 +3,7 @@ import GlobalInput from './GlobalInput';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
-import { AppContext } from '../../Contexts/AppContext';
+import { AppContext } from '../../AppContext';
 
 function GlobalForm() {
     const { state } = useContext(AppContext);

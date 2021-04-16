@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../Contexts/AppContext';
-import { IMechanismProcess, impKeys } from '../Wrapper';
+import { AppContext } from '../../AppContext';
+import { IMechanismProcess, impKeys } from '../../Wrapper';
 import DynamicAttr from './DynamicAttr';
 import DynamicKeys from './DynamicKeys';
 import './DynamicForm.css';

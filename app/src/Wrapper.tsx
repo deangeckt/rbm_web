@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { AppContext } from './Contexts/AppContext';
-import config from '../src/share/config.json';
+import { AppContext } from './AppContext';
+import config from '../src/config.json';
 
 export interface Dictionary<T> {
     [Key: string]: T;
@@ -134,7 +134,7 @@ export const getStage = (): IStageSize => {
 };
 
 export const default_neuron_rad = 5; // in micro
-export const init_form = config.default_form as ReadonlyArray<IGlobalInput>;
+export const init_form = config.static_global_form as ReadonlyArray<IGlobalInput>;
 export const root_id = 1;
 export const none_selected = -1;
 export const default_radius = 0.1; // in micro

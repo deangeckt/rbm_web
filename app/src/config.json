@@ -1,5 +1,5 @@
 {
-	"default_form": [
+	"static_global_form": [
 	{
 		"id": "sim_time",
 		"name": "Simulation time [mS]",

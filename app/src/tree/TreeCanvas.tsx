@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { neuronRadToSize } from '../utils/SwcUtils';
 import { Stage, Layer, Circle } from 'react-konva';
 import TransformerLine from '../design/TransformerLine';
-import { colors } from '../colors';
-import { AppContext } from '../Contexts/AppContext';
+import { colors } from '../utils/colors';
+import { AppContext } from '../AppContext';
 import { useTreeCanvas } from './useTreeCanvas';
 import { getStage, root_id } from '../Wrapper';
 

@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { IAppState } from '../Wrapper';
+import { IAppState } from './Wrapper';
 
 export const AppContext = createContext({
     state: {},

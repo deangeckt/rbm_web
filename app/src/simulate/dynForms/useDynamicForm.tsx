@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { AppContext } from '../Contexts/AppContext';
-import { IMechanismProcess, impKeys } from '../Wrapper';
+import { AppContext } from '../../AppContext';
+import { IMechanismProcess, impKeys } from '../../Wrapper';
 
 export function useDynamicForms() {
     const { state, setState } = useContext(AppContext);

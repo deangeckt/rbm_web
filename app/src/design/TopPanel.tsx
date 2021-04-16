@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { exportFile } from '../utils/SwcUtils';
-import { AppContext } from '../Contexts/AppContext';
+import { AppContext } from '../AppContext';
 import { IAppState, none_selected } from '../Wrapper';
-import { useTreeCanvas } from '../share/useTreeCanvas';
+import { useTreeCanvas } from '../tree/useTreeCanvas';
 
 const downloadFile = (state: IAppState) => {
     // TODO: remove redundant element created

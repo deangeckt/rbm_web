@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AppContext } from '../Contexts/AppContext';
+import { AppContext } from '../AppContext';
 import { none_selected, ILine, root_id } from '../Wrapper';
 import { useTreeCanvas } from './useTreeCanvas';
 

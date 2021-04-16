@@ -5,7 +5,7 @@ import { Button, TextField } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { IAttr, impKeys } from '../Wrapper';
+import { IAttr, impKeys } from '../../Wrapper';
 import { useDynamicForms } from './useDynamicForm';
 
 export interface IDynamicAttrProps {

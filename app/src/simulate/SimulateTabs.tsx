@@ -5,9 +5,9 @@ import { AppBar, Tab, Tabs } from '@material-ui/core';
 // import GlobalForm from './Forms/GlobalForm';
 import StimRecordForm from './Forms/StimRecordForm';
 import { makeStyles } from '@material-ui/core/styles';
-import DynamicForm from '../dynForms/DynamicForm';
+import DynamicForm from './dynForms/DynamicForm';
 import './Simulate.css';
-import { AppContext } from '../Contexts/AppContext';
+import { AppContext } from '../AppContext';
 
 export const global_tab = 0;
 export const stim_tab = 1;

@@ -1,4 +1,4 @@
-import { Dictionary } from './Wrapper';
+import { Dictionary } from '../Wrapper';
 
 export const colors = {
     primary: '#3f51b5',

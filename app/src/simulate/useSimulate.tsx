@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AppContext } from '../Contexts/AppContext';
+import { AppContext } from '../AppContext';
 import { TreeLines } from '../utils/TreeLines';
 import { ISection, none_selected, recording_types, root_id, section_types } from '../Wrapper';
 

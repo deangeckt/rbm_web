@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { none_selected, root_id } from '../Wrapper';
-import { AppContext } from '../Contexts/AppContext';
-import TreeCanvas from '../share/TreeCanvas';
-import TreeNavigation from '../share/TreeNavigation';
+import { AppContext } from '../AppContext';
+import TreeCanvas from '../tree/TreeCanvas';
+import TreeNavigation from '../tree/TreeNavigation';
 import AddIcon from '@material-ui/icons/Add';
 import { Button } from '@material-ui/core';
 import { record_tab, stim_tab } from './SimulateTabs';
@@ -24,8 +24,8 @@ const SimulateCanvas = ({ setTab }: ISimulateCanvasProps) => {
             <div
                 id={'Canvas'}
                 style={{
-                    // flexBasis: '80%',
-                    // maxHeight: '80%',
+                    flexBasis: '80%',
+                    maxHeight: '80%',
                     width: '100%',
                     borderBottom: '1px solid #efefef',
                     borderLeft: '1px solid #efefef',

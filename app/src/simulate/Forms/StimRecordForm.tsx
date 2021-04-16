@@ -1,6 +1,6 @@
 import { Button, Grid, List, ListItem } from '@material-ui/core';
 import React, { useContext } from 'react';
-import { AppContext } from '../../Contexts/AppContext';
+import { AppContext } from '../../AppContext';
 import StimInput from './StimInput';
 import { useSimulate } from '../useSimulate';
 import AddIcon from '@material-ui/icons/Add';
