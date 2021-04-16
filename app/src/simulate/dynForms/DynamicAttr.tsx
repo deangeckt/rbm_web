@@ -17,18 +17,30 @@ export interface IDynamicAttrProps {
 
 function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
     // const { updateDialogInfo } = useDialogs();
-    const { setKeyChecked } = useDynamicForms();
+    // const { state } = useContext(AppContext);
+    const { setKeyChecked, onChangeGlobalMech } = useDynamicForms();
+
     const headLine = impKey.endsWith('Mechanism') ? 'Mechanism' : 'Process';
 
+    const onChange = (attr: string, value: number) => {
+        if (impKey === 'globalMechanism') {
+            onChangeGlobalMech(attr_key, attr, value);
+        }
+    };
+
     return (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             {attrs.length === 0 ? (
                 <div>Select {headLine}</div>
             ) : (
                 <>
                     <FormControlLabel
                         control={
-                            <Checkbox checked={checked} onChange={() => setKeyChecked(impKey, attr_key, !checked)} />
+                            <Checkbox
+                                color="primary"
+                                checked={checked}
+                                onChange={() => setKeyChecked(impKey, attr_key, !checked)}
+                            />
                         }
                         label={`Add ${attr_key}`}
                     />
@@ -48,7 +60,7 @@ function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
                                         variant="filled"
                                         type="number"
                                         defaultValue={at.value}
-                                        // onChange={(e: any) => updateInput(input.id, Number(e.target.value))}
+                                        onChange={(e: any) => onChange(at.attr, Number(e.target.value))}
                                     />
                                 </div>
                             </ListItem>

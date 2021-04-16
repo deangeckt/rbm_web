@@ -1,0 +1,1034 @@
+{
+    "point_processes": {
+        "IClamp": [
+            {
+                "delay": 0
+            },
+            {
+                "dur": 0
+            },
+            {
+                "amp": 0
+            },
+            {
+                "i": 0
+            }
+        ],
+        "AlphaSynapse": [
+            {
+                "alpha": 0
+            },
+            {
+                "onset": 0
+            },
+            {
+                "tau": 0
+            },
+            {
+                "gmax": 0
+            },
+            {
+                "e": 0
+            },
+            {
+                "i": 0
+            }
+        ],
+        "ExpSyn": [
+            {
+                "tau": 0
+            },
+            {
+                "e": 0
+            },
+            {
+                "i": 0
+            },
+            {
+                "g": 0
+            }
+        ],
+        "Exp2Syn": [
+            {
+                "tau1": 0
+            },
+            {
+                "tau2": 0
+            },
+            {
+                "e": 0
+            },
+            {
+                "i": 0
+            },
+            {
+                "g": 0
+            },
+            {
+                "A": 0
+            },
+            {
+                "B": 0
+            }
+        ],
+        "SEClamp": [
+            {
+                "icur": 0
+            },
+            {
+                "vstim": 0
+            },
+            {
+                "rs": 0
+            },
+            {
+                "dur1": 0
+            },
+            {
+                "amp1": 0
+            },
+            {
+                "dur2": 0
+            },
+            {
+                "amp2": 0
+            },
+            {
+                "dur3": 0
+            },
+            {
+                "amp3": 0
+            },
+            {
+                "i": 0
+            },
+            {
+                "vc": 0
+            }
+        ],
+        "VClamp": [
+            {
+                "icur": 0
+            },
+            {
+                "update": 0
+            },
+            {
+                "vstim": 0
+            },
+            {
+                "dur": 0
+            },
+            {
+                "amp": 0
+            },
+            {
+                "gain": 0
+            },
+            {
+                "rstim": 0
+            },
+            {
+                "tau1": 0
+            },
+            {
+                "tau2": 0
+            },
+            {
+                "e0": 0
+            },
+            {
+                "vo0": 0
+            },
+            {
+                "vi0": 0
+            },
+            {
+                "fac": 0
+            },
+            {
+                "i": 0
+            },
+            {
+                "e": 0
+            },
+            {
+                "vo": 0
+            },
+            {
+                "vi": 0
+            }
+        ],
+        "OClamp": [
+            {
+                "icur": 0
+            },
+            {
+                "vstim": 0
+            },
+            {
+                "rs": 0
+            },
+            {
+                "on": 0
+            },
+            {
+                "off": 0
+            },
+            {
+                "vc": 0
+            },
+            {
+                "switched_on": 0
+            },
+            {
+                "i": 0
+            }
+        ],
+        "APCount": [
+            {
+                "check": 0
+            },
+            {
+                "record": 0
+            },
+            {
+                "n": 0
+            },
+            {
+                "thresh": 0
+            },
+            {
+                "time": 0
+            },
+            {
+                "firing": 0
+            }
+        ],
+        "NetStim": [
+            {
+                "erand": 0
+            },
+            {
+                "init_sequence": 0
+            },
+            {
+                "invl": 0
+            },
+            {
+                "next_invl": 0
+            },
+            {
+                "noiseFromRandom123": 0
+            },
+            {
+                "noiseFromRandom": 0
+            },
+            {
+                "seed": 0
+            },
+            {
+                "interval": 0
+            },
+            {
+                "number": 0
+            },
+            {
+                "start": 0
+            },
+            {
+                "noise": 0
+            },
+            {
+                "donotuse": 0
+            }
+        ],
+        "IntFire1": [
+            {
+                "M": 0
+            },
+            {
+                "tau": 0
+            },
+            {
+                "refrac": 0
+            },
+            {
+                "m": 0
+            }
+        ],
+        "IntFire2": [
+            {
+                "I": 0
+            },
+            {
+                "M": 0
+            },
+            {
+                "firetime": 0
+            },
+            {
+                "newton1": 0
+            },
+            {
+                "taus": 0
+            },
+            {
+                "taum": 0
+            },
+            {
+                "ib": 0
+            },
+            {
+                "i": 0
+            },
+            {
+                "m": 0
+            }
+        ],
+        "IntFire4": [
+            {
+                "E": 0
+            },
+            {
+                "I": 0
+            },
+            {
+                "M": 0
+            },
+            {
+                "deriv": 0
+            },
+            {
+                "firetimebound": 0
+            },
+            {
+                "factors": 0
+            },
+            {
+                "fixprecondition": 0
+            },
+            {
+                "newstates": 0
+            },
+            {
+                "search": 0
+            },
+            {
+                "update": 0
+            },
+            {
+                "taue": 0
+            },
+            {
+                "taui1": 0
+            },
+            {
+                "taui2": 0
+            },
+            {
+                "taum": 0
+            },
+            {
+                "e": 0
+            },
+            {
+                "i1": 0
+            },
+            {
+                "i2": 0
+            },
+            {
+                "m": 0
+            },
+            {
+                "nself": 0
+            },
+            {
+                "nexcite": 0
+            },
+            {
+                "ninhibit": 0
+            },
+            {
+                "ae": 0
+            },
+            {
+                "ai1": 0
+            },
+            {
+                "ai2": 0
+            }
+        ],
+        "PointProcessMark": [],
+        "PatternStim": [
+            {
+                "initps": 0
+            },
+            {
+                "play": 0
+            },
+            {
+                "sendgroup": 0
+            },
+            {
+                "fake_output": 0
+            },
+            {
+                "ptr": 0
+            }
+        ],
+        "ampa": [
+            {
+                "gmax": 0
+            },
+            {
+                "e": 0
+            },
+            {
+                "delay": 0
+            },
+            {
+                "Tspike": 0
+            },
+            {
+                "Nspike": 0
+            },
+            {
+                "iampa": 0
+            },
+            {
+                "local_v": 0
+            },
+            {
+                "gampa": 0
+            }
+        ],
+        "glutamate": [
+            {
+                "gmax": 0
+            },
+            {
+                "e": 0
+            },
+            {
+                "ntar": 0
+            },
+            {
+                "delay": 0
+            },
+            {
+                "Tspike": 0
+            },
+            {
+                "Nspike": 0
+            },
+            {
+                "inmda": 0
+            },
+            {
+                "iampa": 0
+            },
+            {
+                "gnmda": 0
+            },
+            {
+                "gh": 0
+            },
+            {
+                "local_v": 0
+            },
+            {
+                "A": 0
+            },
+            {
+                "B": 0
+            },
+            {
+                "gampa": 0
+            },
+            {
+                "h": 0
+            }
+        ]
+    },
+    "point_mechanism": {
+        "pas": [
+            {
+                "g_pas": 0.001
+            },
+            {
+                "e_pas": -70.0
+            }
+        ],
+        "extracellular": [
+            {
+                "xraxial": 1000000000.0
+            },
+            {
+                "xg": 1000000000.0
+            },
+            {
+                "xc": 0.0
+            },
+            {
+                "e_extracellular": 0.0
+            }
+        ],
+        "fastpas": [
+            {
+                "g_fastpas": 0.0005
+            },
+            {
+                "e_fastpas": -65.0
+            }
+        ],
+        "hh": [
+            {
+                "gnabar_hh": 0.12
+            },
+            {
+                "gkbar_hh": 0.036
+            },
+            {
+                "gl_hh": 0.0003
+            },
+            {
+                "el_hh": -54.3
+            }
+        ],
+        "Kdr": [
+            {
+                "gKdrbar_Kdr": 0.0338
+            }
+        ],
+        "sca": [
+            {
+                "inactF_sca": 3.0
+            },
+            {
+                "actF_sca": 1.0
+            },
+            {
+                "gbar_sca": 0.1
+            }
+        ],
+        "hd": [
+            {
+                "ghdbar_hd": 0.0001
+            },
+            {
+                "vhalfl_hd": -81.0
+            },
+            {
+                "tau_hd": 1.0
+            }
+        ],
+        "h": [
+            {
+                "ghbar_h": 0.0001
+            }
+        ],
+        "hh3": [
+            {
+                "gnabar_hh3": 0.2
+            },
+            {
+                "gkbar_hh3": 0.12
+            },
+            {
+                "gkbar2_hh3": 0.12
+            },
+            {
+                "gl_hh3": 0.0001
+            },
+            {
+                "el_hh3": -70.0
+            },
+            {
+                "vshift_hh3": 0.0
+            }
+        ],
+        "na_ion": [
+            {
+                "ena": 50.0
+            }
+        ],
+        "ih": [
+            {
+                "ghdbar_ih": 0.00015
+            }
+        ],
+        "it2": [
+            {
+                "gcabar_it2": 0.0008
+            }
+        ],
+        "kap": [
+            {
+                "gkabar_kap": 0.008
+            }
+        ],
+        "kca": [
+            {
+                "gbar_kca": 10.0
+            }
+        ],
+        "kdf": [
+            {
+                "gkbar_kdf": 2.5
+            },
+            {
+                "vshift_kdf": 0.0
+            }
+        ],
+        "kdr": [
+            {
+                "gbar_kdr": 0.0
+            }
+        ],
+        "km": [
+            {
+                "gbar_km": 10.0
+            }
+        ],
+        "k_ion": [
+            {
+                "ki": 54.4
+            },
+            {
+                "ko": 2.5
+            }
+        ]
+    },
+    "global_mechanism": {
+        "na_ion": [
+            {
+                "nai0_na_ion": 10.0
+            },
+            {
+                "nao0_na_ion": 140.0
+            }
+        ],
+        "k_ion": [
+            {
+                "ki0_k_ion": 54.4
+            },
+            {
+                "ko0_k_ion": 2.5
+            }
+        ],
+        "hh": [
+            {
+                "minf_hh": 0.0
+            },
+            {
+                "hinf_hh": 0.0
+            },
+            {
+                "ninf_hh": 0.0
+            },
+            {
+                "mtau_hh": 0.0
+            },
+            {
+                "htau_hh": 0.0
+            },
+            {
+                "ntau_hh": 0.0
+            },
+            {
+                "usetable_hh": 1.0
+            }
+        ],
+        "ca_ion": [
+            {
+                "cai0_ca_ion": 5e-05
+            },
+            {
+                "cao0_ca_ion": 2.0
+            }
+        ],
+        "sca": [
+            {
+                "vshift_sca": 0.0
+            },
+            {
+                "cao_sca": 2.5
+            },
+            {
+                "cai_sca": 0.0
+            },
+            {
+                "temp_sca": 23.0
+            },
+            {
+                "q10_sca": 2.3
+            },
+            {
+                "vmin_sca": -120.0
+            },
+            {
+                "vmax_sca": 100.0
+            },
+            {
+                "tadj_sca": 0.0
+            },
+            {
+                "usetable_sca": 1.0
+            }
+        ],
+        "cad2": [
+            {
+                "depth_cad2": 0.1
+            },
+            {
+                "taur_cad2": 80.0
+            },
+            {
+                "cainf_cad2": 0.0001
+            }
+        ],
+        "hd": [
+            {
+                "ehd_hd": -34.0
+            },
+            {
+                "kl_hd": -8.0
+            },
+            {
+                "vhalft_hd": -75.0
+            },
+            {
+                "a0t_hd": 0.011
+            },
+            {
+                "zetat_hd": 2.2
+            },
+            {
+                "gmt_hd": 0.4
+            },
+            {
+                "q10_hd": 4.5
+            },
+            {
+                "qtl_hd": 1.0
+            },
+            {
+                "linf_hd": 0.0
+            },
+            {
+                "taul_hd": 0.0
+            }
+        ],
+        "h": [
+            {
+                "eh_h": -40.0
+            },
+            {
+                "ratetau_h": 1.0
+            },
+            {
+                "qinf_h": 0.0
+            },
+            {
+                "tauh_h": 0.0
+            }
+        ],
+        "hh3": [
+            {
+                "taum_hh3": 0.05
+            },
+            {
+                "tauh_hh3": 0.5
+            },
+            {
+                "taus_hh3": 50.0
+            },
+            {
+                "tausv_hh3": 30.0
+            },
+            {
+                "tausd_hh3": 1.0
+            },
+            {
+                "taun_hh3": 1.0
+            },
+            {
+                "taun2_hh3": 10.0
+            },
+            {
+                "mN_hh3": 3.0
+            },
+            {
+                "nN_hh3": 3.0
+            },
+            {
+                "sN_hh3": 1.0
+            },
+            {
+                "tausb_hh3": 0.5
+            }
+        ],
+        "ih": [
+            {
+                "ehd_ih": -45.0
+            }
+        ],
+        "it2": [
+            {
+                "vshift_it2": 0.0
+            },
+            {
+                "cao_it2": 2.5
+            },
+            {
+                "cai_it2": 0.0
+            },
+            {
+                "vmin_it2": -120.0
+            },
+            {
+                "vmax_it2": 100.0
+            },
+            {
+                "v12m_it2": 50.0
+            },
+            {
+                "v12h_it2": 78.0
+            },
+            {
+                "vwm_it2": 7.4
+            },
+            {
+                "vwh_it2": 5.0
+            },
+            {
+                "am_it2": 3.0
+            },
+            {
+                "ah_it2": 85.0
+            },
+            {
+                "vm1_it2": 25.0
+            },
+            {
+                "vm2_it2": 100.0
+            },
+            {
+                "vh1_it2": 46.0
+            },
+            {
+                "vh2_it2": 405.0
+            },
+            {
+                "wm1_it2": 20.0
+            },
+            {
+                "wm2_it2": 15.0
+            },
+            {
+                "wh1_it2": 4.0
+            },
+            {
+                "wh2_it2": 50.0
+            },
+            {
+                "usetable_it2": 1.0
+            }
+        ],
+        "kap": [
+            {
+                "vhalfn_kap": 11.0
+            },
+            {
+                "vhalfl_kap": -56.0
+            },
+            {
+                "a0l_kap": 0.05
+            },
+            {
+                "a0n_kap": 0.05
+            },
+            {
+                "zetan_kap": -1.5
+            },
+            {
+                "zetal_kap": 3.0
+            },
+            {
+                "gmn_kap": 0.55
+            },
+            {
+                "gml_kap": 1.0
+            },
+            {
+                "lmin_kap": 2.0
+            },
+            {
+                "nmin_kap": 0.1
+            },
+            {
+                "pw_kap": -1.0
+            },
+            {
+                "tq_kap": -40.0
+            },
+            {
+                "qq_kap": 5.0
+            },
+            {
+                "q10_kap": 5.0
+            },
+            {
+                "qtl_kap": 1.0
+            },
+            {
+                "ninf_kap": 0.0
+            },
+            {
+                "linf_kap": 0.0
+            },
+            {
+                "taul_kap": 0.0
+            },
+            {
+                "taun_kap": 0.0
+            }
+        ],
+        "kca": [
+            {
+                "caix_kca": 1.0
+            },
+            {
+                "Ra_kca": 0.01
+            },
+            {
+                "Rb_kca": 0.02
+            },
+            {
+                "temp_kca": 23.0
+            },
+            {
+                "q10_kca": 2.3
+            },
+            {
+                "vmin_kca": -120.0
+            },
+            {
+                "vmax_kca": 100.0
+            },
+            {
+                "tadj_kca": 0.0
+            }
+        ],
+        "kdf": [
+            {
+                "temp_kdf": 23.0
+            },
+            {
+                "q10_kdf": 2.3
+            },
+            {
+                "vmin_kdf": -150.0
+            },
+            {
+                "vmax_kdf": 100.0
+            },
+            {
+                "ntau_C1_kdf": 1.25
+            },
+            {
+                "ntau_C2_kdf": 171.0
+            },
+            {
+                "ntau_C3_kdf": -0.026
+            },
+            {
+                "ntau_C4_kdf": 13.0
+            },
+            {
+                "ninf_a_kdf": -24.0
+            },
+            {
+                "ninf_b_kdf": 14.0
+            },
+            {
+                "htau_C1_kdf": 360.0
+            },
+            {
+                "htau_C2_kdf": 810.0
+            },
+            {
+                "htau_C3_kdf": -75.0
+            },
+            {
+                "htau_C4_kdf": 48.0
+            },
+            {
+                "htau_C5_kdf": 22.0
+            },
+            {
+                "htau_C6_kdf": -55.0
+            },
+            {
+                "hinf_a_kdf": -54.0
+            },
+            {
+                "hinf_b_kdf": -11.0
+            },
+            {
+                "ntau_slow1_kdf": 1.0
+            },
+            {
+                "ntau_slow2_kdf": 0.0
+            },
+            {
+                "N_kdf": 3.0
+            },
+            {
+                "tadj_kdf": 0.0
+            },
+            {
+                "usetable_kdf": 1.0
+            }
+        ],
+        "kdr": [
+            {
+                "usetable_kdr": 1.0
+            }
+        ],
+        "km": [
+            {
+                "tha_km": -30.0
+            },
+            {
+                "qa_km": 9.0
+            },
+            {
+                "Ra_km": 0.001
+            },
+            {
+                "Rb_km": 0.001
+            },
+            {
+                "temp_km": 23.0
+            },
+            {
+                "q10_km": 2.3
+            },
+            {
+                "vmin_km": -120.0
+            },
+            {
+                "vmax_km": 100.0
+            },
+            {
+                "tadj_km": 0.0
+            },
+            {
+                "usetable_km": 1.0
+            }
+        ]
+    }
+}

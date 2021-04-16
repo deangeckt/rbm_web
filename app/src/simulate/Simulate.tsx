@@ -44,7 +44,6 @@ function Simulate() {
             globalMechanism: newGlobalMech,
             pointProcess: newPointProcc,
         });
-        console.log(newPointMech);
         setReadLoading(false);
     };
 

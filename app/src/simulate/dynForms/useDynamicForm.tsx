@@ -16,5 +16,13 @@ export function useDynamicForms() {
         setState({ ...state, mechProcKeySelected: key });
     };
 
-    return { setKeySelected, setKeyChecked };
+    const onChangeGlobalMech = (mech: string, attr: string, value: number) => {
+        const globalMechs = [...state.globalMechanism];
+        const vals = globalMechs.find((m) => m.key === mech);
+        const attrs = vals!.attrs.find((a) => a.attr === attr);
+        attrs!.value = value;
+        setState({ ...state, globalMechanism: globalMechs });
+    };
+
+    return { setKeySelected, setKeyChecked, onChangeGlobalMech };
 }
