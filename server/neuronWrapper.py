@@ -44,7 +44,7 @@ class NeuronWrapper:
 
         self.config = {}
         with open(config_path) as f_:
-            default_form = json.load(f_)['default_form']
+            default_form = json.load(f_)['static_global_form']
             for form in default_form:
                 self.config[form['id']] = form['value']
 
@@ -224,7 +224,7 @@ class NeuronWrapper:
 
 
 if __name__ == "__main__":
-    wrap = NeuronWrapper('../app/src/share/config.json')
+    wrap = NeuronWrapper('../app/src/config.json')
     section_soma = {'id': 0, 'section': 0.5, 'type': 1}
     section_undef = {'id': 0, 'section': 0.5, 'type': 0}
 

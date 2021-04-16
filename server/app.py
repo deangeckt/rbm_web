@@ -10,7 +10,7 @@ from neuronWrapper import NeuronWrapper
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-config_path = '../app/src/share/config.json'
+config_path = '../app/src/config.json'
 base_cwd = os.getcwd()
 config_full_path = os.path.join(base_cwd, config_path)
 
