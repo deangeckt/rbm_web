@@ -5,7 +5,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { run, read } from '../api/api';
 import { AppContext } from '../AppContext';
 import SimulateTabs from './SimulateTabs';
-import InfoDialog from './Dialogs/InfoDialog';
+import InfoDialog from './dialogs/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import { useSimulate } from './useSimulate';
 import SimulateCanvas from './SimulateCanvas';
@@ -64,7 +64,7 @@ function Simulate() {
     };
 
     React.useEffect(() => {
-        console.log('eading first tme!!!!!!!!!');
+        console.log('reading first time!!!!!!!!!');
         setReadLoading(true);
         setSimulationTreeCids();
         read(updateError, updateDynForms);

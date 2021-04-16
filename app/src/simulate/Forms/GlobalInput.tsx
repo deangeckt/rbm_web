@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, TextField } from '@material-ui/core';
 import { IGlobalInput } from '../../Wrapper';
 import { useSimulate } from '../useSimulate';
-import { useDialogs } from '../Dialogs/useDialogs';
+import { useDialogs } from '../dialogs/useDialogs';
 
 export interface IGlobalInputProps {
     input: IGlobalInput;
