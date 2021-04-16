@@ -7,7 +7,7 @@
     align-items: center;
     flex-direction: column;
 	align-content: space-between;
-    overflow: scroll;
+    overflow: hidden;
 }
 
 .SimulateContainer {
@@ -31,10 +31,10 @@
 .RightSide {
     flex-basis: 50%;
     min-width: 50%;
-    height: 100%;
     text-align: left;
     border-left: 1px solid #efefef;
-    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .Plot {
@@ -52,6 +52,7 @@
     align-items: center;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 

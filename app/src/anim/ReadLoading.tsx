@@ -14,7 +14,6 @@ function ReadLoading() {
                 <div></div>
                 <div></div>
             </div>
-            <div>Loading</div>
         </>
     );
 }

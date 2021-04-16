@@ -9,9 +9,9 @@ import InfoDialog from './Dialogs/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import { useSimulate } from './useSimulate';
 import SimulateCanvas from './SimulateCanvas';
-import { IMechanism } from '../Wrapper';
-import './Simulate.css';
+import { IMechanismProcess } from '../Wrapper';
 import ReadLoading from '../anim/ReadLoading';
+import './Simulate.css';
 
 export interface IPlotData {
     plot: number[];
@@ -33,8 +33,17 @@ function Simulate() {
         setRunning(false);
     };
 
-    const updateDynForms = (newPointMech: IMechanism[], newGlobalMech: IMechanism[]) => {
-        setState({ ...state, pointMechanism: newPointMech, globalMechanism: newGlobalMech });
+    const updateDynForms = (
+        newPointMech: IMechanismProcess[],
+        newGlobalMech: IMechanismProcess[],
+        newPointProcc: IMechanismProcess[],
+    ) => {
+        setState({
+            ...state,
+            pointMechanism: newPointMech,
+            globalMechanism: newGlobalMech,
+            pointProcess: newPointProcc,
+        });
         console.log(newPointMech);
         setReadLoading(false);
     };
@@ -45,6 +54,7 @@ function Simulate() {
     };
 
     const StartRunning = () => {
+        console.log(state.globalMechanism);
         setRunning(true);
         run(updatePlotData, updateError, state.inputs, state.stims, state.records);
     };

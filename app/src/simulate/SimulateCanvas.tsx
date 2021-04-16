@@ -24,15 +24,16 @@ const SimulateCanvas = ({ setTab }: ISimulateCanvasProps) => {
             <div
                 id={'Canvas'}
                 style={{
+                    // flexBasis: '80%',
+                    // maxHeight: '80%',
                     width: '100%',
-                    height: '100%',
                     borderBottom: '1px solid #efefef',
                     borderLeft: '1px solid #efefef',
                 }}
             >
                 <TreeCanvas />
             </div>
-            <div style={{ flexBasis: '20%', minHeight: '20%', width: '100%' }}>
+            <div style={{ flexBasis: '20%', minHeight: '20%', height: '20%', width: '100%', textAlign: 'center' }}>
                 {!neuronSelected && !lineSelected ? (
                     <big style={{ color: 'black', alignSelf: 'center', fontSize: '16px', marginTop: '16px' }}>
                         Select a section to add simulate properties

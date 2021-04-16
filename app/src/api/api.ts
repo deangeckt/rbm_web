@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { IPlotData } from '../simulate/Simulate';
-import { IGlobalInput, init_form, IMechanism, IRecordInput, IStimInput } from '../Wrapper';
-import { pointMechanismMock } from './readMock';
+import { IGlobalInput, init_form, IMechanismProcess, IRecordInput, IStimInput } from '../Wrapper';
+import { pointMechanismMock, globalMechanismMock, pointProcessMock } from './readMock';
 
 export const run = async (
     setData: Function,
@@ -47,15 +47,16 @@ export const read = async (setError: Function, setData: Function) => {
             url: 'http://localhost:8080/api/v1/read',
             method: 'GET',
         })) as AxiosResponse;
-        const ipointMech = response.data['point_mechanism'] as IMechanism[];
-        setData(ipointMech);
-        // const point_processes = response.data['point_processes'];
-        // const global_mechanism = response.data['global_mechanism'];
+        const ipointMech = response.data['point_mechanism'] as IMechanismProcess[];
+        const ipointProcess = response.data['point_processes'] as IMechanismProcess[];
+        const iglobalMech = response.data['global_mechanism'] as IMechanismProcess[];
+
+        setData(ipointMech, iglobalMech, ipointProcess);
     } catch (error: any) {
         let msg;
         if (!error.response) {
             msg = ' - Using mocks';
-            setData(pointMechanismMock);
+            setData(pointMechanismMock, globalMechanismMock, pointProcessMock);
         } else msg = error.response.data;
         setError('Failed to read Neuron attributes ' + msg);
     }
