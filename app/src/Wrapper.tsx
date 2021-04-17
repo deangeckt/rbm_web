@@ -107,8 +107,9 @@ export interface IDialogs {
 export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
 export interface IAppState {
     stage: IStageSize;
-    lines: ILine[];
+    lines: Record<number, ILine>;
     selectedId: number;
+    lastId: number;
     neuronRadius: number;
     stims: IStimInput[];
     records: IRecordInput[];
@@ -145,12 +146,13 @@ export const default_alpha = 0.1; // in rad [PI]
 
 export const init_app_state: IAppState = {
     stage: getStage(),
-    lines: [],
+    lines: {},
     stims: [],
     records: [],
     neuronRadius: default_neuron_rad,
     inputs: JSON.parse(JSON.stringify(init_form)) as IGlobalInput[],
     selectedId: none_selected,
+    lastId: root_id,
     dialogs: {
         dialogInfo: false,
         dialogInfoTitle: '',

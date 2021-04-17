@@ -57,7 +57,7 @@ function convertAlpha(y0: number, y1: number, x0: number, x1: number) {
 }
 
 function textLineToILine(
-    ilines: ILine[],
+    ilines: Record<number, ILine>,
     line: string,
     screenRootX: number,
     screenRootY: number,
@@ -82,7 +82,7 @@ function textLineToILine(
         x0 = screenRootX;
         y0 = screenRootY;
     } else {
-        const father = ilines.find((l) => l.id === pid);
+        const father = ilines[pid];
         if (!father) throw new Error('SWC file bad format');
         x0 = father.points[2];
         y0 = father.points[3];
@@ -95,7 +95,7 @@ function textLineToILine(
 }
 
 export function importFile(text: string, screenRootX: number, screenRootY: number): Partial<IAppState> {
-    const ilines: ILine[] = [];
+    const ilines: Record<number, ILine> = {};
     let found_root = false;
     let neuronRad = -1;
     let x = 0;
@@ -118,7 +118,7 @@ export function importFile(text: string, screenRootX: number, screenRootY: numbe
             }
         } else {
             const iline = textLineToILine(ilines, line, screenRootX, screenRootY, x, y);
-            ilines.push(iline as ILine);
+            ilines[iline.id] = iline;
         }
     }
     if (neuronRad === -1) {

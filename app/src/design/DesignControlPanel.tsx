@@ -48,6 +48,9 @@ function DesignControlPanel() {
                                 type="number"
                                 value={getSelectedLength()}
                                 onChange={(e) => updateLength(Number(e.target.value))}
+                                InputProps={{
+                                    inputProps: { min: 0 },
+                                }}
                             />
                             <TextField
                                 label={'α [Rad]'}
@@ -66,7 +69,7 @@ function DesignControlPanel() {
                                 type="number"
                                 value={getSelectedRadius()}
                                 onChange={(e) => updateSimpleField('radius', Number(e.target.value))}
-                                InputProps={{ inputProps: { step: 0.1 } }}
+                                InputProps={{ inputProps: { min: 0, step: 0.1 } }}
                             />
                             <TextField
                                 select

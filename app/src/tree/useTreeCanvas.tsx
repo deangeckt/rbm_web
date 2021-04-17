@@ -6,16 +6,28 @@ import { default_alpha, default_length, default_radius, default_tid, ILine, none
 export function useTreeCanvas() {
     const { state, setState } = useContext(AppContext);
 
-    const getChildren = (lid: number) => {
-        const lines = state.lines;
-        return lines.filter((line) => line.pid === lid);
+    const getChildren = (pid: number): ILine[] => {
+        const ents = Object.values(state.lines);
+        return ents
+            .filter((line) => line.pid === pid)
+            .map((line) => {
+                return line;
+            });
     };
 
-    const updateChildsBelow = (ilines: ILine[], startId: number, rootX: number, rootY: number): void => {
-        for (let i = 0; i < ilines.length; i++) {
-            const currLine = ilines[i];
+    const getLinesArray = (): ILine[] => {
+        const ents = Object.values(state.lines);
+        return ents.map((line) => {
+            return line;
+        });
+    };
+
+    const updateChildsBelow = (startId: number, rootX: number, rootY: number): void => {
+        const ents = Object.values(state.lines);
+        for (let i = 0; i < ents.length; i++) {
+            const currLine = ents[i];
             if (currLine.id < startId) continue;
-            const father = ilines.find((l) => l.id === currLine.pid);
+            const father = state.lines[currLine.pid];
             if (!father) {
                 console.log('looking for root');
                 currLine.points[0] = rootX;
@@ -61,12 +73,13 @@ export function useTreeCanvas() {
     };
 
     const addNew = () => {
-        const lines = [...state.lines];
-        const selectedLine = lines.find((line) => line.id === state.selectedId);
-        let newId: number;
+        const lines = { ...state.lines };
+        console.log(lines);
+        const selectedLine = lines[state.selectedId];
         let newPid: number;
         let newPoints: number[] = [];
         let newAlpha: number;
+        const newId = state.lastId + 1;
 
         if (!selectedLine) {
             const rootChilds = getChildren(root_id);
@@ -74,17 +87,15 @@ export function useTreeCanvas() {
             newPoints = r.newPoints;
             newAlpha = r.newAngle;
             newPid = root_id;
-            newId = rootChilds.length === 0 ? root_id + 1 : lines[lines.length - 1].id + 1;
         } else {
             const prevX = selectedLine.points[2];
             const prevY = selectedLine.points[3];
             const r = addNewPoints(prevX, prevY, getChildren(selectedLine.id));
             newPoints = r.newPoints;
             newAlpha = r.newAngle;
-            newId = lines[lines.length - 1].id + 1;
             newPid = selectedLine.id;
         }
-        lines.push({
+        lines[newId] = {
             id: newId,
             points: newPoints,
             pid: newPid,
@@ -92,82 +103,79 @@ export function useTreeCanvas() {
             tid: default_tid,
             length: lengthToPoint(default_length),
             alpha: newAlpha,
-        });
-        setState({ ...state, lines: lines, selectedId: newId });
+        };
+        setState({ ...state, lines: lines, selectedId: newId, lastId: newId });
     };
 
     const getSelectedRadius = () => {
-        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
+        const selectedLine = state.lines[state.selectedId];
         return selectedLine ? selectedLine.radius : default_radius;
     };
 
     const getSelectedType = () => {
-        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
+        const selectedLine = state.lines[state.selectedId];
         return selectedLine ? selectedLine.tid : default_tid;
     };
 
-    const updateSimpleField = (field: 'tid' | 'radius', value: number) => {
-        if (field === 'radius' && value <= 0) return;
-        const lines = [...state.lines];
-        const selectedLine = lines.find((line) => line.id === state.selectedId);
-        (selectedLine as any)[field] = value;
-        setState({ ...state, lines: lines });
-    };
-
     const getSelectedAlpha = () => {
-        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
+        const selectedLine = state.lines[state.selectedId];
         const alpha = selectedLine ? selectedLine.alpha : default_alpha;
         return alpha;
     };
 
     const getSelectedLength = () => {
-        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
+        const selectedLine = state.lines[state.selectedId];
         return selectedLine ? pointToLength(selectedLine.length) : default_length;
     };
 
-    const deleteChildsRecur = (lines: ILine[], fatherIdx: number): void => {
-        const childs = lines.filter((line) => line.pid === lines[fatherIdx].id); //use map to return idx?
-        childs.forEach((child) => {
-            const childIdx = lines.findIndex((line) => line.id === child.id);
-            deleteChildsRecur(lines, childIdx);
-        });
-        lines.splice(fatherIdx, 1);
+    const updateSimpleField = (field: 'tid' | 'radius', value: number) => {
+        const lines = { ...state.lines };
+        const selectedLine = lines[state.selectedId];
+        if (!selectedLine) return;
+        (selectedLine as any)[field] = value;
+        setState({ ...state, lines: lines });
     };
 
     const updateAlpha = (value: number) => {
-        const lines = [...state.lines];
-        const selectedLine = lines.find((line) => line.id === state.selectedId);
+        const lines = { ...state.lines };
+        const selectedLine = lines[state.selectedId];
         if (!selectedLine) return;
 
         selectedLine.alpha = value;
         updateLinePoint(selectedLine);
-        updateChildsBelow(lines, selectedLine.id, state.stage.rootX, state.stage.rootY);
+        updateChildsBelow(selectedLine.id, state.stage.rootX, state.stage.rootY);
         setState({ ...state, lines: lines });
     };
 
     const updateLength = (value: number) => {
-        if (value <= 0) return;
-        const lines = [...state.lines];
-        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
+        const lines = { ...state.lines };
+        const selectedLine = lines[state.selectedId];
         if (!selectedLine) return;
 
         selectedLine.length = lengthToPoint(value);
         updateLinePoint(selectedLine);
-        updateChildsBelow(lines, selectedLine.id, state.stage.rootX, state.stage.rootY);
+        updateChildsBelow(selectedLine.id, state.stage.rootX, state.stage.rootY);
         setState({ ...state, lines: lines });
     };
 
-    const Delete = () => {
-        const lines = [...state.lines];
-        const index = lines.findIndex((line) => line.id === state.selectedId);
-        if (index === -1) return;
+    const deleteChildsRecur = (lines: Record<number, ILine>, pid: number): void => {
+        const childs = getChildren(pid);
+        childs.forEach((child) => {
+            deleteChildsRecur(lines, child.id);
+            delete lines[child.id];
+        });
+    };
 
-        const parentId = lines[index].pid;
-        deleteChildsRecur(lines, index);
+    const Delete = () => {
+        const lines = { ...state.lines };
+        const parentId = lines[state.selectedId].pid;
+        deleteChildsRecur(lines, state.selectedId);
+        delete lines[state.selectedId];
         setState({ ...state, lines: lines, selectedId: parentId });
     };
 
     return {
+        getLinesArray,
         getChildren,
         updateChildsBelow,
         setSelectedId,

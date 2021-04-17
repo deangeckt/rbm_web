@@ -7,24 +7,23 @@ export function useSimulate() {
     const { state, setState } = useContext(AppContext);
 
     const setSimulationTreeCids = () => {
-        const lines = [...state.lines];
-        if (lines.length === 0) return;
-
-        section_types.forEach((sec_type) => {
-            const sec_lines = lines.filter((l) => l.tid === sec_type.value);
-            if (sec_lines.length > 0) {
-                const tree = new TreeLines(root_id);
-                sec_lines.forEach((line) => {
-                    tree.insert(line);
-                });
-                tree.setCid();
-            }
-        });
-        setState({ ...state, lines: lines });
+        // const lines = [...state.lines];
+        // if (lines.length === 0) return;
+        // section_types.forEach((sec_type) => {
+        //     const sec_lines = lines.filter((l) => l.tid === sec_type.value);
+        //     if (sec_lines.length > 0) {
+        //         const tree = new TreeLines(root_id);
+        //         sec_lines.forEach((line) => {
+        //             tree.insert(line);
+        //         });
+        //         tree.setCid();
+        //     }
+        // });
+        // setState({ ...state, lines: lines });
     };
 
     const getSelectedCid = () => {
-        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
+        const selectedLine = state.lines[state.selectedId];
         return selectedLine ? selectedLine.cid ?? 0 : 0;
     };
 
@@ -62,7 +61,7 @@ export function useSimulate() {
     };
 
     const newSection = (): ISection => {
-        const selectedLine = state.lines.find((line) => line.id === state.selectedId);
+        const selectedLine = state.lines[state.selectedId];
         let newStimId;
         let newStimType;
         if (!selectedLine || state.selectedId === none_selected) {

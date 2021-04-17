@@ -29,7 +29,7 @@ function TreeText() {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <List dense={false}>
+            {/* <List dense={false}>
                 {state.lines.map((l) => (
                     <ListItem key={l.id} classes={{ root: classes.item }}>
                         <div key={l.id} style={{ display: 'flex', flexDirection: 'row', marginLeft: margin }}>
@@ -43,7 +43,7 @@ function TreeText() {
                         </div>
                     </ListItem>
                 ))}
-            </List>
+            </List> */}
         </div>
     );
 }

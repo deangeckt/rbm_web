@@ -17,9 +17,9 @@ function TreeCanvas() {
         if (widSize && widSize !== state.stage.width) {
             console.log('changing stage size');
             const newStage = getStage();
-            const lines = [...state.lines];
-            if (lines.length > 0) {
-                updateChildsBelow(lines, lines[0].id, newStage.rootX, newStage.rootY);
+            const lines = { ...state.lines };
+            if (Object.keys(lines).length > 0) {
+                updateChildsBelow(root_id + 1, newStage.rootX, newStage.rootY);
             }
             setState({ ...state, lines: lines, stage: newStage });
         }
@@ -44,9 +44,9 @@ function TreeCanvas() {
                         draggable={false}
                         onClick={() => setSelectedId(root_id)}
                     />
-                    {state.lines.map((l) => (
+                    {Object.entries(state.lines).map(([id, l]) => (
                         <TransformerLine
-                            key={l.id}
+                            key={id}
                             shapeProps={l}
                             isSelected={l.id === state.selectedId}
                             onSelect={() => {
