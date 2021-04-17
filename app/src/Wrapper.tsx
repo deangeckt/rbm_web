@@ -64,6 +64,7 @@ export interface ISectionInput {
     // process e.g ICLAMP == Stim
 }
 
+// DEL THIS
 export interface IStimInput {
     delay: number;
     duration: number;
@@ -104,7 +105,6 @@ export interface IDialogs {
 
 export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
 export interface IAppState {
-    // [key: string]: any;
     stage: IStageSize;
     lines: ILine[];
     selectedId: number;

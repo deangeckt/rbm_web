@@ -24,7 +24,7 @@ function Simulate() {
     // simulate props
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
-    const [readLoading, setReadLoading] = React.useState(false);
+    const [readLoading, setReadLoading] = React.useState(true);
     const [plotData, setPlotData] = React.useState([] as IPlotData[]);
     const [tab, setTab] = React.useState(0);
 
@@ -63,8 +63,6 @@ function Simulate() {
     };
 
     React.useEffect(() => {
-        console.log('reading first time!!!!!!!!!');
-        setReadLoading(true);
         setSimulationTreeCids();
         read(updateError, updateDynForms);
     }, []);

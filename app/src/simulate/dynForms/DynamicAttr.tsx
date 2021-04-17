@@ -21,6 +21,7 @@ function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
     const { setKeyChecked, onChangeGlobalMech } = useDynamicForms();
 
     const headLine = impKey.endsWith('Mechanism') ? 'Mechanism' : 'Process';
+    const operationStr = impKey.startsWith('global') ? 'Change' : 'Add';
 
     const onChange = (attr: string, value: number) => {
         if (impKey === 'globalMechanism') {
@@ -42,7 +43,7 @@ function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
                                 onChange={() => setKeyChecked(impKey, attr_key, !checked)}
                             />
                         }
-                        label={`Add ${attr_key}`}
+                        label={`${operationStr} ${attr_key}`}
                     />
                     <List>
                         {attrs.map((at) => (
