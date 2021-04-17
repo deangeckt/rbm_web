@@ -4,8 +4,8 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { AppContext } from '../AppContext';
 import { none_selected, section_types, root_id, default_alpha } from '../Wrapper';
-import './DesignControlPanel.css';
 import { useTreeCanvas } from '../tree/useTreeCanvas';
+import './DesignControlPanel.css';
 
 function DesignControlPanel() {
     const { state, setState } = useContext(AppContext);

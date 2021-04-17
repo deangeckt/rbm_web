@@ -98,7 +98,7 @@ function Simulate() {
                                 <SimulateTabs tab={tab} setTab={setTab} />
                             </div>
                             <div className="RightSide">
-                                {treeOrPlot === 'Plot' ? <Plot data={plotData} /> : <SimulateCanvas setTab={setTab} />}
+                                {treeOrPlot === 'Plot' ? <Plot data={plotData} /> : <SimulateCanvas />}
                             </div>
                         </div>
                     </div>
