@@ -2,15 +2,13 @@ import React, { useContext } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { AppBar, Tab, Tabs } from '@material-ui/core';
-import StimRecordForm from './forms/StimRecordForm';
 import { makeStyles } from '@material-ui/core/styles';
 import DynamicForm from './dynForms/DynamicForm';
-import './Simulate.css';
 import { AppContext } from '../AppContext';
+import './Simulate.css';
 
 export const global_tab = 0;
-export const stim_tab = 1;
-export const record_tab = 2;
+export const section_tab = 1;
 
 export interface ISimulateTabsProps {
     tab: number;
@@ -35,7 +33,7 @@ function TabPanel(props: TabPanelProps) {
             {...other}
         >
             {value === index && (
-                <Box p={3}>
+                <Box p={2}>
                     <Typography>{children}</Typography>
                 </Box>
             )}
@@ -74,19 +72,15 @@ function SimulateTabs({ tab, setTab }: ISimulateTabsProps) {
                         variant="fullWidth"
                     >
                         <Tab label="Global" />
-                        <Tab label="Stimulus" />
-                        <Tab label="Recordings" />
+                        <Tab label="Section" />
                     </Tabs>
                 </AppBar>
                 <TabPanel value={tab} index={global_tab}>
                     {/* <GlobalForm /> */}
                     <DynamicForm mp={state.globalMechanism} impKey={'globalMechanism'} />
                 </TabPanel>
-                <TabPanel value={tab} index={stim_tab}>
-                    <StimRecordForm stim={true} />
-                </TabPanel>
-                <TabPanel value={tab} index={record_tab}>
-                    <StimRecordForm stim={false} />
+                <TabPanel value={tab} index={section_tab}>
+                    <div>Section</div>
                 </TabPanel>
             </div>
         </div>
