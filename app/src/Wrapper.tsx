@@ -61,6 +61,7 @@ export interface ISection {
 export interface ISectionInput {
     section: ISection;
     mechanism: IMechanismProcess[];
+    process: IMechanismProcess[];
     // process e.g ICLAMP == Stim
 }
 

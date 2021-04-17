@@ -17,15 +17,19 @@ export interface IPlotData {
     plot: number[];
     name: string;
 }
+
+export type TreeOrPlot = 'Tree' | 'Plot';
+const initTreePlot: TreeOrPlot = 'Plot';
+
 function Simulate() {
     const { state, setState } = useContext(AppContext);
     const { setSimulationTreeCids } = useSimulate();
 
-    // simulate props
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
     const [readLoading, setReadLoading] = React.useState(true);
     const [plotData, setPlotData] = React.useState([] as IPlotData[]);
+    const [treeOrPlot, setTreeOrPlot] = React.useState(initTreePlot);
     const [tab, setTab] = React.useState(0);
 
     const updatePlotData = (newData: IPlotData[]) => {
@@ -81,18 +85,20 @@ function Simulate() {
                     </Snackbar>
 
                     <div className="SimulateContainer">
-                        <div className="LeftSide">
-                            <div className="SimulatePanel">
-                                <SimulatePanel running={running} start={StartRunning} />
-                            </div>
-                            <SimulateTabs tab={tab} setTab={setTab} />
+                        <div className="SimulateTopPanel">
+                            <SimulatePanel
+                                running={running}
+                                start={StartRunning}
+                                toggle={treeOrPlot}
+                                togglePlotTree={setTreeOrPlot}
+                            />
                         </div>
-                        <div className="RightSide">
-                            <div className="Plot">
-                                <Plot data={plotData} />
+                        <div className="SimulateCenter">
+                            <div className="LeftSide">
+                                <SimulateTabs tab={tab} setTab={setTab} />
                             </div>
-                            <div className="SimulateCanvas">
-                                <SimulateCanvas setTab={setTab} />
+                            <div className="RightSide">
+                                {treeOrPlot === 'Plot' ? <Plot data={plotData} /> : <SimulateCanvas setTab={setTab} />}
                             </div>
                         </div>
                     </div>

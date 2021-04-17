@@ -1,19 +1,34 @@
 .Simulate {
-    text-align: center;
     display: flex;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-	align-content: space-between;
-    overflow: hidden;
 }
 
 .SimulateContainer {
     width: 100%;
     height: 100%;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.SimulateTopPanel {
+    flex-basis: 5%;
+    min-height: 5%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #efefef;
+}
+
+.SimulateCenter {
+    flex-basis: 95%;
+    max-height: 95%;
+    width: 100%;
     display: flex;
 }
 
@@ -37,41 +52,45 @@
     flex-direction: column;
 }
 
-.Plot {
-    flex-basis: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    border-bottom: 1px solid #efefef;
-}
-
-.SimulateCanvas {
+.Tabs {
     width: 100%;
     height: 100%;
-    align-items: center;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    align-items: center;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
+.SimulateCanvasTree {
+    flex-basis: 50%;
+    max-height: 50%;
+    width: 100%;
+}
 
-.SimulatePanel {
-    flex-basis: 10%;
-    min-height: 10%;
+.SimulateCanvasBottomPanel {
+    flex-basis: 50%;
+    min-height: 50%;
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid #efefef;
+}
+
+.SimulateCanvasBottomRight {
+    flex-basis: 50%;
+    min-width: 50%;
+    border-left: 1px solid #efefef;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    border-bottom: 1px solid #efefef;
 }
 
-.Tabs {
-    flex-basis: 90%;
+.SimulateCanvasBottomLeft {
+    text-align: center;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 100%;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    height: 100%;
+
 }
