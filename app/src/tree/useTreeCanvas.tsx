@@ -222,7 +222,6 @@ export function useTreeCanvas() {
             }
         });
 
-        console.log(sectionLines);
         return { sectionLines, lines };
     };
 

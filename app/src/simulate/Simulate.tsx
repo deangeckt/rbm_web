@@ -18,7 +18,7 @@ export interface IPlotData {
 }
 
 export type TreeOrPlot = 'Tree' | 'Plot';
-const initTreePlot: TreeOrPlot = 'Plot';
+const initTreePlot: TreeOrPlot = 'Tree';
 
 function Simulate() {
     const { state, setState } = useContext(AppContext);

@@ -18,7 +18,7 @@ const downloadFile = (state: IAppState, linesArray: ILine[]) => {
     element.click();
 };
 
-function TopPanel() {
+function DesignTopPanel() {
     const { state, setState } = useContext(AppContext);
     const { getLinesArrayNoRoot, setSimulationTreeCids } = useTreeCanvas();
     const history = useHistory();
@@ -52,4 +52,4 @@ function TopPanel() {
     );
 }
 
-export default TopPanel;
+export default DesignTopPanel;

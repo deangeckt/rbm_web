@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import DesignControlPanel from './DesignControlPanel';
-import TopPanel from './TopPanel';
+import DesignTopPanel from './DesignTopPanel';
 import TreeCanvas from '../tree/TreeCanvas';
 import TreeNavigation from '../tree/TreeNavigation';
 import { none_selected } from '../Wrapper';
@@ -13,7 +13,7 @@ const Design = () => {
     return (
         <div className="Design">
             <div className="TopPanel">
-                <TopPanel />
+                <DesignTopPanel />
             </div>
             <div className="MainPanel">
                 <div className="Canvas" id={'Canvas'}>
