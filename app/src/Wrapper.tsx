@@ -25,6 +25,15 @@ export interface IStageSize {
     rootY: number;
 }
 
+export const section_short_labels: Dictionary<string> = {
+    0: 'undef',
+    1: 'soma',
+    2: 'axon',
+    3: 'basal',
+    4: 'apic',
+    5: 'custom',
+};
+
 export const section_types = [
     {
         value: 0,
@@ -56,6 +65,11 @@ export interface ISection {
     type: number; // section_types value
     id: number;
     section: number;
+}
+
+export interface ISectionLine {
+    key: string; //cid_tid
+    depth: number;
 }
 
 // THE NEW FORM
@@ -108,14 +122,15 @@ export interface IDialogs {
 export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
 export interface IAppState {
     stage: IStageSize;
-    lines: Record<number, ILine>;
+    lines: Record<string, ILine>;
+    sectionTreeLines: ISectionLine[];
     selectedId: number;
     lastId: number;
-    stims: IStimInput[];
-    records: IRecordInput[];
-    inputs: IGlobalInput[];
+    stims: IStimInput[]; //del
+    records: IRecordInput[]; // del
+    inputs: IGlobalInput[]; //rename to static
     dialogs: IDialogs;
-    pointMechanism: IMechanismProcess[];
+    pointMechanism: IMechanismProcess[]; // to record?
     pointProcess: IMechanismProcess[];
     globalMechanism: IMechanismProcess[];
     mechProcKeySelected: string;
@@ -160,6 +175,7 @@ export const init_app_state: IAppState = {
     lines: {
         1: init_root_line,
     },
+    sectionTreeLines: [],
     stims: [],
     records: [],
     inputs: JSON.parse(JSON.stringify(init_form)) as IGlobalInput[],

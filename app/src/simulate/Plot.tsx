@@ -2,15 +2,14 @@ import React from 'react';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
 import { IPlotData } from './Simulate';
-import { section_types } from '../Wrapper';
+import { section_short_labels } from '../Wrapper';
 
 const record_key_parse = (recordKey: string) => {
     const keys = recordKey.split('_');
     const type_ = keys[1];
     const id_ = keys[2];
     const section_ = keys[3];
-    const sec_type = section_types.find((t) => t.value == Number(type_));
-    return `${sec_type!.label}[${id_}](${section_})`;
+    return `${section_short_labels[Number(type_)]}[${id_}](${section_})`;
 };
 
 function oneD2d(data: IPlotData[]) {

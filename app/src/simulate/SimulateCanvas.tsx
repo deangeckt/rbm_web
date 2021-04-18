@@ -3,7 +3,7 @@ import { none_selected, root_id } from '../Wrapper';
 import { AppContext } from '../AppContext';
 import TreeCanvas from '../tree/TreeCanvas';
 import TreeNavigation from '../tree/TreeNavigation';
-import TreeText from '../tree/TreeText';
+import TreeTexts from '../tree/TreeTexts';
 import './Simulate.css';
 
 const SimulateCanvas = () => {
@@ -18,7 +18,7 @@ const SimulateCanvas = () => {
             </div>
             <div className="SimulateCanvasBottomPanel">
                 <div className="SimulateCanvasBottomLeft">
-                    <TreeText />
+                    <TreeTexts />
                 </div>
                 <div className="SimulateCanvasBottomRight">
                     {!neuronSelected && !lineSelected ? (

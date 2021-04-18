@@ -42,6 +42,7 @@ function Simulate() {
         newGlobalMech: IMechanismProcess[],
         newPointProcc: IMechanismProcess[],
     ) => {
+        console.log(state);
         setState({
             ...state,
             pointMechanism: newPointMech,
@@ -69,6 +70,7 @@ function Simulate() {
     React.useEffect(() => {
         setSimulationTreeCids();
         read(updateError, updateDynForms);
+        console.log(state);
     }, []);
 
     return (

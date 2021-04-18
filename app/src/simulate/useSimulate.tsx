@@ -1,25 +1,74 @@
 import { useContext } from 'react';
 import { AppContext } from '../AppContext';
-import { TreeLines } from '../utils/TreeLines';
-import { ISection, none_selected, recording_types, root_id, section_types } from '../Wrapper';
+import {
+    ILine,
+    ISection,
+    none_selected,
+    recording_types,
+    root_id,
+    section_types,
+    section_short_labels,
+    ISectionLine,
+} from '../Wrapper';
 
 export function useSimulate() {
     const { state, setState } = useContext(AppContext);
+    let cid = -1;
+
+    const setCids = (
+        lines: Record<string, ILine>,
+        sectionLines: ISectionLine[],
+        id: number,
+        tid: number,
+        depth: number,
+    ) => {
+        const childs = lines[id].lineChilds;
+        for (let i = 0; i < childs.length; i++) {
+            const line = lines[childs[i]];
+            if (line.tid !== tid) continue;
+
+            cid += 1;
+
+            const lineChilds = lines[line.id].lineChilds;
+            line.cid = cid;
+
+            if (lineChilds.length === 0) {
+                sectionLines.push({ key: `${cid}_${tid}`, depth: depth });
+                continue;
+            }
+
+            if (lineChilds.length === 1) cid -= 1;
+            else {
+                sectionLines.push({ key: `${cid}_${tid}`, depth: depth });
+            }
+            setCids(lines, sectionLines, line.id, tid, depth + 1);
+        }
+    };
 
     const setSimulationTreeCids = () => {
-        // const lines = [...state.lines];
-        // if (lines.length === 0) return;
-        // section_types.forEach((sec_type) => {
-        //     const sec_lines = lines.filter((l) => l.tid === sec_type.value);
-        //     if (sec_lines.length > 0) {
-        //         const tree = new TreeLines(root_id);
-        //         sec_lines.forEach((line) => {
-        //             tree.insert(line);
-        //         });
-        //         tree.setCid();
-        //     }
-        // });
-        // setState({ ...state, lines: lines });
+        const lines = { ...state.lines };
+        const sectionLines_ = { ...state.sectionTreeLines };
+        sectionLines_.push({ key: '0_1', depth: 0 });
+        lines[root_id].cid = 0;
+        const ents = Object.values(state.lines);
+        if (ents.length === 0) return;
+
+        section_types.forEach((sec_type) => {
+            const sec_lines = ents.filter((l) => l.tid === sec_type.value);
+            if (sec_lines.length > 0) {
+                cid = -1;
+                setCids(lines, sectionLines_, root_id, sec_type.value, 1);
+            }
+        });
+        console.log('section lines:', sectionLines_);
+        setState({ ...state, sectionTreeLines: sectionLines_ });
+    };
+
+    const sectionKeyToLabel = (key: string): string => {
+        const keys = key.split('_');
+        const cid = keys[0];
+        const tid = keys[1];
+        return `${section_short_labels[tid]}[${cid}]`;
     };
 
     const getSelectedCid = () => {
@@ -115,6 +164,7 @@ export function useSimulate() {
     return {
         setSimulationTreeCids,
         getSelectedCid,
+        sectionKeyToLabel,
         addStim,
         addRecord,
         updateInput,

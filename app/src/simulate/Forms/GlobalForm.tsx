@@ -11,7 +11,7 @@ function GlobalForm() {
     const g1 = state.inputs.filter((input) => input.group === 1);
     const g2 = state.inputs.filter((input) => input.group !== 1);
     return (
-        <div style={{ border: '1px solid red' }}>
+        <div>
             <Grid container spacing={0}>
                 <Grid item xs={6}>
                     <List>

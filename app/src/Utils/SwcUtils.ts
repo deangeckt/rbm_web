@@ -89,7 +89,7 @@ function textLineToILine(
 }
 
 export function importFile(text: string, screenRootX: number, screenRootY: number): Partial<IAppState> {
-    const ilines: Record<number, ILine> = {};
+    const ilines: Record<string, ILine> = {};
     ilines[root_id] = init_root_line;
     let neuronRad = -1;
     let x = 0;
