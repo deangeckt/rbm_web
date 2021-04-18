@@ -25,7 +25,7 @@ function DynamicForm({ mp, impKey }: IDynamicFormProps) {
     return (
         <div style={{ display: 'flex' }}>
             <div className="DynLeftSide">
-                <DynamicKeys keys={keys} />
+                <DynamicKeys keys={keys} selectedKey={selectedKey} />
             </div>
             <div className="DynRightSide">
                 <DynamicAttr

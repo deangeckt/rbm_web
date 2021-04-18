@@ -30,7 +30,7 @@ function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '12px' }}>
             {attrs.length === 0 ? (
                 <div>Select {headLine}</div>
             ) : (

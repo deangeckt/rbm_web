@@ -76,7 +76,6 @@ function SimulateTabs({ tab, setTab }: ISimulateTabsProps) {
                     </Tabs>
                 </AppBar>
                 <TabPanel value={tab} index={global_tab}>
-                    {/* <GlobalForm /> */}
                     <DynamicForm mp={state.globalMechanism} impKey={'globalMechanism'} />
                 </TabPanel>
                 <TabPanel value={tab} index={section_tab}>

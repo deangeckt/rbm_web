@@ -7,9 +7,10 @@ import { useDynamicForms } from './useDynamicForm';
 
 export interface IKeyListProps {
     keys: string[];
+    selectedKey: string;
 }
 
-function DynamicKeys({ keys }: IKeyListProps) {
+function DynamicKeys({ keys, selectedKey }: IKeyListProps) {
     // const { updateDialogInfo } = useDialogs();
     const { setKeySelected } = useDynamicForms();
 
@@ -27,7 +28,7 @@ function DynamicKeys({ keys }: IKeyListProps) {
                             ></Button>
                             <Button
                                 className="NoCapsButton"
-                                variant="contained"
+                                variant={selectedKey === key ? 'contained' : 'outlined'}
                                 color="primary"
                                 onClick={() => setKeySelected(key)}
                             >

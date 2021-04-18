@@ -1,24 +1,14 @@
 import axios, { AxiosResponse } from 'axios';
 import { IPlotData } from '../simulate/Simulate';
-import { IStaticGlobalInput, init_form, IMechanismProcess, IAttr } from '../Wrapper';
+import { IMechanismProcess, IAttr } from '../Wrapper';
 import readMocks from './readMock.json';
 
-export const run = async (setData: Function, setError: Function, form: IStaticGlobalInput[]) => {
-    let data: { id: string; value: any }[] = [];
-    const none_default_form = form
-        .map((input) => {
-            return { id: input.id, value: input.value };
-        })
-        .filter((input, index) => {
-            return init_form[index].value !== input.value;
-        });
-
-    data = data.concat(none_default_form);
+export const run = async (setData: Function, setError: Function) => {
     try {
         const response = (await axios.request({
             url: 'http://localhost:8080/api/v1/run',
             method: 'POST',
-            data: data,
+            data: {},
         })) as AxiosResponse;
 
         const idata: IPlotData[] = [];
@@ -33,7 +23,7 @@ export const run = async (setData: Function, setError: Function, form: IStaticGl
     }
 };
 
-const readSchema = (data: any): IMechanismProcess[] => {
+export const readSchema = (data: any): IMechanismProcess[] => {
     const result: IMechanismProcess[] = [];
     Object.keys(data).forEach(function (attrKey) {
         const attrList = data[attrKey];

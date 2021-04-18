@@ -39,10 +39,11 @@ function Simulate() {
         newGlobalMech: IMechanismProcess[],
         newPointProcc: IMechanismProcess[],
     ) => {
+        const staticGloablMech = [...state.globalMechanism];
         setState({
             ...state,
+            globalMechanism: staticGloablMech.concat(newGlobalMech),
             pointMechanism: newPointMech,
-            globalMechanism: newGlobalMech,
             pointProcess: newPointProcc,
         });
         setReadLoading(false);
@@ -55,7 +56,7 @@ function Simulate() {
 
     const StartRunning = () => {
         setRunning(true);
-        run(updatePlotData, updateError, state.inputs);
+        run(updatePlotData, updateError);
     };
 
     const closeError = (_event?: React.SyntheticEvent, reason?: string) => {

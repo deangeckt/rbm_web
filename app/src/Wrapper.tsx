@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AppContext } from './AppContext';
 import config from '../src/config.json';
+import { readSchema } from './api/api';
 
 export interface Dictionary<T> {
     [Key: string]: T;
@@ -83,15 +84,6 @@ export interface IMechanismProcess {
     add?: boolean;
 }
 
-export interface IStaticGlobalInput {
-    name: string;
-    value: any;
-    tooltipTitle: string;
-    id: string;
-    group?: number;
-    // TODO: add tooltip explained / forumla / image
-}
-
 export interface IDialogs {
     dialogInfo: boolean;
     dialogInfoTitle: string;
@@ -105,7 +97,6 @@ export interface IAppState {
     selectedSections: Record<string, boolean>;
     selectedId: number;
     lastId: number;
-    inputs: IStaticGlobalInput[];
     dialogs: IDialogs;
     pointMechanism: IMechanismProcess[]; // to record?
     pointProcess: IMechanismProcess[];
@@ -128,7 +119,6 @@ export const getStage = (): IStageSize => {
 };
 
 export const default_neuron_rad = 5; // in micro
-export const init_form = config.static_global_form as ReadonlyArray<IStaticGlobalInput>;
 export const root_id = 1;
 export const none_selected = -1;
 export const default_radius = 0.1; // in micro
@@ -137,6 +127,8 @@ export const default_length = 10; //in micro
 export const default_alpha = 0.1; // in rad [PI]
 
 const init_stage = getStage();
+const static_global_form = readSchema(config.static_global_form);
+
 export const init_root_line: ILine = {
     id: root_id,
     pid: -1,
@@ -154,7 +146,6 @@ export const init_app_state: IAppState = {
     },
     sectionLines: {},
     selectedSections: {},
-    inputs: JSON.parse(JSON.stringify(init_form)) as IStaticGlobalInput[],
     selectedId: none_selected,
     lastId: root_id,
     dialogs: {
@@ -163,8 +154,8 @@ export const init_app_state: IAppState = {
     },
     pointMechanism: [],
     pointProcess: [],
-    globalMechanism: [],
-    mechProcKeySelected: '',
+    globalMechanism: static_global_form,
+    mechProcKeySelected: 'general',
 };
 
 const Wrapper = (props: any) => {

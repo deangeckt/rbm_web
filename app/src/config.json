@@ -1,31 +1,18 @@
 {
-	"static_global_form": [
-	{
-		"id": "sim_time",
-		"name": "Simulation time [mS]",
-		"value": 100,
-		"tooltipTitle": "Total run time of the simulation",
-		"group": 1
-	},
-	{
-		"id": "dt",
-		"name": "dt [mS]",
-		"value": 0.025,
-		"tooltipTitle": "Granularity of the time vector:\n lower value => higher Granularity",
-		"group": 1
-	},
-	{
-		"id": "rest_volt",
-		"name": "Resting voltage [mV]",
-		"value": -65,
-		"tooltipTitle": "The resting membrane potential",
-		"group": 1
-	},
-	{
-		"id": "celsius",
-		"name": "Celsius [℃]",
-		"value": 6.3,
-		"tooltipTitle": "Celsius degree"
+	"static_global_form": {
+		"general": [
+			{
+				"sim_time": 100
+			},
+			{
+				"dt": 0.025
+			},
+			{
+				"rest_volt": -65
+			},
+			{
+				"celsius": 6.3
+			}
+		]
 	}
-  ]
 }
