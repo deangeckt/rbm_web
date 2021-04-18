@@ -217,7 +217,7 @@ export function useTreeCanvas() {
         section_types.forEach((sec_type) => {
             const sec_lines = ents.filter((l) => l.tid === sec_type.value);
             if (sec_lines.length > 0) {
-                cid = -1;
+                cid = sec_type.value === 1 ? 0 : -1; // on type soma since we have root, start cids from 0
                 setCids(lines, sectionLines, root_id, sec_type.value, 1);
             }
         });

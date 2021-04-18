@@ -2,10 +2,10 @@ import React, { useContext, useEffect } from 'react';
 import { neuronRadToSize } from '../utils/SwcUtils';
 import { Stage, Layer, Circle } from 'react-konva';
 import TransformerLine from '../design/TransformerLine';
-import { colors } from '../utils/colors';
 import { AppContext } from '../AppContext';
 import { useTreeCanvas } from './useTreeCanvas';
 import { getStage, root_id } from '../Wrapper';
+import { section_color } from '../utils/colors';
 
 function TreeCanvas() {
     const { state, setState } = useContext(AppContext);
@@ -37,7 +37,7 @@ function TreeCanvas() {
                 <Layer>
                     <Circle
                         radius={neuronRadToSize(state.lines[root_id].radius)}
-                        fill={colors.primary}
+                        fill={section_color[1]}
                         opacity={state.selectedId === root_id ? 0.8 : 0.3}
                         x={state.stage.rootX}
                         y={state.stage.rootY}
