@@ -61,37 +61,15 @@ export const section_types = [
     },
 ];
 
+export type Recording = 'none' | 'volt' | 'ina' | 'ik';
+
 export interface ISection {
-    type: number; // section_types value
-    id: number;
     section: number;
-}
-
-export interface ISectionLine {
-    key: string; //cid_tid
     depth: number;
-}
-
-// THE NEW FORM
-export interface ISectionInput {
-    section: ISection;
+    recording: Recording;
+    added: boolean;
     mechanism: IMechanismProcess[];
     process: IMechanismProcess[];
-}
-
-// DEL THIS
-export interface IStimInput {
-    delay: number;
-    duration: number;
-    amplitude: number;
-    section: ISection;
-}
-
-// DEL THIS?
-export const recording_types = ['volt', 'ina', 'ik'];
-export interface IRecordInput {
-    section: ISection;
-    type: string; // recording_types
 }
 
 export interface IAttr {
@@ -105,7 +83,7 @@ export interface IMechanismProcess {
     add?: boolean;
 }
 
-export interface IGlobalInput {
+export interface IStaticGlobalInput {
     name: string;
     value: any;
     tooltipTitle: string;
@@ -122,13 +100,12 @@ export interface IDialogs {
 export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
 export interface IAppState {
     stage: IStageSize;
-    lines: Record<string, ILine>;
-    sectionLines: ISectionLine[];
+    lines: Record<string, ILine>; // key: swc id
+    sectionLines: Record<string, ISection>; //key: cid_tid
+    selectedSections: Record<string, boolean>;
     selectedId: number;
     lastId: number;
-    stims: IStimInput[]; //del
-    records: IRecordInput[]; // del
-    inputs: IGlobalInput[]; //rename to static
+    inputs: IStaticGlobalInput[];
     dialogs: IDialogs;
     pointMechanism: IMechanismProcess[]; // to record?
     pointProcess: IMechanismProcess[];
@@ -151,7 +128,7 @@ export const getStage = (): IStageSize => {
 };
 
 export const default_neuron_rad = 5; // in micro
-export const init_form = config.static_global_form as ReadonlyArray<IGlobalInput>;
+export const init_form = config.static_global_form as ReadonlyArray<IStaticGlobalInput>;
 export const root_id = 1;
 export const none_selected = -1;
 export const default_radius = 0.1; // in micro
@@ -175,10 +152,9 @@ export const init_app_state: IAppState = {
     lines: {
         1: init_root_line,
     },
-    sectionLines: [],
-    stims: [],
-    records: [],
-    inputs: JSON.parse(JSON.stringify(init_form)) as IGlobalInput[],
+    sectionLines: {},
+    selectedSections: {},
+    inputs: JSON.parse(JSON.stringify(init_form)) as IStaticGlobalInput[],
     selectedId: none_selected,
     lastId: root_id,
     dialogs: {

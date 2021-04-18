@@ -55,7 +55,7 @@ function Simulate() {
 
     const StartRunning = () => {
         setRunning(true);
-        run(updatePlotData, updateError, state.inputs, state.stims, state.records);
+        run(updatePlotData, updateError, state.inputs);
     };
 
     const closeError = (_event?: React.SyntheticEvent, reason?: string) => {

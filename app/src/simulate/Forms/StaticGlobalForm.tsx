@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
 import { AppContext } from '../../AppContext';
 
-function GlobalForm() {
+function StaticGlobalForm() {
     const { state } = useContext(AppContext);
 
     const g1 = state.inputs.filter((input) => input.group === 1);
@@ -36,4 +36,4 @@ function GlobalForm() {
     );
 }
 
-export default GlobalForm;
+export default StaticGlobalForm;

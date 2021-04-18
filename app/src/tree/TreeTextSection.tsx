@@ -1,27 +1,34 @@
-import React, { useContext } from 'react';
-import { AppContext } from '../AppContext';
+import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { useSimulate } from '../simulate/useSimulate';
 import { useTheme } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
+import { useTreeText } from './useTreeText';
 
 export interface ITreeTextProps {
-    section_key: string;
+    sectionKey: string;
     depth: number;
 }
 
-function TreeTextSection({ section_key, depth }: ITreeTextProps) {
-    // const { state } = useContext(AppContext);
-    const { sectionKeyToLabel } = useSimulate();
+function TreeTextSection({ sectionKey, depth }: ITreeTextProps) {
+    const { sectionKeyToLabel, isSectionSelected, setSectionChecked } = useTreeText();
+    const [check, setCheck] = React.useState(false);
+
     const theme = useTheme();
     const margin = `${depth * 1.5}ex`;
     const border = `2px solid ${theme.palette.primary.main}`;
+    const fontWeight = isSectionSelected(sectionKey) ? 600 : 500;
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setCheck(event.target.checked);
+        setSectionChecked(sectionKey);
+    };
 
     return (
-        <div key={section_key} style={{ marginLeft: margin, borderLeft: border }}>
+        <div key={sectionKey} style={{ marginLeft: margin, borderLeft: border }}>
             <FormControlLabel
-                label={sectionKeyToLabel(section_key)}
-                control={<Checkbox color="primary" checked={true} />}
+                label={<Typography style={{ fontWeight: fontWeight }}>{sectionKeyToLabel(sectionKey)}</Typography>}
+                control={<Checkbox color="primary" checked={check} onChange={handleChange} />}
                 labelPlacement="start"
             />
         </div>

@@ -22,7 +22,7 @@ const SimulateCanvas = () => {
                 </div>
                 <div className="SimulateCanvasBottomRight">
                     {!neuronSelected && !lineSelected ? (
-                        <div>Select a section</div>
+                        <div>Select a section to travel the tree</div>
                     ) : (
                         <div>{state.selectedId !== none_selected ? <TreeNavigation /> : null}</div>
                     )}

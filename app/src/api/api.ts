@@ -1,15 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import { IPlotData } from '../simulate/Simulate';
-import { IGlobalInput, init_form, IMechanismProcess, IRecordInput, IStimInput, IAttr } from '../Wrapper';
+import { IStaticGlobalInput, init_form, IMechanismProcess, IAttr } from '../Wrapper';
 import readMocks from './readMock.json';
 
-export const run = async (
-    setData: Function,
-    setError: Function,
-    form: IGlobalInput[],
-    stim: IStimInput[],
-    records: IRecordInput[],
-) => {
+export const run = async (setData: Function, setError: Function, form: IStaticGlobalInput[]) => {
     let data: { id: string; value: any }[] = [];
     const none_default_form = form
         .map((input) => {
@@ -19,8 +13,6 @@ export const run = async (
             return init_form[index].value !== input.value;
         });
 
-    data.push({ id: 'stim', value: stim });
-    data.push({ id: 'record', value: records });
     data = data.concat(none_default_form);
     try {
         const response = (await axios.request({

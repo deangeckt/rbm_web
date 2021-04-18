@@ -1,16 +1,16 @@
 import InfoIcon from '@material-ui/icons/Info';
 import React from 'react';
 import { Button, TextField } from '@material-ui/core';
-import { IGlobalInput } from '../../Wrapper';
+import { IStaticGlobalInput } from '../../Wrapper';
 import { useSimulate } from '../useSimulate';
 import { useDialogs } from '../dialogs/useDialogs';
 
 export interface IGlobalInputProps {
-    input: IGlobalInput;
+    input: IStaticGlobalInput;
 }
 
 function GlobalInput({ input }: IGlobalInputProps) {
-    const { updateInput } = useSimulate();
+    const { updateStaticGloablnput } = useSimulate();
     const { updateDialogInfo } = useDialogs();
 
     return (
@@ -27,7 +27,7 @@ function GlobalInput({ input }: IGlobalInputProps) {
                     variant="filled"
                     type="number"
                     defaultValue={input.value}
-                    onChange={(e: any) => updateInput(input.id, Number(e.target.value))}
+                    onChange={(e: any) => updateStaticGloablnput(input.id, Number(e.target.value))}
                 />
             </div>
         </>

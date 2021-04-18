@@ -7,7 +7,7 @@ import {
     default_radius,
     default_tid,
     ILine,
-    ISectionLine,
+    ISection,
     none_selected,
     root_id,
     section_types,
@@ -174,10 +174,14 @@ export function useTreeCanvas() {
         setState({ ...state, lines: lines, selectedId: pid });
     };
 
+    const addNewSection = (depth: number): ISection => {
+        return { depth: depth, section: 0.5, recording: 'none', added: false, mechanism: [], process: [] };
+    };
+
     let cid = -1;
     const setCids = (
         lines: Record<string, ILine>,
-        sectionLines: ISectionLine[],
+        sectionLines: Record<string, ISection>,
         id: number,
         tid: number,
         depth: number,
@@ -193,7 +197,7 @@ export function useTreeCanvas() {
             line.cid = cid;
 
             if (lineChilds.length === 0) {
-                sectionLines.push({ key: `${cid}_${tid}`, depth: depth });
+                sectionLines[`${cid}_${tid}`] = addNewSection(depth);
                 continue;
             }
 
@@ -201,7 +205,7 @@ export function useTreeCanvas() {
                 cid -= 1;
                 depth -= 1;
             } else {
-                sectionLines.push({ key: `${cid}_${tid}`, depth: depth });
+                sectionLines[`${cid}_${tid}`] = addNewSection(depth);
             }
             setCids(lines, sectionLines, line.id, tid, depth + 1);
         }
@@ -209,8 +213,8 @@ export function useTreeCanvas() {
 
     const setSimulationTreeCids = () => {
         const lines = { ...state.lines };
-        const sectionLines = [...state.sectionLines];
-        sectionLines.push({ key: '0_1', depth: 0 });
+        const sectionLines = { ...state.sectionLines };
+        sectionLines['0_1'] = addNewSection(0);
         lines[root_id].cid = 0;
         const ents = Object.values(lines);
 

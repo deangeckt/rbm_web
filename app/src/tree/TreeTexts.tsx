@@ -24,9 +24,9 @@ function TreeTexts() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <List>
-                {state.sectionLines.map((sec) => (
-                    <ListItem key={sec.key} classes={{ root: classes.item }}>
-                        <TreeTextSection section_key={sec.key} depth={sec.depth} />
+                {Object.entries(state.sectionLines).map(([sec_key, sec]) => (
+                    <ListItem key={sec_key} classes={{ root: classes.item }}>
+                        <TreeTextSection sectionKey={sec_key} depth={sec.depth} />
                     </ListItem>
                 ))}
             </List>
