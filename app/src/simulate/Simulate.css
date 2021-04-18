@@ -90,6 +90,8 @@
 .SimulateCanvasBottomLeft {
     text-align: center;
     display: flex;
-    width: 100%;
+    max-width: 50%;
+    width: 50%;
     height: 100%;
+    overflow: auto;
 }

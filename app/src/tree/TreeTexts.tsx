@@ -20,12 +20,11 @@ const useStyles = makeStyles(() =>
 function TreeTexts() {
     const { state } = useContext(AppContext);
     const classes = useStyles();
-    console.log('hh: ', state);
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <List>
-                {state.sectionTreeLines.map((sec) => (
+                {state.sectionLines.map((sec) => (
                     <ListItem key={sec.key} classes={{ root: classes.item }}>
                         <TreeTextSection section_key={sec.key} depth={sec.depth} />
                     </ListItem>

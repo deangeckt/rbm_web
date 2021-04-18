@@ -123,7 +123,7 @@ export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
 export interface IAppState {
     stage: IStageSize;
     lines: Record<string, ILine>;
-    sectionTreeLines: ISectionLine[];
+    sectionLines: ISectionLine[];
     selectedId: number;
     lastId: number;
     stims: IStimInput[]; //del
@@ -175,7 +175,7 @@ export const init_app_state: IAppState = {
     lines: {
         1: init_root_line,
     },
-    sectionTreeLines: [],
+    sectionLines: [],
     stims: [],
     records: [],
     inputs: JSON.parse(JSON.stringify(init_form)) as IGlobalInput[],

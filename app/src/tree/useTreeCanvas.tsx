@@ -1,7 +1,17 @@
 import { useContext } from 'react';
 import { AppContext } from '../AppContext';
 import { lengthToPoint, pointToLength } from '../utils/SwcUtils';
-import { default_alpha, default_length, default_radius, default_tid, ILine, none_selected, root_id } from '../Wrapper';
+import {
+    default_alpha,
+    default_length,
+    default_radius,
+    default_tid,
+    ILine,
+    ISectionLine,
+    none_selected,
+    root_id,
+    section_types,
+} from '../Wrapper';
 
 export function useTreeCanvas() {
     const { state, setState } = useContext(AppContext);
@@ -164,7 +174,60 @@ export function useTreeCanvas() {
         setState({ ...state, lines: lines, selectedId: pid });
     };
 
+    let cid = -1;
+    const setCids = (
+        lines: Record<string, ILine>,
+        sectionLines: ISectionLine[],
+        id: number,
+        tid: number,
+        depth: number,
+    ) => {
+        const childs = lines[id].lineChilds;
+        for (let i = 0; i < childs.length; i++) {
+            const line = lines[childs[i]];
+            if (line.tid !== tid) continue;
+
+            cid += 1;
+
+            const lineChilds = lines[line.id].lineChilds;
+            line.cid = cid;
+
+            if (lineChilds.length === 0) {
+                sectionLines.push({ key: `${cid}_${tid}`, depth: depth });
+                continue;
+            }
+
+            if (lineChilds.length === 1) {
+                cid -= 1;
+                depth -= 1;
+            } else {
+                sectionLines.push({ key: `${cid}_${tid}`, depth: depth });
+            }
+            setCids(lines, sectionLines, line.id, tid, depth + 1);
+        }
+    };
+
+    const setSimulationTreeCids = () => {
+        const lines = { ...state.lines };
+        const sectionLines = [...state.sectionLines];
+        sectionLines.push({ key: '0_1', depth: 0 });
+        lines[root_id].cid = 0;
+        const ents = Object.values(lines);
+
+        section_types.forEach((sec_type) => {
+            const sec_lines = ents.filter((l) => l.tid === sec_type.value);
+            if (sec_lines.length > 0) {
+                cid = -1;
+                setCids(lines, sectionLines, root_id, sec_type.value, 1);
+            }
+        });
+
+        console.log(sectionLines);
+        return { sectionLines, lines };
+    };
+
     return {
+        setSimulationTreeCids,
         getLinesArrayNoRoot,
         updateChildsBelow,
         setSelectedId,

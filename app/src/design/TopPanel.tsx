@@ -19,8 +19,8 @@ const downloadFile = (state: IAppState, linesArray: ILine[]) => {
 };
 
 function TopPanel() {
-    const { state } = useContext(AppContext);
-    const { setSelectedId, getLinesArrayNoRoot } = useTreeCanvas();
+    const { state, setState } = useContext(AppContext);
+    const { getLinesArrayNoRoot, setSimulationTreeCids } = useTreeCanvas();
     const history = useHistory();
 
     return (
@@ -40,7 +40,8 @@ function TopPanel() {
                 color="primary"
                 variant="contained"
                 onClick={() => {
-                    setSelectedId(none_selected);
+                    const { sectionLines, lines } = setSimulationTreeCids();
+                    setState({ ...state, sectionLines: sectionLines, lines: lines, setSelectedId: none_selected });
                     history.push({ pathname: '/simulate' });
                 }}
                 style={{ marginRight: '24px' }}

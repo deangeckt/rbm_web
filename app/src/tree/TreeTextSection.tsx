@@ -12,17 +12,14 @@ export interface ITreeTextProps {
 function TreeTextSection({ section_key, depth }: ITreeTextProps) {
     // const { state } = useContext(AppContext);
     const { sectionKeyToLabel } = useSimulate();
-    const margin = `${depth}ex`;
+    const margin = `${depth * 1.5}ex`;
 
     return (
-        <div
-            key={section_key}
-            style={{ display: 'flex', flexDirection: 'row', marginLeft: margin, borderLeft: '1px solid' }}
-        >
+        <div key={section_key} style={{ marginLeft: margin, borderLeft: '1px solid blue' }}>
             <FormControlLabel
                 label={sectionKeyToLabel(section_key)}
                 control={<Checkbox color="primary" checked={true} />}
-                labelPlacement="end"
+                labelPlacement="start"
             />
         </div>
     );

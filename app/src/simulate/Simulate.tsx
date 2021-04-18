@@ -7,7 +7,6 @@ import { AppContext } from '../AppContext';
 import SimulateTabs from './SimulateTabs';
 import InfoDialog from './dialogs/InfoDialog';
 import SimulatePanel from './SimulatePanel';
-import { useSimulate } from './useSimulate';
 import SimulateCanvas from './SimulateCanvas';
 import { IMechanismProcess } from '../Wrapper';
 import ReadLoading from '../anim/ReadLoading';
@@ -23,8 +22,6 @@ const initTreePlot: TreeOrPlot = 'Plot';
 
 function Simulate() {
     const { state, setState } = useContext(AppContext);
-    const { setSimulationTreeCids } = useSimulate();
-
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
     const [readLoading, setReadLoading] = React.useState(true);
@@ -42,7 +39,6 @@ function Simulate() {
         newGlobalMech: IMechanismProcess[],
         newPointProcc: IMechanismProcess[],
     ) => {
-        console.log(state);
         setState({
             ...state,
             pointMechanism: newPointMech,
@@ -68,9 +64,7 @@ function Simulate() {
     };
 
     React.useEffect(() => {
-        setSimulationTreeCids();
         read(updateError, updateDynForms);
-        console.log(state);
     }, []);
 
     return (
