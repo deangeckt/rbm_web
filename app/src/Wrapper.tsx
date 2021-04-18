@@ -101,7 +101,7 @@ export interface IAppState {
     pointMechanism: IMechanismProcess[]; // to record?
     pointProcess: IMechanismProcess[];
     globalMechanism: IMechanismProcess[];
-    mechProcKeySelected: string;
+    currAttrKeySelectedIdx: Record<impKeys, number>;
 }
 
 export const getStage = (): IStageSize => {
@@ -155,7 +155,11 @@ export const init_app_state: IAppState = {
     pointMechanism: [],
     pointProcess: [],
     globalMechanism: static_global_form,
-    mechProcKeySelected: 'general',
+    currAttrKeySelectedIdx: {
+        globalMechanism: 0,
+        pointMechanism: 0,
+        pointProcess: 0,
+    },
 };
 
 const Wrapper = (props: any) => {

@@ -12,8 +12,10 @@ export function useDynamicForms() {
         setState({ ...state, [impKey]: gm });
     };
 
-    const setKeySelected = (key: string) => {
-        setState({ ...state, mechProcKeySelected: key });
+    const setCurrKeyIdx = (impKey: impKeys, idx: number) => {
+        const currAttrKeys = { ...state.currAttrKeySelectedIdx };
+        currAttrKeys[impKey] = idx;
+        setState({ ...state, currAttrKeySelectedIdx: currAttrKeys });
     };
 
     const onChangeGlobalMech = (mech: string, attr: string, value: number) => {
@@ -24,5 +26,5 @@ export function useDynamicForms() {
         setState({ ...state, globalMechanism: globalMechs });
     };
 
-    return { setKeySelected, setKeyChecked, onChangeGlobalMech };
+    return { setCurrKeyIdx, setKeyChecked, onChangeGlobalMech };
 }

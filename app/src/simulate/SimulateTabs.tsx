@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import DynamicForm from './dynForms/DynamicForm';
 import { AppContext } from '../AppContext';
 import './Simulate.css';
+import SectionFormWrapper from './SectionFormWrapper';
 
 export const global_tab = 0;
 export const section_tab = 1;
@@ -79,7 +80,7 @@ function SimulateTabs({ tab, setTab }: ISimulateTabsProps) {
                     <DynamicForm mp={state.globalMechanism} impKey={'globalMechanism'} />
                 </TabPanel>
                 <TabPanel value={tab} index={section_tab}>
-                    <div>Section</div>
+                    <SectionFormWrapper />
                 </TabPanel>
             </div>
         </div>

@@ -13,19 +13,20 @@ export interface IDynamicFormProps {
 function DynamicForm({ mp, impKey }: IDynamicFormProps) {
     const { state } = useContext(AppContext);
 
-    const selectedKey = state.mechProcKeySelected;
+    const selectedKeyIdx = state.currAttrKeySelectedIdx[impKey];
     const keys = mp.map((prop) => {
         return prop.key;
     });
 
-    const vals = mp.find((mp_val) => mp_val.key === selectedKey);
-    const selectedAttrs = vals?.attrs ?? [];
-    const isSelectedKeyChecked = vals?.add ?? false;
+    const vals = mp[selectedKeyIdx];
+    const selectedAttrs = vals.attrs;
+    const isSelectedKeyChecked = vals.add ?? false;
+    const selectedKey = vals.key;
 
     return (
         <div style={{ display: 'flex' }}>
             <div className="DynLeftSide">
-                <DynamicKeys keys={keys} selectedKey={selectedKey} />
+                <DynamicKeys impKey={impKey} keys={keys} selectedKey={selectedKey} />
             </div>
             <div className="DynRightSide">
                 <DynamicAttr

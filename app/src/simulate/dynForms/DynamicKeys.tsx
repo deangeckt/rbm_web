@@ -4,20 +4,22 @@ import ListItem from '@material-ui/core/ListItem';
 import { Button } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import { useDynamicForms } from './useDynamicForm';
+import { impKeys } from '../../Wrapper';
 
 export interface IKeyListProps {
     keys: string[];
     selectedKey: string;
+    impKey: impKeys;
 }
 
-function DynamicKeys({ keys, selectedKey }: IKeyListProps) {
+function DynamicKeys({ keys, selectedKey, impKey }: IKeyListProps) {
     // const { updateDialogInfo } = useDialogs();
-    const { setKeySelected } = useDynamicForms();
+    const { setCurrKeyIdx } = useDynamicForms();
 
     return (
         <>
             <List>
-                {keys.map((key) => (
+                {keys.map((key, index) => (
                     <ListItem key={key}>
                         <div key={key} style={{ display: 'flex', flexDirection: 'row' }}>
                             <Button
@@ -30,7 +32,7 @@ function DynamicKeys({ keys, selectedKey }: IKeyListProps) {
                                 className="NoCapsButton"
                                 variant={selectedKey === key ? 'contained' : 'outlined'}
                                 color="primary"
-                                onClick={() => setKeySelected(key)}
+                                onClick={() => setCurrKeyIdx(impKey, index)}
                             >
                                 {key}
                             </Button>
