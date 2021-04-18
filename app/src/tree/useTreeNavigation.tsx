@@ -29,10 +29,10 @@ export function useTreeNavigation() {
 
         if (sibs.length === 1) return;
 
-        const nextChild = sibs.find((l) => l !== selectedLine.id);
-        if (!nextChild) return;
+        const nextIdx = sibs.findIndex((l) => l === selectedLine.id) + 1;
+        const nextId = sibs[nextIdx % sibs.length];
 
-        setSelectedId(nextChild);
+        setSelectedId(nextId);
     };
 
     return {
