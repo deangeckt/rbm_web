@@ -8,7 +8,7 @@ import { useTreeCanvas } from '../tree/useTreeCanvas';
 import './DesignControlPanel.css';
 
 function DesignControlPanel() {
-    const { state, setState } = useContext(AppContext);
+    const { state } = useContext(AppContext);
     const neuronSelected = state.selectedId === root_id;
     const lineSelected = state.selectedId !== none_selected && state.selectedId !== root_id;
     const {
@@ -21,6 +21,7 @@ function DesignControlPanel() {
         updateSimpleField,
         updateAlpha,
         updateLength,
+        updateNeuronRad,
     } = useTreeCanvas();
 
     return (
@@ -99,9 +100,9 @@ function DesignControlPanel() {
                             label={'Neuron Radius [µM]'}
                             variant="filled"
                             type="number"
-                            value={state.neuronRadius}
+                            value={state.lines[root_id].radius}
                             InputProps={{ inputProps: { min: 0 } }}
-                            onChange={(e) => setState({ ...state, neuronRadius: Number(e.target.value) })}
+                            onChange={(e) => updateNeuronRad(Number(e.target.value))}
                         />
                     )}
                 </div>

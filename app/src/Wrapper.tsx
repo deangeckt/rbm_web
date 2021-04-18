@@ -15,6 +15,7 @@ export interface ILine {
     radius: number;
     length: number;
     alpha: number;
+    lineChilds: number[];
 }
 
 export interface IStageSize {
@@ -62,7 +63,6 @@ export interface ISectionInput {
     section: ISection;
     mechanism: IMechanismProcess[];
     process: IMechanismProcess[];
-    // process e.g ICLAMP == Stim
 }
 
 // DEL THIS
@@ -73,6 +73,7 @@ export interface IStimInput {
     section: ISection;
 }
 
+// DEL THIS?
 export const recording_types = ['volt', 'ina', 'ik'];
 export interface IRecordInput {
     section: ISection;
@@ -110,7 +111,6 @@ export interface IAppState {
     lines: Record<number, ILine>;
     selectedId: number;
     lastId: number;
-    neuronRadius: number;
     stims: IStimInput[];
     records: IRecordInput[];
     inputs: IGlobalInput[];
@@ -144,12 +144,24 @@ export const default_tid = 0;
 export const default_length = 10; //in micro
 export const default_alpha = 0.1; // in rad [PI]
 
+const init_stage = getStage();
+export const init_root_line: ILine = {
+    id: root_id,
+    pid: -1,
+    points: [-1, -1, init_stage.rootX, init_stage.rootY],
+    lineChilds: [],
+    tid: 1,
+    radius: default_neuron_rad,
+    length: 0,
+    alpha: 0,
+};
 export const init_app_state: IAppState = {
-    stage: getStage(),
-    lines: {},
+    stage: init_stage,
+    lines: {
+        1: init_root_line,
+    },
     stims: [],
     records: [],
-    neuronRadius: default_neuron_rad,
     inputs: JSON.parse(JSON.stringify(init_form)) as IGlobalInput[],
     selectedId: none_selected,
     lastId: root_id,

@@ -3,13 +3,13 @@ import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { exportFile } from '../utils/SwcUtils';
 import { AppContext } from '../AppContext';
-import { IAppState, none_selected, ILine } from '../Wrapper';
+import { IAppState, none_selected, ILine, root_id } from '../Wrapper';
 import { useTreeCanvas } from '../tree/useTreeCanvas';
 
 const downloadFile = (state: IAppState, linesArray: ILine[]) => {
     // TODO: remove redundant element created
     const element = document.createElement('a');
-    const file = new Blob(exportFile(linesArray, state.neuronRadius, state.stage.rootX, state.stage.rootY), {
+    const file = new Blob(exportFile(linesArray, state.lines[root_id].radius, state.stage.rootX, state.stage.rootY), {
         type: 'text/plain;charset=utf-8',
     });
     element.href = URL.createObjectURL(file);

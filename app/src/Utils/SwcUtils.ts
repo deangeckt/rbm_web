@@ -1,4 +1,4 @@
-import { IAppState, ILine, root_id } from '../Wrapper';
+import { IAppState, ILine, init_root_line, root_id } from '../Wrapper';
 
 export const lenPointRatio = 5;
 export const neuronRadiusRatio = 2.5;
@@ -75,28 +75,22 @@ function textLineToILine(
     let points: number[] = [];
     const x1 = lengthToPoint(x - rootX) + screenRootX;
     const y1 = screenRootY - lengthToPoint(y - rootY);
-    let x0: number;
-    let y0: number;
 
-    if (pid === root_id) {
-        x0 = screenRootX;
-        y0 = screenRootY;
-    } else {
-        const father = ilines[pid];
-        if (!father) throw new Error('SWC file bad format');
-        x0 = father.points[2];
-        y0 = father.points[3];
-    }
+    const father = ilines[pid];
+    if (!father) throw new Error('SWC file bad format');
+    ilines[pid].lineChilds.push(id);
+    const x0 = father.points[2];
+    const y0 = father.points[3];
 
     points = [x0, y0, x1, y1];
     const length = Number(Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2)).toFixed(2));
     const alpha = convertAlpha(y0, y1, x0, x1);
-    return { id: id, tid: tid, points: points, radius: radius, pid: pid, length: length, alpha: alpha };
+    return { id: id, tid: tid, points: points, radius: radius, pid: pid, length: length, alpha: alpha, lineChilds: [] };
 }
 
 export function importFile(text: string, screenRootX: number, screenRootY: number): Partial<IAppState> {
     const ilines: Record<number, ILine> = {};
-    let found_root = false;
+    ilines[root_id] = init_root_line;
     let neuronRad = -1;
     let x = 0;
     let y = 0;
@@ -107,14 +101,14 @@ export function importFile(text: string, screenRootX: number, screenRootY: numbe
         if (line.startsWith('#')) continue;
         if (line === '') continue;
 
-        if (!found_root) {
+        if (neuronRad === -1) {
             const fields = lineSplitToFields(line);
             const id = Number(fields[0]);
             if (id === root_id) {
-                found_root = true;
                 x = Number(fields[2]);
                 y = Number(fields[3]);
                 neuronRad = Number(fields[5]);
+                ilines[root_id].radius = neuronRad;
             }
         } else {
             const iline = textLineToILine(ilines, line, screenRootX, screenRootY, x, y);
@@ -124,5 +118,5 @@ export function importFile(text: string, screenRootX: number, screenRootY: numbe
     if (neuronRad === -1) {
         throw new Error('SWC file bad format - missing neuron line');
     }
-    return { lines: ilines, neuronRadius: neuronRad };
+    return { lines: ilines };
 }

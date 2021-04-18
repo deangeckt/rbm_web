@@ -1,47 +1,38 @@
 import { useContext } from 'react';
 import { AppContext } from '../AppContext';
-import { none_selected, ILine, root_id } from '../Wrapper';
+import { none_selected, root_id } from '../Wrapper';
 import { useTreeCanvas } from './useTreeCanvas';
 
 export function useTreeNavigation() {
     const { state } = useContext(AppContext);
-    const { getChildren, setSelectedId } = useTreeCanvas();
+    const { setSelectedId } = useTreeCanvas();
 
     const setNextChildSelected = () => {
         if (state.selectedId === none_selected) return;
 
-        let childs: ILine[];
-        if (state.selectedId === root_id) {
-            childs = getChildren(root_id);
-        } else {
-            const selectedLine = state.lines[state.selectedId];
-            childs = getChildren(selectedLine!.id);
-        }
-
+        const childs = state.lines[state.selectedId].lineChilds;
         if (childs.length === 0) return;
-
-        setSelectedId(childs[0].id);
+        setSelectedId(childs[0]);
     };
 
     const setBackChildSelected = () => {
         if (state.selectedId === none_selected || state.selectedId === root_id) return;
-
         const selectedLine = state.lines[state.selectedId];
-        setSelectedId(selectedLine!.pid);
+        setSelectedId(selectedLine.pid);
     };
 
     const setBrotherChildSelected = () => {
         if (state.selectedId === none_selected || state.selectedId === root_id) return;
 
         const selectedLine = state.lines[state.selectedId];
-        const childs = getChildren(selectedLine!.pid);
+        const sibs = state.lines[selectedLine.pid].lineChilds;
 
-        if (childs.length === 1) return;
+        if (sibs.length === 1) return;
 
-        const nextIdx = childs.findIndex((l) => l.id === selectedLine!.id) + 1;
-        const nextId = childs[nextIdx % childs.length].id;
+        const nextChild = sibs.find((l) => l !== selectedLine.id);
+        if (!nextChild) return;
 
-        setSelectedId(nextId);
+        setSelectedId(nextChild);
     };
 
     return {

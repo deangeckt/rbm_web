@@ -9,7 +9,7 @@ import { getStage, root_id } from '../Wrapper';
 
 function TreeCanvas() {
     const { state, setState } = useContext(AppContext);
-    const { updateChildsBelow, checkDeselect, setSelectedId } = useTreeCanvas();
+    const { updateChildsBelow, checkDeselect, setSelectedId, getLinesArray } = useTreeCanvas();
     //TODO: handle zoom
     const widSize = window.document.getElementById('Canvas')?.offsetWidth;
 
@@ -36,7 +36,7 @@ function TreeCanvas() {
             >
                 <Layer>
                     <Circle
-                        radius={neuronRadToSize(state.neuronRadius)}
+                        radius={neuronRadToSize(state.lines[root_id].radius)}
                         fill={colors.primary}
                         opacity={state.selectedId === root_id ? 0.8 : 0.3}
                         x={state.stage.rootX}
@@ -44,9 +44,9 @@ function TreeCanvas() {
                         draggable={false}
                         onClick={() => setSelectedId(root_id)}
                     />
-                    {Object.entries(state.lines).map(([id, l]) => (
+                    {getLinesArray().map((l) => (
                         <TransformerLine
-                            key={id}
+                            key={l.id}
                             shapeProps={l}
                             isSelected={l.id === state.selectedId}
                             onSelect={() => {

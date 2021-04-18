@@ -6,36 +6,28 @@ import { default_alpha, default_length, default_radius, default_tid, ILine, none
 export function useTreeCanvas() {
     const { state, setState } = useContext(AppContext);
 
-    const getChildren = (pid: number): ILine[] => {
-        const ents = Object.values(state.lines);
-        return ents
-            .filter((line) => line.pid === pid)
-            .map((line) => {
-                return line;
-            });
+    const getChildren = (id: number): number[] => {
+        return state.lines[id].lineChilds;
     };
 
-    const getLinesArray = (): ILine[] => {
+    const getLinesArrayNoRoot = (): ILine[] => {
         const ents = Object.values(state.lines);
-        return ents.map((line) => {
-            return line;
+        return ents.filter((line) => {
+            return line.id !== root_id && line;
         });
     };
 
     const updateChildsBelow = (startId: number, rootX: number, rootY: number): void => {
+        state.lines[root_id].points = [-1, -1, rootX, rootY];
         const ents = Object.values(state.lines);
         for (let i = 0; i < ents.length; i++) {
             const currLine = ents[i];
             if (currLine.id < startId) continue;
+
             const father = state.lines[currLine.pid];
-            if (!father) {
-                console.log('looking for root');
-                currLine.points[0] = rootX;
-                currLine.points[1] = rootY;
-            } else {
-                currLine.points[0] = father.points[2];
-                currLine.points[1] = father.points[3];
-            }
+            currLine.points[0] = father.points[2];
+            currLine.points[1] = father.points[3];
+
             updateLinePoint(currLine);
         }
     };
@@ -63,8 +55,8 @@ export function useTreeCanvas() {
         }
     };
 
-    const addNewPoints = (prevX: number, prevY: number, childs: ILine[]) => {
-        const alphas = childs.map((c) => c.alpha);
+    const addNewPoints = (prevX: number, prevY: number, childs: number[]) => {
+        const alphas = childs.map((c) => state.lines[c].alpha);
         const max_alpha = alphas.length > 0 ? Math.max(...alphas) : 0;
         const newAngle = max_alpha + default_alpha;
         const [newX, newY] = lengthAlphaToXy(lengthToPoint(default_length), newAngle, prevX, prevY);
@@ -74,27 +66,16 @@ export function useTreeCanvas() {
 
     const addNew = () => {
         const lines = { ...state.lines };
-        console.log(lines);
         const selectedLine = lines[state.selectedId];
-        let newPid: number;
-        let newPoints: number[] = [];
-        let newAlpha: number;
         const newId = state.lastId + 1;
 
-        if (!selectedLine) {
-            const rootChilds = getChildren(root_id);
-            const r = addNewPoints(state.stage.rootX, state.stage.rootY, rootChilds);
-            newPoints = r.newPoints;
-            newAlpha = r.newAngle;
-            newPid = root_id;
-        } else {
-            const prevX = selectedLine.points[2];
-            const prevY = selectedLine.points[3];
-            const r = addNewPoints(prevX, prevY, getChildren(selectedLine.id));
-            newPoints = r.newPoints;
-            newAlpha = r.newAngle;
-            newPid = selectedLine.id;
-        }
+        const prevX = selectedLine.points[2];
+        const prevY = selectedLine.points[3];
+        const r = addNewPoints(prevX, prevY, getChildren(selectedLine.id));
+        const newPoints = r.newPoints;
+        const newPid = selectedLine.id;
+
+        lines[newPid].lineChilds.push(newId);
         lines[newId] = {
             id: newId,
             points: newPoints,
@@ -102,7 +83,8 @@ export function useTreeCanvas() {
             radius: default_radius,
             tid: default_tid,
             length: lengthToPoint(default_length),
-            alpha: newAlpha,
+            alpha: r.newAngle,
+            lineChilds: [],
         };
         setState({ ...state, lines: lines, selectedId: newId, lastId: newId });
     };
@@ -158,25 +140,32 @@ export function useTreeCanvas() {
         setState({ ...state, lines: lines });
     };
 
+    const updateNeuronRad = (value: number) => {
+        const lines = { ...state.lines };
+        lines[root_id].radius = value;
+        setState({ ...state, lines: lines });
+    };
+
     const deleteChildsRecur = (lines: Record<number, ILine>, pid: number): void => {
-        const childs = getChildren(pid);
-        childs.forEach((child) => {
-            deleteChildsRecur(lines, child.id);
-            delete lines[child.id];
+        const childsIds = getChildren(pid);
+        childsIds.forEach((child) => {
+            deleteChildsRecur(lines, child);
+            delete lines[child];
         });
     };
 
     const Delete = () => {
         const lines = { ...state.lines };
-        const parentId = lines[state.selectedId].pid;
+        const pid = lines[state.selectedId].pid;
+        const selectedIdIdxInParent = lines[pid].lineChilds.findIndex((c) => c === state.selectedId);
+        lines[pid].lineChilds.splice(selectedIdIdxInParent, 1);
         deleteChildsRecur(lines, state.selectedId);
         delete lines[state.selectedId];
-        setState({ ...state, lines: lines, selectedId: parentId });
+        setState({ ...state, lines: lines, selectedId: pid });
     };
 
     return {
-        getLinesArray,
-        getChildren,
+        getLinesArray: getLinesArrayNoRoot,
         updateChildsBelow,
         setSelectedId,
         checkDeselect,
@@ -189,5 +178,6 @@ export function useTreeCanvas() {
         updateSimpleField,
         updateAlpha,
         updateLength,
+        updateNeuronRad,
     };
 }
