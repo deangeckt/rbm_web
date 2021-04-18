@@ -165,7 +165,7 @@ export function useTreeCanvas() {
     };
 
     return {
-        getLinesArray: getLinesArrayNoRoot,
+        getLinesArrayNoRoot,
         updateChildsBelow,
         setSelectedId,
         checkDeselect,

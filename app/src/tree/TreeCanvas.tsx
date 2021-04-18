@@ -9,7 +9,7 @@ import { getStage, root_id } from '../Wrapper';
 
 function TreeCanvas() {
     const { state, setState } = useContext(AppContext);
-    const { updateChildsBelow, checkDeselect, setSelectedId, getLinesArray } = useTreeCanvas();
+    const { updateChildsBelow, checkDeselect, setSelectedId, getLinesArrayNoRoot } = useTreeCanvas();
     //TODO: handle zoom
     const widSize = window.document.getElementById('Canvas')?.offsetWidth;
 
@@ -44,7 +44,7 @@ function TreeCanvas() {
                         draggable={false}
                         onClick={() => setSelectedId(root_id)}
                     />
-                    {getLinesArray().map((l) => (
+                    {getLinesArrayNoRoot().map((l) => (
                         <TransformerLine
                             key={l.id}
                             shapeProps={l}

@@ -20,7 +20,7 @@ const downloadFile = (state: IAppState, linesArray: ILine[]) => {
 
 function TopPanel() {
     const { state } = useContext(AppContext);
-    const { setSelectedId, getLinesArray } = useTreeCanvas();
+    const { setSelectedId, getLinesArrayNoRoot } = useTreeCanvas();
     const history = useHistory();
 
     return (
@@ -29,7 +29,7 @@ function TopPanel() {
                 className="NoCapsButton"
                 color="primary"
                 variant="contained"
-                onClick={() => downloadFile(state, getLinesArray())}
+                onClick={() => downloadFile(state, getLinesArrayNoRoot())}
                 style={{ marginLeft: '24px' }}
             >
                 Export
