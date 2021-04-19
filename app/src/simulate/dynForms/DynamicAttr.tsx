@@ -26,6 +26,7 @@ function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
     const onChange = (attr: string, value: number) => {
         if (impKey === 'globalMechanism') {
             onChangeGlobalMech(attr_key, attr, value);
+        } else if (impKey === 'pointMechanism') {
         }
     };
 
@@ -40,7 +41,7 @@ function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
                             <Checkbox
                                 color="primary"
                                 checked={checked}
-                                onChange={() => setKeyChecked(impKey, attr_key, !checked)}
+                                onChange={() => setKeyChecked(impKey, !checked)}
                             />
                         }
                         label={`${operationStr} ${attr_key}`}

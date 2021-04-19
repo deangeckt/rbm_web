@@ -174,8 +174,18 @@ export function useTreeCanvas() {
         setState({ ...state, lines: lines, selectedId: pid });
     };
 
-    const addNewSection = (depth: number): ISection => {
-        return { depth: depth, section: 0.5, recording: 'none', added: false, mechanism: [], process: [] };
+    const addNewSection = (key: string, depth: number): ISection => {
+        return {
+            key: key,
+            depth: depth,
+            section: 0.5,
+            recording: 'none',
+            added: false,
+            mechanism: [],
+            process: [],
+            processKeyIdx: 0,
+            mechanismKeyIdx: 0,
+        };
     };
 
     let cid = -1;
@@ -197,7 +207,7 @@ export function useTreeCanvas() {
             line.cid = cid;
 
             if (lineChilds.length === 0) {
-                sectionLines[`${cid}_${tid}`] = addNewSection(depth);
+                sectionLines[`${cid}_${tid}`] = addNewSection(`${cid}_${tid}`, depth);
                 continue;
             }
 
@@ -205,7 +215,7 @@ export function useTreeCanvas() {
                 cid -= 1;
                 depth -= 1;
             } else {
-                sectionLines[`${cid}_${tid}`] = addNewSection(depth);
+                sectionLines[`${cid}_${tid}`] = addNewSection(`${cid}_${tid}`, depth);
             }
             setCids(lines, sectionLines, line.id, tid, depth + 1);
         }
@@ -214,7 +224,7 @@ export function useTreeCanvas() {
     const setSimulationTreeCids = () => {
         const lines = { ...state.lines };
         const sectionLines = { ...state.sectionLines };
-        sectionLines['0_1'] = addNewSection(0);
+        sectionLines['0_1'] = addNewSection('0_1', 0);
         lines[root_id].cid = 0;
         const ents = Object.values(lines);
 

@@ -4,6 +4,7 @@ import { IMechanismProcess, impKeys } from '../../Wrapper';
 import DynamicAttr from './DynamicAttr';
 import DynamicKeys from './DynamicKeys';
 import './DynamicForm.css';
+import { useDynamicForms } from './useDynamicForm';
 
 export interface IDynamicFormProps {
     mp: IMechanismProcess[];
@@ -12,8 +13,13 @@ export interface IDynamicFormProps {
 
 function DynamicForm({ mp, impKey }: IDynamicFormProps) {
     const { state } = useContext(AppContext);
+    const { getSectionCurrKeyIdx } = useDynamicForms();
+    console.log(state);
 
-    const selectedKeyIdx = state.currAttrKeySelectedIdx[impKey];
+    let selectedKeyIdx: number;
+    if (impKey === 'globalMechanism') selectedKeyIdx = state.globalMechanismCurrKeyIdx;
+    else selectedKeyIdx = getSectionCurrKeyIdx(impKey);
+
     const keys = mp.map((prop) => {
         return prop.key;
     });

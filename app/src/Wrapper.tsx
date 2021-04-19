@@ -65,12 +65,15 @@ export const section_types = [
 export type Recording = 'none' | 'volt' | 'ina' | 'ik';
 
 export interface ISection {
+    key: string;
     section: number;
     depth: number;
     recording: Recording;
     added: boolean;
     mechanism: IMechanismProcess[];
     process: IMechanismProcess[];
+    processKeyIdx: number;
+    mechanismKeyIdx: number;
 }
 
 export interface IAttr {
@@ -81,7 +84,7 @@ export interface IAttr {
 export interface IMechanismProcess {
     key: string;
     attrs: IAttr[];
-    add?: boolean;
+    add?: boolean; // used only for global
 }
 
 export interface IDialogs {
@@ -94,14 +97,14 @@ export interface IAppState {
     stage: IStageSize;
     lines: Record<string, ILine>; // key: swc id
     sectionLines: Record<string, ISection>; //key: cid_tid
-    selectedSections: Record<string, boolean>;
+    selectedSections: Record<string, boolean>; // key: cid_tid
     selectedId: number;
     lastId: number;
     dialogs: IDialogs;
     pointMechanism: IMechanismProcess[]; // to record?
     pointProcess: IMechanismProcess[];
     globalMechanism: IMechanismProcess[];
-    currAttrKeySelectedIdx: Record<impKeys, number>;
+    globalMechanismCurrKeyIdx: number;
 }
 
 export const getStage = (): IStageSize => {
@@ -155,11 +158,7 @@ export const init_app_state: IAppState = {
     pointMechanism: [],
     pointProcess: [],
     globalMechanism: static_global_form,
-    currAttrKeySelectedIdx: {
-        globalMechanism: 0,
-        pointMechanism: 0,
-        pointProcess: 0,
-    },
+    globalMechanismCurrKeyIdx: 0,
 };
 
 const Wrapper = (props: any) => {

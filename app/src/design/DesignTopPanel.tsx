@@ -41,7 +41,7 @@ function DesignTopPanel() {
                 variant="contained"
                 onClick={() => {
                     const { sectionLines, lines } = setSimulationTreeCids();
-                    setState({ ...state, sectionLines: sectionLines, lines: lines, setSelectedId: none_selected });
+                    setState({ ...state, sectionLines: sectionLines, lines: lines, selectedId: none_selected });
                     history.push({ pathname: '/simulate' });
                 }}
                 style={{ marginRight: '24px' }}
