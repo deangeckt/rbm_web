@@ -70,19 +70,18 @@ export interface ISection {
     depth: number;
     recording: Recording;
     added: boolean;
-    mechanism: IMechanismProcess[];
-    process: IMechanismProcess[];
-    processKeyIdx: number;
-    mechanismKeyIdx: number;
+    mechanism: Record<string, IMechanismProcess>;
+    process: Record<string, IMechanismProcess>;
+    mechanismCurrKey: string;
+    processCurrKey: string;
 }
 
 export interface IAttr {
-    attr: string;
     value: number;
+    attr: string;
 }
 
 export interface IMechanismProcess {
-    key: string;
     attrs: IAttr[];
     add?: boolean; // used only for global
 }
@@ -101,10 +100,10 @@ export interface IAppState {
     selectedId: number;
     lastId: number;
     dialogs: IDialogs;
-    pointMechanism: IMechanismProcess[]; // to record?
-    pointProcess: IMechanismProcess[];
-    globalMechanism: IMechanismProcess[];
-    globalMechanismCurrKeyIdx: number;
+    pointMechanism: Record<string, IMechanismProcess>;
+    pointProcess: Record<string, IMechanismProcess>;
+    globalMechanism: Record<string, IMechanismProcess>;
+    globalMechanismCurrKey: string;
 }
 
 export const getStage = (): IStageSize => {
@@ -155,10 +154,10 @@ export const init_app_state: IAppState = {
         dialogInfo: false,
         dialogInfoTitle: '',
     },
-    pointMechanism: [],
-    pointProcess: [],
+    pointMechanism: {},
+    pointProcess: {},
     globalMechanism: static_global_form,
-    globalMechanismCurrKeyIdx: 0,
+    globalMechanismCurrKey: 'general',
 };
 
 const Wrapper = (props: any) => {

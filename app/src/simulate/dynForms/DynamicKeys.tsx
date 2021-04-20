@@ -14,12 +14,12 @@ export interface IKeyListProps {
 
 function DynamicKeys({ keys, selectedKey, impKey }: IKeyListProps) {
     // const { updateDialogInfo } = useDialogs();
-    const { setCurrKeyIdx } = useDynamicForms();
+    const { setCurrKey } = useDynamicForms();
 
     return (
         <>
             <List>
-                {keys.map((key, index) => (
+                {keys.map((key) => (
                     <ListItem key={key}>
                         <div key={key} style={{ display: 'flex', flexDirection: 'row' }}>
                             <Button
@@ -32,7 +32,7 @@ function DynamicKeys({ keys, selectedKey, impKey }: IKeyListProps) {
                                 className="NoCapsButton"
                                 variant={selectedKey === key ? 'contained' : 'outlined'}
                                 color="primary"
-                                onClick={() => setCurrKeyIdx(impKey, index)}
+                                onClick={() => setCurrKey(impKey, key)}
                             >
                                 {key}
                             </Button>

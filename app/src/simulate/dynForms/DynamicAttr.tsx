@@ -25,7 +25,7 @@ function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
 
     const onChange = (attr: string, value: number) => {
         if (impKey === 'globalMechanism') {
-            onChangeGlobalMech(attr_key, attr, value);
+            onChangeGlobalMech(attr, value);
         } else if (impKey === 'pointMechanism') {
         }
     };

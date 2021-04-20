@@ -181,10 +181,10 @@ export function useTreeCanvas() {
             section: 0.5,
             recording: 'none',
             added: false,
-            mechanism: [],
-            process: [],
-            processKeyIdx: 0,
-            mechanismKeyIdx: 0,
+            mechanism: {},
+            process: {},
+            mechanismCurrKey: '',
+            processCurrKey: '',
         };
     };
 

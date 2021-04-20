@@ -7,27 +7,20 @@ import './DynamicForm.css';
 import { useDynamicForms } from './useDynamicForm';
 
 export interface IDynamicFormProps {
-    mp: IMechanismProcess[];
+    mp: Record<string, IMechanismProcess>;
     impKey: impKeys;
 }
 
 function DynamicForm({ mp, impKey }: IDynamicFormProps) {
     const { state } = useContext(AppContext);
-    const { getSectionCurrKeyIdx } = useDynamicForms();
+    const { getDynamicFormProps } = useDynamicForms();
     console.log(state);
 
-    let selectedKeyIdx: number;
-    if (impKey === 'globalMechanism') selectedKeyIdx = state.globalMechanismCurrKeyIdx;
-    else selectedKeyIdx = getSectionCurrKeyIdx(impKey);
+    const { selectedKey, selectedAttrs, isSelectedKeyChecked } = getDynamicFormProps(impKey);
 
-    const keys = mp.map((prop) => {
-        return prop.key;
+    const keys = Object.keys(mp).map((key) => {
+        return key;
     });
-
-    const vals = mp[selectedKeyIdx];
-    const selectedAttrs = vals.attrs;
-    const isSelectedKeyChecked = vals.add ?? false;
-    const selectedKey = vals.key;
 
     return (
         <div style={{ display: 'flex' }}>

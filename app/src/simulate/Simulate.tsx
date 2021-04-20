@@ -35,22 +35,16 @@ function Simulate() {
     };
 
     const updateDynForms = (
-        newPointMech: IMechanismProcess[],
-        newGlobalMech: IMechanismProcess[],
-        newPointProcc: IMechanismProcess[],
+        newPointMech: Record<string, IMechanismProcess>,
+        newGlobalMech: Record<string, IMechanismProcess>,
+        newPointProcc: Record<string, IMechanismProcess>,
     ) => {
-        const sectionLines = { ...state.sectionLines };
-        Object.values(sectionLines).forEach((section) => {
-            section.mechanism = newPointMech.slice();
-            section.process = newPointProcc.slice();
-        });
-        const staticGloablMech = [...state.globalMechanism];
+        const staticGloablMech = { ...state.globalMechanism };
         setState({
             ...state,
-            globalMechanism: staticGloablMech.concat(newGlobalMech),
+            globalMechanism: Object.assign({}, staticGloablMech, newGlobalMech) as Record<string, IMechanismProcess>,
             pointMechanism: newPointMech,
             pointProcess: newPointProcc,
-            sectionLines: sectionLines,
         });
         setReadLoading(false);
     };

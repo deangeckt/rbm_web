@@ -23,8 +23,8 @@ export const run = async (setData: Function, setError: Function) => {
     }
 };
 
-export const readSchema = (data: any): IMechanismProcess[] => {
-    const result: IMechanismProcess[] = [];
+export const readSchema = (data: any): Record<string, IMechanismProcess> => {
+    const result: Record<string, IMechanismProcess> = {};
     Object.keys(data).forEach(function (attrKey) {
         const attrList = data[attrKey];
         const attrs: IAttr[] = [];
@@ -33,11 +33,10 @@ export const readSchema = (data: any): IMechanismProcess[] => {
             attrs.push({ attr: Object.keys(attr)[0], value: Number(Object.values(attr)[0]) });
         });
 
-        result.push({
-            key: attrKey,
+        result[attrKey] = {
             attrs: attrs,
             add: false,
-        });
+        };
     });
     return result;
 };
