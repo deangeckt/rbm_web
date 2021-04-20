@@ -59,32 +59,24 @@ export function useDynamicForms() {
         }
     };
 
-    // const getSectionCurrKey = (impKey: impKeys): string => {
-    //     const selecedSection = getFirstSelectedSection();
-    //     if (impKey === 'pointMechanism') return selecedSection?.mechanismCurrKey ?? '';
-    //     else return selecedSection?.processCurrKey ?? '';
-    // };
-
     const getDynamicFormProps = (
         impKey: impKeys,
     ): { selectedKey: string; selectedAttrs: IAttr[]; isSelectedKeyChecked: boolean } => {
         let selectedKey: string;
-        let selectedAttrs: IAttr[];
         let isSelectedKeyChecked: boolean;
         if (impKey === 'globalMechanism') {
             selectedKey = state.globalMechanismCurrKey;
-            const vals = state.globalMechanism[selectedKey];
-            selectedAttrs = vals?.attrs ?? [];
-            isSelectedKeyChecked = vals?.add ?? false;
+            isSelectedKeyChecked = state.globalMechanism[selectedKey].add ?? false;
         } else {
             const selecedSection = getFirstSelectedSection();
             if (!selecedSection) return { selectedKey: '', selectedAttrs: [], isSelectedKeyChecked: false };
             const keyMp = impKey === 'pointMechanism' ? 'mechanism' : 'process';
             selectedKey = impKey === 'pointMechanism' ? selecedSection.mechanismCurrKey : selecedSection.processCurrKey;
             const vals = (selecedSection as any)[keyMp][selectedKey];
-            selectedAttrs = vals?.attrs ?? [];
             isSelectedKeyChecked = vals?.add ?? false;
         }
+        const selectedAttrs = selectedKey === '' ? [] : ((state as any)[impKey][selectedKey].attrs as IAttr[]);
+
         return { selectedKey, selectedAttrs, isSelectedKeyChecked };
     };
 
@@ -95,8 +87,6 @@ export function useDynamicForms() {
         attrs!.value = value;
         setState({ ...state, globalMechanism: globalMechs });
     };
-
-    // const/ on
 
     return { getDynamicFormProps, setCurrKey, setKeyChecked, onChangeGlobalMech };
 }
