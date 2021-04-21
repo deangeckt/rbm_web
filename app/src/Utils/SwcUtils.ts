@@ -1,7 +1,7 @@
 import { IAppState, ILine, init_root_line, root_id } from '../Wrapper';
 
 export const lenPointRatio = 5;
-export const neuronRadiusRatio = 2.5;
+export const neuronRadiusRatio = 4.5;
 export const lineRadiusAddition = 3;
 export const swcAttr = 7;
 

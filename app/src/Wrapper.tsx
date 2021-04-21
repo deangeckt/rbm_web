@@ -69,7 +69,6 @@ export interface ISection {
     section: number;
     depth: number;
     recording: Recording;
-    added: boolean;
     mechanism: Record<string, IMechanismProcess>;
     process: Record<string, IMechanismProcess>;
     mechanismCurrKey: string;
@@ -116,7 +115,7 @@ export const getStage = (): IStageSize => {
     };
 };
 
-export const default_neuron_rad = 5; // in micro
+export const default_neuron_rad = 3; // in micro
 export const root_id = 1;
 export const none_selected = -1;
 export const default_radius = 0.1; // in micro

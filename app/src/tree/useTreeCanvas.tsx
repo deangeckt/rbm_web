@@ -180,7 +180,6 @@ export function useTreeCanvas() {
             depth: depth,
             section: 0.5,
             recording: 'none',
-            added: false,
             mechanism: {},
             process: {},
             mechanismCurrKey: '',
@@ -202,22 +201,22 @@ export function useTreeCanvas() {
             if (line.tid !== tid) continue;
 
             cid += 1;
-
-            const lineChilds = lines[line.id].lineChilds;
             line.cid = cid;
+            const lineChilds = lines[line.id].lineChilds;
+
+            const key = `${cid}_${tid}`;
+            if (!sectionLines[key]) sectionLines[key] = addNewSection(key, depth);
 
             if (lineChilds.length === 0) {
-                sectionLines[`${cid}_${tid}`] = addNewSection(`${cid}_${tid}`, depth);
                 continue;
             }
 
             if (lineChilds.length === 1) {
                 cid -= 1;
-                depth -= 1;
+                setCids(lines, sectionLines, line.id, tid, depth);
             } else {
-                sectionLines[`${cid}_${tid}`] = addNewSection(`${cid}_${tid}`, depth);
+                setCids(lines, sectionLines, line.id, tid, depth + 1);
             }
-            setCids(lines, sectionLines, line.id, tid, depth + 1);
         }
     };
 
@@ -231,8 +230,9 @@ export function useTreeCanvas() {
         section_types.forEach((sec_type) => {
             const sec_lines = ents.filter((l) => l.tid === sec_type.value);
             if (sec_lines.length > 0) {
+                const startPid = sec_lines[0].pid !== -1 ? sec_lines[0].pid : root_id;
                 cid = sec_type.value === 1 ? 0 : -1; // on type soma since we have root, start cids from 0
-                setCids(lines, sectionLines, root_id, sec_type.value, 1);
+                setCids(lines, sectionLines, startPid, sec_type.value, 1);
             }
         });
 

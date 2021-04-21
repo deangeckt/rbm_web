@@ -5,7 +5,7 @@ import TransformerLine from './TransformerLine';
 import { AppContext } from '../AppContext';
 import { useTreeCanvas } from './useTreeCanvas';
 import { getStage, root_id } from '../Wrapper';
-import { section_color } from '../utils/colors';
+import { neuron_color } from '../utils/colors';
 
 function TreeCanvas() {
     const { state, setState } = useContext(AppContext);
@@ -37,7 +37,7 @@ function TreeCanvas() {
                 <Layer>
                     <Circle
                         radius={neuronRadToSize(state.lines[root_id].radius)}
-                        fill={section_color[1]}
+                        fill={neuron_color}
                         opacity={state.selectedId === root_id ? 0.8 : 0.3}
                         x={state.stage.rootX}
                         y={state.stage.rootY}

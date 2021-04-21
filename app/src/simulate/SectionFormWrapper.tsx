@@ -23,7 +23,7 @@ function SectionFormWrapper() {
     const renderTab = () => {
         if (sectionTab === 'mech') return <DynamicForm mp={state.pointMechanism} impKey={'pointMechanism'} />;
         else if (sectionTab === 'process') return <DynamicForm mp={state.pointProcess} impKey={'pointProcess'} />;
-        else if (sectionTab) return <div>section 0.5</div>;
+        else if (sectionTab === 'record') return <div>section 0.5</div>;
     };
 
     return (
