@@ -76,13 +76,9 @@ export interface ISection {
     processCurrKey: string;
 }
 
-export interface IAttr {
-    value: number;
-    attr: string;
-}
-
+export type IAttr = Record<string, number>;
 export interface IMechanismProcess {
-    attrs: IAttr[];
+    attrs: IAttr;
     add?: boolean; // used only for global
 }
 

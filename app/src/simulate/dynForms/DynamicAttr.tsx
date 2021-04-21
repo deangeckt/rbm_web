@@ -9,7 +9,7 @@ import { IAttr, impKeys } from '../../Wrapper';
 import { useDynamicForms } from './useDynamicForm';
 
 export interface IDynamicAttrProps {
-    attrs: IAttr[];
+    attrs: IAttr;
     attr_key: string;
     checked: boolean;
     impKey: impKeys;
@@ -18,21 +18,15 @@ export interface IDynamicAttrProps {
 function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
     // const { updateDialogInfo } = useDialogs();
     // const { state } = useContext(AppContext);
-    const { setKeyChecked, onChangeGlobalMech } = useDynamicForms();
+    const { setKeyChecked, onChange } = useDynamicForms();
 
     const headLine = impKey.endsWith('Mechanism') ? 'Mechanism' : 'Process';
     const operationStr = impKey.startsWith('global') ? 'Change' : 'Add';
-
-    const onChange = (attr: string, value: number) => {
-        if (impKey === 'globalMechanism') {
-            onChangeGlobalMech(attr, value);
-        } else if (impKey === 'pointMechanism') {
-        }
-    };
+    const attrs_list = Object.entries(attrs);
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '12px' }}>
-            {attrs.length === 0 ? (
+            {attrs_list.length === 0 ? (
                 <div>Select {headLine}</div>
             ) : (
                 <>
@@ -47,9 +41,9 @@ function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
                         label={`${operationStr} ${attr_key}`}
                     />
                     <List>
-                        {attrs.map((at) => (
-                            <ListItem key={at.attr}>
-                                <div key={at.attr} style={{ display: 'flex', flexDirection: 'row' }}>
+                        {attrs_list.map(([attr, value]) => (
+                            <ListItem key={attr}>
+                                <div key={attr} style={{ display: 'flex', flexDirection: 'row' }}>
                                     <Button
                                         variant="outlined"
                                         color="primary"
@@ -58,11 +52,11 @@ function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
                                     ></Button>
                                     <TextField
                                         disabled={!checked}
-                                        label={at.attr}
+                                        label={attr}
                                         variant="filled"
                                         type="number"
-                                        defaultValue={at.value}
-                                        onChange={(e: any) => onChange(at.attr, Number(e.target.value))}
+                                        defaultValue={value}
+                                        onChange={(e: any) => onChange(impKey, attr, Number(e.target.value))}
                                     />
                                 </div>
                             </ListItem>

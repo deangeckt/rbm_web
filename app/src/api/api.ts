@@ -27,10 +27,10 @@ export const readSchema = (data: any): Record<string, IMechanismProcess> => {
     const result: Record<string, IMechanismProcess> = {};
     Object.keys(data).forEach(function (attrKey) {
         const attrList = data[attrKey];
-        const attrs: IAttr[] = [];
+        const attrs: IAttr = {};
 
         attrList.forEach(function (attr: any) {
-            attrs.push({ attr: Object.keys(attr)[0], value: Number(Object.values(attr)[0]) });
+            attrs[Object.keys(attr)[0]] = Number(Object.values(attr)[0]);
         });
 
         result[attrKey] = {
