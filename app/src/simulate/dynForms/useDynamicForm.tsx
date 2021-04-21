@@ -112,5 +112,18 @@ export function useDynamicForms() {
         }
     };
 
-    return { getDynamicFormProps, setCurrKey, setKeyChecked, onChange };
+    const getSectionRecording = () => {
+        const selectedSections = getFirstSelectedSection();
+        if (!selectedSections) return 0;
+        return selectedSections.recording_type;
+    };
+
+    const updateSectionRecording = (value: number) => {
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            sec.recording_type = value;
+        });
+        updateSelectedSectionsState(selectedSections);
+    };
+    return { getDynamicFormProps, setCurrKey, setKeyChecked, onChange, getSectionRecording, updateSectionRecording };
 }

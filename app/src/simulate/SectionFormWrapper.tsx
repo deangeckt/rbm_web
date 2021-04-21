@@ -3,6 +3,9 @@ import Chip from '@material-ui/core/Chip';
 import DynamicForm from './dynForms/DynamicForm';
 import { AppContext } from '../AppContext';
 import { useTreeText } from '../tree/useTreeText';
+import { TextField, MenuItem } from '@material-ui/core';
+import { section_recording } from '../Wrapper';
+import { useDynamicForms } from './dynForms/useDynamicForm';
 
 type SectionTab = 'process' | 'mech' | 'record';
 const initTab: SectionTab = 'mech';
@@ -11,6 +14,7 @@ function SectionFormWrapper() {
     const [sectionTab, setSectionTab] = React.useState(initTab);
     const { state } = useContext(AppContext);
     const { sectionKeyToLabel } = useTreeText();
+    const { getSectionRecording, updateSectionRecording } = useDynamicForms();
 
     const selecedSections = Object.entries(state.selectedSections)
         .filter(([, added]) => added)
@@ -23,7 +27,22 @@ function SectionFormWrapper() {
     const renderTab = () => {
         if (sectionTab === 'mech') return <DynamicForm mp={state.pointMechanism} impKey={'pointMechanism'} />;
         else if (sectionTab === 'process') return <DynamicForm mp={state.pointProcess} impKey={'pointProcess'} />;
-        else if (sectionTab === 'record') return <div>section 0.5</div>;
+        else if (sectionTab === 'record')
+            return (
+                <TextField
+                    select
+                    label="Recording"
+                    variant="filled"
+                    value={getSectionRecording()}
+                    onChange={(e) => updateSectionRecording(Number(e.target.value))}
+                >
+                    {section_recording.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            );
     };
 
     return (

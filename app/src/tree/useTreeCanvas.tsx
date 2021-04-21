@@ -5,6 +5,7 @@ import {
     default_alpha,
     default_length,
     default_radius,
+    default_section_value,
     default_tid,
     ILine,
     ISection,
@@ -178,8 +179,8 @@ export function useTreeCanvas() {
         return {
             key: key,
             depth: depth,
-            section: 0.5,
-            recording: 'none',
+            section: default_section_value,
+            recording_type: 0,
             mechanism: {},
             process: {},
             mechanismCurrKey: '',

@@ -62,13 +62,30 @@ export const section_types = [
     },
 ];
 
-export type Recording = 'none' | 'volt' | 'ina' | 'ik';
+export const section_recording = [
+    {
+        value: 0,
+        label: 'none',
+    },
+    {
+        value: 1,
+        label: 'volt',
+    },
+    {
+        value: 2,
+        label: 'ina',
+    },
+    {
+        value: 3,
+        label: 'ik',
+    },
+];
 
 export interface ISection {
     key: string;
     section: number;
     depth: number;
-    recording: Recording;
+    recording_type: number;
     mechanism: Record<string, IMechanismProcess>;
     process: Record<string, IMechanismProcess>;
     mechanismCurrKey: string;
@@ -122,6 +139,7 @@ export const default_radius = 0.1; // in micro
 export const default_tid = 0;
 export const default_length = 10; //in micro
 export const default_alpha = 0.1; // in rad [PI]
+export const default_section_value = 0.5;
 
 const init_stage = getStage();
 const static_global_form = readSchema(config.static_global_form);

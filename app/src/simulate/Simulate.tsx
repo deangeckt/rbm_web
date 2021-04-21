@@ -4,7 +4,7 @@ import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import { run, read } from '../api/api';
 import { AppContext } from '../AppContext';
-import SimulateTabs from './SimulateTabs';
+import SimulateMainForm from './SimulateMainForms';
 import InfoDialog from './dialogs/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import SimulateCanvas from './SimulateCanvas';
@@ -92,7 +92,7 @@ function Simulate() {
                         </div>
                         <div className="SimulateCenter">
                             <div className="LeftSide">
-                                <SimulateTabs tab={tab} setTab={setTab} />
+                                <SimulateMainForm tab={tab} setTab={setTab} />
                             </div>
                             <div className="RightSide">
                                 {treeOrPlot === 'Plot' ? <Plot data={plotData} /> : <SimulateCanvas />}

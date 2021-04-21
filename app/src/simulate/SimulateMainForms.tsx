@@ -11,7 +11,7 @@ import SectionFormWrapper from './SectionFormWrapper';
 export const global_tab = 0;
 export const section_tab = 1;
 
-export interface ISimulateTabsProps {
+export interface ISimulateMainFormProps {
     tab: number;
     setTab: Function;
 }
@@ -56,7 +56,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-function SimulateTabs({ tab, setTab }: ISimulateTabsProps) {
+function SimulateMainForm({ tab, setTab }: ISimulateMainFormProps) {
     const classes = useStyles();
     const { state } = useContext(AppContext);
 
@@ -87,4 +87,4 @@ function SimulateTabs({ tab, setTab }: ISimulateTabsProps) {
     );
 }
 
-export default SimulateTabs;
+export default SimulateMainForm;
