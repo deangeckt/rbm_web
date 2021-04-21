@@ -40,8 +40,6 @@ function Simulate() {
         newPointProcc: Record<string, IMechanismProcess>,
     ) => {
         const staticGloablMech = { ...state.globalMechanism };
-        // const firstPointMech = Object.keys(newPointMech)[0];
-        // const firstPointProc = Object.keys(newPointProcc)[0];
         setState({
             ...state,
             globalMechanism: Object.assign({}, staticGloablMech, newGlobalMech) as Record<string, IMechanismProcess>,

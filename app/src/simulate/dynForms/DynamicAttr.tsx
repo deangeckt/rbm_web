@@ -17,7 +17,6 @@ export interface IDynamicAttrProps {
 
 function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
     // const { updateDialogInfo } = useDialogs();
-    // const { state } = useContext(AppContext);
     const { setKeyChecked, onChange } = useDynamicForms();
 
     const headLine = impKey.endsWith('Mechanism') ? 'Mechanism' : 'Process';
