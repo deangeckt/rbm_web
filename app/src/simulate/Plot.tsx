@@ -60,10 +60,15 @@ function options(data: IPlotData[]) {
 
 export interface IPlotProps {
     data: IPlotData[];
+    display: boolean;
 }
 
-function Plot(props: IPlotProps) {
-    return <HighchartsReact highcharts={Highcharts} options={options(props.data)} />;
+function Plot({ data, display }: IPlotProps) {
+    return (
+        <div style={{ display: display ? undefined : 'none' }}>
+            <HighchartsReact highcharts={Highcharts} options={options(data)} />
+        </div>
+    );
 }
 
 export default Plot;

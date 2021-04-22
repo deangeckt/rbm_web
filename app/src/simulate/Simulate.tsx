@@ -55,6 +55,7 @@ function Simulate() {
     };
 
     const StartRunning = () => {
+        setPlotData([] as IPlotData[]);
         setRunning(true);
 
         const globalMech = { ...state.globalMechanism };
@@ -100,7 +101,8 @@ function Simulate() {
                                 <SimulateMainForm tab={tab} setTab={setTab} />
                             </div>
                             <div className="RightSide">
-                                {treeOrPlot === 'Plot' ? <Plot data={plotData} /> : <SimulateCanvas />}
+                                <SimulateCanvas display={treeOrPlot === 'Tree'} />
+                                <Plot data={plotData} display={treeOrPlot === 'Plot'} />
                             </div>
                         </div>
                     </div>
