@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../../AppContext';
-import { IAttr, IMechanismProcess, impKeys, ISection } from '../../Wrapper';
+import { default_section_value, IAttr, IMechanismProcess, impKeys, ISection } from '../../Wrapper';
 
 export function useDynamicForms() {
     const { state, setState } = useContext(AppContext);
@@ -125,5 +125,29 @@ export function useDynamicForms() {
         });
         updateSelectedSectionsState(selectedSections);
     };
-    return { getDynamicFormProps, setCurrKey, setKeyChecked, onChange, getSectionRecording, updateSectionRecording };
+
+    const getSectionValue = () => {
+        const selectedSections = getFirstSelectedSection();
+        if (!selectedSections) return default_section_value;
+        return selectedSections.section;
+    };
+
+    const updateSectionValue = (value: number) => {
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            sec.section = value;
+        });
+        updateSelectedSectionsState(selectedSections);
+    };
+
+    return {
+        getDynamicFormProps,
+        setCurrKey,
+        setKeyChecked,
+        onChange,
+        getSectionRecording,
+        updateSectionRecording,
+        getSectionValue,
+        updateSectionValue,
+    };
 }

@@ -49,9 +49,7 @@ function DesignControlPanel() {
                                 type="number"
                                 value={getSelectedLength()}
                                 onChange={(e) => updateLength(Number(e.target.value))}
-                                InputProps={{
-                                    inputProps: { min: 0 },
-                                }}
+                                InputProps={{ inputProps: { min: 0 } }}
                             />
                             <TextField
                                 label={'α [Rad]'}

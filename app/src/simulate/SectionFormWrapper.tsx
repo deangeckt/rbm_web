@@ -14,7 +14,7 @@ function SectionFormWrapper() {
     const [sectionTab, setSectionTab] = React.useState(initTab);
     const { state } = useContext(AppContext);
     const { sectionKeyToLabel } = useTreeText();
-    const { getSectionRecording, updateSectionRecording } = useDynamicForms();
+    const { getSectionRecording, updateSectionRecording, getSectionValue, updateSectionValue } = useDynamicForms();
 
     const selecedSections = Object.entries(state.selectedSections)
         .filter(([, added]) => added)
@@ -81,7 +81,18 @@ function SectionFormWrapper() {
             >
                 {sectionListString}
             </div>
-
+            {renderForm ? (
+                <div style={{ marginBottom: '12px' }}>
+                    <TextField
+                        label={'Section'}
+                        variant="filled"
+                        type="number"
+                        value={getSectionValue()}
+                        onChange={(e) => updateSectionValue(Number(e.target.value))}
+                        InputProps={{ inputProps: { min: 0, step: 0.1 } }}
+                    />
+                </div>
+            ) : null}
             {renderForm ? renderTab() : null}
         </div>
     );
