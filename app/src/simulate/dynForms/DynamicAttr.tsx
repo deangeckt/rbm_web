@@ -1,7 +1,7 @@
 import React from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { Button, TextField } from '@material-ui/core';
+import { TextField, IconButton } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -44,12 +44,9 @@ function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
                         {attrs_list.map(([attr, value]) => (
                             <ListItem key={attr}>
                                 <div key={attr} style={{ display: 'flex', flexDirection: 'row' }}>
-                                    <Button
-                                        variant="outlined"
-                                        color="primary"
-                                        onClick={() => updateKeyInfo(attr)}
-                                        startIcon={<InfoIcon />}
-                                    ></Button>
+                                    <IconButton color="primary" size="small" onClick={() => updateKeyInfo(attr)}>
+                                        <InfoIcon />
+                                    </IconButton>
                                     <TextField
                                         disabled={!checked}
                                         label={attr}

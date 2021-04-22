@@ -1,7 +1,7 @@
 import React from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import { Button } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import { useDynamicForms } from './useDynamicForm';
 import { impKeys } from '../../Wrapper';
@@ -23,12 +23,9 @@ function DynamicKeys({ keys, selectedKey, impKey }: IKeyListProps) {
                 {keys.map((key) => (
                     <ListItem key={key}>
                         <div key={key} style={{ display: 'flex', flexDirection: 'row' }}>
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                onClick={() => updateKeyInfo(key)}
-                                startIcon={<InfoIcon />}
-                            ></Button>
+                            <IconButton color="primary" size="small" onClick={() => updateKeyInfo(key)}>
+                                <InfoIcon />
+                            </IconButton>
                             <Button
                                 className="NoCapsButton"
                                 variant={selectedKey === key ? 'contained' : 'outlined'}
