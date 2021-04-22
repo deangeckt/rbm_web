@@ -7,6 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { IAttr, impKeys } from '../../Wrapper';
 import { useDynamicForms } from './useDynamicForm';
+import { useDialogs } from '../dialogs/useDialogs';
 
 export interface IDynamicAttrProps {
     attrs: IAttr;
@@ -16,7 +17,7 @@ export interface IDynamicAttrProps {
 }
 
 function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
-    // const { updateDialogInfo } = useDialogs();
+    const { updateKeyInfo } = useDialogs();
     const { setKeyChecked, onChange } = useDynamicForms();
 
     const headLine = impKey.endsWith('Mechanism') ? 'Mechanism' : 'Process';
@@ -46,7 +47,7 @@ function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
                                     <Button
                                         variant="outlined"
                                         color="primary"
-                                        // onClick={() => updateDialogInfo(input.id)}
+                                        onClick={() => updateKeyInfo(attr)}
                                         startIcon={<InfoIcon />}
                                     ></Button>
                                     <TextField

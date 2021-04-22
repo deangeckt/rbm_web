@@ -5,6 +5,7 @@ import { Button } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import { useDynamicForms } from './useDynamicForm';
 import { impKeys } from '../../Wrapper';
+import { useDialogs } from '../dialogs/useDialogs';
 
 export interface IKeyListProps {
     keys: string[];
@@ -13,7 +14,7 @@ export interface IKeyListProps {
 }
 
 function DynamicKeys({ keys, selectedKey, impKey }: IKeyListProps) {
-    // const { updateDialogInfo } = useDialogs();
+    const { updateKeyInfo } = useDialogs();
     const { setCurrKey } = useDynamicForms();
 
     return (
@@ -25,7 +26,7 @@ function DynamicKeys({ keys, selectedKey, impKey }: IKeyListProps) {
                             <Button
                                 variant="outlined"
                                 color="primary"
-                                // onClick={() => updateDialogInfo(input.id)}
+                                onClick={() => updateKeyInfo(key)}
                                 startIcon={<InfoIcon />}
                             ></Button>
                             <Button

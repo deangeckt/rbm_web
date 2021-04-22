@@ -101,6 +101,7 @@ export interface IMechanismProcess {
 export interface IDialogs {
     dialogInfo: boolean;
     dialogInfoTitle: string;
+    dialogInfoContent: string;
 }
 
 export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
@@ -166,6 +167,7 @@ export const init_app_state: IAppState = {
     dialogs: {
         dialogInfo: false,
         dialogInfoTitle: '',
+        dialogInfoContent: '',
     },
     pointMechanism: {},
     pointProcess: {},
