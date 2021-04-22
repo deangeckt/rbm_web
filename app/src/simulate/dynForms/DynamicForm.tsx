@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
-import { AppContext } from '../../AppContext';
+import React from 'react';
 import { IMechanismProcess, impKeys } from '../../Wrapper';
 import DynamicAttr from './DynamicAttr';
 import DynamicKeys from './DynamicKeys';
-import './DynamicForm.css';
 import { useDynamicForms } from './useDynamicForm';
+import './DynamicForm.css';
 
 export interface IDynamicFormProps {
     mp: Record<string, IMechanismProcess>;
@@ -12,10 +11,7 @@ export interface IDynamicFormProps {
 }
 
 function DynamicForm({ mp, impKey }: IDynamicFormProps) {
-    const { state } = useContext(AppContext);
     const { getDynamicFormProps } = useDynamicForms();
-    console.log(state);
-
     const { selectedKey, selectedAttrs, isSelectedKeyChecked } = getDynamicFormProps(impKey);
 
     const keys = Object.keys(mp).map((key) => {

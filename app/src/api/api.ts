@@ -1,14 +1,27 @@
 import axios, { AxiosResponse } from 'axios';
 import { IPlotData } from '../simulate/Simulate';
-import { IMechanismProcess, IAttr } from '../Wrapper';
+import { IMechanismProcess, IAttr, ISection } from '../Wrapper';
 import readMocks from './readMock.json';
 
-export const run = async (setData: Function, setError: Function) => {
+interface schema {
+    id: string;
+    value: any;
+}
+
+export const run = async (
+    setData: Function,
+    setError: Function,
+    globalMech: [string, IMechanismProcess][],
+    sections: Record<string, ISection>,
+) => {
     try {
+        const data: schema[] = [];
+        data.push({ id: 'global', value: globalMech });
+        data.push({ id: 'sections', value: sections });
         const response = (await axios.request({
             url: 'http://localhost:8080/api/v1/run',
             method: 'POST',
-            data: {},
+            data: data,
         })) as AxiosResponse;
 
         const idata: IPlotData[] = [];

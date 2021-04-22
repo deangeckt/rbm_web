@@ -56,7 +56,12 @@ function Simulate() {
 
     const StartRunning = () => {
         setRunning(true);
-        run(updatePlotData, updateError);
+
+        const globalMech = { ...state.globalMechanism };
+        const addedGlobal = Object.entries(globalMech).filter(([, mech]) => mech.add);
+
+        const sections = { ...state.sectionLines };
+        run(updatePlotData, updateError, addedGlobal, sections);
     };
 
     const closeError = (_event?: React.SyntheticEvent, reason?: string) => {

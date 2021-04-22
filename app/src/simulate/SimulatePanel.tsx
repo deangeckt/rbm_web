@@ -20,7 +20,10 @@ function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePane
                         className="NoCapsButton"
                         variant="contained"
                         color="primary"
-                        onClick={() => start()}
+                        onClick={() => {
+                            togglePlotTree('Plot');
+                            start();
+                        }}
                         startIcon={<PlayArrowIcon />}
                     >
                         Start

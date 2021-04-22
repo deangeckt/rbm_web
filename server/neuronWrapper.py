@@ -1,37 +1,11 @@
 import io
 import json
 from contextlib import redirect_stdout
+from copy import deepcopy
+
 from pylab import *
 
-
-def num_to_type(type_, h):
-    if type_ == 1:
-        return h.soma
-    elif type_ == 2:
-        return h.axon
-    elif type_ == 3:
-        return h.dend
-    elif type_ == 0:
-        return h.dend_0
-    elif type_ == 4:
-        return h.apic
-    else:
-        raise ValueError('SWC - invalid type: ', type_)
-
-
-def recording_type_to_ref(type_, h_ref):
-    if type_ == 'volt':
-        return h_ref._ref_v
-    elif type_ == 'ina':
-        return h_ref._ref_ina
-    elif type_ == 'ik':
-        return h_ref._ref_ik
-    else:
-        raise ValueError('invalid record type: ', type_)
-
-
-def recording_key(recording_type_, type_, id_, section_):
-    return '{}_{}_{}_{}'.format(recording_type_, type_, id_, section_)
+from schema import recording_type_to_ref, tid_to_type, recording_key, section_key_to_id_tid
 
 
 class NeuronWrapper:
@@ -42,90 +16,128 @@ class NeuronWrapper:
         self.h.load_file('stdrun.hoc')
         self.h.load_file('import3d.hoc')
 
-        self.config = {}
+        self.input = {'global': {}, 'sections': {}}
+        self.recordings = {}
+        self.process = []
+        self.default_general_params = {}
+        self.general_params = {}
+
         with open(config_path) as f_:
-            default_form = json.load(f_)['static_global_form']
-            for form in default_form:
-                self.config[form['id']] = form['value']
+            default_general_ = json.load(f_)['static_global_form']['general']
+            for tup in default_general_:
+                for key_ in tup:
+                    self.default_general_params[key_] = tup[key_]
+        self.__reset_params()
+
+    def __reset_params(self):
+        self.general_params = deepcopy(self.default_general_params)
+        self.input['sections'] = {}
 
     def __init_params(self, params):
         for tup in params:
             id_ = tup['id']
             val_ = tup['value']
-            self.config[id_] = val_
+            self.input[id_] = val_
 
-    def __init_swc(self):
-        if 'swc_path' not in self.config:
-            raise ValueError('Missing SWC file param')
-
+    def __init_swc(self, swc_path):
         cell = self.h.Import3d_SWC_read()
         try:
-            cell.input(self.config['swc_path'])
+            cell.input(swc_path)
         except:
-            raise ValueError('Cant open SWC file at: ', self.config['swc_path'])
+            raise ValueError('Cant open SWC file at: ', swc_path)
 
         i3d = self.h.Import3d_GUI(cell, False)
         i3d.instantiate(None)
 
-    def __add_stim(self):
-        if 'stim' not in self.config:
+    def __add_section_mech(self, section: dict):
+        id_, tid_ = section_key_to_id_tid(section['key'])
+        if tid_ == 1 and id_ > 0:
             return
-        stims = []
-        for stim in self.config['stim']:
-            id_ = stim['section']['id']
-            section_ = stim['section']['section']
-            type_ = stim['section']['type']
-            h_ref = num_to_type(type_, self.h)
+        h_ref = tid_to_type(tid_, self.h)[id_]
+        mechanism = section['mechanism']
+        for mech in mechanism:
+            h_ref.insert(mech)
+            attrs = mechanism[mech]['attrs']
+            for attr in attrs:
+                setattr(h_ref, attr, attrs[attr])
 
-            new_stim = self.h.IClamp(h_ref[id_](section_))
-            new_stim.delay = stim['delay']
-            new_stim.dur = stim['duration']
-            new_stim.amp = stim['amplitude']
-            stims.append(new_stim)
-        return stims
+    def __add_section_process(self, section: dict):
+        id_, tid_ = section_key_to_id_tid(section['key'])
+        if tid_ == 1 and id_ > 0:
+            return
+        section_ = section['section']
 
-    def __add_record(self):
-        if 'record' not in self.config or self.config['record'] == []:
+        h_ref = tid_to_type(tid_, self.h)
+        h_ref = h_ref[id_](section_)
+
+        process = section['process']
+        for proc in process:
+            new_proc = getattr(self.h, proc)(h_ref)
+            attrs = process[proc]['attrs']
+            for attr in attrs:
+                setattr(new_proc, attr, attrs[attr])
+            self.process.append(new_proc)
+
+    def __add_record(self, section: dict):
+        recording_type_ = section['recording_type']
+        if recording_type_ == 0:
+            return
+        id_, tid_ = section_key_to_id_tid(section['key'])
+        if tid_ == 1 and id_ > 0:
+            return
+        section_ = section['section']
+        recording_key_ = recording_key(recording_type_, tid_, id_, section_)
+
+        h_ref = tid_to_type(tid_, self.h)
+        h_ref = h_ref[id_](section_)
+        h_ref = recording_type_to_ref(type_=recording_type_, h_ref=h_ref)
+
+        vrec = self.h.Vector()
+        vrec.record(h_ref)
+
+        self.recordings[recording_key_] = vrec
+
+    def __init_global(self):
+        global_params = self.input['global']
+        for param in global_params:
+            param_key = param[0]
+            attrs = param[1]['attrs']
+
+            for attr in attrs:
+                if param_key == 'general':
+                    self.general_params[attr] = attrs[attr]
+                else:
+                    self.h('{} = {}'.format(attr, attrs[attr]))
+
+    def __init_section(self):
+        sections = self.input['sections']
+        for section_key in sections:
+            section = sections[section_key]
+            self.__add_record(section)
+            self.__add_section_mech(section)
+            self.__add_section_process(section)
+
+        if self.recordings == {}:
             raise ValueError('Missing Recordings')
-        recordings = {}
-        for record_ in self.config['record']:
-            id_ = record_['section']['id']
-            section_ = record_['section']['section']
-            type_ = record_['section']['type']
-            recording_type_ = record_['type']
-            recording_key_ = recording_key(recording_type_, type_, id_, section_)
 
-            h_ref = num_to_type(type_, self.h)
-            h_ref = h_ref[id_](section_)
-            h_ref = recording_type_to_ref(type_=recording_type_, h_ref=h_ref)
-
-            vrec = self.h.Vector()
-            vrec.record(h_ref)
-
-            recordings[recording_key_] = vrec
-        return recordings
-
-    def run(self, params):
+    def run(self, params, swc_path):
+        self.__reset_params()
         self.__init_params(params)
-        self.__init_swc()
-
-        self.h.celsius = self.config['celsius']
-
-        self.h.soma[0].insert('hh')  # insert a Hodgkin-Huxley channel
-
-        stims = self.__add_stim()
-        recordings = self.__add_record()
+        self.__init_swc(swc_path)
+        self.__init_global()
+        self.__init_section()
 
         trec = self.h.Vector()
-        trec.record(self.h._ref_t)  # record time variable
+        trec.record(self.h._ref_t)
 
-        self.h.finitialize(self.config['rest_volt'])
-        self.h.dt = self.config['dt']
-        self.neuron_dy.run(self.config['sim_time'])
+        self.h.celsius = self.general_params['celsius']
+        self.h.finitialize(self.general_params['rest_volt'])
+        self.h.dt = self.general_params['dt']
+        self.neuron_dy.run(self.general_params['sim_time'])
 
         result = {'time': np.array(trec).tolist()}
-        for record_key in recordings:
-            result[record_key] = np.array(recordings[record_key]).tolist()
+        for record_key in self.recordings:
+            result[record_key] = np.array(self.recordings[record_key]).tolist()
 
         return result
 
@@ -224,37 +236,4 @@ class NeuronWrapper:
 
 
 if __name__ == "__main__":
-    wrap = NeuronWrapper('../app/src/config.json')
-    section_soma = {'id': 0, 'section': 0.5, 'type': 1}
-    section_undef = {'id': 0, 'section': 0.5, 'type': 0}
-
-    stim = [{'section': section_soma, 'delay': 20, 'duration': 25, 'amplitude': 0.5},
-            {'section': section_undef, 'delay': 60, 'duration': 25, 'amplitude': 0.5}
-            ]
-    record = [{'section': section_soma, 'type': 'volt'},
-              {'section': section_undef, 'type': 'volt'}
-              ]
-
-    res = wrap.run(
-        [{'id': 'swc_path', 'value': 'C:/Users/t-deangeckt/Downloads/neuromorpho_cnic_001.CNG.swc'},
-         {'id': 'sim_time', 'value': 200},
-         {'id': 'rest_volt', 'value': -65},
-         {'id': 'stim', 'value': stim},
-         {'id': 'record', 'value': record}])
-
-    subplot(1, 2, 1)
-    r_key1 = recording_key('volt', 1, 0, 0.5)
-    r_key2 = recording_key('volt', 0, 0, 0.5)
-
-    plot(np.array(res['time']), np.array(res[r_key1]))
-    xlim((0, 200))
-    ylabel(r_key1)
-    xlabel('Time (ms)')
-    tight_layout()
-
-    subplot(1, 2, 2)
-    plot(np.array(res['time']), np.array(res[r_key2]))
-    xlim((0, 200))
-    xlabel('Time (ms)')
-    ylabel(r_key2)
-    show()
+    print('s')
