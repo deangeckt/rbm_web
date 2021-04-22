@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../AppContext';
-import { lengthToPoint, pointToLength } from '../utils/SwcUtils';
+import { lengthToPoint, pointToLength } from '../utils/swcUtils';
 import {
     default_alpha,
     default_length,

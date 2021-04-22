@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { exportFile } from '../utils/SwcUtils';
+import { exportFile } from '../utils/swcUtils';
 import { AppContext } from '../AppContext';
 import { IAppState, none_selected, ILine, root_id } from '../Wrapper';
 import { useTreeCanvas } from '../tree/useTreeCanvas';

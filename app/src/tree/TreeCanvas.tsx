@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { neuronRadToSize } from '../utils/SwcUtils';
+import { neuronRadToSize } from '../utils/swcUtils';
 import { Stage, Layer, Circle } from 'react-konva';
 import TransformerLine from './TransformerLine';
 import { AppContext } from '../AppContext';
