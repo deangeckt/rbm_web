@@ -3,9 +3,10 @@ import json
 from contextlib import redirect_stdout
 from copy import deepcopy
 
-from pylab import *
+import numpy as np
 
-from schema import recording_type_to_ref, tid_to_type, recording_key, section_key_to_id_tid
+from NeuronWrapper.schema import recording_type_to_ref, tid_to_type, recording_key, \
+    section_key_to_id_tid
 
 
 class NeuronWrapper:
@@ -231,15 +232,8 @@ class NeuronWrapper:
 
         point_mechanism_dict = self.__parse_point_mech_str(point_mechanism_str,
                                                            exclude_mechanism)
-        # e.g IClamp -> h.IClamp(sec[id_](section_))
         result['point_processes'] = point_processes_dict
-        # e.g hh -> sec.insert('hh'), sec.gnabar_hh = X
         result['point_mechanism'] = point_mechanism_dict
-        # e.g  h('celsius = X')
         result['global_mechanism'] = mechanism_global_dict
 
         return result
-
-
-if __name__ == "__main__":
-    print('s')

@@ -1,0 +1,1073 @@
+[
+	{
+		"id": "global",
+		"value": [
+			[
+				"general",
+				{
+					"attrs": {
+						"sim_time": 150,
+						"dt": 0.025,
+						"rest_volt": -70,
+						"celsius": 6.3
+					},
+					"add": true
+				}
+			]
+		]
+	},
+	{
+		"id": "sections",
+		"value": {
+			"0_1": {
+				"key": "0_1",
+				"depth": 0,
+				"section": 0.5,
+				"recording_type": 1,
+				"mechanism": {
+					"hh": {
+						"attrs": {
+							"gnabar_hh": 0.12
+						},
+						"add": true
+					},
+					"pas": {
+						"attrs": {
+							"g_pas": 0.001
+						},
+						"add": false
+					},
+					"fastpas": {
+						"attrs": {},
+						"add": false
+					},
+					"h": {
+						"attrs": {},
+						"add": false
+					},
+					"hh3": {
+						"attrs": {},
+						"add": false
+					}
+				},
+				"process": {
+					"IClamp": {
+						"attrs": {
+							"dur": 30,
+							"amp": 0.5,
+							"delay": 10,
+							"i": 0
+						},
+						"add": true
+					},
+					"glutamate": {
+						"attrs": {},
+						"add": false
+					}
+				},
+				"mechanismCurrKey": "hh3",
+				"processCurrKey": "ampa"
+			},
+			"1_1": {
+				"key": "1_1",
+				"depth": 1,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"2_1": {
+				"key": "2_1",
+				"depth": 1,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"0_3": {
+				"key": "0_3",
+				"depth": 1,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"1_3": {
+				"key": "1_3",
+				"depth": 2,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"2_3": {
+				"key": "2_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"3_3": {
+				"key": "3_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"4_3": {
+				"key": "4_3",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"5_3": {
+				"key": "5_3",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"6_3": {
+				"key": "6_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"7_3": {
+				"key": "7_3",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"8_3": {
+				"key": "8_3",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"9_3": {
+				"key": "9_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"10_3": {
+				"key": "10_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"11_3": {
+				"key": "11_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"12_3": {
+				"key": "12_3",
+				"depth": 2,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"13_3": {
+				"key": "13_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"14_3": {
+				"key": "14_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"15_3": {
+				"key": "15_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"16_3": {
+				"key": "16_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"17_3": {
+				"key": "17_3",
+				"depth": 1,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"18_3": {
+				"key": "18_3",
+				"depth": 2,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"19_3": {
+				"key": "19_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"20_3": {
+				"key": "20_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"21_3": {
+				"key": "21_3",
+				"depth": 2,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"22_3": {
+				"key": "22_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"23_3": {
+				"key": "23_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"24_3": {
+				"key": "24_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"25_3": {
+				"key": "25_3",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"26_3": {
+				"key": "26_3",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"27_3": {
+				"key": "27_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"28_3": {
+				"key": "28_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"29_3": {
+				"key": "29_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"30_3": {
+				"key": "30_3",
+				"depth": 1,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"31_3": {
+				"key": "31_3",
+				"depth": 2,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"32_3": {
+				"key": "32_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"33_3": {
+				"key": "33_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"34_3": {
+				"key": "34_3",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"35_3": {
+				"key": "35_3",
+				"depth": 6,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"36_3": {
+				"key": "36_3",
+				"depth": 6,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"37_3": {
+				"key": "37_3",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"38_3": {
+				"key": "38_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"39_3": {
+				"key": "39_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"40_3": {
+				"key": "40_3",
+				"depth": 2,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"41_3": {
+				"key": "41_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"42_3": {
+				"key": "42_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"43_3": {
+				"key": "43_3",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"44_3": {
+				"key": "44_3",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"45_3": {
+				"key": "45_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"46_3": {
+				"key": "46_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"47_3": {
+				"key": "47_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"48_3": {
+				"key": "48_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"49_3": {
+				"key": "49_3",
+				"depth": 1,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"50_3": {
+				"key": "50_3",
+				"depth": 2,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"51_3": {
+				"key": "51_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"52_3": {
+				"key": "52_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"53_3": {
+				"key": "53_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"54_3": {
+				"key": "54_3",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"55_3": {
+				"key": "55_3",
+				"depth": 2,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"56_3": {
+				"key": "56_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"57_3": {
+				"key": "57_3",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"58_3": {
+				"key": "58_3",
+				"depth": 1,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"0_4": {
+				"key": "0_4",
+				"depth": 1,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"1_4": {
+				"key": "1_4",
+				"depth": 2,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"2_4": {
+				"key": "2_4",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"3_4": {
+				"key": "3_4",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"4_4": {
+				"key": "4_4",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"5_4": {
+				"key": "5_4",
+				"depth": 6,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"6_4": {
+				"key": "6_4",
+				"depth": 7,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"7_4": {
+				"key": "7_4",
+				"depth": 8,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"8_4": {
+				"key": "8_4",
+				"depth": 8,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"9_4": {
+				"key": "9_4",
+				"depth": 9,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"10_4": {
+				"key": "10_4",
+				"depth": 9,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"11_4": {
+				"key": "11_4",
+				"depth": 7,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"12_4": {
+				"key": "12_4",
+				"depth": 8,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"13_4": {
+				"key": "13_4",
+				"depth": 9,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"14_4": {
+				"key": "14_4",
+				"depth": 9,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"15_4": {
+				"key": "15_4",
+				"depth": 8,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"16_4": {
+				"key": "16_4",
+				"depth": 6,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"17_4": {
+				"key": "17_4",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"18_4": {
+				"key": "18_4",
+				"depth": 6,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"19_4": {
+				"key": "19_4",
+				"depth": 6,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"20_4": {
+				"key": "20_4",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"21_4": {
+				"key": "21_4",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"22_4": {
+				"key": "22_4",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"23_4": {
+				"key": "23_4",
+				"depth": 6,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"24_4": {
+				"key": "24_4",
+				"depth": 6,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"25_4": {
+				"key": "25_4",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"26_4": {
+				"key": "26_4",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"27_4": {
+				"key": "27_4",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"28_4": {
+				"key": "28_4",
+				"depth": 6,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"29_4": {
+				"key": "29_4",
+				"depth": 6,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"30_4": {
+				"key": "30_4",
+				"depth": 5,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"31_4": {
+				"key": "31_4",
+				"depth": 6,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"32_4": {
+				"key": "32_4",
+				"depth": 7,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"33_4": {
+				"key": "33_4",
+				"depth": 7,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"34_4": {
+				"key": "34_4",
+				"depth": 6,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"35_4": {
+				"key": "35_4",
+				"depth": 4,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"36_4": {
+				"key": "36_4",
+				"depth": 2,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"37_4": {
+				"key": "37_4",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			},
+			"38_4": {
+				"key": "38_4",
+				"depth": 3,
+				"section": 0.5,
+				"recording_type": 0,
+				"mechanism": {},
+				"process": {},
+				"mechanismCurrKey": "",
+				"processCurrKey": ""
+			}
+		}
+	}
+]
