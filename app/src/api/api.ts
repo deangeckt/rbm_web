@@ -3,10 +3,20 @@ import { IPlotData } from '../simulate/Simulate';
 import { IMechanismProcess, IAttr, ISection } from '../Wrapper';
 import readMocks from './readMock.json';
 
-interface schema {
+export interface schema {
     id: string;
     value: any;
 }
+
+export const getParamsJson = (
+    globalMech: [string, IMechanismProcess][],
+    sections: Record<string, ISection>,
+): schema[] => {
+    const data: schema[] = [];
+    data.push({ id: 'global', value: globalMech });
+    data.push({ id: 'sections', value: sections });
+    return data;
+};
 
 export const run = async (
     setData: Function,
@@ -15,13 +25,10 @@ export const run = async (
     sections: Record<string, ISection>,
 ) => {
     try {
-        const data: schema[] = [];
-        data.push({ id: 'global', value: globalMech });
-        data.push({ id: 'sections', value: sections });
         const response = (await axios.request({
             url: 'http://localhost:8080/api/v1/run',
             method: 'POST',
-            data: data,
+            data: getParamsJson(globalMech, sections),
         })) as AxiosResponse;
 
         const idata: IPlotData[] = [];

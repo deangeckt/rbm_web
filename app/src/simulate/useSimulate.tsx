@@ -2,7 +2,14 @@ import { useContext } from 'react';
 import { AppContext } from '../AppContext';
 
 export function useSimulate() {
-    const { state, setState } = useContext(AppContext);
+    const { state } = useContext(AppContext);
 
-    return {};
+    const getParamsForRun = () => {
+        const globalMech = { ...state.globalMechanism };
+        const globalMechanism = Object.entries(globalMech).filter(([, mech]) => mech.add);
+        const sections = { ...state.sectionLines };
+        return { globalMechanism, sections };
+    };
+
+    return { getParamsForRun };
 }

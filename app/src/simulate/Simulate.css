@@ -16,8 +16,8 @@
 }
 
 .SimulateTopPanel {
-    flex-basis: 5%;
-    min-height: 5%;
+    flex-basis: 10%;
+    min-height: 10%;
     width: 100%;
     display: flex;
     align-items: center;
@@ -26,8 +26,8 @@
 }
 
 .SimulateCenter {
-    flex-basis: 95%;
-    max-height: 95%;
+    flex-basis: 90%;
+    max-height: 90%;
     width: 100%;
     display: flex;
 }

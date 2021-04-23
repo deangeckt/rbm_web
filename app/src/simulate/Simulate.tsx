@@ -11,6 +11,7 @@ import SimulateCanvas from './SimulateCanvas';
 import { IMechanismProcess } from '../Wrapper';
 import ReadLoading from '../anim/ReadLoading';
 import './Simulate.css';
+import { useSimulate } from './useSimulate';
 
 export interface IPlotData {
     plot: number[];
@@ -22,6 +23,7 @@ const initTreePlot: TreeOrPlot = 'Tree';
 
 function Simulate() {
     const { state, setState } = useContext(AppContext);
+    const { getParamsForRun } = useSimulate();
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
     const [readLoading, setReadLoading] = React.useState(true);
@@ -57,12 +59,8 @@ function Simulate() {
     const StartRunning = () => {
         setPlotData([] as IPlotData[]);
         setRunning(true);
-
-        const globalMech = { ...state.globalMechanism };
-        const addedGlobal = Object.entries(globalMech).filter(([, mech]) => mech.add);
-
-        const sections = { ...state.sectionLines };
-        run(updatePlotData, updateError, addedGlobal, sections);
+        const { globalMechanism, sections } = getParamsForRun();
+        run(updatePlotData, updateError, globalMechanism, sections);
     };
 
     const closeError = (_event?: React.SyntheticEvent, reason?: string) => {

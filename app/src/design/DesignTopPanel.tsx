@@ -1,22 +1,10 @@
 import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { exportFile } from '../utils/swcUtils';
 import { AppContext } from '../AppContext';
-import { IAppState, none_selected, ILine, root_id } from '../Wrapper';
+import { none_selected } from '../Wrapper';
 import { useTreeCanvas } from '../tree/useTreeCanvas';
-
-const downloadFile = (state: IAppState, linesArray: ILine[]) => {
-    // TODO: remove redundant element created
-    const element = document.createElement('a');
-    const file = new Blob(exportFile(linesArray, state.lines[root_id].radius, state.stage.rootX, state.stage.rootY), {
-        type: 'text/plain;charset=utf-8',
-    });
-    element.href = URL.createObjectURL(file);
-    element.download = 'swcTree.swc';
-    document.body.appendChild(element);
-    element.click();
-};
+import { downloadSwcFile } from '../utils/general';
 
 function DesignTopPanel() {
     const { state, setState } = useContext(AppContext);
@@ -29,7 +17,7 @@ function DesignTopPanel() {
                 className="NoCapsButton"
                 color="primary"
                 variant="contained"
-                onClick={() => downloadFile(state, getLinesArrayNoRoot())}
+                onClick={() => downloadSwcFile(state, getLinesArrayNoRoot())}
                 style={{ marginLeft: '24px' }}
             >
                 Export
