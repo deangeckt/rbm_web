@@ -51,20 +51,19 @@ class NeuronWrapper:
 
     def __add_section_mech(self, section: dict):
         id_, tid_ = section_key_to_id_tid(section['key'])
-        if tid_ == 1 and id_ > 0:
-            return
         h_ref = tid_to_type(tid_, self.h)[id_]
         mechanism = section['mechanism']
         for mech in mechanism:
+            if not mechanism[mech]['add']:
+                continue
             h_ref.insert(mech)
             attrs = mechanism[mech]['attrs']
             for attr in attrs:
                 setattr(h_ref, attr, attrs[attr])
 
     def __add_section_process(self, section: dict):
+
         id_, tid_ = section_key_to_id_tid(section['key'])
-        if tid_ == 1 and id_ > 0:
-            return
         section_ = section['section']
 
         h_ref = tid_to_type(tid_, self.h)
@@ -72,6 +71,8 @@ class NeuronWrapper:
 
         process = section['process']
         for proc in process:
+            if not process[proc]['add']:
+                continue
             new_proc = getattr(self.h, proc)(h_ref)
             attrs = process[proc]['attrs']
             for attr in attrs:
@@ -82,9 +83,9 @@ class NeuronWrapper:
         recording_type_ = section['recording_type']
         if recording_type_ == 0:
             return
+
         id_, tid_ = section_key_to_id_tid(section['key'])
-        if tid_ == 1 and id_ > 0:
-            return
+
         section_ = section['section']
         recording_key_ = recording_key(recording_type_, tid_, id_, section_)
 
@@ -113,6 +114,11 @@ class NeuronWrapper:
         sections = self.input['sections']
         for section_key in sections:
             section = sections[section_key]
+
+            id_, tid_ = section_key_to_id_tid(section['key'])
+            if tid_ == 1 and id_ > 0:
+                continue
+
             self.__add_record(section)
             self.__add_section_mech(section)
             self.__add_section_process(section)
