@@ -118,5 +118,5 @@ export function importFile(text: string, screenRootX: number, screenRootY: numbe
     if (neuronRad === -1) {
         throw new Error('SWC file bad format - missing neuron line');
     }
-    return { lines: ilines };
+    return { lines: ilines, lastId: lines.length };
 }
