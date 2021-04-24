@@ -24,6 +24,7 @@ const TransformerLine = ({ shapeProps, isSelected, onSelect }: TransLineProps) =
     return (
         <React.Fragment>
             <Line
+                perfectDrawEnabled={false}
                 onClick={onSelect}
                 onTap={onSelect}
                 ref={shapeRef}

@@ -44,8 +44,8 @@
 }
 
 .RightSide {
-    flex-basis: 50%;
-    min-width: 50%;
+    flex-basis: 60%;
+    min-width: 60%;
     text-align: left;
     border-left: 1px solid #efefef;
     display: flex;

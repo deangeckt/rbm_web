@@ -11,9 +11,7 @@ function TreeCanvas() {
     const { state, setState } = useContext(AppContext);
     const { updateChildsBelow, checkDeselect, setSelectedId, getLinesArrayNoRoot } = useTreeCanvas();
     const widSize = window.document.getElementById('Canvas')?.offsetWidth;
-    const [scale, setScale] = React.useState(0.5);
-    const [stagex, setStagex] = React.useState(0);
-    const [stagey, setStagey] = React.useState(0);
+    const [camera, setCamera] = React.useState({ x: 0, y: 0 });
 
     useEffect(() => {
         if (widSize && widSize !== state.stage.width) {
@@ -27,39 +25,31 @@ function TreeCanvas() {
         }
     }, [setState, state, state.lines, widSize]);
 
-    const handleWheel = (e: any) => {
-        e.evt.preventDefault();
+    const handleDragEnd = (e: any) => {
+        setCamera({
+            x: -e.target.x(),
+            y: -e.target.y(),
+        });
+    };
 
-        const scaleBy = 1.2;
-        const stage = e.target.getStage();
-        const oldScale = stage.scaleX();
-        const mousePointTo = {
-            x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
-            y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale,
-        };
+    const isOutWidth = (x: number): boolean => {
+        return x < camera.x || x > camera.x + state.stage.width;
+    };
 
-        const newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
-        const stageX = -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale;
-        const stageY = -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale;
-
-        setScale(newScale);
-        setStagex(stageX);
-        setStagey(stageY);
+    const isOutHeight = (y: number): boolean => {
+        return y < camera.y || y > camera.y + state.stage.height;
     };
 
     return (
         <>
             <Stage
+                pixelRatio={1}
                 width={state.stage.width}
                 height={state.stage.height}
                 draggable
                 onMouseDown={checkDeselect}
                 onTouchStart={checkDeselect}
-                scaleX={scale}
-                scaleY={scale}
-                x={stagex}
-                y={stagey}
-                onWheel={handleWheel}
+                onDragEnd={handleDragEnd}
             >
                 <Layer>
                     <Circle
@@ -71,16 +61,26 @@ function TreeCanvas() {
                         draggable={false}
                         onClick={() => setSelectedId(root_id)}
                     />
-                    {getLinesArrayNoRoot().map((l) => (
-                        <TransformerLine
-                            key={l.id}
-                            shapeProps={l}
-                            isSelected={l.id === state.selectedId}
-                            onSelect={() => {
-                                setSelectedId(l.id);
-                            }}
-                        />
-                    ))}
+                    {getLinesArrayNoRoot().map((l) => {
+                        if (isOutWidth(l.points[0]) || isOutWidth(l.points[2])) {
+                            return null;
+                        }
+                        if (isOutHeight(l.points[1]) || isOutHeight(l.points[3])) {
+                            return null;
+                        }
+                        return (
+                            <>
+                                <TransformerLine
+                                    key={l.id}
+                                    shapeProps={l}
+                                    isSelected={l.id === state.selectedId}
+                                    onSelect={() => {
+                                        setSelectedId(l.id);
+                                    }}
+                                />
+                            </>
+                        );
+                    })}
                 </Layer>
             </Stage>
         </>
