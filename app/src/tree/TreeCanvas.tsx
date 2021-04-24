@@ -10,8 +10,10 @@ import { neuron_color } from '../utils/colors';
 function TreeCanvas() {
     const { state, setState } = useContext(AppContext);
     const { updateChildsBelow, checkDeselect, setSelectedId, getLinesArrayNoRoot } = useTreeCanvas();
-    //TODO: handle zoom
     const widSize = window.document.getElementById('Canvas')?.offsetWidth;
+    const [scale, setScale] = React.useState(0.5);
+    const [stagex, setStagex] = React.useState(0);
+    const [stagey, setStagey] = React.useState(0);
 
     useEffect(() => {
         if (widSize && widSize !== state.stage.width) {
@@ -25,6 +27,26 @@ function TreeCanvas() {
         }
     }, [setState, state, state.lines, widSize]);
 
+    const handleWheel = (e: any) => {
+        e.evt.preventDefault();
+
+        const scaleBy = 1.2;
+        const stage = e.target.getStage();
+        const oldScale = stage.scaleX();
+        const mousePointTo = {
+            x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
+            y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale,
+        };
+
+        const newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+        const stageX = -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale;
+        const stageY = -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale;
+
+        setScale(newScale);
+        setStagex(stageX);
+        setStagey(stageY);
+    };
+
     return (
         <>
             <Stage
@@ -33,6 +55,11 @@ function TreeCanvas() {
                 draggable
                 onMouseDown={checkDeselect}
                 onTouchStart={checkDeselect}
+                scaleX={scale}
+                scaleY={scale}
+                x={stagex}
+                y={stagey}
+                onWheel={handleWheel}
             >
                 <Layer>
                     <Circle
