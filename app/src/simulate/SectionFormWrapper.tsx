@@ -6,6 +6,7 @@ import { useTreeText } from '../tree/useTreeText';
 import { TextField, MenuItem } from '@material-ui/core';
 import { section_recording } from '../Wrapper';
 import { useDynamicForms } from './dynForms/useDynamicForm';
+import './Form.css';
 
 type SectionTab = 'process' | 'mech' | 'record';
 const initTab: SectionTab = 'mech';
@@ -46,7 +47,7 @@ function SectionFormWrapper() {
     };
 
     return (
-        <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', marginTop: '8px' }}>
+        <div className="SectionForm">
             <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
                 <Chip
                     label="Mechanism"
@@ -71,29 +72,22 @@ function SectionFormWrapper() {
                     onClick={() => setSectionTab('record')}
                 />
             </div>
-            <div
-                style={{
-                    textAlign: 'center',
-                    marginTop: '24px',
-                    marginBottom: '16px',
-                    borderBottom: '1px solid #efefef',
-                }}
-            >
-                {sectionListString}
-            </div>
+            <div className="SectionEditStr">{sectionListString}</div>
             {renderForm ? (
-                <div style={{ marginBottom: '12px' }}>
-                    <TextField
-                        label={'Section'}
-                        variant="filled"
-                        type="number"
-                        value={getSectionValue()}
-                        onChange={(e) => updateSectionValue(Number(e.target.value))}
-                        InputProps={{ inputProps: { min: 0, step: 0.1 } }}
-                    />
-                </div>
+                <>
+                    <div style={{ marginBottom: '12px' }}>
+                        <TextField
+                            label={'Section'}
+                            variant="filled"
+                            type="number"
+                            value={getSectionValue()}
+                            onChange={(e) => updateSectionValue(Number(e.target.value))}
+                            InputProps={{ inputProps: { min: 0, step: 0.1 } }}
+                        />
+                    </div>
+                    <div>{renderTab()}</div>
+                </>
             ) : null}
-            {renderForm ? renderTab() : null}
         </div>
     );
 }

@@ -69,16 +69,14 @@ function TreeCanvas() {
                             return null;
                         }
                         return (
-                            <>
-                                <TransformerLine
-                                    key={l.id}
-                                    shapeProps={l}
-                                    isSelected={l.id === state.selectedId}
-                                    onSelect={() => {
-                                        setSelectedId(l.id);
-                                    }}
-                                />
-                            </>
+                            <TransformerLine
+                                key={l.id}
+                                shapeProps={l}
+                                isSelected={l.id === state.selectedId}
+                                onSelect={() => {
+                                    setSelectedId(l.id);
+                                }}
+                            />
                         );
                     })}
                 </Layer>

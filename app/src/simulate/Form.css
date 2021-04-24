@@ -1,0 +1,46 @@
+.MainTabButton {
+    text-transform: none !important;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.TabsContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Tabs {
+    width: 100%;
+    min-height: 6vh;
+    height: 6vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.MainForm {
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.SectionForm {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+}
+
+.SectionEditStr {
+    padding-bottom: 16px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    text-align: center;
+    border-bottom: 1px solid #efefef;
+}

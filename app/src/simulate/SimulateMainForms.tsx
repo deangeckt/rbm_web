@@ -1,88 +1,43 @@
 import React, { useContext } from 'react';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import { AppBar, Tab, Tabs } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
 import DynamicForm from './dynForms/DynamicForm';
 import { AppContext } from '../AppContext';
-import './Simulate.css';
 import SectionFormWrapper from './SectionFormWrapper';
+import './Form.css';
 
-export const global_tab = 0;
-export const section_tab = 1;
+type SimTab = 'Global' | 'Section';
+const initTab: SimTab = 'Global';
 
-export interface ISimulateMainFormProps {
-    tab: number;
-    setTab: Function;
-}
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: any;
-    value: any;
-}
-
-function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={2}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
-
-// No 100% width
-const useStyles = makeStyles(() => ({
-    root: {
-        '& .MuiBox-root': {
-            margin: '0',
-            padding: '0px',
-            width: '100%',
-        },
-        '& .MuiTabs-root': {
-            width: '100%',
-        },
-    },
-}));
-
-function SimulateMainForm({ tab, setTab }: ISimulateMainFormProps) {
-    const classes = useStyles();
+function SimulateMainForm() {
     const { state } = useContext(AppContext);
+    const [tab, setTab] = React.useState(initTab);
+
+    const renderTab = () => {
+        if (tab === 'Global') return <DynamicForm mp={state.globalMechanism} impKey={'globalMechanism'} />;
+        else return <SectionFormWrapper />;
+    };
 
     return (
-        <div className="Tabs">
-            <div className={classes.root}>
-                <AppBar position="static">
-                    <Tabs
-                        value={tab}
-                        onChange={(_event: React.ChangeEvent<{}>, newValue: number) => {
-                            setTab(newValue);
-                        }}
-                        centered
-                        variant="fullWidth"
-                    >
-                        <Tab label="Global" />
-                        <Tab label="Section" />
-                    </Tabs>
-                </AppBar>
-                <TabPanel value={tab} index={global_tab}>
-                    <DynamicForm mp={state.globalMechanism} impKey={'globalMechanism'} />
-                </TabPanel>
-                <TabPanel value={tab} index={section_tab}>
-                    <SectionFormWrapper />
-                </TabPanel>
+        <div className="TabsContainer">
+            <div className="Tabs">
+                <Button
+                    className="MainTabButton"
+                    variant={tab === 'Global' ? 'contained' : 'outlined'}
+                    color="primary"
+                    onClick={() => setTab('Global')}
+                >
+                    Global
+                </Button>
+                <Button
+                    className="MainTabButton"
+                    variant={tab === 'Section' ? 'contained' : 'outlined'}
+                    color="primary"
+                    onClick={() => setTab('Section')}
+                >
+                    Section
+                </Button>
             </div>
+            <div className="MainForm">{renderTab()}</div>
         </div>
     );
 }

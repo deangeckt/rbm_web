@@ -24,12 +24,12 @@ const initTreePlot: TreeOrPlot = 'Tree';
 function Simulate() {
     const { state, setState } = useContext(AppContext);
     const { getParamsForRun } = useSimulate();
+
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
     const [readLoading, setReadLoading] = React.useState(true);
     const [plotData, setPlotData] = React.useState([] as IPlotData[]);
     const [treeOrPlot, setTreeOrPlot] = React.useState(initTreePlot);
-    const [tab, setTab] = React.useState(0);
 
     const updatePlotData = (newData: IPlotData[]) => {
         setPlotData(newData);
@@ -96,7 +96,7 @@ function Simulate() {
                         </div>
                         <div className="SimulateCenter">
                             <div className="LeftSide">
-                                <SimulateMainForm tab={tab} setTab={setTab} />
+                                <SimulateMainForm />
                             </div>
                             <div className="RightSide">
                                 <SimulateCanvas display={treeOrPlot === 'Tree'} />
