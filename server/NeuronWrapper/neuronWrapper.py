@@ -12,11 +12,6 @@ from NeuronWrapper.schema import recording_type_to_ref, tid_to_type, recording_k
 class NeuronWrapper:
     def __init__(self, config_path):
         self.neuron_dy = __import__("neuron")
-        self.h = getattr(self.neuron_dy, "h")
-
-        self.h.load_file('stdrun.hoc')
-        self.h.load_file('import3d.hoc')
-
         self.input = {'global': {}, 'sections': {}}
         self.recordings = {}
         self.process = []
@@ -33,6 +28,10 @@ class NeuronWrapper:
     def __reset_params(self):
         self.general_params = deepcopy(self.default_general_params)
         self.input['sections'] = {}
+
+        self.h = getattr(self.neuron_dy, "h")
+        self.h.load_file('stdrun.hoc')
+        self.h.load_file('import3d.hoc')
 
     def __init_params(self, params):
         for tup in params:
@@ -63,7 +62,6 @@ class NeuronWrapper:
                 setattr(h_ref, attr, attrs[attr])
 
     def __add_section_process(self, section: dict):
-
         id_, tid_ = section_key_to_id_tid(section['key'])
         section_ = section['section']
 
