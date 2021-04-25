@@ -8,12 +8,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 function InfoDialog() {
     const { closeDialog } = useDialogs();
     const { state } = useContext(AppContext);
+    const imgRelPath = state.dialogs.dialogInfoImage;
 
     return (
         <Dialog onClose={() => closeDialog()} open={state.dialogs.dialogInfo}>
             <DialogTitle> {state.dialogs.dialogInfoTitle} </DialogTitle>
             <DialogContent>
                 <DialogContentText>{state.dialogs.dialogInfoContent}</DialogContentText>
+                {imgRelPath ? <img src={`${process.env.PUBLIC_URL}/assets/${imgRelPath}`} /> : null}
             </DialogContent>
         </Dialog>
     );

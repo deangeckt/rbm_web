@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../../AppContext';
-import { infoTitle, infoContent } from '../../utils/info';
+import { infoTitle, infoContent, infoImg } from '../../utils/info';
 
 export function useDialogs() {
     const { state, setState } = useContext(AppContext);
@@ -14,11 +14,12 @@ export function useDialogs() {
         const title = infoTitle[key];
         if (!title) return;
         const content = infoContent[key];
+        const img = infoImg[key];
 
         dialogs.dialogInfoTitle = title;
         dialogs.dialogInfoContent = content;
+        dialogs.dialogInfoImage = img;
         dialogs.dialogInfo = true;
-
         setState({ ...state, dialogs: dialogs });
     };
 

@@ -102,6 +102,7 @@ export interface IDialogs {
     dialogInfo: boolean;
     dialogInfoTitle: string;
     dialogInfoContent: string;
+    dialogInfoImage?: string;
 }
 
 export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';

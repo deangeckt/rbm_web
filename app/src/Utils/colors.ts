@@ -3,9 +3,9 @@ import { Dictionary } from '../Wrapper';
 export const section_color: Dictionary<string> = {
     0: '#677be9',
     1: '#809798',
-    2: '#cf0029',
-    3: '#4f7b95',
-    4: '#31dcbd',
+    2: '#0E90E9',
+    3: '#DE7324',
+    4: '#E13A1C',
     5: '#00000',
 };
 
