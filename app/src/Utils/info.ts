@@ -7,12 +7,18 @@ export const infoTitle: Dictionary<string> = {
     rest_volt: 'Resting voltage [mV]',
     celsius: 'Celsius [℃]',
     hh: 'Hodgkin–Huxley model',
-    minf_hh: 'm - activation gate of Na',
-    mtau_hh: 'm - activation gate of Na',
-    hinf_hh: 'h - deactivation gate of Na',
-    htau_hh: 'h - deactivation gate of Na',
-    ntau_hh: 'n - activation gate of K',
-    ninf_hh: 'n - activation gate of K',
+    minf_hh: 'm - The sodium activation state variable',
+    mtau_hh: 'm - The sodium activation state variable',
+    hinf_hh: 'h - The sodium inactivation state variable',
+    htau_hh: 'h - The sodium inactivation state variable',
+    ntau_hh: 'n - The potassium activation state variable',
+    ninf_hh: 'n - The potassium activation state variable',
+    gnabar_hh: 'gna - Sodium channel conductance',
+    gkbar_hh: 'gk - Potassium channel conductance',
+    gl_hh: 'gl - Leakage conductance',
+    el_hh: 'The reversal potential for the leakage channel [mV]',
+    ena: 'The reversal potential for the sodium channel [mV]',
+    ek: 'The reversal potential for the potassium  channel [mV]',
 };
 
 export const infoContent: Dictionary<string> = {
@@ -28,6 +34,9 @@ export const infoContent: Dictionary<string> = {
     mtau_hh: 'time constant [mS]',
     htau_hh: 'time constant [mS]',
     ntau_hh: 'time constant [mS]',
+    gnabar_hh: 'The maximum specific sodium channel conductance [S/cm2]',
+    gkbar_hh: 'The maximum specific potassium channel conductance [S/cm2]',
+    gl_hh: 'The maximum specific leakage conductance [S/cm2]',
 };
 
 // relative path in public/assests
@@ -39,4 +48,7 @@ export const infoImg: Dictionary<string> = {
     htau_hh: 'h(t).jpg',
     ntau_hh: 'n(t).jpg',
     ninf_hh: 'n(t).jpg',
+    gnabar_hh: 'hh_short.jpg',
+    gkbar_hh: 'hh_short.jpg',
+    gl_hh: 'hh_short.jpg',
 };
