@@ -2,7 +2,7 @@ import React from 'react';
 import TreeItem, { TreeItemProps } from '@material-ui/lab/TreeItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+import { Typography, Button } from '@material-ui/core';
 import { useTreeText } from './useTreeText';
 
 const useTreeItemStyles = makeStyles((theme: Theme) =>
@@ -35,26 +35,12 @@ function TreeTextRecurItem({ labelText, ...other }: TreeTextRecurItemProps) {
     const [check, setCheck] = React.useState(false);
     const { sectionKeyToLabel, isSectionSelected, setSectionChecked } = useTreeText();
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCheck(event.target.checked);
-        // event.stopPropagation();
+    const handleChange = (event: any) => {
+        setCheck(!check);
+        event.stopPropagation();
         event.preventDefault();
         // setSectionChecked(sectionKey);
     };
-
-    // const renderLabel = (text: string) => (
-    //     <span
-    //         onClick={(event) => {
-    //             console.log(text);
-    //             //setActiveItemId(item.id);
-    //             // if you want after click do expand/collapse comment this two line
-    //             // event.stopPropagation();
-    //             // event.preventDefault();
-    //         }}
-    //     >
-    //         {text}
-    //     </span>
-    // );
 
     return (
         <TreeItem
@@ -63,7 +49,7 @@ function TreeTextRecurItem({ labelText, ...other }: TreeTextRecurItemProps) {
                     <Typography variant="body2" className={classes.labelText}>
                         {labelText}
                     </Typography>
-                    <Checkbox color="primary" checked={check} onChange={handleChange} />
+                    <Checkbox color="primary" checked={check} onClick={handleChange} />
                 </div>
             }
             classes={{

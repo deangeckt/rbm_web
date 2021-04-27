@@ -43,7 +43,7 @@ export default function TreeTextRecur() {
     const classes = useStyles();
 
     const renderTree = (nodes: RenderTree) => (
-        <TreeTextRecurItem nodeId={nodes.id} labelText={nodes.name}>
+        <TreeTextRecurItem key={nodes.id} nodeId={nodes.id} labelText={nodes.name}>
             {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
         </TreeTextRecurItem>
     );

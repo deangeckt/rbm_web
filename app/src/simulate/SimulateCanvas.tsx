@@ -3,9 +3,8 @@ import { none_selected, root_id } from '../Wrapper';
 import { AppContext } from '../AppContext';
 import TreeCanvas from '../tree/TreeCanvas';
 import TreeNavigation from '../tree/TreeNavigation';
-import TreeTexts from '../tree/TreeTexts';
-import './Simulate.css';
 import TreeTextRecur from '../tree/TreeTextRecur';
+import './Simulate.css';
 
 interface ISimulateCanvasProps {
     display: boolean;
