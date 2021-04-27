@@ -5,6 +5,7 @@ import TreeCanvas from '../tree/TreeCanvas';
 import TreeNavigation from '../tree/TreeNavigation';
 import TreeTexts from '../tree/TreeTexts';
 import './Simulate.css';
+import TreeTextRecur from '../tree/TreeTextRecur';
 
 interface ISimulateCanvasProps {
     display: boolean;
@@ -22,7 +23,7 @@ const SimulateCanvas = ({ display }: ISimulateCanvasProps) => {
             </div>
             <div className="SimulateCanvasBottomPanel">
                 <div className="SimulateCanvasBottomLeft">
-                    <TreeTexts />
+                    <TreeTextRecur />
                 </div>
                 <div className="SimulateCanvasBottomRight">
                     {!neuronSelected && !lineSelected ? (

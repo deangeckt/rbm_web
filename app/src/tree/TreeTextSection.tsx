@@ -10,7 +10,7 @@ export interface ITreeTextProps {
     depth: number;
 }
 
-function TreeTextSection({ sectionKey, depth }: ITreeTextProps) {
+function TreeItemChecked({ sectionKey, depth }: ITreeTextProps) {
     const { sectionKeyToLabel, isSectionSelected, setSectionChecked } = useTreeText();
     const [check, setCheck] = React.useState(false);
 
@@ -35,4 +35,4 @@ function TreeTextSection({ sectionKey, depth }: ITreeTextProps) {
     );
 }
 
-export default TreeTextSection;
+export default TreeItemChecked;
