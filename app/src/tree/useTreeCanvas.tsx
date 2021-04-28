@@ -11,6 +11,7 @@ import {
     ISection,
     none_selected,
     root_id,
+    root_key,
     section_types,
 } from '../Wrapper';
 
@@ -40,6 +41,18 @@ export function useTreeCanvas() {
             currLine.points[1] = father.points[3];
 
             updateLinePoint(currLine);
+        }
+    };
+
+    const updateTreeLocation = (x_delta: number, y_delta: number): void => {
+        const ents = Object.values(state.lines);
+        for (let i = 0; i < ents.length; i++) {
+            const currLine = ents[i];
+            if (currLine.id === root_id) continue;
+            for (let i = 0; i < currLine.points.length; i++) {
+                if (i % 2 === 0) currLine.points[i] += x_delta;
+                else currLine.points[i] += y_delta;
+            }
         }
     };
 
@@ -175,16 +188,17 @@ export function useTreeCanvas() {
         setState({ ...state, lines: lines, selectedId: pid });
     };
 
-    const addNewSection = (key: string, depth: number): ISection => {
+    const addNewSection = (key: string, swc_id: number): ISection => {
         return {
             key: key,
-            depth: depth,
             section: default_section_value,
             recording_type: 0,
             mechanism: {},
             process: {},
             mechanismCurrKey: '',
             processCurrKey: '',
+            children: [],
+            swc_id: swc_id,
         };
     };
 
@@ -194,7 +208,7 @@ export function useTreeCanvas() {
         sectionLines: Record<string, ISection>,
         id: number,
         tid: number,
-        depth: number,
+        pidKey: string,
     ) => {
         const childs = lines[id].lineChilds;
         for (let i = 0; i < childs.length; i++) {
@@ -206,7 +220,10 @@ export function useTreeCanvas() {
             const lineChilds = lines[line.id].lineChilds;
 
             const key = `${cid}_${tid}`;
-            if (!sectionLines[key]) sectionLines[key] = addNewSection(key, depth);
+            if (!sectionLines[key]) {
+                sectionLines[key] = addNewSection(key, line.id);
+                sectionLines[pidKey].children.push(key);
+            }
 
             if (lineChilds.length === 0) {
                 continue;
@@ -214,17 +231,15 @@ export function useTreeCanvas() {
 
             if (lineChilds.length === 1) {
                 cid -= 1;
-                setCids(lines, sectionLines, line.id, tid, depth);
-            } else {
-                setCids(lines, sectionLines, line.id, tid, depth + 1);
             }
+            setCids(lines, sectionLines, line.id, tid, key);
         }
     };
 
     const setSimulationTreeCids = () => {
         const lines = { ...state.lines };
         const sectionLines = { ...state.sectionLines };
-        sectionLines['0_1'] = addNewSection('0_1', 0);
+        sectionLines[root_key] = addNewSection(root_key, root_id);
         lines[root_id].cid = 0;
         const ents = Object.values(lines);
 
@@ -233,9 +248,16 @@ export function useTreeCanvas() {
             if (sec_lines.length > 0) {
                 const startPid = sec_lines[0].pid !== -1 ? sec_lines[0].pid : root_id;
                 cid = sec_type.value === 1 ? 0 : -1; // on type soma since we have root, start cids from 0
-                setCids(lines, sectionLines, startPid, sec_type.value, 1);
+                setCids(lines, sectionLines, startPid, sec_type.value, root_key);
             }
         });
+
+        // const ilines: Record<string, ILine> = {};
+
+        // Object.entries(sectionLines);
+
+        console.log(lines);
+        console.log(sectionLines);
 
         return { sectionLines, lines };
     };

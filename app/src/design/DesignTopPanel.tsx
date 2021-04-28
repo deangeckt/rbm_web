@@ -5,10 +5,12 @@ import { AppContext } from '../AppContext';
 import { none_selected } from '../Wrapper';
 import { useTreeCanvas } from '../tree/useTreeCanvas';
 import { downloadSwcFile } from '../utils/general';
+import { useTreeText } from '../tree/useTreeText';
 
 function DesignTopPanel() {
     const { state, setState } = useContext(AppContext);
     const { getLinesArrayNoRoot, setSimulationTreeCids } = useTreeCanvas();
+    const { sectionsToTreeRender } = useTreeText();
     const history = useHistory();
 
     return (
@@ -29,7 +31,14 @@ function DesignTopPanel() {
                 variant="contained"
                 onClick={() => {
                     const { sectionLines, lines } = setSimulationTreeCids();
-                    setState({ ...state, sectionLines: sectionLines, lines: lines, selectedId: none_selected });
+                    const treeText = sectionsToTreeRender(sectionLines);
+                    setState({
+                        ...state,
+                        sectionLines: sectionLines,
+                        lines: lines,
+                        selectedId: none_selected,
+                        sectionsTreeText: treeText,
+                    });
                     history.push({ pathname: '/simulate' });
                 }}
                 style={{ marginRight: '24px' }}

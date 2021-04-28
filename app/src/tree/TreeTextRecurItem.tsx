@@ -1,7 +1,7 @@
 import React from 'react';
 import TreeItem, { TreeItemProps } from '@material-ui/lab/TreeItem';
 import Checkbox from '@material-ui/core/Checkbox';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme, createStyles, fade } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import { useTreeText } from './useTreeText';
 
@@ -10,10 +10,9 @@ const useTreeItemStyles = makeStyles((theme: Theme) =>
         root: {},
         content: {},
         group: {
-            marginLeft: 0,
-            '& $content': {
-                paddingLeft: theme.spacing(2),
-            },
+            marginLeft: 7,
+            paddingLeft: 18,
+            borderLeft: `1px dashed ${fade(theme.palette.text.primary, 0.4)}`,
         },
         expanded: {},
         selected: {},
@@ -26,22 +25,14 @@ const useTreeItemStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-type TreeTextRecurItemProps = TreeItemProps & {
-    labelText: string;
-};
-
-function TreeTextRecurItem({ labelText, ...other }: TreeTextRecurItemProps) {
+function TreeTextRecurItem({ ...other }: TreeItemProps) {
     const classes = useTreeItemStyles();
-    const [check, setCheck] = React.useState(false);
-    const { sectionKeyToLabel, isSectionSelected, setSectionChecked } = useTreeText();
+    const { sectionKeyToLabel, setSectionChecked, isSectionChecked } = useTreeText();
 
     const handleChange = (event: any) => {
-        setCheck(!check);
-        console.log(other.nodeId);
-
+        setSectionChecked(other.nodeId);
         event.stopPropagation();
         event.preventDefault();
-        // setSectionChecked(sectionKey);
     };
 
     return (
@@ -49,9 +40,9 @@ function TreeTextRecurItem({ labelText, ...other }: TreeTextRecurItemProps) {
             label={
                 <div className={classes.labelRoot}>
                     <Typography variant="body2" className={classes.labelText}>
-                        {labelText}
+                        {sectionKeyToLabel(other.nodeId)}
                     </Typography>
-                    <Checkbox color="primary" checked={check} onClick={handleChange} />
+                    <Checkbox color="primary" checked={isSectionChecked(other.nodeId)} onClick={handleChange} />
                 </div>
             }
             classes={{
