@@ -216,7 +216,6 @@ export function useTreeCanvas() {
             if (line.tid !== tid) continue;
 
             cid += 1;
-            line.cid = cid;
             const lineChilds = lines[line.id].lineChilds;
 
             const key = `${cid}_${tid}`;
@@ -240,7 +239,6 @@ export function useTreeCanvas() {
         const lines = { ...state.lines };
         const sectionLines = { ...state.sectionLines };
         sectionLines[root_key] = addNewSection(root_key, root_id);
-        lines[root_id].cid = 0;
         const ents = Object.values(lines);
 
         section_types.forEach((sec_type) => {

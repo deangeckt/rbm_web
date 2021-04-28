@@ -88,7 +88,6 @@ export interface RenderTreeText {
 
 export interface ILine {
     id: number;
-    cid?: number;
     tid: number;
     pid: number;
     points: number[]; // [x1,y1, x2,y2]

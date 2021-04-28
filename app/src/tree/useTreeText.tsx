@@ -12,13 +12,13 @@ export function useTreeText() {
         return `${section_short_labels[tid]}[${cid}]`;
     };
 
-    const isSectionSelected = (sectionKey: string): boolean => {
-        const selectedLine = state.lines[state.selectedId];
-        if (!selectedLine) return false;
-        const selectedCid = selectedLine.cid;
-        const selectedTid = selectedLine.tid;
-        return `${selectedCid}_${selectedTid}` === sectionKey;
-    };
+    // const isSectionSelected = (sectionKey: string): boolean => {
+    //     const selectedLine = state.lines[state.selectedId];
+    //     if (!selectedLine) return false;
+    //     const selectedCid = selectedLine.cid;
+    //     const selectedTid = selectedLine.tid;
+    //     return `${selectedCid}_${selectedTid}` === sectionKey;
+    // };
 
     const setSectionChecked = (sectionKey: string) => {
         const selectedSecs = { ...state.selectedSections };
@@ -53,5 +53,5 @@ export function useTreeText() {
         return res;
     };
 
-    return { sectionKeyToLabel, isSectionSelected, isSectionChecked, setSectionChecked, sectionsToTreeRender };
+    return { sectionKeyToLabel, isSectionChecked, setSectionChecked, sectionsToTreeRender };
 }
