@@ -39,6 +39,7 @@ const useStyles = makeStyles({
     },
 });
 
+// TODO pass section lines data root - no need to pass name
 export default function TreeTextRecur() {
     const classes = useStyles();
 

@@ -2,7 +2,7 @@ import React from 'react';
 import TreeItem, { TreeItemProps } from '@material-ui/lab/TreeItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Typography, Button } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { useTreeText } from './useTreeText';
 
 const useTreeItemStyles = makeStyles((theme: Theme) =>
@@ -37,6 +37,8 @@ function TreeTextRecurItem({ labelText, ...other }: TreeTextRecurItemProps) {
 
     const handleChange = (event: any) => {
         setCheck(!check);
+        console.log(other.nodeId);
+
         event.stopPropagation();
         event.preventDefault();
         // setSectionChecked(sectionKey);
