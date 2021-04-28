@@ -19,24 +19,24 @@ export function useTreeCanvas() {
     const { state, setState } = useContext(AppContext);
 
     const getChildren = (id: number): number[] => {
-        return state.lines[id].lineChilds;
+        return state.designLines[id].lineChilds;
     };
 
     const getLinesArrayNoRoot = (): ILine[] => {
-        const ents = Object.values(state.lines);
+        const ents = Object.values(state.designLines);
         return ents.filter((line) => {
             return line.id !== root_id && line;
         });
     };
 
     const updateChildsBelow = (startId: number, rootX: number, rootY: number): void => {
-        state.lines[root_id].points = [-1, -1, rootX, rootY];
-        const ents = Object.values(state.lines);
+        state.designLines[root_id].points = [-1, -1, rootX, rootY];
+        const ents = Object.values(state.designLines);
         for (let i = 0; i < ents.length; i++) {
             const currLine = ents[i];
             if (currLine.id < startId) continue;
 
-            const father = state.lines[currLine.pid];
+            const father = state.designLines[currLine.pid];
             currLine.points[0] = father.points[2];
             currLine.points[1] = father.points[3];
 
@@ -45,7 +45,7 @@ export function useTreeCanvas() {
     };
 
     const updateTreeLocation = (x_delta: number, y_delta: number): void => {
-        const ents = Object.values(state.lines);
+        const ents = Object.values(state.designLines);
         for (let i = 0; i < ents.length; i++) {
             const currLine = ents[i];
             if (currLine.id === root_id) continue;
@@ -80,7 +80,7 @@ export function useTreeCanvas() {
     };
 
     const addNewPoints = (prevX: number, prevY: number, childs: number[]) => {
-        const alphas = childs.map((c) => state.lines[c].alpha);
+        const alphas = childs.map((c) => state.designLines[c].alpha);
         const max_alpha = alphas.length > 0 ? Math.max(...alphas) : 0;
         const newAngle = max_alpha + default_alpha;
         const [newX, newY] = lengthAlphaToXy(lengthToPoint(default_length), newAngle, prevX, prevY);
@@ -89,9 +89,9 @@ export function useTreeCanvas() {
     };
 
     const addNew = () => {
-        const lines = { ...state.lines };
+        const lines = { ...state.designLines };
         const selectedLine = lines[state.selectedId];
-        const newId = state.lastId + 1;
+        const newId = state.designLastAddedId + 1;
 
         const prevX = selectedLine.points[2];
         const prevY = selectedLine.points[3];
@@ -110,64 +110,64 @@ export function useTreeCanvas() {
             alpha: r.newAngle,
             lineChilds: [],
         };
-        setState({ ...state, lines: lines, selectedId: newId, lastId: newId });
+        setState({ ...state, designLines: lines, selectedId: newId, designLastAddedId: newId });
     };
 
     const getSelectedRadius = () => {
-        const selectedLine = state.lines[state.selectedId];
+        const selectedLine = state.designLines[state.selectedId];
         return selectedLine ? selectedLine.radius : default_radius;
     };
 
     const getSelectedType = () => {
-        const selectedLine = state.lines[state.selectedId];
+        const selectedLine = state.designLines[state.selectedId];
         return selectedLine ? selectedLine.tid : default_tid;
     };
 
     const getSelectedAlpha = () => {
-        const selectedLine = state.lines[state.selectedId];
+        const selectedLine = state.designLines[state.selectedId];
         const alpha = selectedLine ? selectedLine.alpha : default_alpha;
         return alpha;
     };
 
     const getSelectedLength = () => {
-        const selectedLine = state.lines[state.selectedId];
+        const selectedLine = state.designLines[state.selectedId];
         return selectedLine ? pointToLength(selectedLine.length) : default_length;
     };
 
     const updateSimpleField = (field: 'tid' | 'radius', value: number) => {
-        const lines = { ...state.lines };
+        const lines = { ...state.designLines };
         const selectedLine = lines[state.selectedId];
         if (!selectedLine) return;
         (selectedLine as any)[field] = value;
-        setState({ ...state, lines: lines });
+        setState({ ...state, designLines: lines });
     };
 
     const updateAlpha = (value: number) => {
-        const lines = { ...state.lines };
+        const lines = { ...state.designLines };
         const selectedLine = lines[state.selectedId];
         if (!selectedLine) return;
 
         selectedLine.alpha = value;
         updateLinePoint(selectedLine);
         updateChildsBelow(selectedLine.id, state.stage.rootX, state.stage.rootY);
-        setState({ ...state, lines: lines });
+        setState({ ...state, designLines: lines });
     };
 
     const updateLength = (value: number) => {
-        const lines = { ...state.lines };
+        const lines = { ...state.designLines };
         const selectedLine = lines[state.selectedId];
         if (!selectedLine) return;
 
         selectedLine.length = lengthToPoint(value);
         updateLinePoint(selectedLine);
         updateChildsBelow(selectedLine.id, state.stage.rootX, state.stage.rootY);
-        setState({ ...state, lines: lines });
+        setState({ ...state, designLines: lines });
     };
 
     const updateNeuronRad = (value: number) => {
-        const lines = { ...state.lines };
+        const lines = { ...state.designLines };
         lines[root_id].radius = value;
-        setState({ ...state, lines: lines });
+        setState({ ...state, designLines: lines });
     };
 
     const deleteChildsRecur = (lines: Record<number, ILine>, pid: number): void => {
@@ -179,13 +179,13 @@ export function useTreeCanvas() {
     };
 
     const Delete = () => {
-        const lines = { ...state.lines };
+        const lines = { ...state.designLines };
         const pid = lines[state.selectedId].pid;
         const selectedIdIdxInParent = lines[pid].lineChilds.findIndex((c) => c === state.selectedId);
         lines[pid].lineChilds.splice(selectedIdIdxInParent, 1);
         deleteChildsRecur(lines, state.selectedId);
         delete lines[state.selectedId];
-        setState({ ...state, lines: lines, selectedId: pid });
+        setState({ ...state, designLines: lines, selectedId: pid });
     };
 
     const addNewSection = (key: string, swc_id: number): ISection => {
@@ -205,7 +205,7 @@ export function useTreeCanvas() {
     let cid = -1;
     const setCids = (
         lines: Record<string, ILine>,
-        sectionLines: Record<string, ISection>,
+        sections: Record<string, ISection>,
         id: number,
         tid: number,
         pidKey: string,
@@ -219,9 +219,9 @@ export function useTreeCanvas() {
             const lineChilds = lines[line.id].lineChilds;
 
             const key = `${cid}_${tid}`;
-            if (!sectionLines[key]) {
-                sectionLines[key] = addNewSection(key, line.id);
-                sectionLines[pidKey].children.push(key);
+            if (!sections[key]) {
+                sections[key] = addNewSection(key, line.id);
+                sections[pidKey].children.push(key);
             }
 
             if (lineChilds.length === 0) {
@@ -231,14 +231,14 @@ export function useTreeCanvas() {
             if (lineChilds.length === 1) {
                 cid -= 1;
             }
-            setCids(lines, sectionLines, line.id, tid, key);
+            setCids(lines, sections, line.id, tid, key);
         }
     };
 
     const setSimulationTreeCids = () => {
-        const lines = { ...state.lines };
-        const sectionLines = { ...state.sectionLines };
-        sectionLines[root_key] = addNewSection(root_key, root_id);
+        const lines = { ...state.designLines };
+        const sections = { ...state.sections };
+        sections[root_key] = addNewSection(root_key, root_id);
         const ents = Object.values(lines);
 
         section_types.forEach((sec_type) => {
@@ -246,7 +246,7 @@ export function useTreeCanvas() {
             if (sec_lines.length > 0) {
                 const startPid = sec_lines[0].pid !== -1 ? sec_lines[0].pid : root_id;
                 cid = sec_type.value === 1 ? 0 : -1; // on type soma since we have root, start cids from 0
-                setCids(lines, sectionLines, startPid, sec_type.value, root_key);
+                setCids(lines, sections, startPid, sec_type.value, root_key);
             }
         });
 
@@ -255,9 +255,9 @@ export function useTreeCanvas() {
         // Object.entries(sectionLines);
 
         console.log(lines);
-        console.log(sectionLines);
+        console.log(sections);
 
-        return { sectionLines, lines };
+        return { sections };
     };
 
     return {

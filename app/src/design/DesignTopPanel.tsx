@@ -30,12 +30,11 @@ function DesignTopPanel() {
                 color="primary"
                 variant="contained"
                 onClick={() => {
-                    const { sectionLines, lines } = setSimulationTreeCids();
-                    const treeText = sectionsToTreeRender(sectionLines);
+                    const { sections } = setSimulationTreeCids();
+                    const treeText = sectionsToTreeRender(sections);
                     setState({
                         ...state,
-                        sectionLines: sectionLines,
-                        lines: lines,
+                        sections: sections,
                         selectedId: none_selected,
                         sectionsTreeText: treeText,
                     });

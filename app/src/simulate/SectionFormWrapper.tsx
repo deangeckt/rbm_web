@@ -17,7 +17,7 @@ function SectionFormWrapper() {
     const { sectionKeyToLabel } = useTreeText();
     const { getSectionRecording, updateSectionRecording, getSectionValue, updateSectionValue } = useDynamicForms();
 
-    const selecedSections = Object.entries(state.selectedSections)
+    const selecedSections = Object.entries(state.checkedSections)
         .filter(([, added]) => added)
         .map(([k]) => sectionKeyToLabel(k));
     const renderForm = selecedSections.length > 0;

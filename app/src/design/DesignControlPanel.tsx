@@ -98,7 +98,7 @@ function DesignControlPanel() {
                             label={'Neuron Radius [µM]'}
                             variant="filled"
                             type="number"
-                            value={state.lines[root_id].radius}
+                            value={state.designLines[root_id].radius}
                             InputProps={{ inputProps: { min: 0 } }}
                             onChange={(e) => updateNeuronRad(Number(e.target.value))}
                         />

@@ -17,13 +17,13 @@ function TreeCanvas() {
         if (widSize && widSize !== state.stage.width) {
             console.log('changing stage size');
             const newStage = getStage();
-            const lines = { ...state.lines };
+            const lines = { ...state.designLines };
             if (Object.keys(lines).length > 0) {
                 updateChildsBelow(root_id + 1, newStage.rootX, newStage.rootY);
             }
-            setState({ ...state, lines: lines, stage: newStage });
+            setState({ ...state, designLines: lines, stage: newStage });
         }
-    }, [setState, state, state.lines, widSize]);
+    }, [setState, state, state.designLines, widSize]);
 
     const handleDragEnd = (e: any) => {
         setCamera({
@@ -53,7 +53,7 @@ function TreeCanvas() {
             >
                 <Layer>
                     <Circle
-                        radius={neuronRadToSize(state.lines[root_id].radius)}
+                        radius={neuronRadToSize(state.designLines[root_id].radius)}
                         fill={neuron_color}
                         opacity={state.selectedId === root_id ? 0.8 : 0.3}
                         x={state.stage.rootX}

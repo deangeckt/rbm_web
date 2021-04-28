@@ -111,14 +111,18 @@ export interface IDialogs {
 }
 
 export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
+
+// section key: cid_tid
+// design line key: swc id
+// simulate line key: cid_tid
 export interface IAppState {
     stage: IStageSize;
-    lines: Record<string, ILine>; // key: swc id
-    sectionLines: Record<string, ISection>; //key: cid_tid
-    selectedSections: Record<string, boolean>; // key: cid_tid
-    sectionsTreeText: RenderTreeText;
+    designLines: Record<string, ILine>;
+    designLastAddedId: number;
     selectedId: number;
-    lastId: number;
+    sections: Record<string, ISection>;
+    checkedSections: Record<string, boolean>;
+    sectionsTreeText: RenderTreeText;
     dialogs: IDialogs;
     pointMechanism: Record<string, IMechanismProcess>;
     pointProcess: Record<string, IMechanismProcess>;
@@ -163,14 +167,14 @@ export const init_root_line: ILine = {
 };
 export const init_app_state: IAppState = {
     stage: init_stage,
-    lines: {
+    designLines: {
         1: init_root_line,
     },
-    sectionLines: {},
-    selectedSections: {},
+    sections: {},
+    checkedSections: {},
     sectionsTreeText: { id: root_key },
     selectedId: none_selected,
-    lastId: root_id,
+    designLastAddedId: root_id,
     dialogs: {
         dialogInfo: false,
         dialogInfoTitle: '',
