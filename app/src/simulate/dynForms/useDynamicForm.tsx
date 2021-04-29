@@ -40,6 +40,7 @@ export function useDynamicForms() {
             selectedSections.forEach((sec) => {
                 const mps = (sec as any)[keyMp] as Record<string, IMechanismProcess>;
                 const currKey = (sec as any)[keyRef] as string;
+                if (currKey === '') return;
                 if (!mps[currKey]) mps[currKey] = { attrs: {}, add: false };
                 mps[currKey].add = checked;
             });
