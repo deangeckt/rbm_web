@@ -5,17 +5,13 @@ import {
     default_alpha,
     default_length,
     default_radius,
-    default_section_value,
     default_tid,
     ILine,
-    ISection,
-    none_selected,
+    none_selected_id,
     root_id,
-    root_key,
-    section_types,
 } from '../Wrapper';
 
-export function useTreeCanvas() {
+export function useDesignCanvas() {
     const { state, setState } = useContext(AppContext);
 
     const getChildren = (id: number): number[] => {
@@ -44,18 +40,6 @@ export function useTreeCanvas() {
         }
     };
 
-    const updateTreeLocation = (x_delta: number, y_delta: number): void => {
-        const ents = Object.values(state.designLines);
-        for (let i = 0; i < ents.length; i++) {
-            const currLine = ents[i];
-            if (currLine.id === root_id) continue;
-            for (let i = 0; i < currLine.points.length; i++) {
-                if (i % 2 === 0) currLine.points[i] += x_delta;
-                else currLine.points[i] += y_delta;
-            }
-        }
-    };
-
     const updateLinePoint = (line: ILine) => {
         const prevX = line.points[0];
         const prevY = line.points[1];
@@ -75,7 +59,7 @@ export function useTreeCanvas() {
     const checkDeselect = (e: any) => {
         const clickedOnEmpty = e.target === e.target.getStage();
         if (clickedOnEmpty) {
-            setSelectedId(none_selected);
+            setSelectedId(none_selected_id);
         }
     };
 
@@ -183,85 +167,12 @@ export function useTreeCanvas() {
         const pid = lines[state.selectedId].pid;
         const selectedIdIdxInParent = lines[pid].lineChilds.findIndex((c) => c === state.selectedId);
         lines[pid].lineChilds.splice(selectedIdIdxInParent, 1);
-        deleteChildsRecur(lines, state.selectedId);
+        deleteChildsRecur(lines, state.selectedId as number);
         delete lines[state.selectedId];
         setState({ ...state, designLines: lines, selectedId: pid });
     };
 
-    const addNewSection = (key: string, swc_id: number): ISection => {
-        return {
-            key: key,
-            section: default_section_value,
-            recording_type: 0,
-            mechanism: {},
-            process: {},
-            mechanismCurrKey: '',
-            processCurrKey: '',
-            children: [],
-            swc_id: swc_id,
-        };
-    };
-
-    let cid = -1;
-    const setCids = (
-        lines: Record<string, ILine>,
-        sections: Record<string, ISection>,
-        id: number,
-        tid: number,
-        pidKey: string,
-    ) => {
-        const childs = lines[id].lineChilds;
-        for (let i = 0; i < childs.length; i++) {
-            const line = lines[childs[i]];
-            if (line.tid !== tid) continue;
-
-            cid += 1;
-            const lineChilds = lines[line.id].lineChilds;
-
-            const key = `${cid}_${tid}`;
-            if (!sections[key]) {
-                sections[key] = addNewSection(key, line.id);
-                sections[pidKey].children.push(key);
-            }
-
-            if (lineChilds.length === 0) {
-                continue;
-            }
-
-            if (lineChilds.length === 1) {
-                cid -= 1;
-            }
-            setCids(lines, sections, line.id, tid, key);
-        }
-    };
-
-    const setSimulationTreeCids = () => {
-        const lines = { ...state.designLines };
-        const sections = { ...state.sections };
-        sections[root_key] = addNewSection(root_key, root_id);
-        const ents = Object.values(lines);
-
-        section_types.forEach((sec_type) => {
-            const sec_lines = ents.filter((l) => l.tid === sec_type.value);
-            if (sec_lines.length > 0) {
-                const startPid = sec_lines[0].pid !== -1 ? sec_lines[0].pid : root_id;
-                cid = sec_type.value === 1 ? 0 : -1; // on type soma since we have root, start cids from 0
-                setCids(lines, sections, startPid, sec_type.value, root_key);
-            }
-        });
-
-        // const ilines: Record<string, ILine> = {};
-
-        // Object.entries(sectionLines);
-
-        console.log(lines);
-        console.log(sections);
-
-        return { sections };
-    };
-
     return {
-        setSimulationTreeCids,
         getLinesArrayNoRoot,
         updateChildsBelow,
         setSelectedId,

@@ -2,14 +2,16 @@ import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from '../AppContext';
-import { none_selected } from '../Wrapper';
-import { useTreeCanvas } from '../tree/useTreeCanvas';
+import { none_selected_id } from '../Wrapper';
+import { useDesignCanvas } from '../tree/useDesignCanvas';
 import { downloadSwcFile } from '../utils/general';
 import { useTreeText } from '../tree/useTreeText';
+import { useSimulateCanvas } from '../tree/useSimulateCanvas';
 
 function DesignTopPanel() {
     const { state, setState } = useContext(AppContext);
-    const { getLinesArrayNoRoot, setSimulationTreeCids } = useTreeCanvas();
+    const { getLinesArrayNoRoot } = useDesignCanvas();
+    const { setSimulationTreeSections } = useSimulateCanvas();
     const { sectionsToTreeRender } = useTreeText();
     const history = useHistory();
 
@@ -30,12 +32,12 @@ function DesignTopPanel() {
                 color="primary"
                 variant="contained"
                 onClick={() => {
-                    const { sections } = setSimulationTreeCids();
+                    const { sections } = setSimulationTreeSections();
                     const treeText = sectionsToTreeRender(sections);
                     setState({
                         ...state,
                         sections: sections,
-                        selectedId: none_selected,
+                        selectedId: none_selected_id,
                         sectionsTreeText: treeText,
                     });
                     history.push({ pathname: '/simulate' });

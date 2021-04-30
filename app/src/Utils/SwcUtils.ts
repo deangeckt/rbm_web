@@ -1,4 +1,4 @@
-import { IAppState, ILine, init_root_line, root_id } from '../Wrapper';
+import { IAppState, ILine, design_init_root_line, root_id } from '../Wrapper';
 
 export const lenPointRatio = 5;
 export const neuronRadiusRatio = 4.5;
@@ -90,7 +90,7 @@ function textLineToILine(
 
 export function importFile(text: string, screenRootX: number, screenRootY: number): Partial<IAppState> {
     const ilines: Record<string, ILine> = {};
-    ilines[root_id] = init_root_line;
+    ilines[root_id] = design_init_root_line;
     let neuronRad = -1;
     let x = 0;
     let y = 0;

@@ -9,7 +9,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { downloadSwcFile, downloadJsonParams } from '../utils/general';
 import { AppContext } from '../AppContext';
-import { useTreeCanvas } from '../tree/useTreeCanvas';
+import { useDesignCanvas } from '../tree/useDesignCanvas';
 import { useSimulate } from './useSimulate';
 
 export interface ISimulatePanelProps {
@@ -21,7 +21,7 @@ export interface ISimulatePanelProps {
 
 function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePanelProps) {
     const { state } = useContext(AppContext);
-    const { getLinesArrayNoRoot } = useTreeCanvas();
+    const { getLinesArrayNoRoot } = useDesignCanvas();
     const { getParamsForRun } = useSimulate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 

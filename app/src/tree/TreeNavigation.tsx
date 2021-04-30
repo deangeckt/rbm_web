@@ -3,10 +3,14 @@ import { Button } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import CallSplitIcon from '@material-ui/icons/CallSplit';
-import { useTreeNavigation } from './useTreeNavigation';
+import { useDesignTreeNavigation } from './useDesignTreeNavigation';
+import { ITreeCanvasProps } from './TreeCanvas';
+import { useSimulateTreeNavigation } from './useSimulateTreeNavigation';
 
-function TreeNavigation() {
-    const { setNextChildSelected, setBackChildSelected, setBrotherChildSelected } = useTreeNavigation();
+function TreeNavigation({ design }: ITreeCanvasProps) {
+    const { setNextChildSelected, setBackChildSelected, setBrotherChildSelected } = design
+        ? useDesignTreeNavigation()
+        : useSimulateTreeNavigation();
 
     return (
         <>

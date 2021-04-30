@@ -71,6 +71,7 @@ export const section_recording = [
 
 export interface ISection {
     key: string;
+    pidKey: string;
     swc_id: number;
     section: number;
     recording_type: number;
@@ -79,6 +80,8 @@ export interface ISection {
     mechanismCurrKey: string;
     processCurrKey: string;
     children: string[];
+    points: number[];
+    // lines: Partial<ILine>;
 }
 
 export interface RenderTreeText {
@@ -90,6 +93,7 @@ export interface ILine {
     id: number;
     tid: number;
     pid: number;
+    cid?: number;
     points: number[]; // [x1,y1, x2,y2]
     radius: number;
     length: number;
@@ -119,7 +123,7 @@ export interface IAppState {
     stage: IStageSize;
     designLines: Record<string, ILine>;
     designLastAddedId: number;
-    selectedId: number;
+    selectedId: number | string;
     sections: Record<string, ISection>;
     checkedSections: Record<string, boolean>;
     sectionsTreeText: RenderTreeText;
@@ -144,8 +148,10 @@ export const getStage = (): IStageSize => {
 
 export const default_neuron_rad = 3; // in micro
 export const root_id = 1;
+export const none_selected_id = -1;
 export const root_key = '0_1';
-export const none_selected = -1;
+export const none_selected_key = '-1';
+
 export const default_radius = 0.1; // in micro
 export const default_tid = 0;
 export const default_length = 10; //in micro
@@ -155,7 +161,7 @@ export const default_section_value = 0.5;
 const init_stage = getStage();
 const static_global_form = readSchema(config.static_global_form);
 
-export const init_root_line: ILine = {
+export const design_init_root_line: ILine = {
     id: root_id,
     pid: -1,
     points: [-1, -1, init_stage.rootX, init_stage.rootY],
@@ -165,15 +171,16 @@ export const init_root_line: ILine = {
     length: 0,
     alpha: 0,
 };
+
 export const init_app_state: IAppState = {
     stage: init_stage,
     designLines: {
-        1: init_root_line,
+        1: design_init_root_line,
     },
     sections: {},
     checkedSections: {},
     sectionsTreeText: { id: root_key },
-    selectedId: none_selected,
+    selectedId: none_selected_id,
     designLastAddedId: root_id,
     dialogs: {
         dialogInfo: false,
