@@ -23,8 +23,6 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
     const widSize = window.document.getElementById('Canvas')?.offsetWidth;
     const [camera, setCamera] = React.useState({ x: 0, y: 0 });
 
-    // console.log(state.selectedId);
-
     useEffect(() => {
         if (widSize && widSize !== state.stage.width) {
             console.log('changing stage size');

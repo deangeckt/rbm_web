@@ -32,7 +32,7 @@ const TransformerLine = ({ isSelected, line, click }: TransLineProps) => {
                 ref={shapeRef as any}
                 stroke={color}
                 strokeWidth={line.radius + lineRadiusAddition}
-                points={line.points}
+                points={[...line.points]}
                 draggable={false}
             />
             {isSelected && <Transformer ref={trRef} resizeEnabled={false} rotateEnabled={false} padding={10} />}
