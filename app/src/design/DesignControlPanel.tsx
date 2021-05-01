@@ -27,9 +27,7 @@ function DesignControlPanel() {
     return (
         <>
             {!neuronSelected && !lineSelected ? (
-                <big style={{ color: 'black', alignSelf: 'center', fontSize: '16px', marginTop: '16px' }}>
-                    Select a section to edit it
-                </big>
+                <div className="emptyHeader">Select a line / point to edit it</div>
             ) : (
                 <div className="EditPanel">
                     <Button
@@ -39,7 +37,7 @@ function DesignControlPanel() {
                         startIcon={<AddIcon />}
                         onClick={() => addNew()}
                     >
-                        Add Section
+                        Add Point
                     </Button>
                     {lineSelected ? (
                         <>
@@ -90,7 +88,7 @@ function DesignControlPanel() {
                                 startIcon={<DeleteIcon />}
                                 onClick={() => Delete()}
                             >
-                                Delete Section
+                                Delete Point
                             </Button>
                         </>
                     ) : (

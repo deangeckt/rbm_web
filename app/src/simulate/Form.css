@@ -38,6 +38,7 @@
 }
 
 .SectionEditStr {
+    white-space: pre-wrap;
     padding-bottom: 16px;
     margin-top: 24px;
     margin-bottom: 24px;

@@ -23,7 +23,7 @@ function SectionFormWrapper() {
     const renderForm = selecedSections.length > 0;
     const sectionListString = renderForm
         ? 'Editing Sections [' + selecedSections.join(' ') + ']'
-        : 'Select some sections in the tree to edit';
+        : 'Check some sections in the tree to edit\ndouble click to check all sub sections';
 
     const renderTab = () => {
         if (sectionTab === 'mech') return <DynamicForm mp={state.pointMechanism} impKey={'pointMechanism'} />;
