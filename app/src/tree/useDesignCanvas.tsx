@@ -14,18 +14,18 @@ import {
 export function useDesignCanvas() {
     const { state, setState } = useContext(AppContext);
 
-    const getChildren = (id: number): number[] => {
-        return state.designLines[id].lineChilds;
+    const getChildren = (id: string): string[] => {
+        return state.designLines[id].children;
     };
 
     const getLinesArrayNoRoot = (): ILine[] => {
         const ents = Object.values(state.designLines);
         return ents.filter((line) => {
-            return line.id !== root_id && line;
+            return line.id !== root_id;
         });
     };
 
-    const updateChildsBelow = (startId: number, rootX: number, rootY: number): void => {
+    const updateChildsBelow = (startId: string, rootX: number, rootY: number): void => {
         state.designLines[root_id].points = [-1, -1, rootX, rootY];
         const ents = Object.values(state.designLines);
         for (let i = 0; i < ents.length; i++) {
@@ -52,7 +52,7 @@ export function useDesignCanvas() {
         return [prevX + d * Math.cos(alpha * Math.PI), prevY - d * Math.sin(alpha * Math.PI)];
     };
 
-    const setSelectedId = (id: number) => {
+    const setSelectedId = (id: string) => {
         setState({ ...state, selectedId: id });
     };
 
@@ -63,8 +63,8 @@ export function useDesignCanvas() {
         }
     };
 
-    const addNewPoints = (prevX: number, prevY: number, childs: number[]) => {
-        const alphas = childs.map((c) => state.designLines[c].alpha);
+    const addNewPoints = (prevX: number, prevY: number, childs: string[]) => {
+        const alphas = childs.map((c) => state.designLines[c]?.alpha);
         const max_alpha = alphas.length > 0 ? Math.max(...alphas) : 0;
         const newAngle = max_alpha + default_alpha;
         const [newX, newY] = lengthAlphaToXy(lengthToPoint(default_length), newAngle, prevX, prevY);
@@ -75,7 +75,7 @@ export function useDesignCanvas() {
     const addNew = () => {
         const lines = { ...state.designLines };
         const selectedLine = lines[state.selectedId];
-        const newId = state.designLastAddedId + 1;
+        const newId = (Number(state.designLastAddedId) + 1).toString();
 
         const prevX = selectedLine.points[2];
         const prevY = selectedLine.points[3];
@@ -83,7 +83,7 @@ export function useDesignCanvas() {
         const newPoints = r.newPoints;
         const newPid = selectedLine.id;
 
-        lines[newPid].lineChilds.push(newId);
+        lines[newPid].children.push(newId);
         lines[newId] = {
             id: newId,
             points: newPoints,
@@ -92,7 +92,7 @@ export function useDesignCanvas() {
             tid: default_tid,
             length: lengthToPoint(default_length),
             alpha: r.newAngle,
-            lineChilds: [],
+            children: [],
         };
         setState({ ...state, designLines: lines, selectedId: newId, designLastAddedId: newId });
     };
@@ -154,7 +154,7 @@ export function useDesignCanvas() {
         setState({ ...state, designLines: lines });
     };
 
-    const deleteChildsRecur = (lines: Record<number, ILine>, pid: number): void => {
+    const deleteChildsRecur = (lines: Record<string, ILine>, pid: string): void => {
         const childsIds = getChildren(pid);
         childsIds.forEach((child) => {
             deleteChildsRecur(lines, child);
@@ -165,9 +165,9 @@ export function useDesignCanvas() {
     const Delete = () => {
         const lines = { ...state.designLines };
         const pid = lines[state.selectedId].pid;
-        const selectedIdIdxInParent = lines[pid].lineChilds.findIndex((c) => c === state.selectedId);
-        lines[pid].lineChilds.splice(selectedIdIdxInParent, 1);
-        deleteChildsRecur(lines, state.selectedId as number);
+        const selectedIdIdxInParent = lines[pid].children.findIndex((c) => c === state.selectedId);
+        lines[pid].children.splice(selectedIdIdxInParent, 1);
+        deleteChildsRecur(lines, state.selectedId);
         delete lines[state.selectedId];
         setState({ ...state, designLines: lines, selectedId: pid });
     };

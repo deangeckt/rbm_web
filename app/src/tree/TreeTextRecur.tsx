@@ -30,6 +30,7 @@ export default function TreeTextRecur() {
             defaultCollapseIcon={<ExpandMoreIcon />}
             defaultExpanded={['root']}
             defaultExpandIcon={<ChevronRightIcon />}
+            selected={[state.selectedId]}
         >
             {renderTree(state.sectionsTreeText)}
         </TreeView>

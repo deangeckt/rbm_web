@@ -4,7 +4,7 @@ import { Stage, Layer, Circle } from 'react-konva';
 import TransformerLine from './TransformerLine';
 import { AppContext } from '../AppContext';
 import { useDesignCanvas } from './useDesignCanvas';
-import { getStage, root_id, root_key } from '../Wrapper';
+import { getStage, RenderILine, root_id, root_key } from '../Wrapper';
 import { neuron_color } from '../utils/colors';
 import { useSimulateCanvas } from './useSimulateCanvas';
 
@@ -14,26 +14,32 @@ export interface ITreeCanvasProps {
 
 function TreeCanvas({ design }: ITreeCanvasProps) {
     const { state, setState } = useContext(AppContext);
+
     const root = design ? root_id : root_key;
-    const { updateChildsBelow, checkDeselect, setSelectedId, getLinesArrayNoRoot } = design
-        ? useDesignCanvas()
-        : useSimulateCanvas();
+    const { checkDeselect, setSelectedId, getLinesArrayNoRoot } = design ? useDesignCanvas() : useSimulateCanvas();
+    const { updateChildsBelow } = useDesignCanvas();
+    const { updateTree } = useSimulateCanvas();
+
     const widSize = window.document.getElementById('Canvas')?.offsetWidth;
     const [camera, setCamera] = React.useState({ x: 0, y: 0 });
 
-    console.log(getLinesArrayNoRoot());
+    // console.log(state.selectedId);
 
-    // useEffect(() => {
-    //     if (widSize && widSize !== state.stage.width) {
-    //         console.log('changing stage size');
-    //         const newStage = getStage();
-    //         const lines = { ...state.designLines };
-    //         if (Object.keys(lines).length > 0) {
-    //             updateChildsBelow(root_id + 1, newStage.rootX, newStage.rootY);
-    //         }
-    //         setState({ ...state, designLines: lines, stage: newStage });
-    //     }
-    // }, [setState, state, state.designLines, widSize]);
+    useEffect(() => {
+        if (widSize && widSize !== state.stage.width) {
+            console.log('changing stage size');
+            const newStage = getStage();
+            if (design) {
+                const lines = { ...state.designLines };
+                updateChildsBelow('2', newStage.rootX, newStage.rootY);
+                setState({ ...state, designLines: lines, stage: newStage });
+            } else {
+                const sections = { ...state.sections };
+                updateTree(newStage.rootX - state.stage.rootX, newStage.rootY - state.stage.rootY);
+                setState({ ...state, sections: sections, stage: newStage });
+            }
+        }
+    }, [setState, state, state.designLines, widSize]);
 
     const handleDragEnd = (e: any) => {
         setCamera({
@@ -69,23 +75,21 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
                         x={state.stage.rootX}
                         y={state.stage.rootY}
                         draggable={false}
-                        onClick={() => setSelectedId(root as never)}
+                        onClick={() => setSelectedId(root)}
                     />
-                    {getLinesArrayNoRoot().map((l: any) => {
-                        // if (isOutWidth(l.points[0]) || isOutWidth(l.points[2])) {
-                        //     return null;
-                        // }
-                        // if (isOutHeight(l.points[1]) || isOutHeight(l.points[3])) {
-                        //     return null;
-                        // }
+                    {getLinesArrayNoRoot().map((l: RenderILine) => {
+                        if (isOutWidth(l.points[0]) || isOutWidth(l.points[2])) {
+                            return null;
+                        }
+                        if (isOutHeight(l.points[1]) || isOutHeight(l.points[3])) {
+                            return null;
+                        }
                         return (
                             <TransformerLine
                                 key={l.id}
-                                shapeProps={l}
+                                line={l}
                                 isSelected={l.id === state.selectedId}
-                                onSelect={() => {
-                                    setSelectedId(l.id as never);
-                                }}
+                                click={() => setSelectedId(l.id)}
                             />
                         );
                     })}

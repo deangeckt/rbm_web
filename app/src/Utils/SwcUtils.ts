@@ -57,7 +57,7 @@ function convertAlpha(y0: number, y1: number, x0: number, x1: number) {
 }
 
 function textLineToILine(
-    ilines: Record<number, ILine>,
+    ilines: Record<string, ILine>,
     line: string,
     screenRootX: number,
     screenRootY: number,
@@ -65,12 +65,12 @@ function textLineToILine(
     rootY: number,
 ): ILine {
     const fields = lineSplitToFields(line);
-    const id = Number(fields[0]);
+    const id = fields[0];
     const tid = Number(fields[1]);
     const x = Number(fields[2]);
     const y = Number(fields[3]);
     const radius = Number(fields[5]);
-    const pid = Number(fields[6]);
+    const pid = fields[6];
 
     let points: number[] = [];
     const x1 = lengthToPoint(x - rootX) + screenRootX;
@@ -78,14 +78,14 @@ function textLineToILine(
 
     const father = ilines[pid];
     if (!father) throw new Error('SWC file bad format');
-    ilines[pid].lineChilds.push(id);
+    ilines[pid].children.push(id);
     const x0 = father.points[2];
     const y0 = father.points[3];
 
     points = [x0, y0, x1, y1];
     const length = Number(Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2)).toFixed(2));
     const alpha = convertAlpha(y0, y1, x0, x1);
-    return { id: id, tid: tid, points: points, radius: radius, pid: pid, length: length, alpha: alpha, lineChilds: [] };
+    return { id: id, tid: tid, points: points, radius: radius, pid: pid, length: length, alpha: alpha, children: [] };
 }
 
 export function importFile(text: string, screenRootX: number, screenRootY: number): Partial<IAppState> {
@@ -103,7 +103,7 @@ export function importFile(text: string, screenRootX: number, screenRootY: numbe
 
         if (neuronRad === -1) {
             const fields = lineSplitToFields(line);
-            const id = Number(fields[0]);
+            const id = fields[0];
             if (id === root_id) {
                 x = Number(fields[2]);
                 y = Number(fields[3]);
@@ -118,5 +118,5 @@ export function importFile(text: string, screenRootX: number, screenRootY: numbe
     if (neuronRad === -1) {
         throw new Error('SWC file bad format - missing neuron line');
     }
-    return { designLines: ilines, designLastAddedId: lines.length };
+    return { designLines: ilines, designLastAddedId: lines.length.toString() };
 }

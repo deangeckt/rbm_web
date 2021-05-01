@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from '../AppContext';
-import { none_selected_id } from '../Wrapper';
+import { none_selected_key } from '../Wrapper';
 import { useDesignCanvas } from '../tree/useDesignCanvas';
 import { downloadSwcFile } from '../utils/general';
 import { useTreeText } from '../tree/useTreeText';
@@ -37,7 +37,7 @@ function DesignTopPanel() {
                     setState({
                         ...state,
                         sections: sections,
-                        selectedId: none_selected_id,
+                        selectedId: none_selected_key,
                         sectionsTreeText: treeText,
                     });
                     history.push({ pathname: '/simulate' });

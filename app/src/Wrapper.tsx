@@ -69,19 +69,17 @@ export const section_recording = [
     },
 ];
 
+export type RenderILine = Pick<ILine, 'id' | 'pid' | 'points' | 'children' | 'tid' | 'radius'>;
+
 export interface ISection {
-    key: string;
-    pidKey: string;
-    swc_id: number;
+    id: string;
     section: number;
     recording_type: number;
     mechanism: Record<string, IMechanismProcess>;
     process: Record<string, IMechanismProcess>;
     mechanismCurrKey: string;
     processCurrKey: string;
-    children: string[];
-    points: number[];
-    // lines: Partial<ILine>;
+    line: RenderILine;
 }
 
 export interface RenderTreeText {
@@ -90,15 +88,15 @@ export interface RenderTreeText {
 }
 
 export interface ILine {
-    id: number;
+    id: string;
+    pid: string;
     tid: number;
-    pid: number;
     cid?: number;
     points: number[]; // [x1,y1, x2,y2]
     radius: number;
     length: number;
     alpha: number;
-    lineChilds: number[];
+    children: string[];
 }
 
 export type IAttr = Record<string, number>;
@@ -122,8 +120,8 @@ export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
 export interface IAppState {
     stage: IStageSize;
     designLines: Record<string, ILine>;
-    designLastAddedId: number;
-    selectedId: number | string;
+    designLastAddedId: string;
+    selectedId: string;
     sections: Record<string, ISection>;
     checkedSections: Record<string, boolean>;
     sectionsTreeText: RenderTreeText;
@@ -146,12 +144,12 @@ export const getStage = (): IStageSize => {
     };
 };
 
-export const default_neuron_rad = 3; // in micro
-export const root_id = 1;
-export const none_selected_id = -1;
+export const root_id = '1';
+export const none_selected_id = '-1';
 export const root_key = '0_1';
 export const none_selected_key = '-1';
 
+export const default_neuron_rad = 3; // in micro
 export const default_radius = 0.1; // in micro
 export const default_tid = 0;
 export const default_length = 10; //in micro
@@ -163,9 +161,9 @@ const static_global_form = readSchema(config.static_global_form);
 
 export const design_init_root_line: ILine = {
     id: root_id,
-    pid: -1,
+    pid: '-1',
     points: [-1, -1, init_stage.rootX, init_stage.rootY],
-    lineChilds: [],
+    children: [],
     tid: 1,
     radius: default_neuron_rad,
     length: 0,

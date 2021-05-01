@@ -10,7 +10,7 @@ export function useSimulateTreeNavigation() {
     const setNextChildSelected = () => {
         if (state.selectedId === none_selected_key) return;
 
-        const childs = state.sections[state.selectedId].children;
+        const childs = state.sections[state.selectedId].line.children;
         if (childs.length === 0) return;
         setSelectedId(childs[0]);
     };
@@ -18,18 +18,18 @@ export function useSimulateTreeNavigation() {
     const setBackChildSelected = () => {
         if (state.selectedId === none_selected_key || state.selectedId === root_key) return;
         const selected = state.sections[state.selectedId];
-        setSelectedId(selected.pidKey);
+        setSelectedId(selected.line.pid);
     };
 
     const setBrotherChildSelected = () => {
         if (state.selectedId === none_selected_key || state.selectedId === root_key) return;
 
         const selected = state.sections[state.selectedId];
-        const sibs = state.sections[selected.pidKey].children;
+        const sibs = state.sections[selected.line.pid].line.children;
 
         if (sibs.length === 1) return;
 
-        const nextIdx = sibs.findIndex((l) => l === selected.key) + 1;
+        const nextIdx = sibs.findIndex((l) => l === selected.id) + 1;
         const nextId = sibs[nextIdx % sibs.length];
 
         setSelectedId(nextId);

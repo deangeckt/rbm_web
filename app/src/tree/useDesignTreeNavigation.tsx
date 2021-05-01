@@ -10,7 +10,7 @@ export function useDesignTreeNavigation() {
     const setNextChildSelected = () => {
         if (state.selectedId === none_selected_id) return;
 
-        const childs = state.designLines[state.selectedId].lineChilds;
+        const childs = state.designLines[state.selectedId].children;
         if (childs.length === 0) return;
         setSelectedId(childs[0]);
     };
@@ -25,7 +25,7 @@ export function useDesignTreeNavigation() {
         if (state.selectedId === none_selected_id || state.selectedId === root_id) return;
 
         const selectedLine = state.designLines[state.selectedId];
-        const sibs = state.designLines[selectedLine.pid].lineChilds;
+        const sibs = state.designLines[selectedLine.pid].children;
 
         if (sibs.length === 1) return;
 

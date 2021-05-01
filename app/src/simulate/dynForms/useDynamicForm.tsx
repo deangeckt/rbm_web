@@ -23,7 +23,7 @@ export function useDynamicForms() {
 
     const updateSelectedSectionsState = (selectedSections: ISection[]) => {
         const sections = { ...state.sections };
-        selectedSections.forEach((sec) => (sections[sec.key] = sec));
+        selectedSections.forEach((sec) => (sections[sec.id] = sec));
         setState({ ...state, sections: sections });
     };
 

@@ -4,9 +4,10 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles, Theme, createStyles, fade } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import { useTreeText } from './useTreeText';
+import { useSimulateCanvas } from './useSimulateCanvas';
 
-const useTreeItemStyles = makeStyles((theme: Theme) =>
-    createStyles({
+const useTreeItemStyles = makeStyles((theme: Theme) => {
+    return createStyles({
         root: {},
         content: {},
         group: {
@@ -22,27 +23,40 @@ const useTreeItemStyles = makeStyles((theme: Theme) =>
             alignItems: 'center',
         },
         labelText: {},
-    }),
-);
+    });
+});
 
 function TreeTextRecurItem({ ...other }: TreeItemProps) {
     const classes = useTreeItemStyles();
     const { sectionKeyToLabel, setSectionChecked, isSectionChecked } = useTreeText();
+    const { setSelectedId } = useSimulateCanvas();
 
-    const handleChange = (event: any) => {
+    const handleCheck = (event: any) => {
         setSectionChecked(other.nodeId);
         event.stopPropagation();
         event.preventDefault();
     };
+
+    const renderLabel = (id: string) => (
+        <span
+            onClick={(event) => {
+                setSelectedId(id);
+                event.stopPropagation();
+                event.preventDefault();
+            }}
+        >
+            {sectionKeyToLabel(other.nodeId)}
+        </span>
+    );
 
     return (
         <TreeItem
             label={
                 <div className={classes.labelRoot}>
                     <Typography variant="body2" className={classes.labelText}>
-                        {sectionKeyToLabel(other.nodeId)}
+                        {renderLabel(other.nodeId)}
                     </Typography>
-                    <Checkbox color="primary" checked={isSectionChecked(other.nodeId)} onClick={handleChange} />
+                    <Checkbox color="primary" checked={isSectionChecked(other.nodeId)} onClick={handleCheck} />
                 </div>
             }
             classes={{

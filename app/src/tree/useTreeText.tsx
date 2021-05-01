@@ -28,7 +28,7 @@ export function useTreeText() {
         section: ISection,
         sections: Record<string, ISection>,
     ): void => {
-        const childs = section.children;
+        const childs = section.line.children;
         if (childs.length === 0) return;
         tree.children = [];
         for (let i = 0; i < childs.length; i++) {
