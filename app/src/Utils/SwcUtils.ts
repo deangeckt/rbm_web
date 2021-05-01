@@ -70,13 +70,14 @@ function textLineToILine(
     const x = Number(fields[2]);
     const y = Number(fields[3]);
     const radius = Number(fields[5]);
-    const pid = fields[6];
+    const pid = fields[6].replace('\r', '');
 
     let points: number[] = [];
     const x1 = lengthToPoint(x - rootX) + screenRootX;
     const y1 = screenRootY - lengthToPoint(y - rootY);
 
     const father = ilines[pid];
+
     if (!father) throw new Error('SWC file bad format');
     ilines[pid].children.push(id);
     const x0 = father.points[2];
