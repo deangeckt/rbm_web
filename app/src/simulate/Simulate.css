@@ -55,6 +55,7 @@
 .SimulateCanvasTree {
     flex-basis: 50%;
     max-height: 50%;
+    height: 50%;
     width: 100%;
 }
 
@@ -78,7 +79,6 @@
 }
 
 .SimulateCanvasBottomLeft {
-    text-align: center;
     display: flex;
     max-width: 50%;
     width: 50%;

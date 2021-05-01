@@ -6,25 +6,25 @@ export function useDynamicForms() {
     const { state, setState } = useContext(AppContext);
 
     const getFirstSelectedSection = (): ISection | undefined => {
-        const selecedSections = Object.entries(state.selectedSections).filter(([, added]) => !!added);
+        const selecedSections = Object.entries(state.checkedSections).filter(([, added]) => !!added);
         if (selecedSections.length === 0) return undefined;
         const sectionKey = selecedSections[0][0];
-        return state.sectionLines[sectionKey];
+        return state.sections[sectionKey];
     };
 
     const getAllSelectedSections = (): ISection[] => {
         const selectedSections: ISection[] = [];
-        const selectedKeys = Object.entries(state.selectedSections)
+        const selectedKeys = Object.entries(state.checkedSections)
             .filter(([, added]) => added)
             .map(([key]) => key);
-        selectedKeys.forEach((key) => selectedSections.push(state.sectionLines[key]));
+        selectedKeys.forEach((key) => selectedSections.push(state.sections[key]));
         return selectedSections;
     };
 
-    const updateSelectedSectionsState = (sections: ISection[]) => {
-        const sectionLines = { ...state.sectionLines };
-        sections.forEach((sec) => (sectionLines[sec.key] = sec));
-        setState({ ...state, sectionLines: sectionLines });
+    const updateSelectedSectionsState = (selectedSections: ISection[]) => {
+        const sections = { ...state.sections };
+        selectedSections.forEach((sec) => (sections[sec.id] = sec));
+        setState({ ...state, sections: sections });
     };
 
     const setKeyChecked = (impKey: impKeys, checked: boolean) => {
@@ -40,6 +40,7 @@ export function useDynamicForms() {
             selectedSections.forEach((sec) => {
                 const mps = (sec as any)[keyMp] as Record<string, IMechanismProcess>;
                 const currKey = (sec as any)[keyRef] as string;
+                if (currKey === '') return;
                 if (!mps[currKey]) mps[currKey] = { attrs: {}, add: false };
                 mps[currKey].add = checked;
             });

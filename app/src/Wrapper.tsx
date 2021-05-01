@@ -7,18 +7,6 @@ export interface Dictionary<T> {
     [Key: string]: T;
 }
 
-export interface ILine {
-    id: number;
-    cid?: number;
-    tid: number;
-    pid: number;
-    points: number[]; // [x1,y1, x2,y2]
-    radius: number;
-    length: number;
-    alpha: number;
-    lineChilds: number[];
-}
-
 export interface IStageSize {
     width: number;
     height: number;
@@ -81,15 +69,34 @@ export const section_recording = [
     },
 ];
 
+export type RenderILine = Pick<ILine, 'id' | 'pid' | 'points' | 'children' | 'tid' | 'radius'>;
+
 export interface ISection {
-    key: string;
+    id: string;
     section: number;
-    depth: number;
     recording_type: number;
     mechanism: Record<string, IMechanismProcess>;
     process: Record<string, IMechanismProcess>;
     mechanismCurrKey: string;
     processCurrKey: string;
+    line: RenderILine;
+}
+
+export interface RenderTreeText {
+    id: string;
+    children?: RenderTreeText[];
+}
+
+export interface ILine {
+    id: string;
+    pid: string;
+    tid: number;
+    cid?: number;
+    points: number[]; // [x1,y1, x2,y2]
+    radius: number;
+    length: number;
+    alpha: number;
+    children: string[];
 }
 
 export type IAttr = Record<string, number>;
@@ -106,13 +113,18 @@ export interface IDialogs {
 }
 
 export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
+
+// section key: cid_tid
+// design line key: swc id
+// simulate line key: cid_tid
 export interface IAppState {
     stage: IStageSize;
-    lines: Record<string, ILine>; // key: swc id
-    sectionLines: Record<string, ISection>; //key: cid_tid
-    selectedSections: Record<string, boolean>; // key: cid_tid
-    selectedId: number;
-    lastId: number;
+    designLines: Record<string, ILine>;
+    designLastAddedId: string;
+    selectedId: string;
+    sections: Record<string, ISection>;
+    checkedSections: Record<string, boolean>;
+    sectionsTreeText: RenderTreeText;
     dialogs: IDialogs;
     pointMechanism: Record<string, IMechanismProcess>;
     pointProcess: Record<string, IMechanismProcess>;
@@ -121,8 +133,6 @@ export interface IAppState {
 }
 
 export const getStage = (): IStageSize => {
-    //TODO: this is the css value of the partial width in design.tsx component, not simulation.tsx
-    console.log('stage:', window.document.getElementById('Canvas')?.offsetWidth);
     const canvas_part_size = 0.7;
     const canvas_hegiht = window.document.getElementById('Canvas')?.offsetHeight ?? window.innerHeight;
     const canvas_width = window.document.getElementById('Canvas')?.offsetWidth ?? window.innerWidth * canvas_part_size;
@@ -134,9 +144,12 @@ export const getStage = (): IStageSize => {
     };
 };
 
+export const root_id = '1';
+export const none_selected_id = '-1';
+export const root_key = '0_1';
+export const none_selected_key = '-1';
+
 export const default_neuron_rad = 3; // in micro
-export const root_id = 1;
-export const none_selected = -1;
 export const default_radius = 0.1; // in micro
 export const default_tid = 0;
 export const default_length = 10; //in micro
@@ -146,25 +159,27 @@ export const default_section_value = 0.5;
 const init_stage = getStage();
 const static_global_form = readSchema(config.static_global_form);
 
-export const init_root_line: ILine = {
+export const design_init_root_line: ILine = {
     id: root_id,
-    pid: -1,
+    pid: '-1',
     points: [-1, -1, init_stage.rootX, init_stage.rootY],
-    lineChilds: [],
+    children: [],
     tid: 1,
     radius: default_neuron_rad,
     length: 0,
     alpha: 0,
 };
+
 export const init_app_state: IAppState = {
     stage: init_stage,
-    lines: {
-        1: init_root_line,
+    designLines: {
+        1: design_init_root_line,
     },
-    sectionLines: {},
-    selectedSections: {},
-    selectedId: none_selected,
-    lastId: root_id,
+    sections: {},
+    checkedSections: {},
+    sectionsTreeText: { id: root_key },
+    selectedId: none_selected_id,
+    designLastAddedId: root_id,
     dialogs: {
         dialogInfo: false,
         dialogInfoTitle: '',

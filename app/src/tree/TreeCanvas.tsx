@@ -3,13 +3,23 @@ import { neuronRadToSize } from '../utils/swcUtils';
 import { Stage, Layer, Circle } from 'react-konva';
 import TransformerLine from './TransformerLine';
 import { AppContext } from '../AppContext';
-import { useTreeCanvas } from './useTreeCanvas';
-import { getStage, root_id } from '../Wrapper';
+import { useDesignCanvas } from './useDesignCanvas';
+import { getStage, RenderILine, root_id, root_key } from '../Wrapper';
 import { neuron_color } from '../utils/colors';
+import { useSimulateCanvas } from './useSimulateCanvas';
 
-function TreeCanvas() {
+export interface ITreeCanvasProps {
+    design: boolean;
+}
+
+function TreeCanvas({ design }: ITreeCanvasProps) {
     const { state, setState } = useContext(AppContext);
-    const { updateChildsBelow, checkDeselect, setSelectedId, getLinesArrayNoRoot } = useTreeCanvas();
+
+    const root = design ? root_id : root_key;
+    const { checkDeselect, setSelectedId, getLinesArrayNoRoot } = design ? useDesignCanvas() : useSimulateCanvas();
+    const { updateChildsBelow } = useDesignCanvas();
+    const { updateTree } = useSimulateCanvas();
+
     const widSize = window.document.getElementById('Canvas')?.offsetWidth;
     const [camera, setCamera] = React.useState({ x: 0, y: 0 });
 
@@ -17,13 +27,17 @@ function TreeCanvas() {
         if (widSize && widSize !== state.stage.width) {
             console.log('changing stage size');
             const newStage = getStage();
-            const lines = { ...state.lines };
-            if (Object.keys(lines).length > 0) {
-                updateChildsBelow(root_id + 1, newStage.rootX, newStage.rootY);
+            if (design) {
+                const lines = { ...state.designLines };
+                updateChildsBelow('2', newStage.rootX, newStage.rootY);
+                setState({ ...state, designLines: lines, stage: newStage });
+            } else {
+                const sections = { ...state.sections };
+                updateTree(newStage.rootX - state.stage.rootX, newStage.rootY - state.stage.rootY);
+                setState({ ...state, sections: sections, stage: newStage });
             }
-            setState({ ...state, lines: lines, stage: newStage });
         }
-    }, [setState, state, state.lines, widSize]);
+    }, [setState, state, state.designLines, widSize]);
 
     const handleDragEnd = (e: any) => {
         setCamera({
@@ -53,15 +67,15 @@ function TreeCanvas() {
             >
                 <Layer>
                     <Circle
-                        radius={neuronRadToSize(state.lines[root_id].radius)}
+                        radius={neuronRadToSize(state.designLines[root_id].radius)}
                         fill={neuron_color}
-                        opacity={state.selectedId === root_id ? 0.8 : 0.3}
+                        opacity={state.selectedId === root ? 0.8 : 0.3}
                         x={state.stage.rootX}
                         y={state.stage.rootY}
                         draggable={false}
-                        onClick={() => setSelectedId(root_id)}
+                        onClick={() => setSelectedId(root)}
                     />
-                    {getLinesArrayNoRoot().map((l) => {
+                    {getLinesArrayNoRoot().map((l: RenderILine) => {
                         if (isOutWidth(l.points[0]) || isOutWidth(l.points[2])) {
                             return null;
                         }
@@ -71,11 +85,9 @@ function TreeCanvas() {
                         return (
                             <TransformerLine
                                 key={l.id}
-                                shapeProps={l}
+                                line={l}
                                 isSelected={l.id === state.selectedId}
-                                onSelect={() => {
-                                    setSelectedId(l.id);
-                                }}
+                                click={() => setSelectedId(l.id)}
                             />
                         );
                     })}

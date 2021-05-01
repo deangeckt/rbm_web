@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../AppContext';
-import { section_short_labels } from '../Wrapper';
+import { ISection, RenderTreeText, root_key, section_short_labels } from '../Wrapper';
 
 export function useTreeText() {
     const { state, setState } = useContext(AppContext);
@@ -12,24 +12,38 @@ export function useTreeText() {
         return `${section_short_labels[tid]}[${cid}]`;
     };
 
-    const isSectionSelected = (sectionKey: string): boolean => {
-        const selectedLine = state.lines[state.selectedId];
-        if (!selectedLine) return false;
-        const selectedCid = selectedLine.cid;
-        const selectedTid = selectedLine.tid;
-        return `${selectedCid}_${selectedTid}` === sectionKey;
-    };
-
     const setSectionChecked = (sectionKey: string) => {
-        const selectedSecs = { ...state.selectedSections };
+        const selectedSecs = { ...state.checkedSections };
         const isChecked = selectedSecs[sectionKey];
         selectedSecs[sectionKey] = !isChecked;
-        setState({ ...state, selectedSections: selectedSecs });
+        setState({ ...state, checkedSections: selectedSecs });
     };
 
     const isSectionChecked = (sectionKey: string): boolean => {
-        return state.selectedSections[sectionKey];
+        return state.checkedSections[sectionKey] ?? false;
     };
 
-    return { sectionKeyToLabel, isSectionSelected, isSectionChecked, setSectionChecked };
+    const sectionsToTreeRenderRecur = (
+        tree: RenderTreeText,
+        section: ISection,
+        sections: Record<string, ISection>,
+    ): void => {
+        const childs = section.line.children;
+        if (childs.length === 0) return;
+        tree.children = [];
+        for (let i = 0; i < childs.length; i++) {
+            const newNode: RenderTreeText = { id: childs[i] };
+            tree.children?.push(newNode);
+            sectionsToTreeRenderRecur(newNode, sections[childs[i]], sections);
+        }
+    };
+
+    const sectionsToTreeRender = (sections: Record<string, ISection>): RenderTreeText => {
+        const res: RenderTreeText = { id: root_key };
+        const root_sec = sections[root_key];
+        sectionsToTreeRenderRecur(res, root_sec, sections);
+        return res;
+    };
+
+    return { sectionKeyToLabel, isSectionChecked, setSectionChecked, sectionsToTreeRender };
 }

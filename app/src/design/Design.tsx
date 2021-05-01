@@ -3,7 +3,7 @@ import DesignControlPanel from './DesignControlPanel';
 import DesignTopPanel from './DesignTopPanel';
 import TreeCanvas from '../tree/TreeCanvas';
 import TreeNavigation from '../tree/TreeNavigation';
-import { none_selected } from '../Wrapper';
+import { none_selected_id } from '../Wrapper';
 import { AppContext } from '../AppContext';
 import './Design.css';
 
@@ -17,12 +17,12 @@ const Design = () => {
             </div>
             <div className="MainPanel">
                 <div className="Canvas" id={'Canvas'}>
-                    <TreeCanvas />
+                    <TreeCanvas design={true} />
                 </div>
                 <div className="ControlPanel">
                     <DesignControlPanel />
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
-                        {state.selectedId !== none_selected ? <TreeNavigation /> : null}
+                        {state.selectedId !== none_selected_id ? <TreeNavigation design={true} /> : null}
                     </div>
                 </div>
             </div>

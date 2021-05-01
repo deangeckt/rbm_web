@@ -3,14 +3,14 @@ import { Button, InputAdornment, MenuItem, TextField } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { AppContext } from '../AppContext';
-import { none_selected, section_types, root_id, default_alpha } from '../Wrapper';
-import { useTreeCanvas } from '../tree/useTreeCanvas';
+import { none_selected_id, section_types, root_id, default_alpha } from '../Wrapper';
+import { useDesignCanvas } from '../tree/useDesignCanvas';
 import './DesignControlPanel.css';
 
 function DesignControlPanel() {
     const { state } = useContext(AppContext);
     const neuronSelected = state.selectedId === root_id;
-    const lineSelected = state.selectedId !== none_selected && state.selectedId !== root_id;
+    const lineSelected = state.selectedId !== none_selected_id && state.selectedId !== root_id;
     const {
         addNew,
         Delete,
@@ -22,7 +22,7 @@ function DesignControlPanel() {
         updateAlpha,
         updateLength,
         updateNeuronRad,
-    } = useTreeCanvas();
+    } = useDesignCanvas();
 
     return (
         <>
@@ -98,7 +98,7 @@ function DesignControlPanel() {
                             label={'Neuron Radius [µM]'}
                             variant="filled"
                             type="number"
-                            value={state.lines[root_id].radius}
+                            value={state.designLines[root_id].radius}
                             InputProps={{ inputProps: { min: 0 } }}
                             onChange={(e) => updateNeuronRad(Number(e.target.value))}
                         />

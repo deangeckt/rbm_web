@@ -6,9 +6,12 @@ import { exportFile } from './swcUtils';
 
 export const downloadSwcFile = (state: IAppState, linesArray: ILine[]) => {
     const element = document.createElement('a');
-    const file = new Blob(exportFile(linesArray, state.lines[root_id].radius, state.stage.rootX, state.stage.rootY), {
-        type: 'text/plain;charset=utf-8',
-    });
+    const file = new Blob(
+        exportFile(linesArray, state.designLines[root_id].radius, state.stage.rootX, state.stage.rootY),
+        {
+            type: 'text/plain;charset=utf-8',
+        },
+    );
     element.href = URL.createObjectURL(file);
     element.download = 'swcTree.swc';
     document.body.appendChild(element);
