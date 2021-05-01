@@ -29,7 +29,7 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
             const newStage = getStage();
             if (design) {
                 const lines = { ...state.designLines };
-                updateChildsBelow('2', newStage.rootX, newStage.rootY);
+                updateChildsBelow('1', newStage.rootX, newStage.rootY);
                 setState({ ...state, designLines: lines, stage: newStage });
             } else {
                 const sections = { ...state.sections };

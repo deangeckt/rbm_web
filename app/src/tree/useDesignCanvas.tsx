@@ -25,19 +25,23 @@ export function useDesignCanvas() {
         });
     };
 
-    const updateChildsBelow = (startId: string, rootX: number, rootY: number): void => {
-        state.designLines[root_id].points = [-1, -1, rootX, rootY];
-        const ents = Object.values(state.designLines);
-        for (let i = 0; i < ents.length; i++) {
-            const currLine = ents[i];
-            if (currLine.id < startId) continue;
-
+    const updateChildsRecur = (pid: string): void => {
+        const childsIds = getChildren(pid);
+        childsIds.forEach((child) => {
+            const currLine = state.designLines[child];
             const father = state.designLines[currLine.pid];
+
             currLine.points[0] = father.points[2];
             currLine.points[1] = father.points[3];
 
             updateLinePoint(currLine);
-        }
+            updateChildsRecur(child);
+        });
+    };
+
+    const updateChildsBelow = (startId: string, rootX: number, rootY: number): void => {
+        state.designLines[root_id].points = [-1, -1, rootX, rootY];
+        updateChildsRecur(startId);
     };
 
     const updateLinePoint = (line: ILine) => {
