@@ -4,7 +4,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { makeStyles } from '@material-ui/core/styles';
 import TreeTextRecurItem from './TreeTextRecurItem';
-import { RenderTreeText } from '../Wrapper';
+import { RenderTreeText, root_key } from '../Wrapper';
 import { AppContext } from '../AppContext';
 
 const useStyles = makeStyles({
@@ -28,7 +28,7 @@ export default function TreeTextRecur() {
         <TreeView
             className={classes.root}
             defaultCollapseIcon={<ExpandMoreIcon />}
-            defaultExpanded={['root']}
+            defaultExpanded={[root_key]}
             defaultExpandIcon={<ChevronRightIcon />}
             selected={[state.selectedId]}
         >

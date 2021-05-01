@@ -12,11 +12,36 @@ export function useTreeText() {
         return `${section_short_labels[tid]}[${cid}]`;
     };
 
-    const setSectionChecked = (sectionKey: string) => {
+    const getTreeChildrenRecur = (sectionKey: string, sections: Record<string, ISection>, res: string[]) => {
+        const currSection = sections[sectionKey];
+        const childs = currSection.line.children;
+        for (let i = 0; i < childs.length; i++) {
+            const child = childs[i];
+            res.push(child);
+            getTreeChildrenRecur(child, sections, res);
+        }
+    };
+
+    const setMultipleSectionChecked = (sectionKey: string) => {
+        const sections = { ...state.sections };
+        const treeRes: string[] = [sectionKey];
+        getTreeChildrenRecur(sectionKey, sections, treeRes);
+        toggleSectionCheck(treeRes);
+    };
+
+    const toggleSectionCheck = (sectionsKeys: string[]) => {
         const selectedSecs = { ...state.checkedSections };
-        const isChecked = selectedSecs[sectionKey];
-        selectedSecs[sectionKey] = !isChecked;
+
+        sectionsKeys.forEach((sectionKey) => {
+            const isChecked = selectedSecs[sectionKey];
+            selectedSecs[sectionKey] = !isChecked;
+        });
+
         setState({ ...state, checkedSections: selectedSecs });
+    };
+
+    const setSectionChecked = (sectionKey: string) => {
+        toggleSectionCheck([sectionKey]);
     };
 
     const isSectionChecked = (sectionKey: string): boolean => {
@@ -45,5 +70,5 @@ export function useTreeText() {
         return res;
     };
 
-    return { sectionKeyToLabel, isSectionChecked, setSectionChecked, sectionsToTreeRender };
+    return { sectionKeyToLabel, isSectionChecked, setSectionChecked, setMultipleSectionChecked, sectionsToTreeRender };
 }

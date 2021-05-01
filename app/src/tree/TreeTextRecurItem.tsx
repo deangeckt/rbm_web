@@ -28,7 +28,7 @@ const useTreeItemStyles = makeStyles((theme: Theme) => {
 
 function TreeTextRecurItem({ ...other }: TreeItemProps) {
     const classes = useTreeItemStyles();
-    const { sectionKeyToLabel, setSectionChecked, isSectionChecked } = useTreeText();
+    const { sectionKeyToLabel, setSectionChecked, setMultipleSectionChecked, isSectionChecked } = useTreeText();
     const { setSelectedId } = useSimulateCanvas();
 
     const handleCheck = (event: any) => {
@@ -56,7 +56,14 @@ function TreeTextRecurItem({ ...other }: TreeItemProps) {
                     <Typography variant="body2" className={classes.labelText}>
                         {renderLabel(other.nodeId)}
                     </Typography>
-                    <Checkbox color="primary" checked={isSectionChecked(other.nodeId)} onClick={handleCheck} />
+                    <Checkbox
+                        color="primary"
+                        checked={isSectionChecked(other.nodeId)}
+                        onClick={handleCheck}
+                        onDoubleClick={() => {
+                            setMultipleSectionChecked(other.nodeId);
+                        }}
+                    />
                 </div>
             }
             classes={{
