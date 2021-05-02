@@ -9,7 +9,7 @@ export interface schema {
 }
 
 export const getParamsJson = (
-    globalMech: [string, IMechanismProcess][],
+    globalMech: Record<string, IMechanismProcess>,
     sections: Record<string, ISection>,
 ): schema[] => {
     const data: schema[] = [];
@@ -21,7 +21,7 @@ export const getParamsJson = (
 export const run = async (
     setData: Function,
     setError: Function,
-    globalMech: [string, IMechanismProcess][],
+    globalMech: Record<string, IMechanismProcess>,
     sections: Record<string, ISection>,
 ) => {
     try {

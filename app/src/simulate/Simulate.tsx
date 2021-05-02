@@ -23,7 +23,7 @@ const initTreePlot: TreeOrPlot = 'Tree';
 
 function Simulate() {
     const { state, setState } = useContext(AppContext);
-    const { getParamsForRun } = useSimulate();
+    const { getChangedForm } = useSimulate();
 
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
@@ -59,7 +59,7 @@ function Simulate() {
     const StartRunning = () => {
         setPlotData([] as IPlotData[]);
         setRunning(true);
-        const { globalMechanism, sections } = getParamsForRun();
+        const { globalMechanism, sections } = getChangedForm();
         run(updatePlotData, updateError, globalMechanism, sections);
     };
 

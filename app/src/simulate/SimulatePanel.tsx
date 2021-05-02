@@ -22,7 +22,7 @@ export interface ISimulatePanelProps {
 function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePanelProps) {
     const { state } = useContext(AppContext);
     const { getLinesArrayNoRoot } = useDesignCanvas();
-    const { getParamsForRun } = useSimulate();
+    const { getChangedForm } = useSimulate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const openMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -49,7 +49,7 @@ function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePane
                 </MenuItem>
                 <MenuItem
                     onClick={() => {
-                        const { globalMechanism, sections } = getParamsForRun();
+                        const { globalMechanism, sections } = getChangedForm();
                         downloadJsonParams(globalMechanism, sections);
                         closeMenu();
                     }}

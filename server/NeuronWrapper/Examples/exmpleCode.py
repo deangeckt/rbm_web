@@ -8,19 +8,17 @@ if __name__ == "__main__":
     wrapper = NeuronWrapper(config_path='../../../app/src/config.json')
 
     sim_time = 200
-    global_params = [
-        [
-            "general",
+    global_params = {
+            "general":
             {
                 "attrs": {
                     "sim_time": sim_time,
                 },
             }
-        ]
-    ]
+    }
     sections_params = {
         "0_1": {
-            "key": "0_1",
+            "id": "0_1",
             "section": 0.5,
             "recording_type": 1,
             "mechanism": {
@@ -28,7 +26,6 @@ if __name__ == "__main__":
                     "attrs": {
                         "gnabar_hh": 0.13
                     },
-                    "add": True
                 }
             },
             "process": {
@@ -38,12 +35,11 @@ if __name__ == "__main__":
                         "amp": 0.5,
                         "delay": 10,
                     },
-                    "add": True
                 },
             }
         },
         "20_4": {
-            "key": "20_4",
+            "id": "20_4",
             "section": 0.5,
             "recording_type": 1,
             "mechanism": {},

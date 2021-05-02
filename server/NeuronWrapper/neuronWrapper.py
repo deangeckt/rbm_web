@@ -54,8 +54,6 @@ class NeuronWrapper:
         h_ref = tid_to_type(tid_, self.h)[id_]
         mechanism = section['mechanism']
         for mech in mechanism:
-            if not mechanism[mech]['add']:
-                continue
             h_ref.insert(mech)
             attrs = mechanism[mech]['attrs']
             for attr in attrs:
@@ -70,8 +68,6 @@ class NeuronWrapper:
 
         process = section['process']
         for proc in process:
-            if not process[proc]['add']:
-                continue
             new_proc = getattr(self.h, proc)(h_ref)
             attrs = process[proc]['attrs']
             for attr in attrs:
@@ -99,9 +95,8 @@ class NeuronWrapper:
 
     def __init_global(self):
         global_params = self.input['global']
-        for param in global_params:
-            param_key = param[0]
-            attrs = param[1]['attrs']
+        for param_key in global_params:
+            attrs = global_params[param_key]['attrs']
 
             for attr in attrs:
                 if param_key == 'general':

@@ -18,7 +18,10 @@ export const downloadSwcFile = (state: IAppState, linesArray: ILine[]) => {
     element.click();
 };
 
-export const downloadJsonParams = (globalMech: [string, IMechanismProcess][], sections: Record<string, ISection>) => {
+export const downloadJsonParams = (
+    globalMech: Record<string, IMechanismProcess>,
+    sections: Record<string, ISection>,
+) => {
     const params = getParamsJson(globalMech, sections);
     const jsonparams = JSON.stringify(params);
     const element = document.createElement('a');
