@@ -50,7 +50,7 @@ class NeuronWrapper:
         i3d.instantiate(None)
 
     def __add_section_mech(self, section: dict):
-        id_, tid_ = section_key_to_id_tid(section['key'])
+        id_, tid_ = section_key_to_id_tid(section['id'])
         h_ref = tid_to_type(tid_, self.h)[id_]
         mechanism = section['mechanism']
         for mech in mechanism:
@@ -62,7 +62,7 @@ class NeuronWrapper:
                 setattr(h_ref, attr, attrs[attr])
 
     def __add_section_process(self, section: dict):
-        id_, tid_ = section_key_to_id_tid(section['key'])
+        id_, tid_ = section_key_to_id_tid(section['id'])
         section_ = section['section']
 
         h_ref = tid_to_type(tid_, self.h)
@@ -83,7 +83,7 @@ class NeuronWrapper:
         if recording_type_ == 0:
             return
 
-        id_, tid_ = section_key_to_id_tid(section['key'])
+        id_, tid_ = section_key_to_id_tid(section['id'])
 
         section_ = section['section']
         recording_key_ = recording_key(recording_type_, tid_, id_, section_)
@@ -114,7 +114,7 @@ class NeuronWrapper:
         for section_key in sections:
             section = sections[section_key]
 
-            id_, tid_ = section_key_to_id_tid(section['key'])
+            id_, tid_ = section_key_to_id_tid(section['id'])
             if tid_ == 1 and id_ > 0:
                 continue
 

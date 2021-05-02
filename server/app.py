@@ -13,7 +13,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.route('/api/v1/run', methods=['POST'])
-def score():
+def run():
     try:
         params = request.get_json()
         for p in params:
