@@ -8,7 +8,7 @@ from config import read_paths
 # Example by using the params.json - can be downloaded from the simulation web page
 if __name__ == "__main__":
     wrapper = NeuronWrapper(config_path='../../../app/src/config.json')
-    sim_time = 150
+    sim_time = 50
 
     with open('params.json') as json_file:
         params = json.load(json_file)
