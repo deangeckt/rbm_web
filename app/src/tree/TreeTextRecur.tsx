@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TreeTextRecurItem from './TreeTextRecurItem';
 import { RenderTreeText, root_key } from '../Wrapper';
 import { AppContext } from '../AppContext';
+import { useTreeText } from './useTreeText';
 
 const useStyles = makeStyles({
     root: {
@@ -17,6 +18,12 @@ const useStyles = makeStyles({
 export default function TreeTextRecur() {
     const classes = useStyles();
     const { state } = useContext(AppContext);
+    const { getTreeChildrenRecur } = useTreeText();
+    const all: string[] = [root_key];
+
+    React.useEffect(() => {
+        getTreeChildrenRecur(root_key, all);
+    }, []);
 
     const renderTree = (nodes: RenderTreeText) => (
         <TreeTextRecurItem key={nodes.id} nodeId={nodes.id}>
@@ -28,7 +35,7 @@ export default function TreeTextRecur() {
         <TreeView
             className={classes.root}
             defaultCollapseIcon={<ExpandMoreIcon />}
-            defaultExpanded={[root_key]}
+            defaultExpanded={all}
             defaultExpandIcon={<ChevronRightIcon />}
             selected={[state.selectedId]}
         >

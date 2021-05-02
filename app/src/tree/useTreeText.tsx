@@ -12,20 +12,19 @@ export function useTreeText() {
         return `${section_short_labels[tid]}[${cid}]`;
     };
 
-    const getTreeChildrenRecur = (sectionKey: string, sections: Record<string, ISection>, res: string[]) => {
-        const currSection = sections[sectionKey];
+    const getTreeChildrenRecur = (sectionKey: string, res: string[]) => {
+        const currSection = state.sections[sectionKey];
         const childs = currSection.line.children;
         for (let i = 0; i < childs.length; i++) {
             const child = childs[i];
             res.push(child);
-            getTreeChildrenRecur(child, sections, res);
+            getTreeChildrenRecur(child, res);
         }
     };
 
     const setMultipleSectionChecked = (sectionKey: string) => {
-        const sections = { ...state.sections };
         const treeRes: string[] = [sectionKey];
-        getTreeChildrenRecur(sectionKey, sections, treeRes);
+        getTreeChildrenRecur(sectionKey, treeRes);
         toggleSectionCheck(treeRes);
     };
 
@@ -70,5 +69,12 @@ export function useTreeText() {
         return res;
     };
 
-    return { sectionKeyToLabel, isSectionChecked, setSectionChecked, setMultipleSectionChecked, sectionsToTreeRender };
+    return {
+        sectionKeyToLabel,
+        isSectionChecked,
+        setSectionChecked,
+        setMultipleSectionChecked,
+        sectionsToTreeRender,
+        getTreeChildrenRecur,
+    };
 }
