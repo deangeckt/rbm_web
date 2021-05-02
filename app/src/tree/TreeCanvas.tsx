@@ -22,6 +22,8 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
 
     const widSize = window.document.getElementById('Canvas')?.offsetWidth;
     const [camera, setCamera] = React.useState({ x: 0, y: 0 });
+    const [stageScale, setStageScale] = React.useState(1);
+    const [stageCoord, setStageCoord] = React.useState({ x: 0, y: 0 });
 
     useEffect(() => {
         if (widSize && widSize !== state.stage.width) {
@@ -46,6 +48,26 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
         });
     };
 
+    const handleWheel = (e: any) => {
+        if (design) return;
+        e.evt.preventDefault();
+
+        const scaleBy = 1.1;
+        const stage = e.target.getStage();
+        const oldScale = stage.scaleX();
+        const mousePointTo = {
+            x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
+            y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale,
+        };
+
+        const newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+        setStageCoord({
+            x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
+            y: -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale,
+        });
+        setStageScale(newScale);
+    };
+
     const isOutWidth = (x: number): boolean => {
         return x < camera.x || x > camera.x + state.stage.width;
     };
@@ -64,6 +86,11 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
                 onMouseDown={checkDeselect}
                 onTouchStart={checkDeselect}
                 onDragEnd={handleDragEnd}
+                onWheel={handleWheel}
+                scaleX={stageScale}
+                scaleY={stageScale}
+                x={stageCoord.x}
+                y={stageCoord.y}
             >
                 <Layer>
                     <Circle
@@ -76,11 +103,13 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
                         onClick={() => setSelectedId(root)}
                     />
                     {getLinesArrayNoRoot().map((l: RenderILine) => {
-                        if (isOutWidth(l.points[0]) || isOutWidth(l.points[2])) {
-                            return null;
-                        }
-                        if (isOutHeight(l.points[1]) || isOutHeight(l.points[3])) {
-                            return null;
+                        if (design) {
+                            if (isOutWidth(l.points[0]) || isOutWidth(l.points[2])) {
+                                return null;
+                            }
+                            if (isOutHeight(l.points[1]) || isOutHeight(l.points[3])) {
+                                return null;
+                            }
                         }
                         return (
                             <TransformerLine
