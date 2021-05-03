@@ -3,6 +3,8 @@ import Drawer from '@material-ui/core/Drawer';
 import { AppContext } from '../../AppContext';
 import { useSimulate } from '../useSimulate';
 import MechProcItem from './MechProcItem';
+import './Summary.css';
+import SectionItem from './SectionItem';
 
 function Summary() {
     const { state, setState } = useContext(AppContext);
@@ -16,14 +18,16 @@ function Summary() {
                 open={state.summaryState}
                 onClose={() => setState({ ...state, summaryState: false })}
             >
-                <div
-                    style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', padding: '16px' }}
-                >
-                    <div style={{ fontWeight: 600, marginTop: '16px', fontSize: 'large' }}>Global:</div>
+                <div className="SummaryContainer">
+                    <div className="SummaryHeader">Global Mechanism</div>
                     {Object.entries(globalMechanism).map(([name, mech]) => {
                         return <MechProcItem key={name} id={name} item={mech} />;
                     })}
-                    <div style={{ fontWeight: 600, marginTop: '16px', fontSize: 'large' }}>Sections:</div>
+
+                    <div className="SummaryHeader">Sections</div>
+                    {Object.values(sections).map((sec) => {
+                        return <SectionItem key={sec.id} section={sec} />;
+                    })}
                 </div>
             </Drawer>
         </div>

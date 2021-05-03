@@ -1,0 +1,38 @@
+.SummaryContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.SummaryHeader {
+    font-weight: 700;
+    font-size: larger;
+}
+
+.SummaryItem {
+    margin-left: 16px;
+}
+
+.SummaryKey {
+    font-weight: 500;
+}
+
+.SummaryAttr {
+    margin-left: 16px;
+}
+
+.SummarySectionHeader {
+    margin-Top: 8px;
+    font-weight: 500;
+}
+
+
+.SummarySectionItem {
+    margin: 8px;
+}
+
+.SummarySection {
+    margin-left: 16px;
+}
