@@ -20,7 +20,7 @@ export interface ISimulatePanelProps {
 }
 
 function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePanelProps) {
-    const { state } = useContext(AppContext);
+    const { state, setState } = useContext(AppContext);
     const { getLinesArrayNoRoot } = useDesignCanvas();
     const { getChangedForm } = useSimulate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -39,6 +39,14 @@ function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePane
                 <MenuIcon />
             </IconButton>
             <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={closeMenu}>
+                <MenuItem
+                    onClick={() => {
+                        setState({ ...state, summaryState: true });
+                        closeMenu();
+                    }}
+                >
+                    Summary
+                </MenuItem>
                 <MenuItem
                     onClick={() => {
                         downloadSwcFile(state, getLinesArrayNoRoot());

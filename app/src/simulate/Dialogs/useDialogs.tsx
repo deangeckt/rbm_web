@@ -19,7 +19,7 @@ export function useDialogs() {
         dialogs.dialogInfoTitle = title;
         dialogs.dialogInfoContent = content;
         dialogs.dialogInfoImage = img;
-        dialogs.dialogInfo = true;
+        dialogs.dialogState = true;
         setState({ ...state, dialogs: dialogs });
     };
 

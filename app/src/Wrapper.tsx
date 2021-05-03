@@ -106,7 +106,7 @@ export interface IMechanismProcess {
 }
 
 export interface IDialogs {
-    dialogInfo: boolean;
+    dialogState: boolean;
     dialogInfoTitle: string;
     dialogInfoContent: string;
     dialogInfoImage?: string;
@@ -126,6 +126,7 @@ export interface IAppState {
     checkedSections: Record<string, boolean>;
     sectionsTreeText: RenderTreeText;
     dialogs: IDialogs;
+    summaryState: boolean;
     pointMechanism: Record<string, IMechanismProcess>;
     pointProcess: Record<string, IMechanismProcess>;
     globalMechanism: Record<string, IMechanismProcess>;
@@ -181,10 +182,11 @@ export const init_app_state: IAppState = {
     selectedId: none_selected_id,
     designLastAddedId: root_id,
     dialogs: {
-        dialogInfo: false,
+        dialogState: false,
         dialogInfoTitle: '',
         dialogInfoContent: '',
     },
+    summaryState: false,
     pointMechanism: {},
     pointProcess: {},
     globalMechanism: static_global_form,

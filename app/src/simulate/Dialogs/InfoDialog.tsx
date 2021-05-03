@@ -11,7 +11,7 @@ function InfoDialog() {
     const imgRelPath = state.dialogs.dialogInfoImage;
 
     return (
-        <Dialog onClose={() => closeDialog()} open={state.dialogs.dialogInfo}>
+        <Dialog onClose={() => closeDialog()} open={state.dialogs.dialogState}>
             <DialogTitle> {state.dialogs.dialogInfoTitle} </DialogTitle>
             <DialogContent>
                 <DialogContentText>{state.dialogs.dialogInfoContent}</DialogContentText>

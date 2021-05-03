@@ -12,6 +12,7 @@ import { IMechanismProcess } from '../Wrapper';
 import ReadLoading from '../anim/ReadLoading';
 import './Simulate.css';
 import { useSimulate } from './useSimulate';
+import Summary from './summary/Summary';
 
 export interface IPlotData {
     plot: number[];
@@ -95,6 +96,8 @@ function Simulate() {
                             />
                         </div>
                         <div className="SimulateCenter">
+                            <Summary />
+
                             <div className="LeftSide">
                                 <SimulateMainForm />
                             </div>

@@ -14,6 +14,7 @@ export function useTreeText() {
 
     const getTreeChildrenRecur = (sectionKey: string, res: string[]) => {
         const currSection = state.sections[sectionKey];
+        if (!currSection) return;
         const childs = currSection.line.children;
         for (let i = 0; i < childs.length; i++) {
             const child = childs[i];
