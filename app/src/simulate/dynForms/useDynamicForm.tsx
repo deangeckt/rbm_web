@@ -107,7 +107,7 @@ export function useDynamicForms() {
             selectedSections.forEach((sec) => {
                 const mps = (sec as any)[keyMp] as Record<string, IMechanismProcess>;
                 const currKey = (sec as any)[keyRef] as string;
-                mps[currKey].attrs[attr] = value;
+                if (currKey !== '') mps[currKey].attrs[attr] = value;
             });
             updateSelectedSectionsState(selectedSections);
         }
