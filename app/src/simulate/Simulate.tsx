@@ -22,6 +22,7 @@ function Simulate() {
     const { state, setState } = useContext(AppContext);
     const { getChangedForm } = useSimulate();
     const { pushPlot } = usePlot();
+    console.log(state);
 
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
