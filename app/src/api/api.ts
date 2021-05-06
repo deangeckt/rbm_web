@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { IPlotData } from '../simulate/Simulate';
-import { IMechanismProcess, IAttr, ISection } from '../Wrapper';
+import { IMechanismProcess, IAttr, ISection, IPlotData } from '../Wrapper';
 import readMocks from './readMock.json';
 
 export interface schema {

@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import Plot from './Plot';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import { run, read } from '../api/api';
@@ -8,16 +7,13 @@ import SimulateMainForm from './SimulateMainForms';
 import InfoDialog from './dialogs/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import SimulateCanvas from './SimulateCanvas';
-import { IMechanismProcess } from '../Wrapper';
+import { IMechanismProcess, IPlotData } from '../Wrapper';
 import ReadLoading from '../anim/ReadLoading';
-import './Simulate.css';
 import { useSimulate } from './useSimulate';
 import Summary from './summary/Summary';
-
-export interface IPlotData {
-    plot: number[];
-    name: string;
-}
+import { usePlot } from './plot/usePlot';
+import Plot from './plot/Plot';
+import './Simulate.css';
 
 export type TreeOrPlot = 'Tree' | 'Plot';
 const initTreePlot: TreeOrPlot = 'Tree';
@@ -25,16 +21,32 @@ const initTreePlot: TreeOrPlot = 'Tree';
 function Simulate() {
     const { state, setState } = useContext(AppContext);
     const { getChangedForm } = useSimulate();
+    const { pushPlot } = usePlot();
 
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
     const [readLoading, setReadLoading] = React.useState(true);
-    const [plotData, setPlotData] = React.useState([] as IPlotData[]);
     const [treeOrPlot, setTreeOrPlot] = React.useState(initTreePlot);
 
     const updatePlotData = (newData: IPlotData[]) => {
-        setPlotData(newData);
+        pushPlot(newData);
         setRunning(false);
+    };
+
+    const updateError = (err: string) => {
+        setError(err);
+        setRunning(false);
+    };
+
+    const StartRunning = () => {
+        setRunning(true);
+        const { globalMechanism, sections } = getChangedForm();
+        run(updatePlotData, updateError, globalMechanism, sections);
+    };
+
+    const closeError = (_event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') return;
+        setError('');
     };
 
     const updateDynForms = (
@@ -50,23 +62,6 @@ function Simulate() {
             pointProcess: newPointProcc,
         });
         setReadLoading(false);
-    };
-
-    const updateError = (err: string) => {
-        setError(err);
-        setRunning(false);
-    };
-
-    const StartRunning = () => {
-        setPlotData([] as IPlotData[]);
-        setRunning(true);
-        const { globalMechanism, sections } = getChangedForm();
-        run(updatePlotData, updateError, globalMechanism, sections);
-    };
-
-    const closeError = (_event?: React.SyntheticEvent, reason?: string) => {
-        if (reason === 'clickaway') return;
-        setError('');
     };
 
     React.useEffect(() => {
@@ -103,7 +98,7 @@ function Simulate() {
                             </div>
                             <div className="RightSide">
                                 <SimulateCanvas display={treeOrPlot === 'Tree'} />
-                                <Plot data={plotData} display={treeOrPlot === 'Plot'} />
+                                <Plot display={treeOrPlot === 'Plot'} />
                             </div>
                         </div>
                     </div>

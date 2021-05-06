@@ -114,6 +114,11 @@ export interface IDialogs {
 
 export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
 
+export interface IPlotData {
+    plot: number[];
+    name: string;
+}
+
 // section key: cid_tid
 // design line key: swc id
 // simulate line key: cid_tid
@@ -131,6 +136,7 @@ export interface IAppState {
     pointProcess: Record<string, IMechanismProcess>;
     globalMechanism: Record<string, IMechanismProcess>;
     globalMechanismCurrKey: string;
+    plots: IPlotData[][];
 }
 
 export const getStage = (): IStageSize => {
@@ -191,6 +197,7 @@ export const init_app_state: IAppState = {
     pointProcess: {},
     globalMechanism: static_global_form,
     globalMechanismCurrKey: 'general',
+    plots: [],
 };
 
 const Wrapper = (props: any) => {

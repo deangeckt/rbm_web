@@ -1,8 +1,8 @@
 import React from 'react';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
-import { IPlotData } from './Simulate';
-import { section_short_labels } from '../Wrapper';
+import { IPlotData, section_short_labels } from '../../Wrapper';
+import { usePlot } from './usePlot';
 
 const record_key_parse = (recordKey: string) => {
     const keys = recordKey.split('_');
@@ -59,14 +59,15 @@ function options(data: IPlotData[]) {
 }
 
 export interface IPlotProps {
-    data: IPlotData[];
     display: boolean;
 }
 
-function Plot({ data, display }: IPlotProps) {
+function Plot({ display }: IPlotProps) {
+    const { getCurrPlot } = usePlot();
+
     return (
         <div style={{ display: display ? undefined : 'none' }}>
-            <HighchartsReact highcharts={Highcharts} options={options(data)} />
+            <HighchartsReact highcharts={Highcharts} options={options(getCurrPlot())} />
         </div>
     );
 }
