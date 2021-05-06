@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
 import { IPlotData, section_short_labels } from '../../Wrapper';
-import { usePlot } from './usePlot';
+import Carousel from 'react-material-ui-carousel';
+import { AppContext } from '../../AppContext';
 
 const record_key_parse = (recordKey: string) => {
     const keys = recordKey.split('_');
@@ -63,11 +64,15 @@ export interface IPlotProps {
 }
 
 function Plot({ display }: IPlotProps) {
-    const { getCurrPlot } = usePlot();
+    const { state } = useContext(AppContext);
 
     return (
         <div style={{ display: display ? undefined : 'none' }}>
-            <HighchartsReact highcharts={Highcharts} options={options(getCurrPlot())} />
+            <Carousel autoPlay={false} stopAutoPlayOnHover={false} index={state.plots.length - 1}>
+                {state.plots.map((item, i) => (
+                    <HighchartsReact key={i} highcharts={Highcharts} options={options(item)} />
+                ))}
+            </Carousel>
         </div>
     );
 }
