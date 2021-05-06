@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
-import DynamicForm from './dynForms/DynamicForm';
-import { AppContext } from '../AppContext';
+import DynamicForm from '../dynForms/DynamicForm';
+import { AppContext } from '../../AppContext';
 import SectionFormWrapper from './SectionFormWrapper';
 import './Form.css';
 

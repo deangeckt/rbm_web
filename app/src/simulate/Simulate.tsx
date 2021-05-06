@@ -3,7 +3,7 @@ import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import { run, read } from '../api/api';
 import { AppContext } from '../AppContext';
-import SimulateMainForm from './SimulateMainForms';
+import SimulateMainForm from './form/SimulateMainForms';
 import InfoDialog from './dialogs/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import SimulateCanvas from './SimulateCanvas';

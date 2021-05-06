@@ -22,8 +22,13 @@ function SectionItem({ section }: ISectionItemProps) {
                 })}
                 <div className="SummarySectionHeader">Process:</div>
 
-                {Object.entries(section.process).map(([name, mp]) => {
-                    return <MechProcItem key={name} id={name} item={mp} />;
+                {section.process.map((proc) => {
+                    {
+                        <div>Process: {proc.section}</div>;
+                        Object.entries(proc).map(([name, mp]) => {
+                            return <MechProcItem key={name} id={name} item={mp} />;
+                        });
+                    }
                 })}
             </div>
         </div>

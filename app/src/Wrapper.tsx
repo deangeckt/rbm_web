@@ -70,14 +70,15 @@ export const section_recording = [
 ];
 
 export type RenderILine = Pick<ILine, 'id' | 'pid' | 'points' | 'children' | 'tid' | 'radius'>;
-
+export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
+export type mpObj = Record<string, IMechanismProcess>;
 export interface ISection {
     id: string;
-    section: number;
     recording_type: number;
-    mechanism: Record<string, IMechanismProcess>;
-    process: Record<string, IMechanismProcess>;
+    mechanism: mpObj;
     mechanismCurrKey: string;
+    process: Record<number, mpObj>;
+    processSectionCurrKey: number;
     processCurrKey: string;
     line: RenderILine;
 }
@@ -112,8 +113,6 @@ export interface IDialogs {
     dialogInfoImage?: string;
 }
 
-export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
-
 export interface IPlotData {
     plot: number[];
     name: string;
@@ -132,9 +131,9 @@ export interface IAppState {
     sectionsTreeText: RenderTreeText;
     dialogs: IDialogs;
     summaryState: boolean;
-    pointMechanism: Record<string, IMechanismProcess>;
-    pointProcess: Record<string, IMechanismProcess>;
-    globalMechanism: Record<string, IMechanismProcess>;
+    pointMechanism: mpObj;
+    pointProcess: mpObj;
+    globalMechanism: mpObj;
     globalMechanismCurrKey: string;
     plots: IPlotData[][];
 }

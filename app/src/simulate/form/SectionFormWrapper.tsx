@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import Chip from '@material-ui/core/Chip';
-import DynamicForm from './dynForms/DynamicForm';
-import { AppContext } from '../AppContext';
-import { useTreeText } from '../tree/useTreeText';
-import { TextField, MenuItem } from '@material-ui/core';
-import { section_recording } from '../Wrapper';
-import { useDynamicForms } from './dynForms/useDynamicForm';
+import DynamicForm from '../dynForms/DynamicForm';
+import { AppContext } from '../../AppContext';
+import { useTreeText } from '../../tree/useTreeText';
+import { TextField, MenuItem, Button } from '@material-ui/core';
+import { section_recording } from '../../Wrapper';
+import AddIcon from '@material-ui/icons/Add';
+import { useSectionForm } from './useSectionForm';
 import './Form.css';
 
 type SectionTab = 'process' | 'mech' | 'record';
@@ -15,7 +16,13 @@ function SectionFormWrapper() {
     const [sectionTab, setSectionTab] = React.useState(initTab);
     const { state } = useContext(AppContext);
     const { sectionKeyToLabel } = useTreeText();
-    const { getSectionRecording, updateSectionRecording, getSectionValue, updateSectionValue } = useDynamicForms();
+    const {
+        getSectionRecording,
+        updateSectionRecording,
+        getSectionValue,
+        updateSectionValue,
+        addProcess,
+    } = useSectionForm();
 
     const selecedSections = Object.entries(state.checkedSections)
         .filter(([, added]) => added)
@@ -48,7 +55,7 @@ function SectionFormWrapper() {
 
     return (
         <div className="SectionForm">
-            <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+            <div className="SctionFormNav">
                 <Chip
                     label="Mechanism"
                     clickable
@@ -75,16 +82,27 @@ function SectionFormWrapper() {
             <div className="SectionEditStr">{sectionListString}</div>
             {renderForm ? (
                 <>
-                    <div style={{ marginBottom: '12px' }}>
-                        <TextField
-                            label={'Section'}
-                            variant="filled"
-                            type="number"
-                            value={getSectionValue()}
-                            onChange={(e) => updateSectionValue(Number(e.target.value))}
-                            InputProps={{ inputProps: { min: 0, step: 0.1 } }}
-                        />
-                    </div>
+                    {sectionTab !== 'mech' ? (
+                        <div className="SctionSegmentHeader">
+                            <TextField
+                                label={'Section'}
+                                variant="filled"
+                                type="number"
+                                value={getSectionValue()}
+                                onChange={(e) => updateSectionValue(Number(e.target.value))}
+                                InputProps={{ inputProps: { min: 0, step: 0.1 } }}
+                            />
+                            <Button
+                                className="NoCapsButton"
+                                variant="outlined"
+                                color="primary"
+                                startIcon={<AddIcon />}
+                                onClick={() => addProcess()}
+                            >
+                                Add Process
+                            </Button>
+                        </div>
+                    ) : null}
                     <div>{renderTab()}</div>
                 </>
             ) : null}

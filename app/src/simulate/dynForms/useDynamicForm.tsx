@@ -1,30 +1,16 @@
 import { useContext } from 'react';
 import { AppContext } from '../../AppContext';
-import { default_section_value, IAttr, IMechanismProcess, impKeys, ISection } from '../../Wrapper';
+import { IAttr, IMechanismProcess, impKeys, mpObj } from '../../Wrapper';
+import { useDynamicFormShare } from './useDynnamicFormShare';
 
 export function useDynamicForms() {
     const { state, setState } = useContext(AppContext);
+    const { getFirstSelectedSection, getAllSelectedSections, updateSelectedSectionsState } = useDynamicFormShare();
 
-    const getFirstSelectedSection = (): ISection | undefined => {
-        const selecedSections = Object.entries(state.checkedSections).filter(([, added]) => !!added);
-        if (selecedSections.length === 0) return undefined;
-        const sectionKey = selecedSections[0][0];
-        return state.sections[sectionKey];
-    };
-
-    const getAllSelectedSections = (): ISection[] => {
-        const selectedSections: ISection[] = [];
-        const selectedKeys = Object.entries(state.checkedSections)
-            .filter(([, added]) => added)
-            .map(([key]) => key);
-        selectedKeys.forEach((key) => selectedSections.push(state.sections[key]));
-        return selectedSections;
-    };
-
-    const updateSelectedSectionsState = (selectedSections: ISection[]) => {
-        const sections = { ...state.sections };
-        selectedSections.forEach((sec) => (sections[sec.id] = sec));
-        setState({ ...state, sections: sections });
+    const setKeyCheckedSectionAux = (mp: mpObj, currKey: string, checked: boolean) => {
+        if (currKey === '') return;
+        if (!mp[currKey]) mp[currKey] = { attrs: {}, add: false };
+        mp[currKey].add = checked;
     };
 
     const setKeyChecked = (impKey: impKeys, checked: boolean) => {
@@ -35,15 +21,41 @@ export function useDynamicForms() {
             setState({ ...state, globalMechanism: globalMechanism });
         } else {
             const selectedSections = getAllSelectedSections();
-            const keyRef = impKey === 'pointMechanism' ? 'mechanismCurrKey' : 'processCurrKey';
-            const keyMp = impKey === 'pointMechanism' ? 'mechanism' : 'process';
-            selectedSections.forEach((sec) => {
-                const mps = (sec as any)[keyMp] as Record<string, IMechanismProcess>;
-                const currKey = (sec as any)[keyRef] as string;
-                if (currKey === '') return;
-                if (!mps[currKey]) mps[currKey] = { attrs: {}, add: false };
-                mps[currKey].add = checked;
-            });
+            if (impKey === 'pointMechanism') {
+                selectedSections.forEach((sec) => {
+                    setKeyCheckedSectionAux(sec.mechanism, sec.mechanismCurrKey, checked);
+                });
+            } else {
+                selectedSections.forEach((sec) => {
+                    setKeyCheckedSectionAux(sec.process[sec.processSectionCurrKey], sec.processCurrKey, checked);
+                });
+            }
+            updateSelectedSectionsState(selectedSections);
+        }
+    };
+
+    const onAttrSectionChangeAux = (mp: mpObj, currKey: string, attr: string, value: number) => {
+        if (currKey === '') return;
+        mp[currKey].attrs[attr] = value;
+    };
+
+    const onAttrChange = (impKey: impKeys, attr: string, value: number) => {
+        if (impKey === 'globalMechanism') {
+            const globalMechanism = { ...state.globalMechanism };
+            const mech = globalMechanism[state.globalMechanismCurrKey];
+            mech.attrs[attr] = value;
+            setState({ ...state, globalMechanism: globalMechanism });
+        } else {
+            const selectedSections = getAllSelectedSections();
+            if (impKey === 'pointMechanism') {
+                selectedSections.forEach((sec) => {
+                    onAttrSectionChangeAux(sec.mechanism, sec.mechanismCurrKey, attr, value);
+                });
+            } else {
+                selectedSections.forEach((sec) => {
+                    onAttrSectionChangeAux(sec.process[sec.processSectionCurrKey], sec.processCurrKey, attr, value);
+                });
+            }
             updateSelectedSectionsState(selectedSections);
         }
     };
@@ -71,6 +83,9 @@ export function useDynamicForms() {
             selectedAttrs = state.globalMechanism[selectedKey].attrs;
         } else {
             const selecedSection = getFirstSelectedSection();
+            if (impKey === 'pointMechanism') {
+            } else {
+            }
             if (!selecedSection) return { selectedKey: '', selectedAttrs: {}, isSelectedKeyChecked: false };
             const keyMp = impKey === 'pointMechanism' ? 'mechanism' : 'process';
             selectedKey = impKey === 'pointMechanism' ? selecedSection.mechanismCurrKey : selecedSection.processCurrKey;
@@ -94,61 +109,10 @@ export function useDynamicForms() {
         return { selectedKey, selectedAttrs, isSelectedKeyChecked };
     };
 
-    const onChange = (impKey: impKeys, attr: string, value: number) => {
-        if (impKey === 'globalMechanism') {
-            const globalMechanism = { ...state.globalMechanism };
-            const mech = globalMechanism[state.globalMechanismCurrKey];
-            mech.attrs[attr] = value;
-            setState({ ...state, globalMechanism: globalMechanism });
-        } else {
-            const selectedSections = getAllSelectedSections();
-            const keyRef = impKey === 'pointMechanism' ? 'mechanismCurrKey' : 'processCurrKey';
-            const keyMp = impKey === 'pointMechanism' ? 'mechanism' : 'process';
-            selectedSections.forEach((sec) => {
-                const mps = (sec as any)[keyMp] as Record<string, IMechanismProcess>;
-                const currKey = (sec as any)[keyRef] as string;
-                if (currKey !== '') mps[currKey].attrs[attr] = value;
-            });
-            updateSelectedSectionsState(selectedSections);
-        }
-    };
-
-    const getSectionRecording = () => {
-        const selectedSections = getFirstSelectedSection();
-        if (!selectedSections) return 0;
-        return selectedSections.recording_type;
-    };
-
-    const updateSectionRecording = (value: number) => {
-        const selectedSections = getAllSelectedSections();
-        selectedSections.forEach((sec) => {
-            sec.recording_type = value;
-        });
-        updateSelectedSectionsState(selectedSections);
-    };
-
-    const getSectionValue = () => {
-        const selectedSections = getFirstSelectedSection();
-        if (!selectedSections) return default_section_value;
-        return selectedSections.section;
-    };
-
-    const updateSectionValue = (value: number) => {
-        const selectedSections = getAllSelectedSections();
-        selectedSections.forEach((sec) => {
-            sec.section = value;
-        });
-        updateSelectedSectionsState(selectedSections);
-    };
-
     return {
         getDynamicFormProps,
         setCurrKey,
         setKeyChecked,
-        onChange,
-        getSectionRecording,
-        updateSectionRecording,
-        getSectionValue,
-        updateSectionValue,
+        onAttrChange,
     };
 }

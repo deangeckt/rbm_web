@@ -18,7 +18,7 @@ export interface IDynamicAttrProps {
 
 function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
     const { updateKeyInfo } = useDialogs();
-    const { setKeyChecked, onChange } = useDynamicForms();
+    const { setKeyChecked, onAttrChange } = useDynamicForms();
 
     const headLine = impKey.endsWith('Mechanism') ? 'Mechanism' : 'Process';
     const operationStr = impKey.startsWith('global') ? 'Change' : 'Add';
@@ -53,7 +53,7 @@ function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
                                         variant="filled"
                                         type="number"
                                         defaultValue={value}
-                                        onChange={(e: any) => onChange(impKey, attr, Number(e.target.value))}
+                                        onChange={(e: any) => onAttrChange(impKey, attr, Number(e.target.value))}
                                     />
                                 </div>
                             </ListItem>

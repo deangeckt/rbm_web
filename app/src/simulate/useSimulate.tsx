@@ -28,12 +28,18 @@ export function useSimulate() {
         const sectionEnts = Object.values(state.sections);
         for (let i = 0; i < sectionEnts.length; i++) {
             const sec = sectionEnts[i];
-            const filterProc = filterProcMech(state.sections[sec.id].process);
+
+            const filterProcList: Record<string, IMechanismProcess & { section: number }>[] = [];
+            let anyProcess = false;
+            state.sections[sec.id].process.forEach((proc) => {
+                filterProcList.push({ ...filterProcMech(proc), section: proc.section });
+                if (Object.keys(proc).length) anyProcess = true;
+            });
             const filterMech = filterProcMech(state.sections[sec.id].mechanism);
-            if (Object.keys(filterProc).length || Object.keys(filterMech).length || sec.recording_type !== 0)
+            if (anyProcess || Object.keys(filterMech).length || sec.recording_type !== 0)
                 filterSections[sec.id] = {
                     ...state.sections[sec.id],
-                    process: filterProc,
+                    process: filterProcList,
                     mechanism: filterMech,
                 };
         }

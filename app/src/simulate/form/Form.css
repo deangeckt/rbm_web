@@ -37,6 +37,11 @@
     margin-top: 16px;
 }
 
+.SctionFormNav {
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .SectionEditStr {
     white-space: pre-wrap;
     padding-bottom: 16px;
@@ -44,4 +49,10 @@
     margin-bottom: 24px;
     text-align: center;
     border-bottom: 1px solid #efefef;
+}
+
+.SctionSegmentHeader {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 12;
 }

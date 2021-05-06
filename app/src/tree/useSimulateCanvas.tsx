@@ -29,12 +29,12 @@ export function useSimulateCanvas() {
     const addNewSection = (key: string, pid: string, swc_id: string, tid: number, radius: number): ISection => {
         return {
             id: key,
-            section: default_section_value,
             recording_type: 0,
             mechanism: {},
             process: {},
             mechanismCurrKey: '',
             processCurrKey: '',
+            processSectionCurrKey: default_section_value,
             line: {
                 id: swc_id,
                 pid: pid,
