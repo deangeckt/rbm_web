@@ -7,7 +7,7 @@ import SimulateMainForm from './form/SimulateMainForms';
 import InfoDialog from './dialogs/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import SimulateCanvas from './SimulateCanvas';
-import { IMechanismProcess, IPlotData } from '../Wrapper';
+import { IPlotData, mpObj } from '../Wrapper';
 import ReadLoading from '../anim/ReadLoading';
 import { useSimulate } from './useSimulate';
 import Summary from './summary/Summary';
@@ -49,15 +49,11 @@ function Simulate() {
         setError('');
     };
 
-    const updateDynForms = (
-        newPointMech: Record<string, IMechanismProcess>,
-        newGlobalMech: Record<string, IMechanismProcess>,
-        newPointProcc: Record<string, IMechanismProcess>,
-    ) => {
+    const updateDynForms = (newPointMech: mpObj, newGlobalMech: mpObj, newPointProcc: mpObj) => {
         const staticGloablMech = { ...state.globalMechanism };
         setState({
             ...state,
-            globalMechanism: Object.assign({}, staticGloablMech, newGlobalMech) as Record<string, IMechanismProcess>,
+            globalMechanism: Object.assign({}, staticGloablMech, newGlobalMech) as mpObj,
             pointMechanism: newPointMech,
             pointProcess: newPointProcc,
         });
