@@ -73,6 +73,7 @@ export function useDynamicForms() {
 
     const getDynamicFormPropsSectionAux = (sectionMp: mpObj, globalMp: mpObj, currKey: string) => {
         const mp = sectionMp[currKey];
+        console.log(globalMp);
         const defaultAttrs = globalMp[currKey].attrs;
         const isSelectedKeyChecked = mp?.add ?? false;
 
@@ -103,13 +104,13 @@ export function useDynamicForms() {
             if (impKey === 'pointMechanism') {
                 ({ selectedAttrs, isSelectedKeyChecked } = getDynamicFormPropsSectionAux(
                     selecedSection.mechanism,
-                    { ...state.pointMechanism },
+                    JSON.parse(JSON.stringify(state.pointMechanism)),
                     selectedKey,
                 ));
             } else {
                 ({ selectedAttrs, isSelectedKeyChecked } = getDynamicFormPropsSectionAux(
                     selecedSection.process[selecedSection.processSectionCurrKey],
-                    { ...state.pointProcess },
+                    JSON.parse(JSON.stringify(state.pointProcess)),
                     selectedKey,
                 ));
             }

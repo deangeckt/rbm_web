@@ -21,7 +21,7 @@
 
 .SummarySectionHeader {
     margin-Top: 8px;
-    font-weight: 500;
+    text-decoration: underline
 }
 
 .SummarySectionItem {

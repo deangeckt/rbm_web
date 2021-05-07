@@ -41,6 +41,7 @@ function SectionFormWrapper() {
         else if (sectionTab === 'record')
             return (
                 <TextField
+                    style={{ width: '100%' }}
                     select
                     label="Recording"
                     variant="filled"
@@ -85,7 +86,7 @@ function SectionFormWrapper() {
             <div className="SectionEditStr">{sectionListString}</div>
             {renderForm ? (
                 <>
-                    {sectionTab !== 'mech' ? (
+                    {sectionTab === 'process' ? (
                         <div className="SctionSegmentHeader">
                             <TextField
                                 label={'Section'}
