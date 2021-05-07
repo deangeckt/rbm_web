@@ -79,7 +79,7 @@ export interface ISection {
     mechanismCurrKey: string;
     process: Record<number, mpObj>;
     processSectionCurrKey: number;
-    processCurrKey: string;
+    processCurrKey: string; //TODO move to record of curr keys aswell
     line: RenderILine;
 }
 

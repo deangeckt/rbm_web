@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { AppContext } from '../AppContext';
-import { IMechanismProcess, ISection } from '../Wrapper';
+import { ISection, mpObj } from '../Wrapper';
 
 export function useSimulate() {
     const { state } = useContext(AppContext);
 
-    const filterProcMech = (mps: Record<string, IMechanismProcess>) => {
-        const filterMp: Record<string, IMechanismProcess> = {};
+    const filterProcMech = (mps: mpObj) => {
+        const filterMp: mpObj = {};
 
         const addedKeys = Object.entries(mps)
             .filter(([, mp]) => mp.add)
@@ -19,20 +19,20 @@ export function useSimulate() {
     };
 
     const getChangedForm = (): {
-        globalMechanism: Record<string, IMechanismProcess>;
+        globalMechanism: mpObj;
         sections: Record<string, ISection>;
     } => {
-        const filterGlobalMech: Record<string, IMechanismProcess> = filterProcMech(state.globalMechanism);
+        const filterGlobalMech: mpObj = filterProcMech(state.globalMechanism);
         const filterSections: Record<string, ISection> = {};
 
         const sectionEnts = Object.values(state.sections);
         for (let i = 0; i < sectionEnts.length; i++) {
             const sec = sectionEnts[i];
 
-            const filterProcList: Record<string, IMechanismProcess & { section: number }>[] = [];
+            const filterProcList: Record<number, mpObj> = {};
             let anyProcess = false;
-            state.sections[sec.id].process.forEach((proc) => {
-                filterProcList.push({ ...filterProcMech(proc), section: proc.section });
+            Object.entries(state.sections[sec.id].process).forEach(([sectionKey, proc]) => {
+                filterProcList[Number(sectionKey)] = filterProcMech(proc);
                 if (Object.keys(proc).length) anyProcess = true;
             });
             const filterMech = filterProcMech(state.sections[sec.id].mechanism);

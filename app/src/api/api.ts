@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { IMechanismProcess, IAttr, ISection, IPlotData } from '../Wrapper';
+import { IAttr, ISection, IPlotData, mpObj } from '../Wrapper';
 import readMocks from './readMock.json';
 
 export interface schema {
@@ -7,10 +7,7 @@ export interface schema {
     value: any;
 }
 
-export const getParamsJson = (
-    globalMech: Record<string, IMechanismProcess>,
-    sections: Record<string, ISection>,
-): schema[] => {
+export const getParamsJson = (globalMech: mpObj, sections: Record<string, ISection>): schema[] => {
     const data: schema[] = [];
     data.push({ id: 'global', value: globalMech });
     data.push({ id: 'sections', value: sections });
@@ -20,7 +17,7 @@ export const getParamsJson = (
 export const run = async (
     setData: Function,
     setError: Function,
-    globalMech: Record<string, IMechanismProcess>,
+    globalMech: mpObj,
     sections: Record<string, ISection>,
 ) => {
     try {
@@ -42,8 +39,8 @@ export const run = async (
     }
 };
 
-export const readSchema = (data: any): Record<string, IMechanismProcess> => {
-    const result: Record<string, IMechanismProcess> = {};
+export const readSchema = (data: any): mpObj => {
+    const result: mpObj = {};
     Object.keys(data).forEach(function (attrKey) {
         const attrList = data[attrKey];
         const attrs: IAttr = {};

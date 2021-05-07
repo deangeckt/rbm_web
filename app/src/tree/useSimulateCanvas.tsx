@@ -31,7 +31,9 @@ export function useSimulateCanvas() {
             id: key,
             recording_type: 0,
             mechanism: {},
-            process: {},
+            process: {
+                0.5: {},
+            },
             mechanismCurrKey: '',
             processCurrKey: '',
             processSectionCurrKey: default_section_value,

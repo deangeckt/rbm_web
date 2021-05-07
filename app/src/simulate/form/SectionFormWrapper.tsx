@@ -6,6 +6,7 @@ import { useTreeText } from '../../tree/useTreeText';
 import { TextField, MenuItem, Button } from '@material-ui/core';
 import { section_recording } from '../../Wrapper';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { useSectionForm } from './useSectionForm';
 import './Form.css';
 
@@ -22,6 +23,8 @@ function SectionFormWrapper() {
         getSectionValue,
         updateSectionValue,
         addProcess,
+        deleteProcess,
+        disableDeleteProcess,
     } = useSectionForm();
 
     const selecedSections = Object.entries(state.checkedSections)
@@ -100,6 +103,16 @@ function SectionFormWrapper() {
                                 onClick={() => addProcess()}
                             >
                                 Add Process
+                            </Button>
+                            <Button
+                                disabled={disableDeleteProcess()}
+                                className="NoCapsButton"
+                                variant="outlined"
+                                color="primary"
+                                startIcon={<DeleteIcon />}
+                                onClick={() => deleteProcess()}
+                            >
+                                Delete Process
                             </Button>
                         </div>
                     ) : null}

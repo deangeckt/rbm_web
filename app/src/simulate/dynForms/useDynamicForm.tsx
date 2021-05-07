@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../../AppContext';
-import { IAttr, IMechanismProcess, impKeys, mpObj } from '../../Wrapper';
+import { IAttr, impKeys, mpObj } from '../../Wrapper';
 import { useDynamicFormShare } from './useDynnamicFormShare';
 
 export function useDynamicForms() {
@@ -71,6 +71,19 @@ export function useDynamicForms() {
         }
     };
 
+    const getDynamicFormPropsSectionAux = (sectionMp: mpObj, globalMp: mpObj, currKey: string) => {
+        const mp = sectionMp[currKey];
+        const defaultAttrs = globalMp[currKey].attrs;
+        const isSelectedKeyChecked = mp?.add ?? false;
+
+        // set only the changed attrs by user. mp.attrs.len <= defaultAtts.len
+        mp &&
+            Object.entries(mp.attrs).forEach(([attr, val]) => {
+                defaultAttrs[attr] = val;
+            });
+        return { selectedAttrs: defaultAttrs, isSelectedKeyChecked };
+    };
+
     const getDynamicFormProps = (
         impKey: impKeys,
     ): { selectedKey: string; selectedAttrs: IAttr; isSelectedKeyChecked: boolean } => {
@@ -83,26 +96,22 @@ export function useDynamicForms() {
             selectedAttrs = state.globalMechanism[selectedKey].attrs;
         } else {
             const selecedSection = getFirstSelectedSection();
-            if (impKey === 'pointMechanism') {
-            } else {
-            }
             if (!selecedSection) return { selectedKey: '', selectedAttrs: {}, isSelectedKeyChecked: false };
-            const keyMp = impKey === 'pointMechanism' ? 'mechanism' : 'process';
             selectedKey = impKey === 'pointMechanism' ? selecedSection.mechanismCurrKey : selecedSection.processCurrKey;
-            if (selectedKey === '') {
-                selectedAttrs = {};
-                isSelectedKeyChecked = false;
-            } else {
-                const mp = (selecedSection as any)[keyMp][selectedKey] as IMechanismProcess;
-                isSelectedKeyChecked = mp?.add ?? false;
-                const defaultAttrs = { ...((state as any)[impKey][selectedKey].attrs as IAttr) };
+            if (selectedKey === '') return { selectedKey: '', selectedAttrs: {}, isSelectedKeyChecked: false };
 
-                // set only the changed attrs by user. mp.attrs.len <= defaultAtts.len
-                mp &&
-                    Object.entries(mp.attrs).forEach(([attr, val]) => {
-                        defaultAttrs[attr] = val;
-                    });
-                selectedAttrs = defaultAttrs;
+            if (impKey === 'pointMechanism') {
+                ({ selectedAttrs, isSelectedKeyChecked } = getDynamicFormPropsSectionAux(
+                    selecedSection.mechanism,
+                    { ...state.pointMechanism },
+                    selectedKey,
+                ));
+            } else {
+                ({ selectedAttrs, isSelectedKeyChecked } = getDynamicFormPropsSectionAux(
+                    selecedSection.process[selecedSection.processSectionCurrKey],
+                    { ...state.pointProcess },
+                    selectedKey,
+                ));
             }
         }
 

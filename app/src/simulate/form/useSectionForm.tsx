@@ -30,8 +30,21 @@ export function useSectionForm() {
     const updateSectionValue = (value: number) => {
         const selectedSections = getAllSelectedSections();
         selectedSections.forEach((sec) => {
-            sec.processSectionCurrKey = value;
-            // TODO: deep copy obj
+            if (!Object.keys(sec.process).includes(value.toString())) {
+                sec.process[value] = Object.assign({}, sec.process[sec.processSectionCurrKey]);
+                delete sec.process[sec.processSectionCurrKey];
+                sec.processSectionCurrKey = value;
+            }
+        });
+        updateSelectedSectionsState(selectedSections);
+    };
+
+    const deleteProcess = () => {
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            delete sec.process[sec.processSectionCurrKey];
+            const sectionsKeys = Object.keys(sec.process);
+            sec.processSectionCurrKey = Number(sectionsKeys[sectionsKeys.length - 1]);
         });
         updateSelectedSectionsState(selectedSections);
     };
@@ -39,8 +52,16 @@ export function useSectionForm() {
     const addProcess = () => {
         const selectedSections = getAllSelectedSections();
         selectedSections.forEach((sec) => {
-            sec.process[default_section_value] = {};
+            sec.process[-1] = {};
+            sec.processSectionCurrKey = -1;
         });
+        updateSelectedSectionsState(selectedSections);
+    };
+
+    const disableDeleteProcess = (): boolean => {
+        const selectedSections = getFirstSelectedSection();
+        if (!selectedSections) return true;
+        return Object.keys(selectedSections.process).length === 1;
     };
 
     return {
@@ -49,5 +70,7 @@ export function useSectionForm() {
         getSectionValue,
         updateSectionValue,
         addProcess,
+        deleteProcess,
+        disableDeleteProcess,
     };
 }
