@@ -61,18 +61,20 @@ class NeuronWrapper:
 
     def __add_section_process(self, section: dict):
         id_, tid_ = section_key_to_id_tid(section['id'])
-        section_ = section['section']
-
-        h_ref = tid_to_type(tid_, self.h)
-        h_ref = h_ref[id_](section_)
-
         process = section['process']
-        for proc in process:
-            new_proc = getattr(self.h, proc)(h_ref)
-            attrs = process[proc]['attrs']
-            for attr in attrs:
-                setattr(new_proc, attr, attrs[attr])
-            self.process.append(new_proc)
+        for segment_key in process:
+            for proc in process[segment_key]:
+                segment = float(segment_key)
+                if segment < 0 or segment > 1:
+                    raise ValueError('Invalid segment. id: {} type: {} segment: {}'.format(id_, tid_, segment))
+                h_ref = tid_to_type(tid_, self.h)
+                h_ref = h_ref[id_](segment)
+
+                new_proc = getattr(self.h, proc)(h_ref)
+                attrs = process[segment_key][proc]['attrs']
+                for attr in attrs:
+                    setattr(new_proc, attr, attrs[attr])
+                self.process.append(new_proc)
 
     def __add_record(self, section: dict):
         recording_type_ = section['recording_type']
@@ -81,17 +83,23 @@ class NeuronWrapper:
 
         id_, tid_ = section_key_to_id_tid(section['id'])
 
-        section_ = section['section']
-        recording_key_ = recording_key(recording_type_, tid_, id_, section_)
+        recording_key_ = recording_key(recording_type_, tid_, id_, 0.5)
 
         h_ref = tid_to_type(tid_, self.h)
-        h_ref = h_ref[id_](section_)
+        h_ref = h_ref[id_](0.5)
         h_ref = recording_type_to_ref(type_=recording_type_, h_ref=h_ref)
 
         vrec = self.h.Vector()
         vrec.record(h_ref)
 
         self.recordings[recording_key_] = vrec
+
+    def __add_section_general_params(self, section: dict):
+        id_, tid_ = section_key_to_id_tid(section['id'])
+        h_ref = tid_to_type(tid_, self.h)[id_]
+        general = section['general']
+        for param in general:
+            setattr(h_ref, param, general[param])
 
     def __init_global(self):
         global_params = self.input['global']
@@ -116,6 +124,7 @@ class NeuronWrapper:
             self.__add_record(section)
             self.__add_section_mech(section)
             self.__add_section_process(section)
+            self.__add_section_general_params(section)
 
         if self.recordings == {}:
             raise ValueError('Missing Recordings')

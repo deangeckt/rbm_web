@@ -1,18 +1,11 @@
 import { useContext } from 'react';
 import { AppContext } from '../AppContext';
-import {
-    ISection,
-    default_section_value,
-    ILine,
-    root_key,
-    root_id,
-    section_types,
-    none_selected_key,
-    RenderILine,
-} from '../Wrapper';
+import { useSimulate } from '../simulate/useSimulate';
+import { ISection, ILine, root_key, root_id, section_types, none_selected_key, RenderILine } from '../Wrapper';
 
 export function useSimulateCanvas() {
     const { state, setState } = useContext(AppContext);
+    const { addNewSection } = useSimulate();
 
     const updateTree = (x_delta: number, y_delta: number): void => {
         const ents = Object.values(state.sections);
@@ -24,28 +17,6 @@ export function useSimulateCanvas() {
                 else section.line.points[i] += y_delta;
             }
         }
-    };
-
-    const addNewSection = (key: string, pid: string, swc_id: string, tid: number, radius: number): ISection => {
-        return {
-            id: key,
-            recording_type: 0,
-            mechanism: {},
-            process: {
-                0.5: {},
-            },
-            mechanismCurrKey: '',
-            processCurrKey: '',
-            processSectionCurrKey: default_section_value,
-            line: {
-                id: swc_id,
-                pid: pid,
-                points: [],
-                children: [],
-                tid: tid,
-                radius: radius,
-            },
-        };
     };
 
     let cid = -1;

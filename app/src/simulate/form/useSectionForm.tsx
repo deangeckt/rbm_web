@@ -74,6 +74,20 @@ export function useSectionForm() {
         updateSelectedSectionsState(selectedSections);
     };
 
+    const onChangeGeneralAttr = (attr: string, value: number) => {
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            sec.general[attr] = value;
+        });
+        updateSelectedSectionsState(selectedSections);
+    };
+
+    const getSectionGenenralAttr = () => {
+        const selectedSection = getFirstSelectedSection();
+        if (!selectedSection) return {};
+        return selectedSection.general;
+    };
+
     return {
         getSectionRecording,
         updateSectionRecording,
@@ -83,5 +97,7 @@ export function useSectionForm() {
         deleteProcess,
         onlyOneProcess,
         processNavigate,
+        onChangeGeneralAttr,
+        getSectionGenenralAttr,
     };
 }

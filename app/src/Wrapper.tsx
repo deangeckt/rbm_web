@@ -80,6 +80,7 @@ export interface ISection {
     process: Record<number, mpObj>;
     processSectionCurrKey: number;
     processCurrKey: string;
+    general: IAttr;
     line: RenderILine;
 }
 
@@ -164,6 +165,13 @@ export const default_section_value = 0.5;
 
 const init_stage = getStage();
 const static_global_form = readSchema(config.static_global_form);
+
+export const init_general_section: IAttr = {
+    L: 100,
+    Ra: 35.4,
+    nseg: 1,
+    rallbranch: 1.0,
+};
 
 export const design_init_root_line: ILine = {
     id: root_id,

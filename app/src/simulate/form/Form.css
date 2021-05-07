@@ -51,7 +51,7 @@
     border-bottom: 1px solid #efefef;
 }
 
-.SctionSegmentHeader {
+.SctionFormProcessHeader {
     display: flex;
     justify-content: space-evenly;
     margin-bottom: 12;

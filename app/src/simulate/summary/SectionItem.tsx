@@ -20,6 +20,9 @@ function SectionItem({ section }: ISectionItemProps) {
                     <u>Recording:</u> {recording_value}
                 </p>
 
+                <div className="SummarySectionHeader">General:</div>
+                <MechProcItem id={'general'} item={{ attrs: section.general }} />
+
                 <div className="SummarySectionHeader">Mechanism:</div>
 
                 {Object.entries(section.mechanism).map(([name, mp]) => {

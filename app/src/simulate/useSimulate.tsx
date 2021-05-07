@@ -1,9 +1,32 @@
 import { useContext } from 'react';
 import { AppContext } from '../AppContext';
-import { ISection, mpObj } from '../Wrapper';
+import { default_section_value, init_general_section, ISection, mpObj } from '../Wrapper';
 
 export function useSimulate() {
     const { state } = useContext(AppContext);
+
+    const addNewSection = (key: string, pid: string, swc_id: string, tid: number, radius: number): ISection => {
+        return {
+            id: key,
+            recording_type: 0,
+            mechanism: {},
+            process: {
+                0.5: {},
+            },
+            mechanismCurrKey: '',
+            processCurrKey: '',
+            processSectionCurrKey: default_section_value,
+            general: { ...init_general_section },
+            line: {
+                id: swc_id,
+                pid: pid,
+                points: [],
+                children: [],
+                tid: tid,
+                radius: radius,
+            },
+        };
+    };
 
     const filterProcMech = (mps: mpObj) => {
         const filterMp: mpObj = {};
@@ -35,8 +58,11 @@ export function useSimulate() {
                 filterProcList[Number(sectionKey)] = filterProcMech(proc);
                 if (Object.keys(proc).length) anyProcess = true;
             });
+
             const filterMech = filterProcMech(state.sections[sec.id].mechanism);
-            if (anyProcess || Object.keys(filterMech).length || sec.recording_type !== 0)
+
+            const generalchanged = JSON.stringify(sec.general) !== JSON.stringify(init_general_section);
+            if (generalchanged || anyProcess || Object.keys(filterMech).length || sec.recording_type !== 0)
                 filterSections[sec.id] = {
                     ...state.sections[sec.id],
                     process: filterProcList,
@@ -47,5 +73,5 @@ export function useSimulate() {
         return { globalMechanism: filterGlobalMech, sections: filterSections };
     };
 
-    return { getChangedForm };
+    return { getChangedForm, addNewSection };
 }
