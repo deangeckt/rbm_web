@@ -3,11 +3,14 @@ import Chip from '@material-ui/core/Chip';
 import DynamicForm from '../dynForms/DynamicForm';
 import { AppContext } from '../../AppContext';
 import { useTreeText } from '../../tree/useTreeText';
-import { TextField, MenuItem, Button } from '@material-ui/core';
+import { TextField, MenuItem, IconButton, Tooltip } from '@material-ui/core';
 import { section_recording } from '../../Wrapper';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useSectionForm } from './useSectionForm';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+
 import './Form.css';
 
 type SectionTab = 'process' | 'mech' | 'record';
@@ -24,7 +27,8 @@ function SectionFormWrapper() {
         updateSectionValue,
         addProcess,
         deleteProcess,
-        disableDeleteProcess,
+        onlyOneProcess,
+        processNavigate,
     } = useSectionForm();
 
     const selecedSections = Object.entries(state.checkedSections)
@@ -88,6 +92,14 @@ function SectionFormWrapper() {
                 <>
                     {sectionTab === 'process' ? (
                         <div className="SctionSegmentHeader">
+                            <IconButton
+                                disabled={onlyOneProcess()}
+                                color="primary"
+                                size="medium"
+                                onClick={() => processNavigate(false)}
+                            >
+                                <NavigateBeforeIcon />
+                            </IconButton>
                             <TextField
                                 label={'Section'}
                                 variant="filled"
@@ -96,25 +108,24 @@ function SectionFormWrapper() {
                                 onChange={(e) => updateSectionValue(Number(e.target.value))}
                                 InputProps={{ inputProps: { min: 0, step: 0.1 } }}
                             />
-                            <Button
-                                className="NoCapsButton"
-                                variant="outlined"
+                            <Tooltip title="Add section">
+                                <IconButton color="primary" onClick={() => addProcess()}>
+                                    <AddIcon />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Delete section">
+                                <IconButton disabled={onlyOneProcess()} color="primary" onClick={() => deleteProcess()}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </Tooltip>
+                            <IconButton
+                                disabled={onlyOneProcess()}
                                 color="primary"
-                                startIcon={<AddIcon />}
-                                onClick={() => addProcess()}
+                                size="medium"
+                                onClick={() => processNavigate(true)}
                             >
-                                Add Process
-                            </Button>
-                            <Button
-                                disabled={disableDeleteProcess()}
-                                className="NoCapsButton"
-                                variant="outlined"
-                                color="primary"
-                                startIcon={<DeleteIcon />}
-                                onClick={() => deleteProcess()}
-                            >
-                                Delete Process
-                            </Button>
+                                <NavigateNextIcon />
+                            </IconButton>
                         </div>
                     ) : null}
                     <div>{renderTab()}</div>

@@ -1,16 +1,13 @@
-import { useContext } from 'react';
-import { AppContext } from '../../AppContext';
 import { default_section_value } from '../../Wrapper';
 import { useDynamicFormShare } from '../dynForms/useDynnamicFormShare';
 
 export function useSectionForm() {
-    const { state, setState } = useContext(AppContext);
     const { getFirstSelectedSection, getAllSelectedSections, updateSelectedSectionsState } = useDynamicFormShare();
 
     const getSectionRecording = () => {
-        const selectedSections = getFirstSelectedSection();
-        if (!selectedSections) return 0;
-        return selectedSections.recording_type;
+        const selectedSection = getFirstSelectedSection();
+        if (!selectedSection) return 0;
+        return selectedSection.recording_type;
     };
 
     const updateSectionRecording = (value: number) => {
@@ -22,9 +19,9 @@ export function useSectionForm() {
     };
 
     const getSectionValue = () => {
-        const selectedSections = getFirstSelectedSection();
-        if (!selectedSections) return default_section_value;
-        return selectedSections.processSectionCurrKey;
+        const selectedSection = getFirstSelectedSection();
+        if (!selectedSection) return default_section_value;
+        return selectedSection.processSectionCurrKey;
     };
 
     const updateSectionValue = (value: number) => {
@@ -58,10 +55,23 @@ export function useSectionForm() {
         updateSelectedSectionsState(selectedSections);
     };
 
-    const disableDeleteProcess = (): boolean => {
-        const selectedSections = getFirstSelectedSection();
-        if (!selectedSections) return true;
-        return Object.keys(selectedSections.process).length === 1;
+    const onlyOneProcess = (): boolean => {
+        const selectedSection = getFirstSelectedSection();
+        if (!selectedSection) return true;
+        return Object.keys(selectedSection.process).length === 1;
+    };
+
+    const processNavigate = (next: boolean) => {
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            const keys = Object.keys(sec.process);
+            const currIdx = keys.findIndex((k) => k === sec.processSectionCurrKey.toString());
+            const newIdx = next ? currIdx + 1 : currIdx - 1;
+            if (newIdx > keys.length - 1 || newIdx < 0) return;
+            const newKey = keys[newIdx];
+            sec.processSectionCurrKey = Number(newKey);
+        });
+        updateSelectedSectionsState(selectedSections);
     };
 
     return {
@@ -71,6 +81,7 @@ export function useSectionForm() {
         updateSectionValue,
         addProcess,
         deleteProcess,
-        disableDeleteProcess,
+        onlyOneProcess,
+        processNavigate,
     };
 }

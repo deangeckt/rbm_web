@@ -1,12 +1,12 @@
 import React from 'react';
-import { IMechanismProcess, impKeys } from '../../Wrapper';
+import { impKeys, mpObj } from '../../Wrapper';
 import DynamicAttr from './DynamicAttr';
 import DynamicKeys from './DynamicKeys';
 import { useDynamicForms } from './useDynamicForm';
 import './DynamicForm.css';
 
 export interface IDynamicFormProps {
-    mp: Record<string, IMechanismProcess>;
+    mp: mpObj;
     impKey: impKeys;
 }
 

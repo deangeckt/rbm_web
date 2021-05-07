@@ -7,7 +7,7 @@ import SimulateMainForm from './form/SimulateMainForms';
 import InfoDialog from './dialogs/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import SimulateCanvas from './SimulateCanvas';
-import { IMechanismProcess, IPlotData, root_key } from '../Wrapper';
+import { IMechanismProcess, IPlotData } from '../Wrapper';
 import ReadLoading from '../anim/ReadLoading';
 import { useSimulate } from './useSimulate';
 import Summary from './summary/Summary';
@@ -22,9 +22,6 @@ function Simulate() {
     const { state, setState } = useContext(AppContext);
     const { getChangedForm } = useSimulate();
     const { pushPlot } = usePlot();
-    // console.log(state.sections[root_key]);
-    console.log(state.pointProcess);
-    console.log(state.pointMechanism);
 
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);

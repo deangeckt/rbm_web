@@ -52,7 +52,7 @@ function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
                                         label={attr}
                                         variant="filled"
                                         type="number"
-                                        defaultValue={value}
+                                        value={value}
                                         onChange={(e: any) => onAttrChange(impKey, attr, Number(e.target.value))}
                                     />
                                 </div>

@@ -73,7 +73,6 @@ export function useDynamicForms() {
 
     const getDynamicFormPropsSectionAux = (sectionMp: mpObj, globalMp: mpObj, currKey: string) => {
         const mp = sectionMp[currKey];
-        console.log(globalMp);
         const defaultAttrs = globalMp[currKey].attrs;
         const isSelectedKeyChecked = mp?.add ?? false;
 
