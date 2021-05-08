@@ -1,11 +1,11 @@
 import React from 'react';
 import { useTreeText } from '../../tree/useTreeText';
-import { ISection, section_recording } from '../../Wrapper';
+import { SectionScheme, section_recording } from '../../Wrapper';
 import MechProcItem from './MechProcItem';
 import './Summary.css';
 
 export interface ISectionItemProps {
-    section: ISection;
+    section: SectionScheme;
 }
 
 function SectionItem({ section }: ISectionItemProps) {

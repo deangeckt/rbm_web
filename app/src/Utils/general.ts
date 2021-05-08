@@ -1,5 +1,5 @@
 import { getParamsJson } from '../api/api';
-import { IAppState, ILine, ISection, mpObj, root_id } from '../Wrapper';
+import { IAppState, ILine, SectionScheme, mpObj, root_id } from '../Wrapper';
 import { exportFile } from './swcUtils';
 
 // TODO: remove redundant element created
@@ -18,7 +18,7 @@ export const downloadSwcFile = (state: IAppState, linesArray: ILine[]) => {
     element.click();
 };
 
-export const downloadJsonParams = (globalMech: mpObj, sections: Record<string, ISection>) => {
+export const downloadJsonParams = (globalMech: mpObj, sections: Record<string, SectionScheme>) => {
     const params = getParamsJson(globalMech, sections);
     const jsonparams = JSON.stringify(params);
     const element = document.createElement('a');

@@ -3,8 +3,8 @@ import Drawer from '@material-ui/core/Drawer';
 import { AppContext } from '../../AppContext';
 import { useSimulate } from '../useSimulate';
 import MechProcItem from './MechProcItem';
-import './Summary.css';
 import SectionItem from './SectionItem';
+import './Summary.css';
 
 function Summary() {
     const { state, setState } = useContext(AppContext);

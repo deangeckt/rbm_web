@@ -72,6 +72,7 @@ export const section_recording = [
 export type RenderILine = Pick<ILine, 'id' | 'pid' | 'points' | 'children' | 'tid' | 'radius'>;
 export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
 export type mpObj = Record<string, IMechanismProcess>;
+export type SectionScheme = Omit<ISection, 'mechanismCurrKey' | 'processSectionCurrKey' | 'processCurrKey' | 'line'>;
 export interface ISection {
     id: string;
     recording_type: number;

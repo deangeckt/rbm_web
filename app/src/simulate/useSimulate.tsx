@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../AppContext';
-import { default_section_value, init_general_section, ISection, mpObj } from '../Wrapper';
+import { default_section_value, init_general_section, ISection, mpObj, SectionScheme } from '../Wrapper';
 
 export function useSimulate() {
     const { state } = useContext(AppContext);
@@ -43,10 +43,10 @@ export function useSimulate() {
 
     const getChangedForm = (): {
         globalMechanism: mpObj;
-        sections: Record<string, ISection>;
+        sections: Record<string, SectionScheme>;
     } => {
         const filterGlobalMech: mpObj = filterProcMech(state.globalMechanism);
-        const filterSections: Record<string, ISection> = {};
+        const filterSections: Record<string, SectionScheme> = {};
 
         const sectionEnts = Object.values(state.sections);
         for (let i = 0; i < sectionEnts.length; i++) {
@@ -62,12 +62,16 @@ export function useSimulate() {
             const filterMech = filterProcMech(state.sections[sec.id].mechanism);
 
             const generalchanged = JSON.stringify(sec.general) !== JSON.stringify(init_general_section);
-            if (generalchanged || anyProcess || Object.keys(filterMech).length || sec.recording_type !== 0)
+            if (generalchanged || anyProcess || Object.keys(filterMech).length || sec.recording_type !== 0) {
+                const currSection = state.sections[sec.id];
                 filterSections[sec.id] = {
-                    ...state.sections[sec.id],
+                    id: currSection.id,
+                    general: { ...currSection.general },
+                    recording_type: currSection.recording_type,
                     process: filterProcList,
                     mechanism: filterMech,
                 };
+            }
         }
 
         return { globalMechanism: filterGlobalMech, sections: filterSections };
