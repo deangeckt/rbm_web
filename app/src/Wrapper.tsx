@@ -78,7 +78,7 @@ export interface ISection {
     recording_type: number;
     mechanism: mpObj;
     mechanismCurrKey: string;
-    process: Record<number, mpObj>;
+    process: Record<number, mpObj>; //key: segment
     processSectionCurrKey: number;
     processCurrKey: string;
     general: IAttr;
@@ -95,7 +95,7 @@ export interface ILine {
     pid: string;
     tid: number;
     cid?: number;
-    points: number[]; // [x1,y1, x2,y2]
+    points: number[]; // [x1, y1, x2,y2]
     radius: number;
     length: number;
     alpha: number;
@@ -105,7 +105,7 @@ export interface ILine {
 export type IAttr = Record<string, number>;
 export interface IMechanismProcess {
     attrs: IAttr;
-    add?: boolean; // used only for global
+    add?: boolean;
 }
 
 export interface IDialogs {
