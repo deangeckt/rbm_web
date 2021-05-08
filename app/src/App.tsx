@@ -10,7 +10,8 @@ function App(): JSX.Element {
     const history = useHistory();
     const { state, setState } = useContext(AppContext);
 
-    const uploadFile = async (e: any) => {
+    const uploadSwcFile = async (e: any) => {
+        if (e?.target?.files?.length === 0) return;
         e.preventDefault();
         const reader = new FileReader();
         reader.onload = async (e) => {
@@ -41,7 +42,7 @@ function App(): JSX.Element {
                 <div className="Divider" />
                 <Button className="Button" variant="outlined" color="primary" component="label">
                     Import Neuron
-                    <input type="file" accept={'.txt, .swc'} hidden onChange={(e) => uploadFile(e)} />
+                    <input type="file" accept={'.txt, .swc'} hidden onChange={(e) => uploadSwcFile(e)} />
                 </Button>
             </div>
         </div>

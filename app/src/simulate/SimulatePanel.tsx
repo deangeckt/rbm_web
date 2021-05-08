@@ -22,7 +22,7 @@ export interface ISimulatePanelProps {
 function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePanelProps) {
     const { state, setState } = useContext(AppContext);
     const { getLinesArrayNoRoot } = useDesignCanvas();
-    const { getChangedForm } = useSimulate();
+    const { getChangedForm, importJsonParams } = useSimulate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const openMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -62,7 +62,16 @@ function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePane
                         closeMenu();
                     }}
                 >
-                    Export json param
+                    Export session params
+                </MenuItem>
+                <MenuItem
+                    onClick={() => {
+                        closeMenu();
+                    }}
+                    component="label"
+                >
+                    Import session params
+                    <input type="file" accept={'.json'} hidden onChange={(e) => importJsonParams(e)} />
                 </MenuItem>
             </Menu>
             <div style={{ marginLeft: '16px' }}>

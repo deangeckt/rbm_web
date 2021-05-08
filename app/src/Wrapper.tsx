@@ -185,6 +185,8 @@ export const design_init_root_line: ILine = {
     alpha: 0,
 };
 
+export const init_global_curr_key = 'general';
+
 export const init_app_state: IAppState = {
     stage: init_stage,
     designLines: {
@@ -204,7 +206,7 @@ export const init_app_state: IAppState = {
     pointMechanism: {},
     pointProcess: {},
     globalMechanism: static_global_form,
-    globalMechanismCurrKey: 'general',
+    globalMechanismCurrKey: init_global_curr_key,
     plots: [],
 };
 

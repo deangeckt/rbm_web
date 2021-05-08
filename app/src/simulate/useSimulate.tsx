@@ -1,9 +1,17 @@
 import { useContext } from 'react';
+import { schema } from '../api/api';
 import { AppContext } from '../AppContext';
-import { default_section_value, init_general_section, ISection, mpObj, SectionScheme } from '../Wrapper';
+import {
+    default_section_value,
+    init_general_section,
+    init_global_curr_key,
+    ISection,
+    mpObj,
+    SectionScheme,
+} from '../Wrapper';
 
 export function useSimulate() {
-    const { state } = useContext(AppContext);
+    const { state, setState } = useContext(AppContext);
 
     const addNewSection = (key: string, pid: string, swc_id: string, tid: number, radius: number): ISection => {
         return {
@@ -77,5 +85,53 @@ export function useSimulate() {
         return { globalMechanism: filterGlobalMech, sections: filterSections };
     };
 
-    return { getChangedForm, addNewSection };
+    const parseJsonParams = (txt: string): { globalMechanism: mpObj; sections: Record<string, SectionScheme> } => {
+        const parsed = JSON.parse(txt) as schema[];
+        let globalMechanism: mpObj = {};
+        let sections: Record<string, SectionScheme> = {};
+        parsed.forEach((s) => {
+            if (s.id === 'global') {
+                globalMechanism = s.value;
+            } else if (s.id === 'sections') {
+                sections = s.value;
+            }
+        });
+        return { sections, globalMechanism };
+    };
+
+    const importJsonParams = async (e: any) => {
+        if (e?.target?.files?.length === 0) return;
+        e.preventDefault();
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            const text = e?.target?.result;
+            if (text) {
+                const { sections, globalMechanism } = parseJsonParams(text as string);
+
+                const currGlobal = { ...state.globalMechanism };
+                Object.entries(globalMechanism).forEach(([key, val]) => {
+                    currGlobal[key] = val;
+                });
+
+                const currSections = { ...state.sections };
+                Object.entries(sections).forEach(([key, val]) => {
+                    currSections[key].general = val.general;
+                    currSections[key].recording_type = val.recording_type;
+                    currSections[key].mechanism = val.mechanism;
+                    currSections[key].process = val.process;
+                    currSections[key].processSectionCurrKey = Number(Object.keys(val.process)[0]);
+                });
+
+                setState({
+                    ...state,
+                    globalMechanism: currGlobal,
+                    globalMechanismCurrKey: init_global_curr_key,
+                    sections: currSections,
+                });
+            }
+        };
+        reader.readAsText(e?.target?.files[0]);
+    };
+
+    return { getChangedForm, addNewSection, importJsonParams };
 }
