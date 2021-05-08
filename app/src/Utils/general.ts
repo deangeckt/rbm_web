@@ -1,4 +1,4 @@
-import { getParamsJson } from '../api/api';
+import { prepareJsonParams } from '../api/api';
 import { IAppState, ILine, SectionScheme, mpObj, root_id } from '../Wrapper';
 import { exportFile } from './swcUtils';
 
@@ -19,7 +19,7 @@ export const downloadSwcFile = (state: IAppState, linesArray: ILine[]) => {
 };
 
 export const downloadJsonParams = (globalMech: mpObj, sections: Record<string, SectionScheme>) => {
-    const params = getParamsJson(globalMech, sections);
+    const params = prepareJsonParams(globalMech, sections);
     const jsonparams = JSON.stringify(params);
     const element = document.createElement('a');
     const file = new Blob([jsonparams], {

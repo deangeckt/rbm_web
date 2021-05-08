@@ -7,11 +7,25 @@ export interface schema {
     value: any;
 }
 
-export const getParamsJson = (globalMech: mpObj, sections: Record<string, SectionScheme>): schema[] => {
+export const prepareJsonParams = (globalMech: mpObj, sections: Record<string, SectionScheme>): schema[] => {
     const data: schema[] = [];
     data.push({ id: 'global', value: globalMech });
     data.push({ id: 'sections', value: sections });
     return data;
+};
+
+export const parseJsonParams = (txt: string): { globalMechanism: mpObj; sections: Record<string, SectionScheme> } => {
+    const parsed = JSON.parse(txt) as schema[];
+    let globalMechanism: mpObj = {};
+    let sections: Record<string, SectionScheme> = {};
+    parsed.forEach((s) => {
+        if (s.id === 'global') {
+            globalMechanism = s.value;
+        } else if (s.id === 'sections') {
+            sections = s.value;
+        }
+    });
+    return { sections, globalMechanism };
 };
 
 export const run = async (
@@ -24,7 +38,7 @@ export const run = async (
         const response = (await axios.request({
             url: 'http://localhost:8080/api/v1/run',
             method: 'POST',
-            data: getParamsJson(globalMech, sections),
+            data: prepareJsonParams(globalMech, sections),
         })) as AxiosResponse;
 
         const idata: IPlotData[] = [];

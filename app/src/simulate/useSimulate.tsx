@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { schema } from '../api/api';
+import { parseJsonParams } from '../api/api';
 import { AppContext } from '../AppContext';
 import {
     default_section_value,
@@ -83,20 +83,6 @@ export function useSimulate() {
         }
 
         return { globalMechanism: filterGlobalMech, sections: filterSections };
-    };
-
-    const parseJsonParams = (txt: string): { globalMechanism: mpObj; sections: Record<string, SectionScheme> } => {
-        const parsed = JSON.parse(txt) as schema[];
-        let globalMechanism: mpObj = {};
-        let sections: Record<string, SectionScheme> = {};
-        parsed.forEach((s) => {
-            if (s.id === 'global') {
-                globalMechanism = s.value;
-            } else if (s.id === 'sections') {
-                sections = s.value;
-            }
-        });
-        return { sections, globalMechanism };
     };
 
     const importJsonParams = async (e: any) => {
