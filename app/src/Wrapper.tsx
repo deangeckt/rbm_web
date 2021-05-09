@@ -140,10 +140,10 @@ export interface IAppState {
     plots: IPlotData[][];
 }
 
-export const getStage = (): IStageSize => {
+export const getStage = (canvasId: string): IStageSize => {
     const canvas_part_size = 0.7;
-    const canvas_hegiht = window.document.getElementById('Canvas')?.offsetHeight ?? window.innerHeight;
-    const canvas_width = window.document.getElementById('Canvas')?.offsetWidth ?? window.innerWidth * canvas_part_size;
+    const canvas_hegiht = window.document.getElementById(canvasId)?.offsetHeight ?? window.innerHeight;
+    const canvas_width = window.document.getElementById(canvasId)?.offsetWidth ?? window.innerWidth * canvas_part_size;
     return {
         width: canvas_width,
         height: canvas_hegiht,
@@ -164,7 +164,7 @@ export const default_length = 10; //in micro
 export const default_alpha = 0.1; // in rad [PI]
 export const default_section_value = 0.5;
 
-const init_stage = getStage();
+const init_stage = getStage('Canvas');
 const static_global_form = readSchema(config.static_global_form);
 
 export const init_general_section: IAttr = {

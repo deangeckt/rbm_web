@@ -28,7 +28,7 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
     useEffect(() => {
         if (widSize && widSize !== state.stage.width) {
             console.log('changing stage size');
-            const newStage = getStage();
+            const newStage = getStage('Canvas');
             if (design) {
                 const lines = { ...state.designLines };
                 updateChildsBelow('1', newStage.rootX, newStage.rootY);

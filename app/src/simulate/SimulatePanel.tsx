@@ -91,6 +91,14 @@ function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePane
                 >
                     Tree
                 </Button>
+                <Button
+                    className="NoCapsButton"
+                    variant={toggle === 'TreeAnim' ? 'contained' : 'outlined'}
+                    color="primary"
+                    onClick={() => togglePlotTree('TreeAnim')}
+                >
+                    Animation
+                </Button>
             </div>
             <div style={{ marginRight: '16px' }}>
                 {!running ? (
