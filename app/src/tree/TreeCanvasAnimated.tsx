@@ -28,7 +28,30 @@ const animList: AnimProps[] = [
     },
 ];
 
-const TCA = () => {
+const TreeCanvasAnimated = () => {
+    // TODO - common code..
+    const [stageScale, setStageScale] = React.useState(1);
+    const [stageCoord, setStageCoord] = React.useState({ x: 0, y: 0 });
+
+    const handleWheel = (e: any) => {
+        e.evt.preventDefault();
+
+        const scaleBy = 1.1;
+        const stage = e.target.getStage();
+        const oldScale = stage.scaleX();
+        const mousePointTo = {
+            x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
+            y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale,
+        };
+
+        const newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+        setStageCoord({
+            x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
+            y: -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale,
+        });
+        setStageScale(newScale);
+    };
+
     const randColor = () => {
         return '#' + Math.floor(Math.random() * 16777215).toString(16);
     };
@@ -46,17 +69,25 @@ const TCA = () => {
         ap[2].from = colorThree;
         randomAnimPropsPerLine[lines[i].id] = ap;
     }
-    console.log(randomAnimPropsPerLine);
 
     return (
-        <Stage width={window.innerWidth} height={window.innerHeight} draggable>
+        <Stage
+            width={window.innerWidth}
+            height={window.innerHeight}
+            draggable
+            onWheel={handleWheel}
+            scaleX={stageScale}
+            scaleY={stageScale}
+            x={stageCoord.x}
+            y={stageCoord.y}
+        >
             <Layer>
                 {lines.map((l: RenderILine) => {
-                    return <AnimatedLine key={l.id} line={l} animList={randomAnimPropsPerLine[l.id]} />;
+                    return <AnimatedLine key={l.id} line={l} animProps={randomAnimPropsPerLine[l.id]} />;
                 })}
             </Layer>
         </Stage>
     );
 };
 
-export default TCA;
+export default TreeCanvasAnimated;

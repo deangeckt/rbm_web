@@ -6,21 +6,21 @@ import { AnimProps } from './TreeCanvasAnimated';
 
 export interface AnimatedLinedProps {
     line: RenderILine;
-    animList: AnimProps[];
+    animProps: AnimProps[];
 }
 
-const AnimatedLine = ({ line, animList }: AnimatedLinedProps) => {
+const AnimatedLine = ({ line, animProps }: AnimatedLinedProps) => {
     const advanceAnim = (idx: number) => {
-        const newIdx = idx === animList.length ? 0 : idx;
+        const newIdx = idx === animProps.length ? 0 : idx;
         setAnim(renderNewAnim(line, newIdx));
     };
 
     const renderNewAnim = (line: RenderILine, idx: number) => {
         return (
             <Spring
-                from={{ stroke: animList[idx].from }}
-                to={{ stroke: animList[idx].to }}
-                config={{ duration: animList[idx].dur }}
+                from={{ stroke: animProps[idx].from }}
+                to={{ stroke: animProps[idx].to }}
+                config={{ duration: animProps[idx].dur }}
                 onRest={() => advanceAnim(idx + 1)}
             >
                 {(props) => (
@@ -29,6 +29,7 @@ const AnimatedLine = ({ line, animList }: AnimatedLinedProps) => {
                         points={[...line.points]}
                         strokeWidth={line.radius + lineRadiusAddition}
                         draggable={false}
+                        perfectDrawEnabled={false}
                     />
                 )}
             </Spring>
