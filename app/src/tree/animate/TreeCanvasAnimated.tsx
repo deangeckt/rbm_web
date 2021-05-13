@@ -1,12 +1,14 @@
 import React, { useContext } from 'react';
 import { Stage, Layer } from 'react-konva';
-import { RenderILine } from '../../Wrapper';
+import { RenderILine, root_id } from '../../Wrapper';
 import AnimatedLine from './AnimatedLine';
 import { useSimulateCanvas } from '../useSimulateCanvas';
 import { useTreeCanvasCommon } from '../useTreeCanvasCommon';
 import { Button, Checkbox, FormControlLabel } from '@material-ui/core';
 import { AppContext } from '../../AppContext';
+import AnimatedCircle from './AnimatedCircle';
 import './Animate.css';
+import { neuronRadToSize } from '../../utils/swcUtils';
 
 export interface AnimProps {
     from: string;
@@ -16,18 +18,18 @@ export interface AnimProps {
 
 const animList: AnimProps[] = [
     {
-        from: 'red',
-        to: 'blue',
+        from: '#FF0000',
+        to: '#0000FF',
         dur: 1500,
     },
     {
-        from: 'blue',
-        to: 'green',
+        from: '#0000FF',
+        to: '#00FF00',
         dur: 1500,
     },
     {
-        from: 'green',
-        to: 'red',
+        from: '#00FF00',
+        to: '#FF0000',
         dur: 1500,
     },
 ];
@@ -94,6 +96,13 @@ const TreeCanvasAnimated = ({ display }: ITreeCanvasAnimatedProps) => {
                         y={stageCoord.y}
                     >
                         <Layer>
+                            <AnimatedCircle
+                                radius={neuronRadToSize(state.designLines[root_id].radius)}
+                                start={startAnim}
+                                animProps={animList}
+                                x={state.stage.rootX}
+                                y={state.stage.rootY}
+                            />
                             {lines.map((l: RenderILine) => {
                                 return (
                                     <AnimatedLine
