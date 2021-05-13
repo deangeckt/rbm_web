@@ -6,15 +6,8 @@
 				"attrs": {
 					"sim_time": 50,
 					"dt": 0.025,
-					"rest_volt": -65,
+					"rest_volt": -70,
 					"celsius": 6.3
-				},
-				"add": true
-			},
-			"na_ion": {
-				"attrs": {
-					"nai0_na_ion": 11,
-					"nao0_na_ion": 140
 				},
 				"add": true
 			}
@@ -25,42 +18,30 @@
 		"value": {
 			"0_1": {
 				"id": "0_1",
-				"section": 0.5,
+				"general": {
+					"L": 100,
+					"Ra": 35.4,
+					"nseg": 1,
+					"rallbranch": 1
+				},
 				"recording_type": 1,
+				"process": {
+					"0.5": {
+						"IClamp": {
+							"attrs": {
+								"delay": 20,
+								"dur": 20,
+								"amp": 0.5
+							},
+							"add": true
+						}
+					}
+				},
 				"mechanism": {
 					"hh": {
 						"attrs": {},
 						"add": true
-					},
-					"pas": {
-						"attrs": {},
-						"add": true
 					}
-				},
-				"process": {
-					"IClamp": {
-						"attrs": {
-							"delay": 10,
-							"dur": 5,
-							"amp": 0.5
-						},
-						"add": true
-					}
-				},
-				"mechanismCurrKey": "pas",
-				"processCurrKey": "IClamp",
-				"line": {
-					"id": "1",
-					"pid": "-1",
-					"points": [
-						-1,
-						-1,
-						672,
-						468.5
-					],
-					"children": [],
-					"tid": 1,
-					"radius": 3
 				}
 			}
 		}
