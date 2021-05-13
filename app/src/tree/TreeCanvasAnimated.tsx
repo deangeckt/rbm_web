@@ -3,6 +3,7 @@ import { Stage, Layer } from 'react-konva';
 import { RenderILine } from '../Wrapper';
 import AnimatedLine from './AnimatedLine';
 import { useSimulateCanvas } from './useSimulateCanvas';
+import { useTreeCanvasCommon } from './useTreeCanvasCommon';
 
 export interface AnimProps {
     from: string;
@@ -29,33 +30,16 @@ const animList: AnimProps[] = [
 ];
 
 const TreeCanvasAnimated = () => {
-    // TODO - common code..
+    const { handleWheel } = useTreeCanvasCommon();
+    const { getLinesArrayNoRoot } = useSimulateCanvas();
+
     const [stageScale, setStageScale] = React.useState(1);
     const [stageCoord, setStageCoord] = React.useState({ x: 0, y: 0 });
-
-    const handleWheel = (e: any) => {
-        e.evt.preventDefault();
-
-        const scaleBy = 1.1;
-        const stage = e.target.getStage();
-        const oldScale = stage.scaleX();
-        const mousePointTo = {
-            x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
-            y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale,
-        };
-
-        const newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
-        setStageCoord({
-            x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
-            y: -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale,
-        });
-        setStageScale(newScale);
-    };
 
     const randColor = () => {
         return '#' + Math.floor(Math.random() * 16777215).toString(16);
     };
-    const { getLinesArrayNoRoot } = useSimulateCanvas();
+
     const randomAnimPropsPerLine: Record<string, AnimProps[]> = {};
     const lines = getLinesArrayNoRoot();
     for (let i = 0; i < lines.length; i++) {
@@ -75,7 +59,7 @@ const TreeCanvasAnimated = () => {
             width={window.innerWidth}
             height={window.innerHeight}
             draggable
-            onWheel={handleWheel}
+            onWheel={(e) => handleWheel(e, setStageCoord, setStageScale)}
             scaleX={stageScale}
             scaleY={stageScale}
             x={stageCoord.x}

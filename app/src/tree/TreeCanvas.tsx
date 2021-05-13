@@ -7,6 +7,7 @@ import { useDesignCanvas } from './useDesignCanvas';
 import { getStage, RenderILine, root_id, root_key } from '../Wrapper';
 import { neuron_color } from '../utils/colors';
 import { useSimulateCanvas } from './useSimulateCanvas';
+import { useTreeCanvasCommon } from './useTreeCanvasCommon';
 
 export interface ITreeCanvasProps {
     design: boolean;
@@ -19,6 +20,7 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
     const { checkDeselect, setSelectedId, getLinesArrayNoRoot } = design ? useDesignCanvas() : useSimulateCanvas();
     const { updateChildsBelow } = useDesignCanvas();
     const { updateTree } = useSimulateCanvas();
+    const { handleWheel } = useTreeCanvasCommon();
 
     const widSize = window.document.getElementById('Canvas')?.offsetWidth;
     const [camera, setCamera] = React.useState({ x: 0, y: 0 });
@@ -48,24 +50,9 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
         });
     };
 
-    const handleWheel = (e: any) => {
+    const handleWheelLocal = (e: any) => {
         if (design) return;
-        e.evt.preventDefault();
-
-        const scaleBy = 1.1;
-        const stage = e.target.getStage();
-        const oldScale = stage.scaleX();
-        const mousePointTo = {
-            x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
-            y: stage.getPointerPosition().y / oldScale - stage.y() / oldScale,
-        };
-
-        const newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
-        setStageCoord({
-            x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
-            y: -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale,
-        });
-        setStageScale(newScale);
+        handleWheel(e, setStageCoord, setStageScale);
     };
 
     const isOutWidth = (x: number): boolean => {
@@ -86,7 +73,7 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
                 onMouseDown={checkDeselect}
                 onTouchStart={checkDeselect}
                 onDragEnd={handleDragEnd}
-                onWheel={handleWheel}
+                onWheel={handleWheelLocal}
                 scaleX={stageScale}
                 scaleY={stageScale}
                 x={stageCoord.x}
