@@ -138,6 +138,7 @@ export interface IAppState {
     globalMechanism: mpObj;
     globalMechanismCurrKey: string;
     plots: IPlotData[][];
+    addAnims: false;
 }
 
 export const getStage = (canvasId: string): IStageSize => {
@@ -208,6 +209,7 @@ export const init_app_state: IAppState = {
     globalMechanism: static_global_form,
     globalMechanismCurrKey: init_global_curr_key,
     plots: [],
+    addAnims: false,
 };
 
 const Wrapper = (props: any) => {

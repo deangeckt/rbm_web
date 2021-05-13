@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import { Button } from '@material-ui/core';
+import { Button, Checkbox, Tooltip } from '@material-ui/core';
 import ReadLoading from '../anim/ReadLoading';
 import { TreeOrPlot } from './Simulate';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -45,15 +45,19 @@ function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePane
                         closeMenu();
                     }}
                 >
-                    Summary
+                    Seassion summary
                 </MenuItem>
-                <MenuItem
-                    onClick={() => {
-                        downloadSwcFile(state, getLinesArrayNoRoot());
-                        closeMenu();
-                    }}
-                >
-                    Export swc file
+                <MenuItem>
+                    Include animations
+                    <Tooltip title="This will increase run time">
+                        <Checkbox
+                            color="primary"
+                            checked={state.addAnims}
+                            onClick={() => {
+                                setState({ ...state, addAnims: !state.addAnims });
+                            }}
+                        />
+                    </Tooltip>
                 </MenuItem>
                 <MenuItem
                     onClick={() => {
@@ -73,16 +77,16 @@ function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePane
                     Import session params
                     <input type="file" accept={'.json'} hidden onChange={(e) => importJsonParams(e)} />
                 </MenuItem>
+                <MenuItem
+                    onClick={() => {
+                        downloadSwcFile(state, getLinesArrayNoRoot());
+                        closeMenu();
+                    }}
+                >
+                    Export swc file
+                </MenuItem>
             </Menu>
             <div style={{ marginLeft: '16px' }}>
-                <Button
-                    className="NoCapsButton"
-                    variant={toggle === 'Plot' ? 'contained' : 'outlined'}
-                    color="primary"
-                    onClick={() => togglePlotTree('Plot')}
-                >
-                    Plot
-                </Button>
                 <Button
                     className="NoCapsButton"
                     variant={toggle === 'Tree' ? 'contained' : 'outlined'}
@@ -93,9 +97,17 @@ function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePane
                 </Button>
                 <Button
                     className="NoCapsButton"
-                    variant={toggle === 'TreeAnim' ? 'contained' : 'outlined'}
+                    variant={toggle === 'Plot' ? 'contained' : 'outlined'}
                     color="primary"
-                    onClick={() => togglePlotTree('TreeAnim')}
+                    onClick={() => togglePlotTree('Plot')}
+                >
+                    Plot
+                </Button>
+                <Button
+                    className="NoCapsButton"
+                    variant={toggle === 'Anim' ? 'contained' : 'outlined'}
+                    color="primary"
+                    onClick={() => togglePlotTree('Anim')}
                 >
                     Animation
                 </Button>
@@ -112,7 +124,7 @@ function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePane
                         }}
                         startIcon={<PlayArrowIcon />}
                     >
-                        Start
+                        Run
                     </Button>
                 ) : (
                     <ReadLoading />
