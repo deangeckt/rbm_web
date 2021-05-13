@@ -7,7 +7,7 @@ from config import read_paths
 if __name__ == "__main__":
     wrapper = NeuronWrapper(config_path='../../../app/src/config.json')
 
-    sim_time = 200
+    sim_time = 50
     global_params = {
             "general":
             {
@@ -19,32 +19,60 @@ if __name__ == "__main__":
     sections_params = {
         "0_1": {
             "id": "0_1",
-            "section": 0.5,
+            "general": {
+                "L": 100,
+                "Ra": 35.4,
+                "nseg": 1,
+                "rallbranch": 1
+            },
             "recording_type": 1,
-            "mechanism": {
-                "hh": {
-                    "attrs": {
-                        "gnabar_hh": 0.13
-                    },
+            "process": {
+                "0.5": {
+                    "IClamp": {
+                        "attrs": {
+                            "delay": 20,
+                            "dur": 20,
+                            "amp": 0.5
+                        },
+                        "add": True
+                    }
                 }
             },
-            "process": {
-                "IClamp": {
-                    "attrs": {
-                        "dur": 30,
-                        "amp": 0.5,
-                        "delay": 10,
-                    },
-                },
+            "mechanism": {
+                "hh": {
+                    "attrs": {},
+                    "add": True
+                }
             }
         },
         "20_4": {
             "id": "20_4",
-            "section": 0.5,
+            "general": {
+                "L": 100,
+                "Ra": 35.4,
+                "nseg": 1,
+                "rallbranch": 1
+            },
             "recording_type": 1,
-            "mechanism": {},
-            "process": {}
-        }
+            "process": {
+                "0.5": {
+                    "IClamp": {
+                        "attrs": {
+                            "delay": 0,
+                            "dur": 20,
+                            "amp": 0.4
+                        },
+                        "add": True
+                    }
+                }
+            },
+            "mechanism": {
+                "hh": {
+                    "attrs": {},
+                    "add": True
+                }
+            }
+        },
     }
     params = [{'id': 'global', 'value': global_params},
               {'id': 'sections', 'value': sections_params}]
