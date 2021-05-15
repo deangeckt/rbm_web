@@ -120,6 +120,12 @@ export interface IPlotData {
     name: string;
 }
 
+export interface IAnimData {
+    from: string;
+    to: string;
+    dur: number;
+}
+
 // section key: cid_tid
 // design line key: swc id
 // simulate line key: cid_tid
@@ -139,6 +145,7 @@ export interface IAppState {
     globalMechanismCurrKey: string;
     plots: IPlotData[][];
     addAnims: false;
+    animations: Record<string, IAnimData[]>;
 }
 
 export const getStage = (canvasId: string): IStageSize => {
@@ -210,6 +217,7 @@ export const init_app_state: IAppState = {
     globalMechanismCurrKey: init_global_curr_key,
     plots: [],
     addAnims: false,
+    animations: {},
 };
 
 const Wrapper = (props: any) => {

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { IAttr, IPlotData, mpObj, SectionScheme } from '../Wrapper';
+import { IAnimData, IAttr, IPlotData, mpObj, SectionScheme } from '../Wrapper';
 import readMocks from './readMock.json';
 
 export interface schema {
@@ -33,19 +33,30 @@ export const run = async (
     setError: Function,
     globalMech: mpObj,
     sections: Record<string, SectionScheme>,
+    anim: boolean,
 ) => {
     try {
+        const data = prepareJsonParams(globalMech, sections);
+        if (anim) data.push({ id: 'animation', value: true });
         const response = (await axios.request({
             url: 'http://localhost:8080/api/v1/run',
             method: 'POST',
-            data: prepareJsonParams(globalMech, sections),
+            data: data,
         })) as AxiosResponse;
 
-        const idata: IPlotData[] = [];
+        const plotData: IPlotData[] = [];
+        const animData: Record<string, IAnimData[]> = {};
         for (const key in response.data) {
-            idata.push({ name: key, plot: response.data[key] as number[] });
+            if (key === 'animation') {
+                Object.entries(response.data['animation']).forEach(([sec_key, props]) => {
+                    animData[sec_key] = props as IAnimData[];
+                });
+                console.log(animData);
+            } else {
+                plotData.push({ name: key, plot: response.data[key] as number[] });
+            }
         }
-        setData(idata);
+        setData(plotData, animData);
     } catch (error: any) {
         console.error(error);
         const msg = !error.response ? '' : error.response.data;

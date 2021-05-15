@@ -34,3 +34,7 @@ def section_key_to_id_tid(section_key):
     :return: [cid, tid]
     """
     return [int(i) for i in section_key.split('_')]
+
+
+def id_tid_to_section_key(id_, tid_):
+    return '{}_{}'.format(id_, tid_)

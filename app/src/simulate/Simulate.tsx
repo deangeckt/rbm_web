@@ -7,11 +7,10 @@ import SimulateMainForm from './form/SimulateMainForms';
 import InfoDialog from './dialogs/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import SimulateCanvas from './SimulateCanvas';
-import { IPlotData, mpObj } from '../Wrapper';
+import { IAnimData, IPlotData, mpObj } from '../Wrapper';
 import ReadLoading from '../anim/ReadLoading';
 import { useSimulate } from './useSimulate';
 import Summary from './summary/Summary';
-import { usePlot } from './plot/usePlot';
 import Plot from './plot/Plot';
 import TreeCanvasAnimated from '../tree/animate/TreeCanvasAnimated';
 import './Simulate.css';
@@ -22,15 +21,19 @@ const initTreePlot: TreeOrPlot = 'Tree';
 function Simulate() {
     const { state, setState } = useContext(AppContext);
     const { getChangedForm } = useSimulate();
-    const { pushPlot } = usePlot();
+    console.log(state.animations);
 
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
     const [readLoading, setReadLoading] = React.useState(true);
     const [treeOrPlot, setTreeOrPlot] = React.useState(initTreePlot);
 
-    const updatePlotData = (newData: IPlotData[]) => {
-        pushPlot(newData);
+    const updateRunData = (plotData: IPlotData[], animData: Record<string, IAnimData[]>) => {
+        console.log(animData);
+        const plots = [...state.plots];
+        plots.push(plotData);
+        // anim = JSON.parse(JSON.stringify(animData));
+        setState({ ...state, plots: plots, animations: animData });
         setRunning(false);
     };
 
@@ -42,7 +45,7 @@ function Simulate() {
     const StartRunning = () => {
         setRunning(true);
         const { globalMechanism, sections } = getChangedForm();
-        run(updatePlotData, updateError, globalMechanism, sections);
+        run(updateRunData, updateError, globalMechanism, sections, state.addAnims);
     };
 
     const closeError = (_event?: React.SyntheticEvent, reason?: string) => {

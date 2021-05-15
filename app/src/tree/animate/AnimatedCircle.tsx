@@ -1,10 +1,10 @@
 import React from 'react';
 import { Spring, animated } from '@react-spring/konva';
-import { AnimProps } from './TreeCanvasAnimated';
 import { Circle } from 'react-konva';
+import { IAnimData } from '../../Wrapper';
 
 export interface AnimatedCircleProps {
-    animProps: AnimProps[];
+    animProps: IAnimData[];
     radius: number;
     x: number;
     y: number;

@@ -1,13 +1,12 @@
 import React from 'react';
 import { Spring, animated } from '@react-spring/konva';
 import { lineRadiusAddition } from '../../utils/swcUtils';
-import { RenderILine } from '../../Wrapper';
-import { AnimProps } from './TreeCanvasAnimated';
+import { RenderILine, IAnimData } from '../../Wrapper';
 import { Line } from 'react-konva';
 
 export interface AnimatedLinedProps {
     line: RenderILine;
-    animProps: AnimProps[];
+    animProps: IAnimData[];
     start: boolean;
 }
 

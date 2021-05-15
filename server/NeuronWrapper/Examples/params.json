@@ -1,5 +1,9 @@
 [
 	{
+		"id": "animation",
+		"value": true
+	},
+	{
 		"id": "global",
 		"value": {
 			"general": {
