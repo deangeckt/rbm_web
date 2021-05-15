@@ -2,8 +2,8 @@ import numpy as np
 from matplotlib import cm
 from matplotlib import colors
 
-norm = colors.Normalize(vmin=-100, vmax=100)
-cmap = cm.get_cmap('bwr')
+norm = colors.Normalize(vmin=-70, vmax=50)
+cmap = cm.get_cmap('turbo')
 
 
 def record_to_hex(record):
@@ -25,7 +25,7 @@ def create_animations(recordings, time_vec):
             from_ = record_to_hex(last_r)
             to_ = record_to_hex(r)
             dur_ = (time_vec[idx] - time_vec[last_i])
-            anim_props.append({'from': from_, 'to': to_, 'dur': dur_ * 250})
+            anim_props.append({'from': from_, 'to': to_, 'dur': dur_ * 10})
 
             last_i = idx
             last_r = r

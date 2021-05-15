@@ -21,7 +21,6 @@ const initTreePlot: TreeOrPlot = 'Tree';
 function Simulate() {
     const { state, setState } = useContext(AppContext);
     const { getChangedForm } = useSimulate();
-    console.log(state.animations);
 
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
@@ -29,11 +28,9 @@ function Simulate() {
     const [treeOrPlot, setTreeOrPlot] = React.useState(initTreePlot);
 
     const updateRunData = (plotData: IPlotData[], animData: Record<string, IAnimData[]>) => {
-        console.log(animData);
         const plots = [...state.plots];
         plots.push(plotData);
-        // anim = JSON.parse(JSON.stringify(animData));
-        setState({ ...state, plots: plots, animations: animData });
+        setState({ ...state, plots: plots, animations: JSON.parse(JSON.stringify(animData)) });
         setRunning(false);
     };
 

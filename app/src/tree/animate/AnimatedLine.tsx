@@ -59,6 +59,12 @@ const AnimatedLine = ({ line, animProps, start }: AnimatedLinedProps) => {
     const [animList] = React.useState(propsToAnims());
     const [anim, setAnim] = React.useState(animList[0]);
 
+    React.useEffect(() => {
+        if (!start) {
+            setAnim(animList[0]);
+        }
+    }, [start]);
+
     return start ? anim : renderNoneAnim();
 };
 export default AnimatedLine;
