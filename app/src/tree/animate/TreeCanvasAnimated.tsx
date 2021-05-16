@@ -4,10 +4,12 @@ import { RenderILine, root_id, root_key } from '../../Wrapper';
 import AnimatedLine from './AnimatedLine';
 import { useSimulateCanvas } from '../useSimulateCanvas';
 import { useTreeCanvasCommon } from '../useTreeCanvasCommon';
-import { Button, Checkbox, FormControlLabel } from '@material-ui/core';
+import { Button, Checkbox, FormControlLabel, IconButton } from '@material-ui/core';
 import { AppContext } from '../../AppContext';
 import AnimatedCircle from './AnimatedCircle';
 import { neuronRadToSize } from '../../utils/swcUtils';
+import FastForwardIcon from '@material-ui/icons/FastForward';
+import FastRewindIcon from '@material-ui/icons/FastRewind';
 import './Animate.css';
 
 export interface ITreeCanvasAnimatedProps {
@@ -21,9 +23,17 @@ const TreeCanvasAnimated = ({ display }: ITreeCanvasAnimatedProps) => {
 
     const [stageScale, setStageScale] = React.useState(1);
     const [stageCoord, setStageCoord] = React.useState({ x: 0, y: 0 });
+
     const [startAnim, setStartAnim] = React.useState(false);
+    const [speed, setSpeed] = React.useState(1);
     const lines = getLinesArrayNoRoot();
     const anims = { ...state.animations };
+
+    const updateSpeed = (slow: boolean) => {
+        const newSpeed = slow ? speed * 2 : speed / 2;
+        // if (newSpeed < 1 || newSpeed > 256) return;
+        setSpeed(newSpeed);
+    };
 
     return (
         <div style={{ display: display ? undefined : 'none', width: '100%', height: '100%' }}>
@@ -47,6 +57,16 @@ const TreeCanvasAnimated = ({ display }: ITreeCanvasAnimatedProps) => {
             ) : (
                 <>
                     <div className="AnimatePanel">
+                        <div className="SpeedPanel">
+                            <IconButton color="primary" size="medium" onClick={() => updateSpeed(true)}>
+                                <FastRewindIcon />
+                            </IconButton>
+                            <IconButton color="primary" size="medium" onClick={() => updateSpeed(false)}>
+                                <FastForwardIcon />
+                            </IconButton>
+
+                            <div>{`X${speed}`}</div>
+                        </div>
                         <Button
                             className="NoCapsButton"
                             variant={'outlined'}
@@ -74,12 +94,19 @@ const TreeCanvasAnimated = ({ display }: ITreeCanvasAnimatedProps) => {
                                     animProps={anims[root_key]}
                                     x={state.stage.rootX}
                                     y={state.stage.rootY}
+                                    durScale={speed}
                                 />
                             )}
                             {lines.map((l: RenderILine) => {
                                 return (
                                     anims[l.id] && (
-                                        <AnimatedLine key={l.id} line={l} animProps={anims[l.id]} start={startAnim} />
+                                        <AnimatedLine
+                                            key={l.id}
+                                            line={l}
+                                            animProps={anims[l.id]}
+                                            start={startAnim}
+                                            durScale={speed}
+                                        />
                                     )
                                 );
                             })}

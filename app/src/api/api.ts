@@ -51,7 +51,6 @@ export const run = async (
                 Object.entries(response.data['animation']).forEach(([sec_key, props]) => {
                     animData[sec_key] = props as IAnimData[];
                 });
-                console.log(animData);
             } else {
                 plotData.push({ name: key, plot: response.data[key] as number[] });
             }

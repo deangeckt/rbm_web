@@ -8,12 +8,13 @@ export interface AnimatedLinedProps {
     line: RenderILine;
     animProps: IAnimData[];
     start: boolean;
+    durScale: number;
 }
 
-const AnimatedLine = ({ line, animProps, start }: AnimatedLinedProps) => {
+const AnimatedLine = ({ line, animProps, start, durScale }: AnimatedLinedProps) => {
     const advanceAnim = (idx: number) => {
-        const newIdx = idx === animList.length ? 0 : idx;
-        setAnim(animList[newIdx]);
+        if (idx === animList.length) setAnim(renderNoneAnim());
+        else setAnim(animList[idx]);
     };
 
     const renderNoneAnim = () => {
@@ -33,7 +34,7 @@ const AnimatedLine = ({ line, animProps, start }: AnimatedLinedProps) => {
             <Spring
                 from={{ stroke: animProps[idx].from }}
                 to={{ stroke: animProps[idx].to }}
-                config={{ duration: animProps[idx].dur }}
+                config={{ duration: animProps[idx].dur * durScale }}
                 onRest={() => advanceAnim(idx + 1)}
             >
                 {(props) => (
@@ -64,6 +65,13 @@ const AnimatedLine = ({ line, animProps, start }: AnimatedLinedProps) => {
             setAnim(animList[0]);
         }
     }, [start]);
+
+    React.useEffect(() => {
+        console.log('change to speed:', durScale);
+        animList.forEach((anim) => {
+            anim.props.config.duration *= durScale;
+        });
+    }, [durScale]);
 
     return start ? anim : renderNoneAnim();
 };

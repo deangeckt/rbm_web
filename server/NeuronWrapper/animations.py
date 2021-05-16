@@ -15,7 +15,7 @@ def create_animations(recordings, time_vec):
     res = {}
     for record_key in recordings:
         anim_props = []
-        record = recordings[record_key] #np.array(recordings[record_key]).tolist()
+        record = recordings[record_key]
         last_r = record[0]
         last_i = 0
         for idx, r in enumerate(recordings[record_key]):

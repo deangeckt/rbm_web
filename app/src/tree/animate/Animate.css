@@ -10,5 +10,13 @@
 .AnimatePanel {
     display: flex;
     width: 100%;
-    justify-content: center;
+    justify-content: space-evenly;
+    border-bottom: 1px solid #efefef;
+    padding: 4px;
+    align-items: center;
+}
+
+.SpeedPanel {
+    display: flex;
+    align-items: center;
 }

@@ -6,7 +6,7 @@ export function useDialogs() {
     const { state, setState } = useContext(AppContext);
 
     const closeDialog = () => {
-        setState({ ...state, dialogs: { dialogInfo: false, infoTitle: '', dialogInfoContent: '' } });
+        setState({ ...state, dialogs: { dialogState: false, infoTitle: '', dialogInfoContent: '' } });
     };
 
     const updateKeyInfo = (key: string) => {

@@ -9,12 +9,13 @@ export interface AnimatedCircleProps {
     x: number;
     y: number;
     start: boolean;
+    durScale: number;
 }
 
-const AnimatedCircle = ({ animProps, start, radius, x, y }: AnimatedCircleProps) => {
+const AnimatedCircle = ({ animProps, start, radius, x, y, durScale }: AnimatedCircleProps) => {
     const advanceAnim = (idx: number) => {
-        const newIdx = idx === animList.length ? 0 : idx;
-        setAnim(animList[newIdx]);
+        if (idx === animList.length) setAnim(renderNoneAnim());
+        else setAnim(animList[idx]);
     };
 
     const renderNoneAnim = () => {
@@ -26,7 +27,7 @@ const AnimatedCircle = ({ animProps, start, radius, x, y }: AnimatedCircleProps)
             <Spring
                 from={{ fill: animProps[idx].from }}
                 to={{ fill: animProps[idx].to }}
-                config={{ duration: animProps[idx].dur }}
+                config={{ duration: animProps[idx].dur * durScale }}
                 onRest={() => advanceAnim(idx + 1)}
             >
                 {(props) => (
