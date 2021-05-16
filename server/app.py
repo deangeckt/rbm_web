@@ -42,7 +42,7 @@ def read():
             os.chdir(neuron_path)
 
         wrapper = NeuronWrapper(config_full_path)
-        res = wrapper.read()
+        res = wrapper.read(swc_path=read_paths()[1])
         return json.dumps(res), 200, {'Content-Type': 'application/json'}
 
     except ValueError as e:

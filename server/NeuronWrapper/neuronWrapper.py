@@ -107,7 +107,7 @@ class NeuronWrapper:
         for tid in range(1, 5):
             try:
                 _type = tid_to_type(tid, self.h)
-                print('adding record to {} in type {}'.format(len(_type), tid))
+                print('adding record to {} sections from type {}'.format(len(_type), tid))
                 for cid in range(len(_type)):
                     recording_key_ = id_tid_to_section_key(cid, tid)
                     vec_rec = self.__add_record_aux(cid, tid, 1)
@@ -222,7 +222,27 @@ class NeuronWrapper:
                     result[attr] = vals
         return result
 
-    def read(self):
+    def __read_section_general(self):
+        res = {}
+        for tid in range(1, 5):
+            try:
+                _type = tid_to_type(tid, self.h)
+                print(
+                    'reading general params from {} sections from type {}'.format(len(_type), tid))
+                for cid in range(len(_type)):
+                    recording_key_ = id_tid_to_section_key(cid, tid)
+                    h_ref = tid_to_type(tid, self.h)[cid]
+                    res[recording_key_] = {'L': h_ref.L,
+                                           'Ra': h_ref.Ra,
+                                           'nseg': h_ref.Ra,
+                                           'rallbranch': h_ref.rallbranch}
+            except:
+                continue
+        return res
+
+    def read(self, swc_path):
+        self.__init_swc(swc_path)
+
         result = {}
         dummy = self.h.Section(name='dummy')
         point_mechanism_list = self.__read_mechanism(0)
@@ -234,12 +254,18 @@ class NeuronWrapper:
         exclude_processes = ['loc', 'has_loc', 'get_loc', 'get_segment']
         for proc in point_processes:
             point_processes_dict[proc] = []
+            dummy_proc = getattr(self.h, proc)(dummy(0.5))
             attrs = vars(getattr(self.h, proc))
             for attr in attrs:
                 if attr in exclude_processes:
                     continue
-                value = 0 if (attrs[attr] is None) else attrs[attr]
-                point_processes_dict[proc].append({attr: value})
+                try:
+                    value = getattr(dummy_proc, attr)
+                    if not isinstance(value, int) and not isinstance(value, float):
+                        continue
+                    point_processes_dict[proc].append({attr: value})
+                except:
+                    continue
 
         exclude_mechanism = ['morphology', 'capacitance']
         for mech in point_mechanism_list:
@@ -265,5 +291,6 @@ class NeuronWrapper:
         result['point_processes'] = point_processes_dict
         result['point_mechanism'] = point_mechanism_dict
         result['global_mechanism'] = mechanism_global_dict
+        result['section_general'] = self.__read_section_general()
 
         return result
