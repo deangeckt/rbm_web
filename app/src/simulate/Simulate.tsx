@@ -89,7 +89,6 @@ function Simulate() {
                         </div>
                         <div className="SimulateCenter">
                             <Summary />
-
                             <div className="LeftSide">
                                 <SimulateMainForm />
                             </div>

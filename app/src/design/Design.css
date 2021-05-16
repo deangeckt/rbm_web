@@ -28,7 +28,6 @@
 }
 
 .Canvas {
-    /* text-align: center; */
     display: flex;
     height: 100%;
     flex-basis: 70%;

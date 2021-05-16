@@ -76,42 +76,49 @@ const TreeCanvasAnimated = ({ display }: ITreeCanvasAnimatedProps) => {
                             {startAnim ? 'Stop' : 'Play'}
                         </Button>
                     </div>
-                    <Stage
-                        width={window.innerWidth}
-                        height={window.innerHeight}
-                        draggable
-                        onWheel={(e) => handleWheel(e, setStageCoord, setStageScale)}
-                        scaleX={stageScale}
-                        scaleY={stageScale}
-                        x={stageCoord.x}
-                        y={stageCoord.y}
-                    >
-                        <Layer>
-                            {anims[root_key] && (
-                                <AnimatedCircle
-                                    radius={neuronRadToSize(state.designLines[root_id].radius)}
-                                    start={startAnim}
-                                    animProps={anims[root_key]}
-                                    x={state.stage.rootX}
-                                    y={state.stage.rootY}
-                                    durScale={1 / speed}
-                                />
-                            )}
-                            {lines.map((l: RenderILine) => {
-                                return (
-                                    anims[l.id] && (
-                                        <AnimatedLine
-                                            key={l.id}
-                                            line={l}
-                                            animProps={anims[l.id]}
+                    <div className="StagePanel">
+                        <div className="AnimCanvas" id={'AnimCanvas'}>
+                            <Stage
+                                width={window.innerWidth}
+                                height={window.innerHeight}
+                                draggable
+                                onWheel={(e) => handleWheel(e, setStageCoord, setStageScale)}
+                                scaleX={stageScale}
+                                scaleY={stageScale}
+                                x={stageCoord.x}
+                                y={stageCoord.y}
+                            >
+                                <Layer>
+                                    {anims[root_key] && (
+                                        <AnimatedCircle
+                                            radius={neuronRadToSize(state.designLines[root_id].radius)}
                                             start={startAnim}
+                                            animProps={anims[root_key]}
+                                            x={state.stage.rootX}
+                                            y={state.stage.rootY}
                                             durScale={1 / speed}
                                         />
-                                    )
-                                );
-                            })}
-                        </Layer>
-                    </Stage>
+                                    )}
+                                    {lines.map((l: RenderILine) => {
+                                        return (
+                                            anims[l.id] && (
+                                                <AnimatedLine
+                                                    key={l.id}
+                                                    line={l}
+                                                    animProps={anims[l.id]}
+                                                    start={startAnim}
+                                                    durScale={1 / speed}
+                                                />
+                                            )
+                                        );
+                                    })}
+                                </Layer>
+                            </Stage>
+                        </div>
+                        <div className="MapPanel">
+                            <img src={`${process.env.PUBLIC_URL}/assets/turboCmap.JPG`} className="Img" />
+                        </div>
+                    </div>
                 </>
             )}
         </div>
