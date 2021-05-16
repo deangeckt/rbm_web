@@ -29,8 +29,8 @@ const TreeCanvasAnimated = ({ display }: ITreeCanvasAnimatedProps) => {
     const lines = getLinesArrayNoRoot();
     const anims = { ...state.animations };
 
-    const updateSpeed = (slow: boolean) => {
-        const newSpeed = slow ? speed * 2 : speed / 2;
+    const updateSpeed = (fast: boolean) => {
+        const newSpeed = fast ? speed * 2 : speed / 2;
         // if (newSpeed < 1 || newSpeed > 256) return;
         setSpeed(newSpeed);
     };
@@ -58,10 +58,10 @@ const TreeCanvasAnimated = ({ display }: ITreeCanvasAnimatedProps) => {
                 <>
                     <div className="AnimatePanel">
                         <div className="SpeedPanel">
-                            <IconButton color="primary" size="medium" onClick={() => updateSpeed(true)}>
+                            <IconButton color="primary" size="medium" onClick={() => updateSpeed(false)}>
                                 <FastRewindIcon />
                             </IconButton>
-                            <IconButton color="primary" size="medium" onClick={() => updateSpeed(false)}>
+                            <IconButton color="primary" size="medium" onClick={() => updateSpeed(true)}>
                                 <FastForwardIcon />
                             </IconButton>
 
@@ -94,7 +94,7 @@ const TreeCanvasAnimated = ({ display }: ITreeCanvasAnimatedProps) => {
                                     animProps={anims[root_key]}
                                     x={state.stage.rootX}
                                     y={state.stage.rootY}
-                                    durScale={speed}
+                                    durScale={1 / speed}
                                 />
                             )}
                             {lines.map((l: RenderILine) => {
@@ -105,7 +105,7 @@ const TreeCanvasAnimated = ({ display }: ITreeCanvasAnimatedProps) => {
                                             line={l}
                                             animProps={anims[l.id]}
                                             start={startAnim}
-                                            durScale={speed}
+                                            durScale={1 / speed}
                                         />
                                     )
                                 );

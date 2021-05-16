@@ -34,7 +34,7 @@ const AnimatedLine = ({ line, animProps, start, durScale }: AnimatedLinedProps) 
             <Spring
                 from={{ stroke: animProps[idx].from }}
                 to={{ stroke: animProps[idx].to }}
-                config={{ duration: animProps[idx].dur * durScale }}
+                config={{ duration: animProps[idx].dur }}
                 onRest={() => advanceAnim(idx + 1)}
             >
                 {(props) => (
@@ -57,7 +57,15 @@ const AnimatedLine = ({ line, animProps, start, durScale }: AnimatedLinedProps) 
         return anims;
     };
 
-    const [animList] = React.useState(propsToAnims());
+    const propsToSpeed = () => {
+        const speeds = animProps.map((ap) => {
+            return ap.dur;
+        });
+        return speeds;
+    };
+
+    const [animList, setAnimList] = React.useState(propsToAnims());
+    const [speeds, setSpeed] = React.useState(propsToSpeed());
     const [anim, setAnim] = React.useState(animList[0]);
 
     React.useEffect(() => {
@@ -67,11 +75,15 @@ const AnimatedLine = ({ line, animProps, start, durScale }: AnimatedLinedProps) 
     }, [start]);
 
     React.useEffect(() => {
-        console.log('change to speed:', durScale);
-        animList.forEach((anim) => {
-            anim.props.config.duration *= durScale;
+        animList.forEach((anim, i) => {
+            anim.props.config.duration = durScale * speeds[i];
         });
     }, [durScale]);
+
+    React.useEffect(() => {
+        setAnimList(propsToAnims());
+        setSpeed(propsToSpeed());
+    }, [animProps]);
 
     return start ? anim : renderNoneAnim();
 };

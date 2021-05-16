@@ -27,7 +27,7 @@ const AnimatedCircle = ({ animProps, start, radius, x, y, durScale }: AnimatedCi
             <Spring
                 from={{ fill: animProps[idx].from }}
                 to={{ fill: animProps[idx].to }}
-                config={{ duration: animProps[idx].dur * durScale }}
+                config={{ duration: animProps[idx].dur }}
                 onRest={() => advanceAnim(idx + 1)}
             >
                 {(props) => (
@@ -51,7 +51,15 @@ const AnimatedCircle = ({ animProps, start, radius, x, y, durScale }: AnimatedCi
         return anims;
     };
 
-    const [animList] = React.useState(propsToAnims());
+    const propsToSpeed = () => {
+        const speeds = animProps.map((ap) => {
+            return ap.dur;
+        });
+        return speeds;
+    };
+
+    const [animList, setAnimList] = React.useState(propsToAnims());
+    const [speeds, setSpeed] = React.useState(propsToSpeed());
     const [anim, setAnim] = React.useState(animList[0]);
 
     React.useEffect(() => {
@@ -59,6 +67,17 @@ const AnimatedCircle = ({ animProps, start, radius, x, y, durScale }: AnimatedCi
             setAnim(animList[0]);
         }
     }, [start]);
+
+    React.useEffect(() => {
+        animList.forEach((anim, i) => {
+            anim.props.config.duration = durScale * speeds[i];
+        });
+    }, [durScale]);
+
+    React.useEffect(() => {
+        setAnimList(propsToAnims());
+        setSpeed(propsToSpeed());
+    }, [animProps]);
 
     return start ? anim : renderNoneAnim();
 };

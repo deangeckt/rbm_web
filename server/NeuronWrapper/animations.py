@@ -25,7 +25,7 @@ def create_animations(recordings, time_vec):
             from_ = record_to_hex(last_r)
             to_ = record_to_hex(r)
             dur_ = (time_vec[idx] - time_vec[last_i])
-            anim_props.append({'from': from_, 'to': to_, 'dur': dur_ * 10})
+            anim_props.append({'from': from_, 'to': to_, 'dur': dur_ * 1000 / 64})
 
             last_i = idx
             last_r = r
