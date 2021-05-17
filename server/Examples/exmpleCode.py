@@ -1,11 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from NeuronWrapper.neuronWrapper import NeuronWrapper
-from NeuronWrapper.schema import recording_key
+from API.neuronWrapper import NeuronWrapper
+from API.schemaConvert import recording_key
 from config import read_paths
 
 if __name__ == "__main__":
-    wrapper = NeuronWrapper(config_path='../../../app/src/config.json')
+    wrapper = NeuronWrapper(config_path='../../app/src/config.json')
 
     sim_time = 50
     global_params = {

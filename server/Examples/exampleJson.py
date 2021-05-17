@@ -1,13 +1,13 @@
 import json
 import numpy as np
 import matplotlib.pyplot as plt
-from NeuronWrapper.neuronWrapper import NeuronWrapper
-from NeuronWrapper.schema import recording_key
+from API.neuronWrapper import NeuronWrapper
+from API.schemaConvert import recording_key
 from config import read_paths
 
-# Example by using the params.json - can be downloaded from the simulation web page
+# Example using the params.json - can be downloaded from the simulation web page
 if __name__ == "__main__":
-    wrapper = NeuronWrapper(config_path='../../../app/src/config.json')
+    wrapper = NeuronWrapper(config_path='../../app/src/config.json')
     sim_time = 50
 
     with open('params.json') as json_file:
