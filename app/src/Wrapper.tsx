@@ -72,7 +72,10 @@ export const section_recording = [
 export type RenderILine = Pick<ILine, 'id' | 'pid' | 'points' | 'children' | 'tid' | 'radius'>;
 export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
 export type mpObj = Record<string, IMechanismProcess>;
-export type SectionScheme = Omit<ISection, 'mechanismCurrKey' | 'processSectionCurrKey' | 'processCurrKey' | 'line'>;
+export type SectionScheme = Omit<
+    ISection,
+    'mechanismCurrKey' | 'processSectionCurrKey' | 'processCurrKey' | 'line' | 'generalChanged'
+>;
 export interface ISection {
     id: string;
     recording_type: number;
@@ -82,6 +85,7 @@ export interface ISection {
     processSectionCurrKey: number;
     processCurrKey: string;
     general: IAttr;
+    generalChanged: boolean;
     line: RenderILine;
 }
 
@@ -174,13 +178,6 @@ export const default_section_value = 0.5;
 
 const init_stage = getStage('Canvas');
 const static_global_form = readSchema(config.static_global_form);
-
-export const init_general_section: IAttr = {
-    L: 100,
-    Ra: 35.4,
-    nseg: 1,
-    rallbranch: 1.0,
-};
 
 export const design_init_root_line: ILine = {
     id: root_id,

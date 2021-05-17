@@ -78,6 +78,7 @@ export function useSectionForm() {
         const selectedSections = getAllSelectedSections();
         selectedSections.forEach((sec) => {
             sec.general[attr] = value;
+            sec.generalChanged = true;
         });
         updateSelectedSectionsState(selectedSections);
     };

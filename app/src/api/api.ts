@@ -88,10 +88,15 @@ export const read = async (setError: Function, setData: Function) => {
             method: 'GET',
         })) as AxiosResponse;
 
+        const section_general: Record<string, IAttr> = {};
+        Object.entries(response.data['section_general']).forEach(([sec_key, props]) => {
+            section_general[sec_key] = props as IAttr;
+        });
         setData(
             readSchema(response.data['point_mechanism']),
             readSchema(response.data['global_mechanism']),
             readSchema(response.data['point_processes']),
+            section_general,
         );
     } catch (error: any) {
         let msg;

@@ -1,14 +1,7 @@
 import { useContext } from 'react';
 import { parseJsonParams } from '../api/api';
 import { AppContext } from '../AppContext';
-import {
-    default_section_value,
-    init_general_section,
-    init_global_curr_key,
-    ISection,
-    mpObj,
-    SectionScheme,
-} from '../Wrapper';
+import { default_section_value, init_global_curr_key, ISection, mpObj, SectionScheme } from '../Wrapper';
 
 export function useSimulate() {
     const { state, setState } = useContext(AppContext);
@@ -24,7 +17,8 @@ export function useSimulate() {
             mechanismCurrKey: '',
             processCurrKey: '',
             processSectionCurrKey: default_section_value,
-            general: { ...init_general_section },
+            general: {},
+            generalChanged: false,
             line: {
                 id: swc_id,
                 pid: pid,
@@ -69,8 +63,7 @@ export function useSimulate() {
 
             const filterMech = filterProcMech(state.sections[sec.id].mechanism);
 
-            const generalchanged = JSON.stringify(sec.general) !== JSON.stringify(init_general_section);
-            if (generalchanged || anyProcess || Object.keys(filterMech).length || sec.recording_type !== 0) {
+            if (sec.generalChanged || anyProcess || Object.keys(filterMech).length || sec.recording_type !== 0) {
                 const currSection = state.sections[sec.id];
                 filterSections[sec.id] = {
                     id: currSection.id,

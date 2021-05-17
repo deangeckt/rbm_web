@@ -7,7 +7,7 @@ import SimulateMainForm from './form/SimulateMainForms';
 import InfoDialog from './dialogs/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import SimulateCanvas from './SimulateCanvas';
-import { IAnimData, IPlotData, mpObj } from '../Wrapper';
+import { IAnimData, IAttr, IPlotData, mpObj } from '../Wrapper';
 import ReadLoading from '../anim/ReadLoading';
 import { useSimulate } from './useSimulate';
 import Summary from './summary/Summary';
@@ -50,13 +50,23 @@ function Simulate() {
         setError('');
     };
 
-    const updateDynForms = (newPointMech: mpObj, newGlobalMech: mpObj, newPointProcc: mpObj) => {
+    const updateDynForms = (
+        newPointMech: mpObj,
+        newGlobalMech: mpObj,
+        newPointProc: mpObj,
+        sectionGeneral: Record<string, IAttr>,
+    ) => {
         const staticGloablMech = { ...state.globalMechanism };
+        const sections = { ...state.sections };
+        Object.entries(sectionGeneral).forEach(([sec_key, attr]) => {
+            sections[sec_key].general = attr;
+        });
         setState({
             ...state,
             globalMechanism: Object.assign({}, staticGloablMech, newGlobalMech) as mpObj,
             pointMechanism: newPointMech,
-            pointProcess: newPointProcc,
+            pointProcess: newPointProc,
+            sections: sections,
         });
         setReadLoading(false);
     };
