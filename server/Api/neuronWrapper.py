@@ -9,7 +9,6 @@ from Utils.animations import create_animations
 
 class NeuronWrapper:
     def __init__(self, config_path):
-        self.neuron_dy = __import__("neuron")
         self.input = {'global': {}, 'sections': {}}
         self.recordings = {}
         self.anim_recordings = {}
@@ -27,10 +26,14 @@ class NeuronWrapper:
     def __reset_params(self):
         self.general_params = deepcopy(self.default_general_params)
         self.input['sections'] = {}
+        self.recordings.clear()
         self.recordings = {}
+        self.anim_recordings.clear()
         self.anim_recordings = {}
+        self.process.clear()
         self.process = []
 
+        self.neuron_dy = __import__("neuron")
         self.h = getattr(self.neuron_dy, "h")
         self.h.load_file('stdrun.hoc')
         self.h.load_file('import3d.hoc')
