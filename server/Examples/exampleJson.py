@@ -1,8 +1,8 @@
 import json
 import numpy as np
 import matplotlib.pyplot as plt
-from API.neuronWrapper import NeuronWrapper
-from API.schemaConvert import recording_key
+from Api.neuronWrapper import NeuronWrapper
+from Api.schemaConvert import recording_key
 from config import read_paths
 
 # Example using the params.json - can be downloaded from the simulation web page

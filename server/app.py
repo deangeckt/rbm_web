@@ -6,7 +6,7 @@ from flask import request
 from flask_cors import CORS
 import os
 
-from API.neuronWrapper import NeuronWrapper
+from Api.neuronWrapper import NeuronWrapper
 from config import config_full_path, read_paths
 
 app = Flask(__name__)
