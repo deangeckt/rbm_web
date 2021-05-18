@@ -25,17 +25,17 @@ function SectionItem({ section }: ISectionItemProps) {
 
                 <div className="SummarySectionHeader">Mechanism:</div>
 
-                {Object.entries(section.mechanism).map(([name, mp]) => {
-                    return <MechProcItem key={name} id={name} item={mp} />;
-                })}
+                {Object.entries(section.mechanism).map(([name, mp]) => (
+                    <MechProcItem key={name} id={name} item={mp} />
+                ))}
                 <div className="SummarySectionHeader">Process:</div>
 
                 {Object.entries(section.process).map(([section, proc]) => {
                     return (
                         <div key={section}>
                             <div>section({section})</div>
-                            {Object.entries(proc).map(([name, mp]) => {
-                                return <MechProcItem key={name} id={name} item={mp} />;
+                            {Object.entries(proc).map(([name, mps]) => {
+                                return mps.map((mp) => <MechProcItem key={name} id={name} item={mp} />);
                             })}
                         </div>
                     );

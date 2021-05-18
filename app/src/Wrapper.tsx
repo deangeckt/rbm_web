@@ -71,17 +71,19 @@ export const section_recording = [
 
 export type RenderILine = Pick<ILine, 'id' | 'pid' | 'points' | 'children' | 'tid' | 'radius'>;
 export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
-export type mpObj = Record<string, IMechanismProcess>;
+export type singleAttrObj = Record<string, IMechanismProcess>;
+export type mulAttrObj = Record<string, IMechanismProcess[]>;
 export type SectionScheme = Omit<
     ISection,
     'mechanismCurrKey' | 'processSectionCurrKey' | 'processCurrKey' | 'line' | 'generalChanged'
 >;
+
 export interface ISection {
     id: string;
     recording_type: number;
-    mechanism: mpObj;
+    mechanism: singleAttrObj;
     mechanismCurrKey: string;
-    process: Record<number, mpObj>; //key: segment
+    process: Record<number, mulAttrObj>; //key: segment
     processSectionCurrKey: number;
     processCurrKey: string;
     general: IAttr;
@@ -143,9 +145,9 @@ export interface IAppState {
     sectionsTreeText: RenderTreeText;
     dialogs: IDialogs;
     summaryState: boolean;
-    pointMechanism: mpObj;
-    pointProcess: mpObj;
-    globalMechanism: mpObj;
+    pointMechanism: singleAttrObj;
+    pointProcess: singleAttrObj;
+    globalMechanism: singleAttrObj;
     globalMechanismCurrKey: string;
     plots: IPlotData[][];
     addAnims: false;

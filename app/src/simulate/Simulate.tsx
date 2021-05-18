@@ -7,7 +7,7 @@ import SimulateMainForm from './form/SimulateMainForms';
 import InfoDialog from './dialogs/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import SimulateCanvas from './SimulateCanvas';
-import { IAnimData, IAttr, IPlotData, mpObj } from '../Wrapper';
+import { IAnimData, IAttr, IPlotData, singleAttrObj } from '../Wrapper';
 import ReadLoading from '../anim/ReadLoading';
 import { useSimulate } from './useSimulate';
 import Summary from './summary/Summary';
@@ -21,6 +21,7 @@ const initTreePlot: TreeOrPlot = 'Tree';
 function Simulate() {
     const { state, setState } = useContext(AppContext);
     const { getChangedForm } = useSimulate();
+    console.log(state.sections);
 
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
@@ -51,9 +52,9 @@ function Simulate() {
     };
 
     const updateDynForms = (
-        newPointMech: mpObj,
-        newGlobalMech: mpObj,
-        newPointProc: mpObj,
+        newPointMech: singleAttrObj,
+        newGlobalMech: singleAttrObj,
+        newPointProc: singleAttrObj,
         sectionGeneral: Record<string, IAttr>,
     ) => {
         const staticGloablMech = { ...state.globalMechanism };
@@ -63,7 +64,7 @@ function Simulate() {
         });
         setState({
             ...state,
-            globalMechanism: Object.assign({}, staticGloablMech, newGlobalMech) as mpObj,
+            globalMechanism: Object.assign({}, staticGloablMech, newGlobalMech) as singleAttrObj,
             pointMechanism: newPointMech,
             pointProcess: newPointProc,
             sections: sections,

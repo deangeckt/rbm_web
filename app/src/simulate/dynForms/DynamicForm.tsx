@@ -1,12 +1,12 @@
 import React from 'react';
-import { impKeys, mpObj } from '../../Wrapper';
+import { impKeys, singleAttrObj } from '../../Wrapper';
 import DynamicAttr from './DynamicAttr';
 import DynamicKeys from './DynamicKeys';
 import { useDynamicForms } from './useDynamicForm';
 import './DynamicForm.css';
 
 export interface IDynamicFormProps {
-    mp: mpObj;
+    mp: singleAttrObj;
     impKey: impKeys;
 }
 

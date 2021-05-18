@@ -1,16 +1,23 @@
 import { useContext } from 'react';
 import { AppContext } from '../../AppContext';
-import { IAttr, impKeys, mpObj } from '../../Wrapper';
+import { IAttr, IMechanismProcess, impKeys, singleAttrObj, mulAttrObj } from '../../Wrapper';
 import { useDynamicFormShare } from './useDynnamicFormShare';
 
 export function useDynamicForms() {
     const { state, setState } = useContext(AppContext);
     const { getFirstSelectedSection, getAllSelectedSections, updateSelectedSectionsState } = useDynamicFormShare();
 
-    const setKeyCheckedSectionAux = (mp: mpObj, currKey: string, checked: boolean) => {
+    const setKeyCheckedSectionMech = (mp: singleAttrObj, currKey: string, checked: boolean) => {
         if (currKey === '') return;
         if (!mp[currKey]) mp[currKey] = { attrs: {}, add: false };
         mp[currKey].add = checked;
+    };
+
+    const setKeyCheckedSectionProc = (mp: mulAttrObj, currKey: string, checked: boolean) => {
+        if (currKey === '') return;
+        if (!mp[currKey]) mp[currKey] = [{ attrs: {}, add: false }];
+        mp[currKey][0].add = checked;
+        console.log(mp);
     };
 
     const setKeyChecked = (impKey: impKeys, checked: boolean) => {
@@ -23,20 +30,25 @@ export function useDynamicForms() {
             const selectedSections = getAllSelectedSections();
             if (impKey === 'pointMechanism') {
                 selectedSections.forEach((sec) => {
-                    setKeyCheckedSectionAux(sec.mechanism, sec.mechanismCurrKey, checked);
+                    setKeyCheckedSectionMech(sec.mechanism, sec.mechanismCurrKey, checked);
                 });
             } else {
                 selectedSections.forEach((sec) => {
-                    setKeyCheckedSectionAux(sec.process[sec.processSectionCurrKey], sec.processCurrKey, checked);
+                    setKeyCheckedSectionProc(sec.process[sec.processSectionCurrKey], sec.processCurrKey, checked);
                 });
             }
             updateSelectedSectionsState(selectedSections);
         }
     };
 
-    const onAttrSectionChangeAux = (mp: mpObj, currKey: string, attr: string, value: number) => {
+    const onAttrSectionChangeMech = (mp: singleAttrObj, currKey: string, attr: string, value: number) => {
         if (currKey === '') return;
         mp[currKey].attrs[attr] = value;
+    };
+
+    const onAttrSectionChangeProc = (mp: mulAttrObj, currKey: string, attr: string, value: number) => {
+        if (currKey === '') return;
+        mp[currKey][0].attrs[attr] = value;
     };
 
     const onAttrChange = (impKey: impKeys, attr: string, value: number) => {
@@ -49,11 +61,11 @@ export function useDynamicForms() {
             const selectedSections = getAllSelectedSections();
             if (impKey === 'pointMechanism') {
                 selectedSections.forEach((sec) => {
-                    onAttrSectionChangeAux(sec.mechanism, sec.mechanismCurrKey, attr, value);
+                    onAttrSectionChangeMech(sec.mechanism, sec.mechanismCurrKey, attr, value);
                 });
             } else {
                 selectedSections.forEach((sec) => {
-                    onAttrSectionChangeAux(sec.process[sec.processSectionCurrKey], sec.processCurrKey, attr, value);
+                    onAttrSectionChangeProc(sec.process[sec.processSectionCurrKey], sec.processCurrKey, attr, value);
                 });
             }
             updateSelectedSectionsState(selectedSections);
@@ -71,8 +83,11 @@ export function useDynamicForms() {
         }
     };
 
-    const getDynamicFormPropsSectionAux = (sectionMp: mpObj, globalMp: mpObj, currKey: string) => {
-        const mp = sectionMp[currKey];
+    const getDynamicFormPropsSectionAux = (
+        mp: IMechanismProcess | undefined,
+        globalMp: singleAttrObj,
+        currKey: string,
+    ) => {
         const defaultAttrs = globalMp[currKey].attrs;
         const isSelectedKeyChecked = mp?.add ?? false;
 
@@ -102,13 +117,15 @@ export function useDynamicForms() {
 
             if (impKey === 'pointMechanism') {
                 ({ selectedAttrs, isSelectedKeyChecked } = getDynamicFormPropsSectionAux(
-                    selecedSection.mechanism,
+                    selecedSection.mechanism[selectedKey],
                     JSON.parse(JSON.stringify(state.pointMechanism)),
                     selectedKey,
                 ));
             } else {
+                const procObj = selecedSection.process[selecedSection.processSectionCurrKey][selectedKey];
+
                 ({ selectedAttrs, isSelectedKeyChecked } = getDynamicFormPropsSectionAux(
-                    selecedSection.process[selecedSection.processSectionCurrKey],
+                    procObj ? procObj[0] : undefined,
                     JSON.parse(JSON.stringify(state.pointProcess)),
                     selectedKey,
                 ));
