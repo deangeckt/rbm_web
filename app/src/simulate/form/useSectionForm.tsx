@@ -1,4 +1,4 @@
-import { default_section_value } from '../../Wrapper';
+import { default_section_value, IMechanismProcess } from '../../Wrapper';
 import { useDynamicFormShare } from '../dynForms/useDynnamicFormShare';
 
 export function useSectionForm() {
@@ -36,12 +36,15 @@ export function useSectionForm() {
         updateSelectedSectionsState(selectedSections);
     };
 
-    const deleteSectionSegment = () => {
+    const processNaviagte = (next: boolean) => {
         const selectedSections = getAllSelectedSections();
         selectedSections.forEach((sec) => {
-            delete sec.process[sec.processSectionCurrKey];
-            const sectionsKeys = Object.keys(sec.process);
-            sec.processSectionCurrKey = Number(sectionsKeys[sectionsKeys.length - 1]);
+            const procList = getProcList();
+            if (!procList) return;
+            const currIdx = sec.processCurrKeyCurrIdx[sec.processCurrKey];
+            const newIdx = next ? currIdx + 1 : currIdx - 1;
+            if (newIdx > procList.length - 1 || newIdx < 0) return;
+            sec.processCurrKeyCurrIdx[sec.processCurrKey] = newIdx;
         });
         updateSelectedSectionsState(selectedSections);
     };
@@ -49,10 +52,48 @@ export function useSectionForm() {
     const deleteProcess = () => {
         const selectedSections = getAllSelectedSections();
         selectedSections.forEach((sec) => {
-            const mulObj = sec.process[sec.processSectionCurrKey];
-            const procList = mulObj[sec.processCurrKey];
+            const procList = getProcList();
+            if (!procList) return;
             procList.splice(sec.processCurrKeyCurrIdx[sec.processCurrKey], 1);
             sec.processCurrKeyCurrIdx[sec.processCurrKey] = procList.length - 1;
+        });
+        updateSelectedSectionsState(selectedSections);
+    };
+
+    const addProcess = () => {
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            const procList = getProcList();
+            if (!procList) return;
+            procList.push({ attrs: {}, add: false });
+            sec.processCurrKeyCurrIdx[sec.processCurrKey] = procList.length - 1;
+        });
+        updateSelectedSectionsState(selectedSections);
+    };
+
+    const getProcList = (): IMechanismProcess[] | undefined => {
+        const sec = getFirstSelectedSection();
+        if (!sec) return undefined;
+        if (sec.processCurrKey === '') return undefined;
+        return sec.process[sec.processSectionCurrKey][sec.processCurrKey];
+    };
+
+    const onlyOneProcess = (): boolean => {
+        const procList = getProcList();
+        if (!procList) return true;
+        return procList.length <= 1;
+    };
+
+    const disableProcessAdd = (): boolean => {
+        return !getProcList();
+    };
+
+    const deleteSectionSegment = () => {
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            delete sec.process[sec.processSectionCurrKey];
+            const sectionsKeys = Object.keys(sec.process);
+            sec.processSectionCurrKey = Number(sectionsKeys[sectionsKeys.length - 1]);
         });
         updateSelectedSectionsState(selectedSections);
     };
@@ -64,33 +105,6 @@ export function useSectionForm() {
             sec.processSectionCurrKey = -1;
         });
         updateSelectedSectionsState(selectedSections);
-    };
-
-    const addProcess = () => {
-        const selectedSections = getAllSelectedSections();
-        selectedSections.forEach((sec) => {
-            if (sec.processCurrKey === '') return;
-            const mulObj = sec.process[sec.processSectionCurrKey];
-            const procList = mulObj[sec.processCurrKey];
-            procList.push({ attrs: {}, add: false });
-            sec.processCurrKeyCurrIdx[sec.processCurrKey] = procList.length - 1;
-        });
-        updateSelectedSectionsState(selectedSections);
-    };
-
-    const onlyOneProcess = (): boolean => {
-        const sec = getFirstSelectedSection();
-        if (!sec) return true;
-        if (sec.processCurrKey === '') return true;
-        const procList = sec.process[sec.processSectionCurrKey][sec.processCurrKey];
-        if (!procList) return true;
-        return procList.length <= 1;
-    };
-
-    const disableProcessAdd = (): boolean => {
-        const sec = getFirstSelectedSection();
-        if (!sec) return true;
-        return sec.processCurrKey === '';
     };
 
     const onlyOneSectionSegment = (): boolean => {
@@ -108,18 +122,6 @@ export function useSectionForm() {
             if (newIdx > keys.length - 1 || newIdx < 0) return;
             const newKey = keys[newIdx];
             sec.processSectionCurrKey = Number(newKey);
-        });
-        updateSelectedSectionsState(selectedSections);
-    };
-
-    const processNaviagte = (next: boolean) => {
-        const selectedSections = getAllSelectedSections();
-        selectedSections.forEach((sec) => {
-            const procList = sec.process[sec.processSectionCurrKey][sec.processCurrKey];
-            const currIdx = sec.processCurrKeyCurrIdx[sec.processCurrKey];
-            const newIdx = next ? currIdx + 1 : currIdx - 1;
-            if (newIdx > procList.length - 1 || newIdx < 0) return;
-            sec.processCurrKeyCurrIdx[sec.processCurrKey] = newIdx;
         });
         updateSelectedSectionsState(selectedSections);
     };

@@ -38,30 +38,27 @@ export function useSimulate() {
         };
     };
 
-    const filterMech = (mps: singleAttrObj) => {
-        const filterMp: singleAttrObj = {};
-
-        const addedKeys = Object.entries(mps)
-            .filter(([, mp]) => mp.add)
+    const filterMech = (mechObj: singleAttrObj) => {
+        const filtered: singleAttrObj = {};
+        const addedKeys = Object.entries(mechObj)
+            .filter(([, mech]) => mech.add)
             .map(([key]) => key);
         addedKeys.forEach((id) => {
-            filterMp[id] = { ...mps[id] };
+            filtered[id] = { ...mechObj[id] };
         });
-
-        return filterMp;
+        return filtered;
     };
 
-    const filterProc = (mps: mulAttrObj) => {
-        const filterMp: mulAttrObj = {};
-
-        const addedKeys = Object.entries(mps)
-            .filter(([, mp]) => mp[0].add)
-            .map(([key]) => key);
-        addedKeys.forEach((id) => {
-            filterMp[id] = [...mps[id]];
+    const filterProc = (procObj: mulAttrObj) => {
+        const filtered: mulAttrObj = {};
+        Object.entries(procObj).forEach(([key, procList]) => {
+            filtered[key] = [];
+            procList.forEach((proc) => {
+                proc.add && filtered[key].push(proc);
+            });
+            filtered[key].length === 0 && delete filtered[key];
         });
-
-        return filterMp;
+        return filtered;
     };
 
     const getChangedForm = (): {
