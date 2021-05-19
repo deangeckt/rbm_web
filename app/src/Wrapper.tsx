@@ -75,7 +75,12 @@ export type singleAttrObj = Record<string, IMechanismProcess>;
 export type mulAttrObj = Record<string, IMechanismProcess[]>;
 export type SectionScheme = Omit<
     ISection,
-    'mechanismCurrKey' | 'processSectionCurrKey' | 'processCurrKey' | 'line' | 'generalChanged'
+    | 'mechanismCurrKey'
+    | 'processSectionCurrKey'
+    | 'processCurrKey'
+    | 'line'
+    | 'generalChanged'
+    | 'processCurrKeyCurrIdx'
 >;
 
 export interface ISection {
@@ -83,9 +88,10 @@ export interface ISection {
     recording_type: number;
     mechanism: singleAttrObj;
     mechanismCurrKey: string;
+    processCurrKey: string;
     process: Record<number, mulAttrObj>; //key: segment
     processSectionCurrKey: number;
-    processCurrKey: string;
+    processCurrKeyCurrIdx: Record<string, number>;
     general: IAttr;
     generalChanged: boolean;
     line: RenderILine;

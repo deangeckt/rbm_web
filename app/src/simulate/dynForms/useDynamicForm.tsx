@@ -13,11 +13,14 @@ export function useDynamicForms() {
         mp[currKey].add = checked;
     };
 
-    const setKeyCheckedSectionProc = (mp: mulAttrObj, currKey: string, checked: boolean) => {
+    const setKeyCheckedSectionProc = (mp: mulAttrObj, currKey: string, currIdx: number, checked: boolean) => {
         if (currKey === '') return;
-        if (!mp[currKey]) mp[currKey] = [{ attrs: {}, add: false }];
-        mp[currKey][0].add = checked;
-        console.log(mp);
+        if (!mp[currKey]) {
+            mp[currKey] = [{ attrs: {}, add: checked }];
+            return true;
+        }
+        mp[currKey][currIdx].add = checked;
+        return false;
     };
 
     const setKeyChecked = (impKey: impKeys, checked: boolean) => {
@@ -34,7 +37,15 @@ export function useDynamicForms() {
                 });
             } else {
                 selectedSections.forEach((sec) => {
-                    setKeyCheckedSectionProc(sec.process[sec.processSectionCurrKey], sec.processCurrKey, checked);
+                    const newKey = setKeyCheckedSectionProc(
+                        sec.process[sec.processSectionCurrKey],
+                        sec.processCurrKey,
+                        sec.processCurrKeyCurrIdx[sec.processCurrKey],
+                        checked,
+                    );
+                    if (newKey) {
+                        sec.processCurrKeyCurrIdx[sec.processCurrKey] = 0;
+                    }
                 });
             }
             updateSelectedSectionsState(selectedSections);
@@ -46,9 +57,9 @@ export function useDynamicForms() {
         mp[currKey].attrs[attr] = value;
     };
 
-    const onAttrSectionChangeProc = (mp: mulAttrObj, currKey: string, attr: string, value: number) => {
+    const onAttrSectionChangeProc = (mp: mulAttrObj, currKey: string, currIdx: number, attr: string, value: number) => {
         if (currKey === '') return;
-        mp[currKey][0].attrs[attr] = value;
+        mp[currKey][currIdx].attrs[attr] = value;
     };
 
     const onAttrChange = (impKey: impKeys, attr: string, value: number) => {
@@ -65,7 +76,13 @@ export function useDynamicForms() {
                 });
             } else {
                 selectedSections.forEach((sec) => {
-                    onAttrSectionChangeProc(sec.process[sec.processSectionCurrKey], sec.processCurrKey, attr, value);
+                    onAttrSectionChangeProc(
+                        sec.process[sec.processSectionCurrKey],
+                        sec.processCurrKey,
+                        sec.processCurrKeyCurrIdx[sec.processCurrKey],
+                        attr,
+                        value,
+                    );
                 });
             }
             updateSelectedSectionsState(selectedSections);
@@ -123,9 +140,10 @@ export function useDynamicForms() {
                 ));
             } else {
                 const procObj = selecedSection.process[selecedSection.processSectionCurrKey][selectedKey];
+                const currIdx = selecedSection.processCurrKeyCurrIdx[selectedKey];
 
                 ({ selectedAttrs, isSelectedKeyChecked } = getDynamicFormPropsSectionAux(
-                    procObj ? procObj[0] : undefined,
+                    procObj ? procObj[currIdx] : undefined,
                     JSON.parse(JSON.stringify(state.pointProcess)),
                     selectedKey,
                 ));

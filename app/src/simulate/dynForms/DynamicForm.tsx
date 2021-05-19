@@ -4,6 +4,7 @@ import DynamicAttr from './DynamicAttr';
 import DynamicKeys from './DynamicKeys';
 import { useDynamicForms } from './useDynamicForm';
 import './DynamicForm.css';
+import SectionFormMulProcess from '../form/SectionFormMulProcess';
 
 export interface IDynamicFormProps {
     mp: singleAttrObj;
@@ -24,6 +25,7 @@ function DynamicForm({ mp, impKey }: IDynamicFormProps) {
                 <DynamicKeys impKey={impKey} keys={keys} selectedKey={selectedKey} />
             </div>
             <div className="DynRightSide">
+                {impKey === 'pointProcess' ? <SectionFormMulProcess /> : null}
                 <DynamicAttr
                     impKey={impKey}
                     attrs={selectedAttrs}

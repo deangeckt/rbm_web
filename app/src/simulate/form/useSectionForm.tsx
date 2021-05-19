@@ -36,7 +36,7 @@ export function useSectionForm() {
         updateSelectedSectionsState(selectedSections);
     };
 
-    const deleteProcess = () => {
+    const deleteSectionSegment = () => {
         const selectedSections = getAllSelectedSections();
         selectedSections.forEach((sec) => {
             delete sec.process[sec.processSectionCurrKey];
@@ -46,7 +46,18 @@ export function useSectionForm() {
         updateSelectedSectionsState(selectedSections);
     };
 
-    const addProcess = () => {
+    const deleteProcess = () => {
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            const mulObj = sec.process[sec.processSectionCurrKey];
+            const procList = mulObj[sec.processCurrKey];
+            procList.splice(sec.processCurrKeyCurrIdx[sec.processCurrKey], 1);
+            sec.processCurrKeyCurrIdx[sec.processCurrKey] = procList.length - 1;
+        });
+        updateSelectedSectionsState(selectedSections);
+    };
+
+    const addSectionSegment = () => {
         const selectedSections = getAllSelectedSections();
         selectedSections.forEach((sec) => {
             sec.process[-1] = {};
@@ -55,13 +66,40 @@ export function useSectionForm() {
         updateSelectedSectionsState(selectedSections);
     };
 
+    const addProcess = () => {
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            if (sec.processCurrKey === '') return;
+            const mulObj = sec.process[sec.processSectionCurrKey];
+            const procList = mulObj[sec.processCurrKey];
+            procList.push({ attrs: {}, add: false });
+            sec.processCurrKeyCurrIdx[sec.processCurrKey] = procList.length - 1;
+        });
+        updateSelectedSectionsState(selectedSections);
+    };
+
     const onlyOneProcess = (): boolean => {
+        const sec = getFirstSelectedSection();
+        if (!sec) return true;
+        if (sec.processCurrKey === '') return true;
+        const procList = sec.process[sec.processSectionCurrKey][sec.processCurrKey];
+        if (!procList) return true;
+        return procList.length <= 1;
+    };
+
+    const disableProcessAdd = (): boolean => {
+        const sec = getFirstSelectedSection();
+        if (!sec) return true;
+        return sec.processCurrKey === '';
+    };
+
+    const onlyOneSectionSegment = (): boolean => {
         const selectedSection = getFirstSelectedSection();
         if (!selectedSection) return true;
         return Object.keys(selectedSection.process).length === 1;
     };
 
-    const processNavigate = (next: boolean) => {
+    const SectionSegmentNavigate = (next: boolean) => {
         const selectedSections = getAllSelectedSections();
         selectedSections.forEach((sec) => {
             const keys = Object.keys(sec.process);
@@ -70,6 +108,18 @@ export function useSectionForm() {
             if (newIdx > keys.length - 1 || newIdx < 0) return;
             const newKey = keys[newIdx];
             sec.processSectionCurrKey = Number(newKey);
+        });
+        updateSelectedSectionsState(selectedSections);
+    };
+
+    const processNaviagte = (next: boolean) => {
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            const procList = sec.process[sec.processSectionCurrKey][sec.processCurrKey];
+            const currIdx = sec.processCurrKeyCurrIdx[sec.processCurrKey];
+            const newIdx = next ? currIdx + 1 : currIdx - 1;
+            if (newIdx > procList.length - 1 || newIdx < 0) return;
+            sec.processCurrKeyCurrIdx[sec.processCurrKey] = newIdx;
         });
         updateSelectedSectionsState(selectedSections);
     };
@@ -94,11 +144,16 @@ export function useSectionForm() {
         updateSectionRecording,
         getSectionValue,
         updateSectionValue,
-        addProcess,
-        deleteProcess,
-        onlyOneProcess,
-        processNavigate,
+        addSectionSegment,
+        deleteSectionSegment,
+        onlyOneSectionSegment,
+        SectionSegmentNavigate,
         onChangeGeneralAttr,
         getSectionGenenralAttr,
+        deleteProcess,
+        addProcess,
+        onlyOneProcess,
+        processNaviagte,
+        disableProcessAdd,
     };
 }

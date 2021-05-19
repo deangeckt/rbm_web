@@ -24,6 +24,7 @@ export function useSimulate() {
             mechanismCurrKey: '',
             processCurrKey: '',
             processSectionCurrKey: default_section_value,
+            processCurrKeyCurrIdx: {},
             general: {},
             generalChanged: false,
             line: {
