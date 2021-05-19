@@ -10,16 +10,19 @@ export interface ISectionItemProps {
 
 function SectionItem({ section }: ISectionItemProps) {
     const { sectionKeyToLabel } = useTreeText();
-    const recording_value = section_recording.find((sr) => sr.value === section.recording_type)!.label;
+
+    const getRecordConcatString = (records: number[]): string => {
+        let res = '';
+        section_recording.forEach((record, idx) => {
+            if (records.indexOf(idx) !== -1) res = res.concat(record + ', ');
+        });
+        return res === '' ? 'None' : res.slice(0, -2);
+    };
 
     return (
         <div className="SummarySection">
             <div className="SummaryKey">{sectionKeyToLabel(section.id)}:</div>
             <div className="SummarySectionItem">
-                <p style={{ margin: 0 }}>
-                    <u>Recording:</u> {recording_value}
-                </p>
-
                 <div className="SummarySectionHeader">General:</div>
                 <MechProcItem id={'general'} item={{ attrs: section.general }} />
 
@@ -27,12 +30,15 @@ function SectionItem({ section }: ISectionItemProps) {
                 {Object.entries(section.mechanism).map(([name, mp]) => (
                     <MechProcItem key={name} id={name} item={mp} />
                 ))}
-                <div className="SummarySectionHeader">Process:</div>
 
-                {Object.entries(section.process).map(([section, proc]) => {
+                {Object.entries(section.process).map(([sectionKey, proc]) => {
                     return (
-                        <div key={section}>
-                            <div>section({section})</div>
+                        <div key={sectionKey}>
+                            <div className="SummaryKey">Section({sectionKey})</div>
+                            <p style={{ margin: 0, marginTop: '8px' }}>
+                                <u>Recording:</u> {getRecordConcatString(section.records[Number(sectionKey)])}
+                            </p>
+                            <div className="SummarySectionHeader">Process:</div>
                             {Object.entries(proc).map(([name, mps]) => {
                                 return mps.map((mp, i) => <MechProcItem key={`${name}_${i}`} id={name} item={mp} />);
                             })}

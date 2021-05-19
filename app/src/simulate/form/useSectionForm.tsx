@@ -5,35 +5,98 @@ export function useSectionForm() {
     const { getFirstSelectedSection, getAllSelectedSections, updateSelectedSectionsState } = useDynamicFormShare();
 
     const getSectionRecording = () => {
-        const selectedSection = getFirstSelectedSection();
-        if (!selectedSection) return 0;
-        return selectedSection.recording_type;
+        const sec = getFirstSelectedSection();
+        if (!sec) return [];
+        return sec.records[sec.segmentCurrKey];
     };
 
-    const updateSectionRecording = (value: number) => {
+    const updateSectionRecording = (val: number, add: boolean) => {
+        console.log('add:', add);
         const selectedSections = getAllSelectedSections();
         selectedSections.forEach((sec) => {
-            sec.recording_type = value;
-        });
-        updateSelectedSectionsState(selectedSections);
-    };
-
-    const getSectionValue = () => {
-        const selectedSection = getFirstSelectedSection();
-        if (!selectedSection) return default_section_value;
-        return selectedSection.processSectionCurrKey;
-    };
-
-    const updateSectionValue = (value: number) => {
-        const selectedSections = getAllSelectedSections();
-        selectedSections.forEach((sec) => {
-            if (!Object.keys(sec.process).includes(value.toString())) {
-                sec.process[value] = Object.assign({}, sec.process[sec.processSectionCurrKey]);
-                delete sec.process[sec.processSectionCurrKey];
-                sec.processSectionCurrKey = value;
+            const records = sec.records[sec.segmentCurrKey];
+            add && records.push(val);
+            if (!add) {
+                const idx = records.indexOf(val);
+                records.splice(idx, 1);
             }
         });
         updateSelectedSectionsState(selectedSections);
+    };
+
+    const getSectionSegment = () => {
+        const selectedSection = getFirstSelectedSection();
+        if (!selectedSection) return default_section_value;
+        return selectedSection.segmentCurrKey;
+    };
+
+    const updateSectionSegment = (value: number) => {
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            if (!Object.keys(sec.process).includes(value.toString())) {
+                sec.process[value] = Object.assign({}, sec.process[sec.segmentCurrKey]);
+                sec.records[value] = Object.assign([], sec.records[sec.segmentCurrKey]);
+                delete sec.process[sec.segmentCurrKey];
+                delete sec.records[sec.segmentCurrKey];
+                sec.segmentCurrKey = value;
+            }
+        });
+        updateSelectedSectionsState(selectedSections);
+    };
+
+    const deleteSectionSegment = () => {
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            delete sec.process[sec.segmentCurrKey];
+            delete sec.records[sec.segmentCurrKey];
+            const sectionsKeys = Object.keys(sec.process);
+            sec.segmentCurrKey = Number(sectionsKeys[sectionsKeys.length - 1]);
+        });
+        updateSelectedSectionsState(selectedSections);
+    };
+
+    const addSectionSegment = () => {
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            sec.process[-1] = {};
+            sec.records[-1] = [];
+            sec.segmentCurrKey = -1;
+        });
+        updateSelectedSectionsState(selectedSections);
+    };
+
+    const onlyOneSectionSegment = (): boolean => {
+        const selectedSection = getFirstSelectedSection();
+        if (!selectedSection) return true;
+        return Object.keys(selectedSection.process).length === 1;
+    };
+
+    const SectionSegmentNavigate = (next: boolean) => {
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            const keys = Object.keys(sec.process);
+            const currIdx = keys.findIndex((k) => k === sec.segmentCurrKey.toString());
+            const newIdx = next ? currIdx + 1 : currIdx - 1;
+            if (newIdx > keys.length - 1 || newIdx < 0) return;
+            const newKey = keys[newIdx];
+            sec.segmentCurrKey = Number(newKey);
+        });
+        updateSelectedSectionsState(selectedSections);
+    };
+
+    const onChangeGeneralAttr = (attr: string, value: number) => {
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            sec.general[attr] = value;
+            sec.generalChanged = true;
+        });
+        updateSelectedSectionsState(selectedSections);
+    };
+
+    const getSectionGenenralAttr = () => {
+        const selectedSection = getFirstSelectedSection();
+        if (!selectedSection) return {};
+        return selectedSection.general;
     };
 
     const processNaviagte = (next: boolean) => {
@@ -75,7 +138,7 @@ export function useSectionForm() {
         const sec = getFirstSelectedSection();
         if (!sec) return undefined;
         if (sec.processCurrKey === '') return undefined;
-        return sec.process[sec.processSectionCurrKey][sec.processCurrKey];
+        return sec.process[sec.segmentCurrKey][sec.processCurrKey];
     };
 
     const onlyOneProcess = (): boolean => {
@@ -88,64 +151,11 @@ export function useSectionForm() {
         return !getProcList();
     };
 
-    const deleteSectionSegment = () => {
-        const selectedSections = getAllSelectedSections();
-        selectedSections.forEach((sec) => {
-            delete sec.process[sec.processSectionCurrKey];
-            const sectionsKeys = Object.keys(sec.process);
-            sec.processSectionCurrKey = Number(sectionsKeys[sectionsKeys.length - 1]);
-        });
-        updateSelectedSectionsState(selectedSections);
-    };
-
-    const addSectionSegment = () => {
-        const selectedSections = getAllSelectedSections();
-        selectedSections.forEach((sec) => {
-            sec.process[-1] = {};
-            sec.processSectionCurrKey = -1;
-        });
-        updateSelectedSectionsState(selectedSections);
-    };
-
-    const onlyOneSectionSegment = (): boolean => {
-        const selectedSection = getFirstSelectedSection();
-        if (!selectedSection) return true;
-        return Object.keys(selectedSection.process).length === 1;
-    };
-
-    const SectionSegmentNavigate = (next: boolean) => {
-        const selectedSections = getAllSelectedSections();
-        selectedSections.forEach((sec) => {
-            const keys = Object.keys(sec.process);
-            const currIdx = keys.findIndex((k) => k === sec.processSectionCurrKey.toString());
-            const newIdx = next ? currIdx + 1 : currIdx - 1;
-            if (newIdx > keys.length - 1 || newIdx < 0) return;
-            const newKey = keys[newIdx];
-            sec.processSectionCurrKey = Number(newKey);
-        });
-        updateSelectedSectionsState(selectedSections);
-    };
-
-    const onChangeGeneralAttr = (attr: string, value: number) => {
-        const selectedSections = getAllSelectedSections();
-        selectedSections.forEach((sec) => {
-            sec.general[attr] = value;
-            sec.generalChanged = true;
-        });
-        updateSelectedSectionsState(selectedSections);
-    };
-
-    const getSectionGenenralAttr = () => {
-        const selectedSection = getFirstSelectedSection();
-        if (!selectedSection) return {};
-        return selectedSection.general;
-    };
-
     return {
         getSectionRecording,
         updateSectionRecording,
-        getSectionValue,
-        updateSectionValue,
+        getSectionSegment,
+        updateSectionSegment,
         addSectionSegment,
         deleteSectionSegment,
         onlyOneSectionSegment,

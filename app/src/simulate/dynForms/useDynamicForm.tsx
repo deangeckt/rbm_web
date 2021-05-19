@@ -38,7 +38,7 @@ export function useDynamicForms() {
             } else {
                 selectedSections.forEach((sec) => {
                     const newKey = setKeyCheckedSectionProc(
-                        sec.process[sec.processSectionCurrKey],
+                        sec.process[sec.segmentCurrKey],
                         sec.processCurrKey,
                         sec.processCurrKeyCurrIdx[sec.processCurrKey],
                         checked,
@@ -77,7 +77,7 @@ export function useDynamicForms() {
             } else {
                 selectedSections.forEach((sec) => {
                     onAttrSectionChangeProc(
-                        sec.process[sec.processSectionCurrKey],
+                        sec.process[sec.segmentCurrKey],
                         sec.processCurrKey,
                         sec.processCurrKeyCurrIdx[sec.processCurrKey],
                         attr,
@@ -139,7 +139,7 @@ export function useDynamicForms() {
                     selectedKey,
                 ));
             } else {
-                const procObj = selecedSection.process[selecedSection.processSectionCurrKey][selectedKey];
+                const procObj = selecedSection.process[selecedSection.segmentCurrKey][selectedKey];
                 const currIdx = selecedSection.processCurrKeyCurrIdx[selectedKey];
 
                 ({ selectedAttrs, isSelectedKeyChecked } = getDynamicFormPropsSectionAux(

@@ -9,8 +9,8 @@ import './Form.css';
 
 function SectionFormSegmentHeader() {
     const {
-        getSectionValue,
-        updateSectionValue,
+        getSectionSegment,
+        updateSectionSegment,
         addSectionSegment,
         deleteSectionSegment,
         onlyOneSectionSegment,
@@ -30,8 +30,8 @@ function SectionFormSegmentHeader() {
                 label={'Section'}
                 variant="filled"
                 type="number"
-                value={getSectionValue()}
-                onChange={(e) => updateSectionValue(Number(e.target.value))}
+                value={getSectionSegment()}
+                onChange={(e) => updateSectionSegment(Number(e.target.value))}
                 InputProps={{ inputProps: { min: 0, step: 0.1 } }}
             />
             <Tooltip title="Add segment">

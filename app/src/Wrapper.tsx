@@ -50,24 +50,7 @@ export const section_types = [
     },
 ];
 
-export const section_recording = [
-    {
-        value: 0,
-        label: 'none',
-    },
-    {
-        value: 1,
-        label: 'volt',
-    },
-    {
-        value: 2,
-        label: 'ina',
-    },
-    {
-        value: 3,
-        label: 'ik',
-    },
-];
+export const section_recording = ['volt', 'i_na', 'i_k'];
 
 export type RenderILine = Pick<ILine, 'id' | 'pid' | 'points' | 'children' | 'tid' | 'radius'>;
 export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
@@ -75,22 +58,17 @@ export type singleAttrObj = Record<string, IMechanismProcess>;
 export type mulAttrObj = Record<string, IMechanismProcess[]>;
 export type SectionScheme = Omit<
     ISection,
-    | 'mechanismCurrKey'
-    | 'processSectionCurrKey'
-    | 'processCurrKey'
-    | 'line'
-    | 'generalChanged'
-    | 'processCurrKeyCurrIdx'
+    'mechanismCurrKey' | 'processCurrKey' | 'segmentCurrKey' | 'line' | 'generalChanged' | 'processCurrKeyCurrIdx'
 >;
 
 export interface ISection {
     id: string;
-    recording_type: number;
     mechanism: singleAttrObj;
     mechanismCurrKey: string;
     processCurrKey: string;
     process: Record<number, mulAttrObj>; //key: segment
-    processSectionCurrKey: number;
+    records: Record<number, number[]>; //key: segment
+    segmentCurrKey: number;
     processCurrKeyCurrIdx: Record<string, number>;
     general: IAttr;
     generalChanged: boolean;

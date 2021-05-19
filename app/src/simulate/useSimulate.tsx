@@ -16,14 +16,16 @@ export function useSimulate() {
     const addNewSection = (key: string, pid: string, swc_id: string, tid: number, radius: number): ISection => {
         return {
             id: key,
-            recording_type: 0,
             mechanism: {},
             process: {
                 0.5: {},
             },
+            records: {
+                0.5: [],
+            },
             mechanismCurrKey: '',
             processCurrKey: '',
-            processSectionCurrKey: default_section_value,
+            segmentCurrKey: default_section_value,
             processCurrKeyCurrIdx: {},
             general: {},
             generalChanged: false,
@@ -80,14 +82,24 @@ export function useSimulate() {
                 if (Object.keys(proc).length) anyProcess = true;
             });
 
-            if (sec.generalChanged || anyProcess || Object.keys(filterMechList).length || sec.recording_type !== 0) {
+            const filterRecords: Record<number, number[]> = {};
+            Object.entries(state.sections[sec.id].records).forEach(([sectionKey, recordList]) => {
+                recordList.length > 0 && (filterRecords[Number(sectionKey)] = [...recordList]);
+            });
+
+            if (
+                sec.generalChanged ||
+                anyProcess ||
+                Object.keys(filterMechList).length ||
+                Object.keys(filterRecords).length
+            ) {
                 const currSection = state.sections[sec.id];
                 filterSections[sec.id] = {
                     id: currSection.id,
                     general: { ...currSection.general },
-                    recording_type: currSection.recording_type,
                     process: filterProcList,
                     mechanism: filterMechList,
+                    records: filterRecords,
                 };
             }
         }
@@ -112,10 +124,10 @@ export function useSimulate() {
                 const currSections = { ...state.sections };
                 Object.entries(sections).forEach(([key, val]) => {
                     currSections[key].general = val.general;
-                    currSections[key].recording_type = val.recording_type;
+                    currSections[key].records = val.records;
                     currSections[key].mechanism = val.mechanism;
                     currSections[key].process = val.process;
-                    currSections[key].processSectionCurrKey = Number(Object.keys(val.process)[0]);
+                    currSections[key].segmentCurrKey = Number(Object.keys(val.process)[0]);
                 });
 
                 setState({
