@@ -25,8 +25,8 @@ function Summary() {
                     })}
 
                     <div className="SummaryHeader">Sections</div>
-                    {Object.values(sections).map((sec) => {
-                        return <SectionItem key={sec.id} section={sec} />;
+                    {Object.values(sections).map((sec, i) => {
+                        return <SectionItem key={`${sec.id}_${i}`} section={sec} />;
                     })}
                 </div>
             </Drawer>

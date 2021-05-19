@@ -24,7 +24,6 @@ function SectionItem({ section }: ISectionItemProps) {
                 <MechProcItem id={'general'} item={{ attrs: section.general }} />
 
                 <div className="SummarySectionHeader">Mechanism:</div>
-
                 {Object.entries(section.mechanism).map(([name, mp]) => (
                     <MechProcItem key={name} id={name} item={mp} />
                 ))}
@@ -35,7 +34,7 @@ function SectionItem({ section }: ISectionItemProps) {
                         <div key={section}>
                             <div>section({section})</div>
                             {Object.entries(proc).map(([name, mps]) => {
-                                return mps.map((mp) => <MechProcItem key={name} id={name} item={mp} />);
+                                return mps.map((mp, i) => <MechProcItem key={`${name}_${i}`} id={name} item={mp} />);
                             })}
                         </div>
                     );

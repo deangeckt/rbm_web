@@ -83,7 +83,7 @@ export function useSimulate() {
                 if (Object.keys(proc).length) anyProcess = true;
             });
 
-            if (sec.generalChanged || anyProcess || Object.keys(filterMech).length || sec.recording_type !== 0) {
+            if (sec.generalChanged || anyProcess || Object.keys(filterMechList).length || sec.recording_type !== 0) {
                 const currSection = state.sections[sec.id];
                 filterSections[sec.id] = {
                     id: currSection.id,
