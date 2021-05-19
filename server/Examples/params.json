@@ -1,17 +1,7 @@
 [
 	{
 		"id": "global",
-		"value": {
-			"general": {
-				"attrs": {
-					"sim_time": 50,
-					"dt": 0.025,
-					"rest_volt": -70,
-					"celsius": 6.3
-				},
-				"add": true
-			}
-		}
+		"value": {}
 	},
 	{
 		"id": "sections",
@@ -19,29 +9,76 @@
 			"0_1": {
 				"id": "0_1",
 				"general": {
-					"L": 100,
+					"L": 1,
 					"Ra": 35.4,
 					"nseg": 1,
 					"rallbranch": 1
 				},
-				"recording_type": 1,
 				"process": {
-					"0.5": {
-						"IClamp": {
-							"attrs": {
-								"delay": 20,
-								"dur": 20,
-								"amp": 0.5
+					"0.6": {
+						"IClamp": [
+							{
+								"attrs": {
+									"delay": 20,
+									"dur": 10,
+									"amp": 0.5
+								},
+								"add": true
 							},
-							"add": true
-						}
+							{
+								"attrs": {
+									"delay": 40,
+									"dur": 10,
+									"amp": 0.5
+								},
+								"add": true
+							}
+						]
 					}
 				},
 				"mechanism": {
 					"hh": {
 						"attrs": {},
 						"add": true
+					},
+					"na_ion": {
+						"attrs": {},
+						"add": true
 					}
+				},
+				"records": {
+					"0.6": [
+						0,
+						1
+					]
+				}
+			},
+			"1_3": {
+				"id": "1_3",
+				"general": {
+					"L": 135.4661926101164,
+					"Ra": 35.4,
+					"nseg": 1,
+					"rallbranch": 1
+				},
+				"process": {
+					"0.5": {}
+				},
+				"mechanism": {
+					"hh": {
+						"attrs": {},
+						"add": true
+					},
+					"na_ion": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {
+					"0.5": [
+						1,
+						2
+					]
 				}
 			}
 		}

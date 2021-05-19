@@ -14,11 +14,11 @@ def tid_to_type(type_, h):
 
 
 def recording_type_to_ref(type_, h_ref):
-    if type_ == 1:
+    if type_ == 0:
         return h_ref._ref_v
-    elif type_ == 2:
+    elif type_ == 1:
         return h_ref._ref_ina
-    elif type_ == 3:
+    elif type_ == 2:
         return h_ref._ref_ik
     else:
         raise ValueError('invalid record type: ', type_)

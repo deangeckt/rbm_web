@@ -13,10 +13,10 @@ if __name__ == "__main__":
     with open('params.json') as json_file:
         params = json.load(json_file)
         res = wrapper.run(params=params, swc_path=read_paths()[1])
-        r_key = recording_key(recording_type_=1, type_=1, id_=0, section_=0.5)
+        r_key = recording_key(recording_type_=0, type_=1, id_=0, section_=0.6)
 
         plt.plot(np.array(res['time']), np.array(res[r_key]))
         plt.xlim((0, sim_time))
         plt.xlabel('Time [mS]')
-        plt.ylabel('soma[0] - Voltage')
+        plt.ylabel('soma[0](0.6) - Voltage')
         plt.show()

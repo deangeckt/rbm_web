@@ -76,26 +76,25 @@ class NeuronWrapper:
                 h_ref = tid_to_type(tid_, self.h)
                 h_ref = h_ref[id_](segment)
 
-                new_proc = getattr(self.h, proc)(h_ref)
-                attrs = process[segment_key][proc]['attrs']
-                for attr in attrs:
-                    setattr(new_proc, attr, attrs[attr])
-                self.process.append(new_proc)
+                for attrList in process[segment_key][proc]:
+                    new_proc = getattr(self.h, proc)(h_ref)
+                    attrs = attrList['attrs']
+                    for attr in attrs:
+                        setattr(new_proc, attr, attrs[attr])
+                    self.process.append(new_proc)
 
     def __add_section_record(self, section: dict):
-        recording_type_ = section['recording_type']
-        if recording_type_ == 0:
-            return
-
         id_, tid_ = section_key_to_id_tid(section['id'])
-        vec_rec = self.__add_record_aux(id_, tid_, recording_type_)
-        recording_key_ = recording_key(recording_type_, tid_, id_, 0.5)
+        records = section['records']
+        for segment in records:
+            for record in records[segment]:
+                vec_rec = self.__add_record_aux(id_, tid_, record, float(segment))
+                recording_key_ = recording_key(record, tid_, id_, segment)
+                self.recordings[recording_key_] = vec_rec
 
-        self.recordings[recording_key_] = vec_rec
-
-    def __add_record_aux(self, id_, tid_, recording_type_):
+    def __add_record_aux(self, id_, tid_, recording_type_, segment_):
         h_ref = tid_to_type(tid_, self.h)
-        h_ref = h_ref[id_](0.5)
+        h_ref = h_ref[id_](segment_)
         h_ref = recording_type_to_ref(type_=recording_type_, h_ref=h_ref)
 
         vec_rec = self.h.Vector()
@@ -110,7 +109,7 @@ class NeuronWrapper:
                 print('adding record to {} sections from type {}'.format(len(_type), tid))
                 for cid in range(len(_type)):
                     recording_key_ = id_tid_to_section_key(cid, tid)
-                    vec_rec = self.__add_record_aux(cid, tid, 1)
+                    vec_rec = self.__add_record_aux(cid, tid, 0, 0.5)
                     self.anim_recordings[recording_key_] = vec_rec
             except:
                 continue
@@ -142,9 +141,9 @@ class NeuronWrapper:
             if tid_ == 1 and id_ > 0:
                 continue
 
-            self.__add_section_record(section)
             self.__add_section_mech(section)
             self.__add_section_process(section)
+            self.__add_section_record(section)
             self.__add_section_general_params(section)
 
         if self.recordings == {}:
