@@ -47,7 +47,7 @@
     white-space: pre-wrap;
     padding-bottom: 16px;
     margin-top: 24px;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
     text-align: center;
     border-bottom: 1px solid #efefef;
 }
@@ -55,5 +55,7 @@
 .SctionFormProcessHeader {
     display: flex;
     justify-content: space-evenly;
-    margin-bottom: 12;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #efefef;
 }

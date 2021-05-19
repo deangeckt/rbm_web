@@ -3,10 +3,9 @@ import DynamicForm from '../dynForms/DynamicForm';
 import { AppContext } from '../../AppContext';
 import { useTreeText } from '../../tree/useTreeText';
 import SectionFormNavButton from './SectionFormNavButton';
-import SectionFormProcessHeader from './SectionFormProcessHeader';
+import SectionFormSegmentHeader from './SectionFormSegmentHeader';
 import SectionFormRecording from './SectionFormRecording';
 import SectionFormGeneral from './SectionFormGeneral';
-
 import './Form.css';
 
 type SectionTab = 'process' | 'mech' | 'record' | 'general';
@@ -59,11 +58,7 @@ function SectionFormWrapper() {
             <div className="SectionEditStr">{sectionListString}</div>
             {renderForm ? (
                 <>
-                    {sectionTab === 'process' ? (
-                        <div className="SctionFormProcessHeader">
-                            <SectionFormProcessHeader />
-                        </div>
-                    ) : null}
+                    {sectionTab === 'process' || sectionTab === 'record' ? <SectionFormSegmentHeader /> : null}
                     <div>{renderTab()}</div>
                 </>
             ) : null}

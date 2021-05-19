@@ -5,29 +5,24 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
+import './Form.css';
 
-export interface ISectionFormProcessHeaderProps {
-    label: string;
-    isSelected: boolean;
-    select: Function;
-}
-
-function SectionFormProcessHeader() {
+function SectionFormSegmentHeader() {
     const {
-        getSectionValue,
-        updateSectionValue,
-        addProcess,
-        deleteProcess,
-        onlyOneProcess,
-        processNavigate,
+        getSectionSegment,
+        updateSectionSegment,
+        addSectionSegment,
+        deleteSectionSegment,
+        onlyOneSectionSegment,
+        SectionSegmentNavigate,
     } = useSectionForm();
     return (
-        <>
+        <div className="SctionFormProcessHeader">
             <IconButton
-                disabled={onlyOneProcess()}
+                disabled={onlyOneSectionSegment()}
                 color="primary"
                 size="medium"
-                onClick={() => processNavigate(false)}
+                onClick={() => SectionSegmentNavigate(false)}
             >
                 <NavigateBeforeIcon />
             </IconButton>
@@ -35,27 +30,36 @@ function SectionFormProcessHeader() {
                 label={'Section'}
                 variant="filled"
                 type="number"
-                value={getSectionValue()}
-                onChange={(e) => updateSectionValue(Number(e.target.value))}
+                value={getSectionSegment()}
+                onChange={(e) => updateSectionSegment(Number(e.target.value))}
                 InputProps={{ inputProps: { min: 0, step: 0.1 } }}
             />
-            <Tooltip title="Add section">
-                <IconButton color="primary" onClick={() => addProcess()}>
+            <Tooltip title="Add segment">
+                <IconButton color="primary" onClick={() => addSectionSegment()}>
                     <AddIcon />
                 </IconButton>
             </Tooltip>
             <Tooltip title="Delete section">
                 <div style={{ display: 'flex' }}>
-                    <IconButton disabled={onlyOneProcess()} color="primary" onClick={() => deleteProcess()}>
+                    <IconButton
+                        disabled={onlyOneSectionSegment()}
+                        color="primary"
+                        onClick={() => deleteSectionSegment()}
+                    >
                         <DeleteIcon />
                     </IconButton>
                 </div>
             </Tooltip>
-            <IconButton disabled={onlyOneProcess()} color="primary" size="medium" onClick={() => processNavigate(true)}>
+            <IconButton
+                disabled={onlyOneSectionSegment()}
+                color="primary"
+                size="medium"
+                onClick={() => SectionSegmentNavigate(true)}
+            >
                 <NavigateNextIcon />
             </IconButton>
-        </>
+        </div>
     );
 }
 
-export default SectionFormProcessHeader;
+export default SectionFormSegmentHeader;

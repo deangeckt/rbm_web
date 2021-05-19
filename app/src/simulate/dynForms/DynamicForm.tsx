@@ -1,12 +1,13 @@
 import React from 'react';
-import { impKeys, mpObj } from '../../Wrapper';
+import { impKeys, singleAttrObj } from '../../Wrapper';
 import DynamicAttr from './DynamicAttr';
 import DynamicKeys from './DynamicKeys';
 import { useDynamicForms } from './useDynamicForm';
 import './DynamicForm.css';
+import SectionFormMulProcess from '../form/SectionFormMulProcess';
 
 export interface IDynamicFormProps {
-    mp: mpObj;
+    mp: singleAttrObj;
     impKey: impKeys;
 }
 
@@ -24,6 +25,7 @@ function DynamicForm({ mp, impKey }: IDynamicFormProps) {
                 <DynamicKeys impKey={impKey} keys={keys} selectedKey={selectedKey} />
             </div>
             <div className="DynRightSide">
+                {impKey === 'pointProcess' ? <SectionFormMulProcess /> : null}
                 <DynamicAttr
                     impKey={impKey}
                     attrs={selectedAttrs}

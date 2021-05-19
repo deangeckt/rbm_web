@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { IAnimData, IAttr, IPlotData, mpObj, SectionScheme } from '../Wrapper';
+import { IAnimData, IAttr, IPlotData, singleAttrObj, SectionScheme } from '../Wrapper';
 import readMocks from './readMock.json';
 
 export interface schema {
@@ -7,16 +7,18 @@ export interface schema {
     value: any;
 }
 
-export const prepareJsonParams = (globalMech: mpObj, sections: Record<string, SectionScheme>): schema[] => {
+export const prepareJsonParams = (globalMech: singleAttrObj, sections: Record<string, SectionScheme>): schema[] => {
     const data: schema[] = [];
     data.push({ id: 'global', value: globalMech });
     data.push({ id: 'sections', value: sections });
     return data;
 };
 
-export const parseJsonParams = (txt: string): { globalMechanism: mpObj; sections: Record<string, SectionScheme> } => {
+export const parseJsonParams = (
+    txt: string,
+): { globalMechanism: singleAttrObj; sections: Record<string, SectionScheme> } => {
     const parsed = JSON.parse(txt) as schema[];
-    let globalMechanism: mpObj = {};
+    let globalMechanism: singleAttrObj = {};
     let sections: Record<string, SectionScheme> = {};
     parsed.forEach((s) => {
         if (s.id === 'global') {
@@ -31,7 +33,7 @@ export const parseJsonParams = (txt: string): { globalMechanism: mpObj; sections
 export const run = async (
     setData: Function,
     setError: Function,
-    globalMech: mpObj,
+    globalMech: singleAttrObj,
     sections: Record<string, SectionScheme>,
     anim: boolean,
 ) => {
@@ -63,8 +65,8 @@ export const run = async (
     }
 };
 
-export const readSchema = (data: any): mpObj => {
-    const result: mpObj = {};
+export const readSchema = (data: any): singleAttrObj => {
+    const result: singleAttrObj = {};
     Object.keys(data).forEach(function (attrKey) {
         const attrList = data[attrKey];
         const attrs: IAttr = {};
@@ -106,6 +108,7 @@ export const read = async (setError: Function, setData: Function) => {
                 readSchema(readMocks.point_mechanism),
                 readSchema(readMocks.global_mechanism),
                 readSchema(readMocks.point_processes),
+                {},
             );
         } else msg = error.response.data;
         setError('Failed to read Neuron attributes ' + msg);
