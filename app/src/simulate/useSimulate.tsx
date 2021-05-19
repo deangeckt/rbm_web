@@ -127,6 +127,12 @@ export function useSimulate() {
                     currSections[key].records = val.records;
                     currSections[key].mechanism = val.mechanism;
                     currSections[key].process = val.process;
+                    const attrKeys = Object.keys(Object.values(val.process)[0]);
+                    if (attrKeys.length > 0) {
+                        const procCurrKey = attrKeys[0];
+                        currSections[key].processCurrKeyCurrIdx[procCurrKey] = 0;
+                        currSections[key].processCurrKey = procCurrKey;
+                    }
                     currSections[key].segmentCurrKey = Number(Object.keys(val.process)[0]);
                 });
 

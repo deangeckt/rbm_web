@@ -43,9 +43,7 @@ export function useDynamicForms() {
                         sec.processCurrKeyCurrIdx[sec.processCurrKey],
                         checked,
                     );
-                    if (newKey) {
-                        sec.processCurrKeyCurrIdx[sec.processCurrKey] = 0;
-                    }
+                    if (newKey) sec.processCurrKeyCurrIdx[sec.processCurrKey] = 0;
                 });
             }
             updateSelectedSectionsState(selectedSections);

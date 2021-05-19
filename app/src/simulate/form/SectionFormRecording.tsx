@@ -6,7 +6,6 @@ import { useSectionForm } from './useSectionForm';
 function SectionFormRecording() {
     const { getSectionRecording, updateSectionRecording } = useSectionForm();
     const records = getSectionRecording();
-    console.log(records);
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
