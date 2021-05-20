@@ -1,11 +1,10 @@
 import React, { useContext, useEffect } from 'react';
-import { neuronRadToSize } from '../utils/swcUtils';
-import { Stage, Layer, Circle } from 'react-konva';
-import TransformerLine from './TransformerLine';
+import { lineRadiusAddition, neuronRadToSize } from '../utils/swcUtils';
+import { Stage, Layer, Circle, Line } from 'react-konva';
 import { AppContext } from '../AppContext';
 import { useDesignCanvas } from './useDesignCanvas';
 import { getStage, RenderILine, root_id, root_key } from '../Wrapper';
-import { neuron_color } from '../utils/colors';
+import { neuron_color, section_color } from '../utils/colors';
 import { useSimulateCanvas } from './useSimulateCanvas';
 import { useTreeCanvasCommon } from './useTreeCanvasCommon';
 
@@ -99,11 +98,17 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
                             }
                         }
                         return (
-                            <TransformerLine
+                            <Line
                                 key={l.id}
-                                line={l}
+                                id={l.id}
+                                stroke={section_color[l.tid]}
+                                points={[...l.points]}
+                                perfectDrawEnabled={false}
                                 isSelected={l.id === state.selectedId}
-                                click={() => setSelectedId(l.id)}
+                                onClick={() => setSelectedId(l.id)}
+                                opacity={state.selectedId === l.id ? 1 : 0.5}
+                                draggable={false}
+                                strokeWidth={l.radius + lineRadiusAddition}
                             />
                         );
                     })}

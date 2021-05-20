@@ -2,7 +2,7 @@ import { IAppState, ILine, design_init_root_line, root_id } from '../Wrapper';
 
 export const lenPointRatio = 5;
 export const neuronRadiusRatio = 4.5;
-export const lineRadiusAddition = 3;
+export const lineRadiusAddition = 8;
 export const swcAttr = 7;
 
 export function lengthToPoint(length: number) {
