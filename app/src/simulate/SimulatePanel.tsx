@@ -7,7 +7,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { downloadSwcFile, downloadJsonParams } from '../utils/general';
+import { downloadSwcFile, downloadJsonParams, downloadPlots } from '../utils/general';
 import { AppContext } from '../AppContext';
 import { useDesignCanvas } from '../tree/useDesignCanvas';
 import { useSimulate } from './useSimulate';
@@ -76,6 +76,14 @@ function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePane
                 >
                     Import session params
                     <input type="file" accept={'.json'} hidden onChange={(e) => importJsonParams(e)} />
+                </MenuItem>
+                <MenuItem
+                    onClick={() => {
+                        downloadPlots(state.plots);
+                        closeMenu();
+                    }}
+                >
+                    Export plots
                 </MenuItem>
                 <MenuItem
                     onClick={() => {
