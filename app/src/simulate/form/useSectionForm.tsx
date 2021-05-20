@@ -11,7 +11,6 @@ export function useSectionForm() {
     };
 
     const updateSectionRecording = (val: number, add: boolean) => {
-        console.log('add:', add);
         const selectedSections = getAllSelectedSections();
         selectedSections.forEach((sec) => {
             const records = sec.records[sec.segmentCurrKey];

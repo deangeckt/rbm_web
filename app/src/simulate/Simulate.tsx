@@ -7,7 +7,7 @@ import SimulateMainForm from './form/SimulateMainForms';
 import InfoDialog from './dialogs/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import SimulateCanvas from './SimulateCanvas';
-import { IAnimData, IAttr, IPlotData, singleAttrObj } from '../Wrapper';
+import { IAnimData, IAttr, IPlotPayload, singleAttrObj } from '../Wrapper';
 import ReadLoading from '../anim/ReadLoading';
 import { useSimulate } from './useSimulate';
 import Summary from './summary/Summary';
@@ -21,14 +21,13 @@ const initTreePlot: TreeOrPlot = 'Tree';
 function Simulate() {
     const { state, setState } = useContext(AppContext);
     const { getChangedForm } = useSimulate();
-    console.log(state.sections);
 
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
     const [readLoading, setReadLoading] = React.useState(true);
     const [treeOrPlot, setTreeOrPlot] = React.useState(initTreePlot);
 
-    const updateRunData = (plotData: IPlotData[], animData: Record<string, IAnimData[]>) => {
+    const updateRunData = (plotData: IPlotPayload, animData: Record<string, IAnimData[]>) => {
         const plots = [...state.plots];
         plots.push(plotData);
         setState({ ...state, plots: plots, animations: JSON.parse(JSON.stringify(animData)) });

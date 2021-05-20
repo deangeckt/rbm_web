@@ -1,43 +1,42 @@
 import React, { useContext } from 'react';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
-import { IPlotData, section_short_labels } from '../../Wrapper';
+import { section_recording, section_short_labels } from '../../Wrapper';
 import Carousel from 'react-material-ui-carousel';
 import { AppContext } from '../../AppContext';
 
-const record_key_parse = (recordKey: string) => {
+const parsePlotName = (recordKey: string) => {
+    if (recordKey === 'time') return 'time';
     const keys = recordKey.split('_');
-    const type_ = keys[1];
+    const record_ = keys[0];
+    const tid_ = keys[1];
     const id_ = keys[2];
     const section_ = keys[3];
-    return `${section_short_labels[Number(type_)]}[${id_}](${section_})`;
+    let res = `${section_short_labels[Number(tid_)]}[${id_}](${section_})`;
+    if (record_ !== '0') {
+        // not volt
+        res = res.concat('_', section_recording[Number(record_)]);
+    }
+    return res;
 };
 
-function oneD2d(data: IPlotData[]) {
-    const t = data.find((d) => d.name == 'time');
-    if (!t) {
-        return [{ plot: [], name: '' }];
-    }
-    return data
-        .filter((d) => {
-            return d.name != 'time';
-        })
-        .map((d) => {
-            const r = [];
-            for (let i = 0; i < t.plot.length; i++) r.push([t.plot[i], d.plot[i]]);
-            return { name: record_key_parse(d.name), plot: r };
-        });
-}
+const oneD2d = (time: number[], name: string, data: number[]) => {
+    const r = [];
+    for (let i = 0; i < time.length; i++) r.push([time[i], data[i]]);
+    return { name: parsePlotName(name), data: r };
+};
 
-function options(data: IPlotData[]) {
+const options = (data: Record<string, number[]>, time: number[], title: string) => {
     const series: { data: number[][]; lineWidth?: number; name: string; marker?: { enabled: boolean } }[] = [];
-    if (data.length === 0) {
+    if (time.length === 0) {
         series.push({ data: [], name: '' });
     } else {
-        oneD2d(data).forEach((d: { plot: number[][]; name: string }) => {
-            series.push({ data: d.plot, lineWidth: 1.5, name: d.name, marker: { enabled: false } });
+        Object.entries(data).forEach(([name, plot]) => {
+            const format = oneD2d(time, name, plot);
+            series.push({ data: format.data, lineWidth: 1.5, name: format.name, marker: { enabled: false } });
         });
     }
+
     return {
         chart: {
             type: 'spline',
@@ -53,11 +52,11 @@ function options(data: IPlotData[]) {
             title: { text: 'Time [mS]' },
         },
         yAxis: {
-            title: { text: 'Voltage [mV]' },
+            title: { text: title },
         },
         series: series,
     };
-}
+};
 
 export interface IPlotProps {
     display: boolean;
@@ -67,11 +66,24 @@ function Plot({ display }: IPlotProps) {
     const { state } = useContext(AppContext);
 
     return (
-        <div style={{ display: display ? undefined : 'none' }}>
+        <div style={{ height: '100%', display: display ? 'flex' : 'none', flexDirection: 'column' }}>
             <Carousel autoPlay={false} stopAutoPlayOnHover={false} index={state.plots.length - 1}>
-                {state.plots.map((item, i) => (
-                    <HighchartsReact key={i} highcharts={Highcharts} options={options(item)} />
-                ))}
+                {state.plots.map((plot, i) => {
+                    return (
+                        <div key={i} id={'cccc'}>
+                            <HighchartsReact
+                                key={`${i}_v`}
+                                highcharts={Highcharts}
+                                options={options(plot.volt, plot.time, 'Voltage [mV]')}
+                            />
+                            <HighchartsReact
+                                key={`${i}_c`}
+                                highcharts={Highcharts}
+                                options={options(plot.current, plot.time, 'Current [mA]')}
+                            />
+                        </div>
+                    );
+                })}
             </Carousel>
         </div>
     );

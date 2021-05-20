@@ -3,7 +3,7 @@ from copy import deepcopy
 import numpy as np
 from Api.readApi import read_api
 from Api.schemaConvert import recording_type_to_ref, tid_to_type, recording_key, \
-    section_key_to_id_tid, id_tid_to_section_key
+    section_key_to_id_tid, id_tid_to_section_key, recording_key_to_payload_type
 from Utils.animations import create_animations
 
 
@@ -168,9 +168,10 @@ class NeuronWrapper:
         self.neuron_dy.run(self.general_params['sim_time'])
 
         time_vec = np.array(trec).tolist()
-        result = {'time': time_vec}
+        result = {'time': time_vec, 'current': {}, 'volt': {}}
         for record_key in self.recordings:
-            result[record_key] = np.array(self.recordings[record_key]).tolist()
+            payload_type = recording_key_to_payload_type(record_key)
+            result[payload_type][record_key] = np.array(self.recordings[record_key]).tolist()
 
         if 'animation' in self.input:
             result['animation'] = create_animations(self.anim_recordings, time_vec)

@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { IAnimData, IAttr, IPlotData, singleAttrObj, SectionScheme } from '../Wrapper';
+import { IAnimData, IAttr, singleAttrObj, SectionScheme, IPlotPayload } from '../Wrapper';
 import readMocks from './readMock.json';
 
 export interface schema {
@@ -46,15 +46,27 @@ export const run = async (
             data: data,
         })) as AxiosResponse;
 
-        const plotData: IPlotData[] = [];
+        const plotData: IPlotPayload = {
+            time: [],
+            volt: {},
+            current: {},
+        };
         const animData: Record<string, IAnimData[]> = {};
         for (const key in response.data) {
             if (key === 'animation') {
                 Object.entries(response.data['animation']).forEach(([sec_key, props]) => {
                     animData[sec_key] = props as IAnimData[];
                 });
-            } else {
-                plotData.push({ name: key, plot: response.data[key] as number[] });
+            } else if (key === 'time') {
+                plotData.time = response.data[key];
+            } else if (key === 'volt') {
+                Object.entries(response.data['volt']).forEach(([name, payload]) => {
+                    plotData.volt[name] = payload as number[];
+                });
+            } else if (key === 'current') {
+                Object.entries(response.data['current']).forEach(([name, payload]) => {
+                    plotData.current[name] = payload as number[];
+                });
             }
         }
         setData(plotData, animData);

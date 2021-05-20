@@ -24,8 +24,16 @@ def recording_type_to_ref(type_, h_ref):
         raise ValueError('invalid record type: ', type_)
 
 
-def recording_key(recording_type_, type_, id_, section_):
-    return '{}_{}_{}_{}'.format(recording_type_, type_, id_, section_)
+def recording_key(recording_type_, tid_, id_, section_):
+    return '{}_{}_{}_{}'.format(recording_type_, tid_, id_, section_)
+
+
+def recording_key_to_payload_type(record_key):
+    record_type = record_key.split('_')[0]
+    if record_type == '0':
+        return 'volt'
+    else:
+        return 'current'
 
 
 def section_key_to_id_tid(section_key):

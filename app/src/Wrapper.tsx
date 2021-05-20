@@ -105,9 +105,10 @@ export interface IDialogs {
     dialogInfoImage?: string;
 }
 
-export interface IPlotData {
-    plot: number[];
-    name: string;
+export interface IPlotPayload {
+    time: number[];
+    volt: Record<string, number[]>;
+    current: Record<string, number[]>;
 }
 
 export interface IAnimData {
@@ -133,7 +134,7 @@ export interface IAppState {
     pointProcess: singleAttrObj;
     globalMechanism: singleAttrObj;
     globalMechanismCurrKey: string;
-    plots: IPlotData[][];
+    plots: IPlotPayload[];
     addAnims: false;
     animations: Record<string, IAnimData[]>;
 }
