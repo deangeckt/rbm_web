@@ -11,7 +11,8 @@ export interface ISectionItemProps {
 function SectionItem({ section }: ISectionItemProps) {
     const { sectionKeyToLabel } = useTreeText();
 
-    const getRecordConcatString = (records: number[]): string => {
+    const getRecordConcatString = (records: number[] | undefined): string => {
+        if (!records) return 'None';
         let res = '';
         section_recording.forEach((record, idx) => {
             if (records.indexOf(idx) !== -1) res = res.concat(record + ', ');
