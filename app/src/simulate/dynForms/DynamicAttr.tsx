@@ -17,7 +17,7 @@ export interface IDynamicAttrProps {
 }
 
 function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
-    const { updateKeyInfo } = useDialogs();
+    const { updateInfo } = useDialogs();
     const { setKeyChecked, onAttrChange } = useDynamicForms();
 
     const headLine = impKey.endsWith('Mechanism') ? 'Mechanism' : 'Process';
@@ -44,7 +44,7 @@ function DynamicAttr({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
                         {attrs_list.map(([attr, value]) => (
                             <ListItem key={attr}>
                                 <div key={attr} style={{ display: 'flex', flexDirection: 'row' }}>
-                                    <IconButton color="primary" size="small" onClick={() => updateKeyInfo(attr)}>
+                                    <IconButton color="primary" size="small" onClick={() => updateInfo(attr)}>
                                         <InfoIcon />
                                     </IconButton>
                                     <TextField

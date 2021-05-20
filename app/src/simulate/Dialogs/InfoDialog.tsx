@@ -6,15 +6,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
 function InfoDialog() {
-    const { closeDialog } = useDialogs();
+    const { closeInfo } = useDialogs();
     const { state } = useContext(AppContext);
-    const imgRelPath = state.dialogs.dialogInfoImage;
+    const imgRelPath = state.dialogs.infoImage;
 
     return (
-        <Dialog onClose={() => closeDialog()} open={state.dialogs.dialogState}>
-            <DialogTitle> {state.dialogs.dialogInfoTitle} </DialogTitle>
+        <Dialog onClose={() => closeInfo()} open={state.dialogs.infoState}>
+            <DialogTitle> {state.dialogs.infoTitle} </DialogTitle>
             <DialogContent>
-                <DialogContentText>{state.dialogs.dialogInfoContent}</DialogContentText>
+                <DialogContentText>{state.dialogs.infoContent}</DialogContentText>
                 {imgRelPath ? <img src={`${process.env.PUBLIC_URL}/assets/${imgRelPath}`} /> : null}
             </DialogContent>
         </Dialog>

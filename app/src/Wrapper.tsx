@@ -99,10 +99,11 @@ export interface IMechanismProcess {
 }
 
 export interface IDialogs {
-    dialogState: boolean;
-    dialogInfoTitle: string;
-    dialogInfoContent: string;
-    dialogInfoImage?: string;
+    infoState: boolean;
+    infoTitle: string;
+    infoContent: string;
+    infoImage?: string;
+    exportState: boolean;
 }
 
 export interface IPlotPayload {
@@ -190,9 +191,10 @@ export const init_app_state: IAppState = {
     selectedId: none_selected_id,
     designLastAddedId: root_id,
     dialogs: {
-        dialogState: false,
-        dialogInfoTitle: '',
-        dialogInfoContent: '',
+        infoState: false,
+        infoTitle: '',
+        infoContent: '',
+        exportState: false,
     },
     summaryState: false,
     pointMechanism: {},

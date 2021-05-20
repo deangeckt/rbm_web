@@ -10,7 +10,6 @@ function Summary() {
     const { state, setState } = useContext(AppContext);
     const { getChangedForm } = useSimulate();
     const { globalMechanism, sections } = getChangedForm();
-
     return (
         <div>
             <Drawer

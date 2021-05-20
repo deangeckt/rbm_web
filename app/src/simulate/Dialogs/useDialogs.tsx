@@ -5,23 +5,29 @@ import { infoTitle, infoContent, infoImg } from '../../utils/info';
 export function useDialogs() {
     const { state, setState } = useContext(AppContext);
 
-    const closeDialog = () => {
+    const closeInfo = () => {
         setState({ ...state, dialogs: { dialogState: false, infoTitle: '', dialogInfoContent: '' } });
     };
 
-    const updateKeyInfo = (key: string) => {
+    const toggleExport = (val: boolean) => {
+        const dialogs = { ...state.dialogs };
+        dialogs.exportState = val;
+        setState({ ...state, dialogs: dialogs });
+    };
+
+    const updateInfo = (key: string) => {
         const dialogs = { ...state.dialogs };
         const title = infoTitle[key];
         if (!title) return;
         const content = infoContent[key];
         const img = infoImg[key];
 
-        dialogs.dialogInfoTitle = title;
-        dialogs.dialogInfoContent = content;
-        dialogs.dialogInfoImage = img;
-        dialogs.dialogState = true;
+        dialogs.infoTitle = title;
+        dialogs.infoContent = content;
+        dialogs.infoImage = img;
+        dialogs.infoState = true;
         setState({ ...state, dialogs: dialogs });
     };
 
-    return { closeDialog, updateKeyInfo };
+    return { closeInfo, updateInfo, toggleExport };
 }

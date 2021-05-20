@@ -7,10 +7,12 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { downloadSwcFile, downloadJsonParams, downloadPlots } from '../utils/general';
+import { downloadSwcFile, downloadPlots } from '../utils/general';
 import { AppContext } from '../AppContext';
 import { useDesignCanvas } from '../tree/useDesignCanvas';
 import { useSimulate } from './useSimulate';
+import { useDialogs } from './dialogs/useDialogs';
+import ExportSeassionDialog from './dialogs/ExportSeassionDialog';
 
 export interface ISimulatePanelProps {
     running: boolean;
@@ -22,7 +24,8 @@ export interface ISimulatePanelProps {
 function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePanelProps) {
     const { state, setState } = useContext(AppContext);
     const { getLinesArrayNoRoot } = useDesignCanvas();
-    const { getChangedForm, importJsonParams } = useSimulate();
+    const { importJsonParams } = useSimulate();
+    const { toggleExport } = useDialogs();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const openMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -35,6 +38,7 @@ function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePane
 
     return (
         <>
+            <ExportSeassionDialog />
             <IconButton color="primary" size="medium" onClick={openMenu}>
                 <MenuIcon />
             </IconButton>
@@ -61,8 +65,7 @@ function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePane
                 </MenuItem>
                 <MenuItem
                     onClick={() => {
-                        const { globalMechanism, sections } = getChangedForm();
-                        downloadJsonParams(globalMechanism, sections);
+                        toggleExport(true);
                         closeMenu();
                     }}
                 >

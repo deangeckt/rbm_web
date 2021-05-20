@@ -10,6 +10,8 @@ export interface ISectionItemProps {
 
 function SectionItem({ section }: ISectionItemProps) {
     const { sectionKeyToLabel } = useTreeText();
+    const segmentKeys =
+        Object.keys(section.process).length > 0 ? Object.keys(section.process) : Object.keys(section.records);
 
     const getRecordConcatString = (records: number[] | undefined): string => {
         if (!records) return 'None';
@@ -32,7 +34,7 @@ function SectionItem({ section }: ISectionItemProps) {
                     <MechProcItem key={name} id={name} item={mp} />
                 ))}
 
-                {Object.entries(section.process).map(([sectionKey, proc]) => {
+                {segmentKeys.map((sectionKey) => {
                     return (
                         <div key={sectionKey}>
                             <div className="SummaryKey">Section({sectionKey})</div>
@@ -40,7 +42,7 @@ function SectionItem({ section }: ISectionItemProps) {
                                 <u>Recording:</u> {getRecordConcatString(section.records[Number(sectionKey)])}
                             </p>
                             <div className="SummarySectionHeader">Process:</div>
-                            {Object.entries(proc).map(([name, mps]) => {
+                            {Object.entries(section.process[Number(sectionKey)] ?? {}).map(([name, mps]) => {
                                 return mps.map((mp, i) => <MechProcItem key={`${name}_${i}`} id={name} item={mp} />);
                             })}
                         </div>

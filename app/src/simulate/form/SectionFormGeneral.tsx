@@ -9,7 +9,7 @@ import { useDialogs } from '../dialogs/useDialogs';
 function SectionFormGeneral() {
     const { onChangeGeneralAttr, getSectionGenenralAttr } = useSectionForm();
     const attrs_list = Object.entries(getSectionGenenralAttr());
-    const { updateKeyInfo } = useDialogs();
+    const { updateInfo } = useDialogs();
 
     return (
         <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -17,7 +17,7 @@ function SectionFormGeneral() {
                 {attrs_list.map(([attr, value]) => (
                     <ListItem key={attr}>
                         <div key={attr} style={{ display: 'flex', flexDirection: 'row' }}>
-                            <IconButton color="primary" size="small" onClick={() => updateKeyInfo(attr)}>
+                            <IconButton color="primary" size="small" onClick={() => updateInfo(attr)}>
                                 <InfoIcon />
                             </IconButton>
                             <TextField

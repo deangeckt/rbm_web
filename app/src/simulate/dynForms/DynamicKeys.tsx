@@ -14,7 +14,7 @@ export interface IKeyListProps {
 }
 
 function DynamicKeys({ keys, selectedKey, impKey }: IKeyListProps) {
-    const { updateKeyInfo } = useDialogs();
+    const { updateInfo } = useDialogs();
     const { setCurrKey } = useDynamicForms();
 
     return (
@@ -23,7 +23,7 @@ function DynamicKeys({ keys, selectedKey, impKey }: IKeyListProps) {
                 {keys.map((key) => (
                     <ListItem key={key}>
                         <div key={key} style={{ display: 'flex', flexDirection: 'row' }}>
-                            <IconButton color="primary" size="small" onClick={() => updateKeyInfo(key)}>
+                            <IconButton color="primary" size="small" onClick={() => updateInfo(key)}>
                                 <InfoIcon />
                             </IconButton>
                             <Button

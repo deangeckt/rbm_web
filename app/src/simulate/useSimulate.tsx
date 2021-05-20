@@ -63,13 +63,14 @@ export function useSimulate() {
         return filtered;
     };
 
-    const getChangedForm = (): {
+    const getChangedForm = (
+        ignoreSectionsProcess = false,
+    ): {
         globalMechanism: singleAttrObj;
         sections: Record<string, SectionScheme>;
     } => {
         const filterGlobalMech: singleAttrObj = filterMech(state.globalMechanism);
         const filterSections: Record<string, SectionScheme> = {};
-
         const sectionEnts = Object.values(state.sections);
         for (let i = 0; i < sectionEnts.length; i++) {
             const sec = sectionEnts[i];
@@ -78,8 +79,11 @@ export function useSimulate() {
             const filterProcList: Record<number, mulAttrObj> = {};
             let anyProcess = false;
             Object.entries(state.sections[sec.id].process).forEach(([sectionKey, proc]) => {
-                filterProcList[Number(sectionKey)] = filterProc(proc);
-                if (Object.keys(proc).length) anyProcess = true;
+                const filtered = filterProc(proc);
+                if (Object.keys(filtered).length) {
+                    anyProcess = true;
+                    filterProcList[Number(sectionKey)] = filtered;
+                }
             });
 
             const filterRecords: Record<number, number[]> = {};
@@ -97,9 +101,9 @@ export function useSimulate() {
                 filterSections[sec.id] = {
                     id: currSection.id,
                     general: { ...currSection.general },
-                    process: filterProcList,
+                    process: ignoreSectionsProcess ? {} : filterProcList,
                     mechanism: filterMechList,
-                    records: filterRecords,
+                    records: ignoreSectionsProcess ? {} : filterRecords,
                 };
             }
         }
