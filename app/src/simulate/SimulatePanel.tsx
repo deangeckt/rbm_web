@@ -17,11 +17,12 @@ import ExportSeassionDialog from './dialogs/ExportSeassionDialog';
 export interface ISimulatePanelProps {
     running: boolean;
     start: () => void;
+    onErr: (err: string) => void;
     togglePlotTree: (key: TreeOrPlot) => void;
     toggle: TreeOrPlot;
 }
 
-function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePanelProps) {
+function SimulatePanel({ running, start, onErr, togglePlotTree, toggle }: ISimulatePanelProps) {
     const { state, setState } = useContext(AppContext);
     const { getLinesArrayNoRoot } = useDesignCanvas();
     const { importJsonParams } = useSimulate();
@@ -78,7 +79,7 @@ function SimulatePanel({ running, start, togglePlotTree, toggle }: ISimulatePane
                     component="label"
                 >
                     Import session params
-                    <input type="file" accept={'.json'} hidden onChange={(e) => importJsonParams(e)} />
+                    <input type="file" accept={'.json'} hidden onChange={(e) => importJsonParams(e, onErr)} />
                 </MenuItem>
                 <MenuItem
                     onClick={() => {

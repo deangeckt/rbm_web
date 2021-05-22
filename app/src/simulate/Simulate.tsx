@@ -25,7 +25,6 @@ function Simulate() {
     const { getChangedForm } = useSimulate();
     const { setSimulationTreeSections } = useSimulateCanvas();
     const { sectionsToTreeRender } = useTreeText();
-    console.log(state);
 
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
@@ -55,7 +54,7 @@ function Simulate() {
         setError('');
     };
 
-    const updateDynForms = (
+    const updateSimulation = (
         newPointMech: singleAttrObj,
         newGlobalMech: singleAttrObj,
         newPointProc: singleAttrObj,
@@ -82,7 +81,7 @@ function Simulate() {
     };
 
     React.useEffect(() => {
-        read(updateError, updateDynForms);
+        read(updateError, updateSimulation);
     }, []);
 
     return (
@@ -103,6 +102,7 @@ function Simulate() {
                             <SimulatePanel
                                 running={running}
                                 start={StartRunning}
+                                onErr={updateError}
                                 toggle={treeOrPlot}
                                 togglePlotTree={setTreeOrPlot}
                             />

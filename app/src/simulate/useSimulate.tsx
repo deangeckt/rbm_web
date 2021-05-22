@@ -111,41 +111,45 @@ export function useSimulate() {
         return { globalMechanism: filterGlobalMech, sections: filterSections };
     };
 
-    const importJsonParams = async (e: any) => {
+    const importJsonParams = async (e: any, onErr: Function) => {
         if (e?.target?.files?.length === 0) return;
         e.preventDefault();
         const reader = new FileReader();
         reader.onload = async (e) => {
             const text = e?.target?.result;
             if (text) {
-                const { sections, globalMechanism } = parseJsonParams(text as string);
+                try {
+                    const { sections, globalMechanism } = parseJsonParams(text as string);
 
-                const currGlobal = { ...state.globalMechanism };
-                Object.entries(globalMechanism).forEach(([key, val]) => {
-                    currGlobal[key] = val;
-                });
+                    const currGlobal = { ...state.globalMechanism };
+                    Object.entries(globalMechanism).forEach(([key, val]) => {
+                        currGlobal[key] = val;
+                    });
 
-                const currSections = { ...state.sections };
-                Object.entries(sections).forEach(([key, val]) => {
-                    currSections[key].general = val.general;
-                    currSections[key].records = val.records;
-                    currSections[key].mechanism = val.mechanism;
-                    currSections[key].process = val.process;
-                    const attrKeys = Object.keys(Object.values(val.process)[0]);
-                    if (attrKeys.length > 0) {
-                        const procCurrKey = attrKeys[0];
-                        currSections[key].processCurrKeyCurrIdx[procCurrKey] = 0;
-                        currSections[key].processCurrKey = procCurrKey;
-                    }
-                    currSections[key].segmentCurrKey = Number(Object.keys(val.process)[0]);
-                });
+                    const currSections = { ...state.sections };
+                    Object.entries(sections).forEach(([key, val]) => {
+                        currSections[key].general = val.general;
+                        currSections[key].records = val.records;
+                        currSections[key].mechanism = val.mechanism;
+                        currSections[key].process = val.process;
+                        const attrKeys = Object.keys(Object.values(val.process)[0]);
+                        if (attrKeys.length > 0) {
+                            const procCurrKey = attrKeys[0];
+                            currSections[key].processCurrKeyCurrIdx[procCurrKey] = 0;
+                            currSections[key].processCurrKey = procCurrKey;
+                        }
+                        currSections[key].segmentCurrKey = Number(Object.keys(val.process)[0]);
+                    });
 
-                setState({
-                    ...state,
-                    globalMechanism: currGlobal,
-                    globalMechanismCurrKey: init_global_curr_key,
-                    sections: currSections,
-                });
+                    setState({
+                        ...state,
+                        globalMechanism: currGlobal,
+                        globalMechanismCurrKey: init_global_curr_key,
+                        sections: currSections,
+                    });
+                } catch (err: any) {
+                    onErr('Failed to import session - make sure its matchs the swc file loaded');
+                }
             }
         };
         reader.readAsText(e?.target?.files[0]);
