@@ -7,12 +7,14 @@ import SimulateMainForm from './form/SimulateMainForms';
 import InfoDialog from './dialogs/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import SimulateCanvas from './SimulateCanvas';
-import { IAnimData, IAttr, IPlotPayload, singleAttrObj } from '../Wrapper';
+import { IAnimData, IAttr, IPlotPayload, none_selected_key, singleAttrObj } from '../Wrapper';
 import ReadLoading from '../anim/ReadLoading';
 import { useSimulate } from './useSimulate';
 import Summary from './summary/Summary';
 import Plot from './plot/Plot';
 import TreeCanvasAnimated from '../tree/animate/TreeCanvasAnimated';
+import { useSimulateCanvas } from '../tree/useSimulateCanvas';
+import { useTreeText } from '../tree/useTreeText';
 import './Simulate.css';
 
 export type TreeOrPlot = 'Tree' | 'Plot' | 'Anim';
@@ -21,6 +23,9 @@ const initTreePlot: TreeOrPlot = 'Tree';
 function Simulate() {
     const { state, setState } = useContext(AppContext);
     const { getChangedForm } = useSimulate();
+    const { setSimulationTreeSections } = useSimulateCanvas();
+    const { sectionsToTreeRender } = useTreeText();
+    console.log(state);
 
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
@@ -56,17 +61,22 @@ function Simulate() {
         newPointProc: singleAttrObj,
         sectionGeneral: Record<string, IAttr>,
     ) => {
+        const { sections } = setSimulationTreeSections();
+        const treeText = sectionsToTreeRender(sections);
+
         const staticGloablMech = { ...state.globalMechanism };
-        const sections = { ...state.sections };
         Object.entries(sectionGeneral).forEach(([sec_key, attr]) => {
             sections[sec_key].general = attr;
         });
+
         setState({
             ...state,
             globalMechanism: Object.assign({}, staticGloablMech, newGlobalMech) as singleAttrObj,
             pointMechanism: newPointMech,
             pointProcess: newPointProc,
             sections: sections,
+            sectionsTreeText: treeText,
+            selectedId: none_selected_key,
         });
         setReadLoading(false);
     };

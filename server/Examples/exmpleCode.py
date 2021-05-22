@@ -34,7 +34,6 @@ if __name__ == "__main__":
                                 "dur": 20,
                                 "amp": 0.5
                             },
-                            "add": True
                         },
                         {
                             "attrs": {
@@ -42,7 +41,6 @@ if __name__ == "__main__":
                                 "dur": 20,
                                 "amp": 0.5
                             },
-                            "add": True
                         }
                     ]
                 }
@@ -53,11 +51,9 @@ if __name__ == "__main__":
             "mechanism": {
                 "hh": {
                     "attrs": {},
-                    "add": True
                 },
                 "na_ion": {
                     "attrs": {},
-                    "add": True
                 }
             }
         },
@@ -66,18 +62,20 @@ if __name__ == "__main__":
               {'id': 'sections', 'value': sections_params}]
 
     res = wrapper.run(params=params, swc_path=read_paths()[1])
-    r_key1 = recording_key(recording_type_=1, type_=1, id_=0, section_=0.5)
-    r_key2 = recording_key(recording_type_=0, type_=1, id_=0, section_=0.5)
+    volt_res = res['volt']
+    current_res = res['current']
+    r_key1 = recording_key(recording_type_=1, tid_=1, id_=0, section_=0.5)
+    r_key2 = recording_key(recording_type_=0, tid_=1, id_=0, section_=0.5)
 
     plt.subplot(1, 2, 1)
-    plt.plot(np.array(res['time']), np.array(res[r_key1]))
+    plt.plot(np.array(res['time']), np.array(current_res[r_key1]))
     plt.xlim((0, sim_time))
     plt.xlabel('Time [mS]')
     plt.ylabel('soma[0] - Current Na')
     plt.tight_layout()
 
     plt.subplot(1, 2, 2)
-    plt.plot(np.array(res['time']), np.array(res[r_key2]))
+    plt.plot(np.array(res['time']), np.array(volt_res[r_key2]))
     plt.xlim((0, sim_time))
     plt.xlabel('Time [mS]')
     plt.ylabel('soma[0] - Voltage')

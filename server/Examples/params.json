@@ -1,5 +1,9 @@
 [
 	{
+		"id": "description",
+		"value": "example using this session params in python"
+	},
+	{
 		"id": "global",
 		"value": {}
 	},
@@ -8,27 +12,14 @@
 		"value": {
 			"0_1": {
 				"id": "0_1",
-				"general": {
-					"L": 1,
-					"Ra": 35.4,
-					"nseg": 1,
-					"rallbranch": 1
-				},
+				"general": {},
 				"process": {
 					"0.6": {
 						"IClamp": [
 							{
 								"attrs": {
 									"delay": 20,
-									"dur": 10,
-									"amp": 0.5
-								},
-								"add": true
-							},
-							{
-								"attrs": {
-									"delay": 40,
-									"dur": 10,
+									"dur": 20,
 									"amp": 0.5
 								},
 								"add": true
@@ -38,46 +29,15 @@
 				},
 				"mechanism": {
 					"hh": {
-						"attrs": {},
-						"add": true
-					},
-					"na_ion": {
-						"attrs": {},
+						"attrs": {
+							"gnabar_hh": 0.13
+						},
 						"add": true
 					}
 				},
 				"records": {
 					"0.6": [
-						0,
-						1
-					]
-				}
-			},
-			"1_3": {
-				"id": "1_3",
-				"general": {
-					"L": 135.4661926101164,
-					"Ra": 35.4,
-					"nseg": 1,
-					"rallbranch": 1
-				},
-				"process": {
-					"0.5": {}
-				},
-				"mechanism": {
-					"hh": {
-						"attrs": {},
-						"add": true
-					},
-					"na_ion": {
-						"attrs": {},
-						"add": true
-					}
-				},
-				"records": {
-					"0.5": [
-						1,
-						2
+						0
 					]
 				}
 			}
