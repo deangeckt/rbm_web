@@ -17,8 +17,13 @@ export const downloadSwcFile = (state: IAppState, linesArray: ILine[]) => {
     downloadAux(content, 'text/plain;charset=utf-8', 'swcTree.swc');
 };
 
-export const downloadJsonParams = (globalMech: singleAttrObj, sections: Record<string, SectionScheme>) => {
+export const downloadJsonParams = (
+    globalMech: singleAttrObj,
+    sections: Record<string, SectionScheme>,
+    description: string,
+) => {
     const params = prepareJsonParams(globalMech, sections);
+    params.unshift({ id: 'description', value: description });
     const jsonparams = JSON.stringify(params);
     downloadAux([jsonparams], 'type:"text/json"', 'params.json');
 };
