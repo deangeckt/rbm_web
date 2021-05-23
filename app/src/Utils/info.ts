@@ -27,6 +27,7 @@ export const infoTitle: Dictionary<string> = {
     dur: 'Duration of the process [mS]',
     amp: 'Amplitude of the process [nA]',
     pas: 'Passive ("leak") channel',
+    IClamp: 'Single pulse current clamp point process',
 };
 
 export const infoContent: Dictionary<string> = {
@@ -44,6 +45,7 @@ export const infoContent: Dictionary<string> = {
     gkbar_hh: 'The maximum specific potassium channel conductance [S/cm2]',
     gl_hh: 'The maximum specific leakage conductance [S/cm2]',
     nseg: 'The section is divided into nseg compartments of length L/nseg',
+    IClamp: 'This is an electrode current so positive amp depolarizes the cell',
 };
 
 // relative path in public/assests

@@ -1,16 +1,9 @@
 import { useContext } from 'react';
 import { AppContext } from '../AppContext';
-import { ISection, RenderTreeText, root_key, section_short_labels } from '../Wrapper';
+import { ISection, RenderTreeText, root_key } from '../Wrapper';
 
 export function useTreeText() {
     const { state, setState } = useContext(AppContext);
-
-    const sectionKeyToLabel = (sectionKey: string): string => {
-        const keys = sectionKey.split('_');
-        const cid = keys[0];
-        const tid = keys[1];
-        return `${section_short_labels[tid]}[${cid}]`;
-    };
 
     const getTreeChildrenRecur = (sectionKey: string, res: string[]) => {
         const currSection = state.sections[sectionKey];
@@ -71,7 +64,6 @@ export function useTreeText() {
     };
 
     return {
-        sectionKeyToLabel,
         isSectionChecked,
         setSectionChecked,
         setMultipleSectionChecked,

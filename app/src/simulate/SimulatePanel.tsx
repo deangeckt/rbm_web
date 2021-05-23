@@ -7,7 +7,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { downloadSwcFile, downloadPlots } from '../utils/general';
+import { downloadSwcFile, downloadPlots } from '../utils/exportUtils';
 import { AppContext } from '../AppContext';
 import { useDesignCanvas } from '../tree/useDesignCanvas';
 import { useSimulate } from './useSimulate';

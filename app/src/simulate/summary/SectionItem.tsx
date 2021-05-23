@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTreeText } from '../../tree/useTreeText';
+import { sectionKeyToLabel } from '../../utils/generalUtils';
 import { SectionScheme, section_recording } from '../../Wrapper';
 import MechProcItem from './MechProcItem';
 import './Summary.css';
@@ -9,7 +9,6 @@ export interface ISectionItemProps {
 }
 
 function SectionItem({ section }: ISectionItemProps) {
-    const { sectionKeyToLabel } = useTreeText();
     const segmentKeys =
         Object.keys(section.process).length > 0 ? Object.keys(section.process) : Object.keys(section.records);
 

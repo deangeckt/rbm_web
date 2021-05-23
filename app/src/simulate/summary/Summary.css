@@ -7,8 +7,16 @@
 }
 
 .SummaryHeader {
-    font-weight: 700;
+    font-weight: 600;
     font-size: larger;
+}
+
+.SummarySearch {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0px 32px 12px 0px;
 }
 
 .SummaryItem {

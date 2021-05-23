@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import DynamicForm from '../dynForms/DynamicForm';
 import { AppContext } from '../../AppContext';
-import { useTreeText } from '../../tree/useTreeText';
 import SectionFormNavButton from './SectionFormNavButton';
 import SectionFormSegmentHeader from './SectionFormSegmentHeader';
 import SectionFormRecording from './SectionFormRecording';
 import SectionFormGeneral from './SectionFormGeneral';
+import { sectionKeyToLabel } from '../../utils/generalUtils';
 import './Form.css';
 
 type SectionTab = 'process' | 'mech' | 'record' | 'general';
@@ -14,7 +14,6 @@ const initTab: SectionTab = 'general';
 function SectionFormWrapper() {
     const [sectionTab, setSectionTab] = React.useState(initTab);
     const { state } = useContext(AppContext);
-    const { sectionKeyToLabel } = useTreeText();
 
     const selecedSections = Object.entries(state.checkedSections)
         .filter(([, added]) => added)

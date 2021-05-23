@@ -5,6 +5,7 @@ import { makeStyles, Theme, createStyles, fade } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core';
 import { useTreeText } from './useTreeText';
 import { useSimulateCanvas } from './useSimulateCanvas';
+import { sectionKeyToLabel } from '../utils/generalUtils';
 
 const useTreeItemStyles = makeStyles((theme: Theme) => {
     return createStyles({
@@ -28,7 +29,7 @@ const useTreeItemStyles = makeStyles((theme: Theme) => {
 
 function TreeTextRecurItem({ ...other }: TreeItemProps) {
     const classes = useTreeItemStyles();
-    const { sectionKeyToLabel, setSectionChecked, setMultipleSectionChecked, isSectionChecked } = useTreeText();
+    const { setSectionChecked, setMultipleSectionChecked, isSectionChecked } = useTreeText();
     const { setSelectedId } = useSimulateCanvas();
 
     const handleCheck = (event: any) => {

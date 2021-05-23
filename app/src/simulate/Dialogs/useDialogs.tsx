@@ -6,7 +6,11 @@ export function useDialogs() {
     const { state, setState } = useContext(AppContext);
 
     const closeInfo = () => {
-        setState({ ...state, dialogs: { infoState: false, infoTitle: '', infoContent: '' } });
+        const dialogs = { ...state.dialogs };
+        dialogs.infoContent = '';
+        dialogs.infoState = false;
+        dialogs.infoTitle = '';
+        setState({ ...state, dialogs: dialogs });
     };
 
     const toggleExport = (val: boolean) => {

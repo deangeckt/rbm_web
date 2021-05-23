@@ -14,15 +14,6 @@ export interface IStageSize {
     rootY: number;
 }
 
-export const section_short_labels: Dictionary<string> = {
-    0: 'undef',
-    1: 'soma',
-    2: 'axon',
-    3: 'basal',
-    4: 'apic',
-    5: 'custom',
-};
-
 export const section_types = [
     {
         value: 0,
@@ -49,6 +40,15 @@ export const section_types = [
         label: 'custom',
     },
 ];
+
+export const section_short_labels: Dictionary<string> = {
+    0: 'undef',
+    1: 'soma',
+    2: 'axon',
+    3: 'basal',
+    4: 'apic',
+    5: 'custom',
+};
 
 export const section_recording = ['volt', 'i_na', 'i_k'];
 
