@@ -41,7 +41,9 @@ def __read_section_general(h):
                 res[recording_key_] = {'L': h_ref.L,
                                        'Ra': h_ref.Ra,
                                        'nseg': h_ref.nseg,
-                                       'rallbranch': h_ref.rallbranch}
+                                       'rallbranch': h_ref.rallbranch,
+                                       'cm': h_ref.cm,
+                                       'diam': h_ref.diam}
         except:
             continue
     return res
