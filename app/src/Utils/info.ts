@@ -18,15 +18,21 @@ export const infoTitle: Dictionary<string> = {
     gl_hh: 'gl - Leakage conductance',
     el_hh: 'The reversal potential for the leakage channel [mV]',
     ena: 'The reversal potential for the sodium channel [mV]',
-    ek: 'The reversal potential for the potassium  channel [mV]',
+    ek: 'The reversal potential for the potassium channel [mV]',
+    L: 'Section Length [µM]',
+    diam: 'Section diameter [µM]',
+    nseg: 'Number of segments (compartments)',
+    Ra: 'Axial resistivity in ohm-cm',
+    delay: 'Delay of the process [mS]',
+    dur: 'Duration of the process [mS]',
+    amp: 'Amplitude of the process [nA]',
+    pas: 'Passive ("leak") channel',
 };
 
 export const infoContent: Dictionary<string> = {
-    general: '',
     sim_time: 'Total run time of the simulation',
     dt: 'lower value => higher Granularity',
     rest_volt: 'The resting membrane potential',
-    celsius: '',
     hh: 'https://en.wikipedia.org/wiki/Hodgkin-Huxley_model',
     minf_hh: 'm∞: gating equation constant in steady state [mV]',
     ninf_hh: 'n∞: gating equation constant in steady state [mV]',
@@ -37,6 +43,7 @@ export const infoContent: Dictionary<string> = {
     gnabar_hh: 'The maximum specific sodium channel conductance [S/cm2]',
     gkbar_hh: 'The maximum specific potassium channel conductance [S/cm2]',
     gl_hh: 'The maximum specific leakage conductance [S/cm2]',
+    nseg: 'The section is divided into nseg compartments of length L/nseg',
 };
 
 // relative path in public/assests
