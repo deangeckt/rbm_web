@@ -1,7 +1,7 @@
 from matplotlib import cm
 from matplotlib import colors
 
-norm = colors.Normalize(vmin=-70, vmax=50)
+norm = colors.Normalize(vmin=-70, vmax=70)
 cmap = cm.get_cmap('turbo')
 
 
