@@ -15,11 +15,12 @@ import Plot from './plot/Plot';
 import TreeCanvasAnimated from '../tree/animate/TreeCanvasAnimated';
 import { useSimulateCanvas } from '../tree/useSimulateCanvas';
 import { useTreeText } from '../tree/useTreeText';
-// import FreeHandPlot from './brute/FreeHandPlot';
+import FreeHandPlot from './brute/FreeHandPlot';
 import './Simulate.css';
+import BruteForcePanel from './brute/BruteForcePanel';
 
-export type TreeOrPlot = 'Tree' | 'Plot' | 'Anim';
-const initTreePlot: TreeOrPlot = 'Tree';
+export type toggleType = 'Tree' | 'Plot' | 'Anim' | 'FreeHand';
+const toggle_init: toggleType = 'Tree';
 
 function Simulate() {
     const { state, setState } = useContext(AppContext);
@@ -30,7 +31,7 @@ function Simulate() {
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
     const [readLoading, setReadLoading] = React.useState(true);
-    const [treeOrPlot, setTreeOrPlot] = React.useState(initTreePlot);
+    const [toggle, setToggle] = React.useState(toggle_init);
 
     const updateRunData = (plotData: IPlotPayload, animData: Record<string, IAnimData[]>) => {
         const plots = [...state.plots];
@@ -92,6 +93,7 @@ function Simulate() {
             ) : (
                 <>
                     <InfoDialog />
+                    <Summary />
                     <Snackbar open={error !== ''} autoHideDuration={6000} onClose={closeError}>
                         <Alert variant="outlined" severity="error" onClose={closeError}>
                             {error}
@@ -100,24 +102,37 @@ function Simulate() {
 
                     <div className="SimulateContainer">
                         <div className="SimulateTopPanel">
-                            <SimulatePanel
-                                running={running}
-                                start={StartRunning}
-                                onErr={updateError}
-                                toggle={treeOrPlot}
-                                togglePlotTree={setTreeOrPlot}
-                            />
+                            {!state.bruteForceMode && (
+                                <SimulatePanel
+                                    running={running}
+                                    start={StartRunning}
+                                    onErr={updateError}
+                                    toggle={toggle}
+                                    setToggle={setToggle}
+                                />
+                            )}
+                            {state.bruteForceMode && (
+                                <BruteForcePanel
+                                    running={false}
+                                    start={() => null}
+                                    toggle={toggle}
+                                    setToggle={setToggle}
+                                />
+                            )}
                         </div>
                         <div className="SimulateCenter">
-                            <Summary />
                             <div className="LeftSide">
                                 <SimulateMainForm />
                             </div>
                             <div className="RightSide">
-                                <SimulateCanvas display={treeOrPlot === 'Tree'} />
-                                <Plot display={treeOrPlot === 'Plot'} />
-                                <TreeCanvasAnimated display={treeOrPlot === 'Anim'} />
-                                {/* <FreeHandPlot display={treeOrPlot === 'Anim'} /> */}
+                                <SimulateCanvas display={toggle === 'Tree'} />
+                                {!state.bruteForceMode && (
+                                    <>
+                                        <Plot display={toggle === 'Plot'} />
+                                        <TreeCanvasAnimated display={toggle === 'Anim'} />
+                                    </>
+                                )}
+                                {state.bruteForceMode && <FreeHandPlot display={toggle === 'FreeHand'} />}
                             </div>
                         </div>
                     </div>

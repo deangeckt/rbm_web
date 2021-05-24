@@ -136,8 +136,9 @@ export interface IAppState {
     globalMechanism: singleAttrObj;
     globalMechanismCurrKey: string;
     plots: IPlotPayload[];
-    addAnims: false;
+    addAnims: boolean;
     animations: Record<string, IAnimData[]>;
+    bruteForceMode: boolean;
 }
 
 export const getStage = (canvasId: string): IStageSize => {
@@ -204,6 +205,7 @@ export const init_app_state: IAppState = {
     plots: [],
     addAnims: false,
     animations: {},
+    bruteForceMode: false,
 };
 
 const Wrapper = (props: any) => {

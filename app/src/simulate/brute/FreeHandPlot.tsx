@@ -10,16 +10,22 @@ import './FreeHand.css';
 export interface FreeLine {
     points: number[];
 }
-
 const init_lines: FreeLine[] = [];
+
 const canvasSize = 500;
+
+type SearchedSection = string | undefined;
+const noSearch: SearchedSection = undefined;
+
+interface SearchedSectionLabel {
+    label: string;
+    key: string;
+}
+const searchOptions_init: SearchedSectionLabel[] = [];
 
 export interface IFreeHandPlotProps {
     display: boolean;
 }
-
-type SearchedSection = string | undefined;
-const noSearch: SearchedSection = undefined;
 
 function FreeHandPlot({ display }: IFreeHandPlotProps) {
     const [lines, setLines] = React.useState(init_lines);
@@ -27,12 +33,18 @@ function FreeHandPlot({ display }: IFreeHandPlotProps) {
     const [miny, setMiny] = React.useState(-70);
     const [time, setTime] = React.useState(100);
     const [sectionKey, setSectionKey] = React.useState(noSearch);
-
+    const [segment, setSegment] = React.useState(0.5);
+    const [options, setOptions] = React.useState(searchOptions_init);
     const { getTreeChildrenRecur } = useTreeText();
-    const all: string[] = [root_key];
 
     React.useEffect(() => {
+        const all: string[] = [root_key];
         getTreeChildrenRecur(root_key, all);
+        setOptions(
+            all.map((sec_key) => {
+                return { label: sectionKeyToLabel(sec_key), key: sec_key };
+            }),
+        );
     }, []);
 
     const handToVector = () => {
@@ -59,18 +71,24 @@ function FreeHandPlot({ display }: IFreeHandPlotProps) {
     return (
         <div style={{ height: '100%', width: '100%', display: display ? 'flex' : 'none', flexDirection: 'column' }}>
             <div className="FreeHandPanel">
-                <div>
+                <div style={{ display: 'flex' }}>
                     <Autocomplete
-                        options={all.map((sec_key) => {
-                            return { label: sectionKeyToLabel(sec_key), key: sec_key };
-                        })}
+                        options={options}
                         getOptionLabel={(option) => option.label}
                         getOptionSelected={(option, value) => option.key === value.key}
                         onChange={(_event, value) => setSectionKey(value?.key ?? undefined)}
                         style={{ width: 200 }}
                         renderInput={(params) => <TextField {...params} label="Section" variant="outlined" />}
                     />
-                    <TextField style={{ width: 100 }} label="Segment" variant="outlined" type="number" />
+                    <TextField
+                        style={{ width: 100 }}
+                        value={segment}
+                        onChange={(e) => setSegment(Number(e.target.value))}
+                        label="Segment"
+                        variant="outlined"
+                        type="number"
+                        InputProps={{ inputProps: { min: 0, max: 1, step: 0.1 } }}
+                    />
                 </div>
                 <div>
                     <Button

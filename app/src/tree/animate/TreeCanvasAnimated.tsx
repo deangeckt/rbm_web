@@ -48,7 +48,7 @@ const TreeCanvasAnimated = ({ display }: ITreeCanvasAnimatedProps) => {
                                 }}
                             />
                         }
-                        label={'Include animations'}
+                        label={'Include heatmap animation'}
                         labelPlacement="start"
                     />
                     <div>This will increase run time. to turn off use the menu</div>
@@ -115,7 +115,9 @@ const TreeCanvasAnimated = ({ display }: ITreeCanvasAnimatedProps) => {
                             </Stage>
                         </div>
                         <div className="MapPanel">
-                            <img src={`${process.env.PUBLIC_URL}/assets/turboCmap.JPG`} className="Img" />
+                            <div className="MapText">70 [mV]</div>
+                            <img src={`${process.env.PUBLIC_URL}/assets/turboCmap.JPG`} className="MapImg" />
+                            <div>-70 [mV]</div>
                         </div>
                     </div>
                 </>

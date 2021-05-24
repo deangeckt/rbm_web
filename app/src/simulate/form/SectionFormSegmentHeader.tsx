@@ -32,7 +32,7 @@ function SectionFormSegmentHeader() {
                 type="number"
                 value={getSectionSegment()}
                 onChange={(e) => updateSectionSegment(Number(e.target.value))}
-                InputProps={{ inputProps: { min: 0, step: 0.1 } }}
+                InputProps={{ inputProps: { min: 0, max: 1, step: 0.1 } }}
             />
             <Tooltip title="Add segment">
                 <IconButton color="primary" onClick={() => addSectionSegment()}>
