@@ -1,0 +1,39 @@
+.FreeHandMain {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.FreeHandPanel {
+    display: flex;
+    flex-direction: row;
+    min-height: 8%;
+    justify-content: center;
+    border-bottom: 1px solid #efefef;
+}
+
+.FreeHandCanvas {
+    display: flex;
+    flex-direction: column;
+}
+
+.FreeHandCanvasRow {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 90%;
+}
+
+.FreeHandYAxis {
+    flex-basis: 10%;
+    min-width: 10%;
+    border-right: 1px solid #efefef;
+    text-align: center;
+}
+
+.FreeHandXAxis {
+    flex-basis: 10%;
+    min-height: 10%;
+    border-top: 1px solid #efefef;
+    text-align: center;
+}

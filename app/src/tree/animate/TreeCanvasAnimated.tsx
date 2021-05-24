@@ -31,7 +31,6 @@ const TreeCanvasAnimated = ({ display }: ITreeCanvasAnimatedProps) => {
 
     const updateSpeed = (fast: boolean) => {
         const newSpeed = fast ? speed * 2 : speed / 2;
-        // if (newSpeed < 1 || newSpeed > 256) return;
         setSpeed(newSpeed);
     };
 
