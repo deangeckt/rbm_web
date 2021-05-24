@@ -103,14 +103,15 @@ function SimulatePanel({ running, start, onErr, setToggle, toggle }: ISimulatePa
                     </MenuItem>
                 </Menu>
                 <Tooltip title="Brute force">
-                    <IconButton color="primary" size="medium">
-                        <SportsMmaIcon
-                            style={iconSizeStyle}
-                            onClick={() => {
-                                setState({ ...state, bruteForceMode: true });
-                                setToggle('FreeHand');
-                            }}
-                        />
+                    <IconButton
+                        color="primary"
+                        size="medium"
+                        onClick={() => {
+                            setState({ ...state, bruteForceMode: true });
+                            setToggle('FreeHand');
+                        }}
+                    >
+                        <SportsMmaIcon style={iconSizeStyle} />
                     </IconButton>
                 </Tooltip>
             </div>
