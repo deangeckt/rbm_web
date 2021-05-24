@@ -1,5 +1,5 @@
 import React from 'react';
-import { sectionKeyToLabel } from '../../utils/generalUtils';
+import { sectionKeyToLabel } from '../../util/generalUtils';
 import { SectionScheme, section_recording } from '../../Wrapper';
 import MechProcItem from './MechProcItem';
 import './Summary.css';

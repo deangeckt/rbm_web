@@ -7,7 +7,7 @@ import { useTreeCanvasCommon } from '../useTreeCanvasCommon';
 import { Button, Checkbox, FormControlLabel, IconButton } from '@material-ui/core';
 import { AppContext } from '../../AppContext';
 import AnimatedCircle from './AnimatedCircle';
-import { neuronRadToSize } from '../../utils/swcUtils';
+import { neuronRadToSize } from '../../util/swcUtils';
 import FastForwardIcon from '@material-ui/icons/FastForward';
 import FastRewindIcon from '@material-ui/icons/FastRewind';
 import './Animate.css';

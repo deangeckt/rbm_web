@@ -1,6 +1,6 @@
 import React from 'react';
 import { Spring, animated } from '@react-spring/konva';
-import { lineRadiusAddition } from '../../utils/swcUtils';
+import { lineRadiusAddition } from '../../util/swcUtils';
 import { RenderILine, IAnimData } from '../../Wrapper';
 import { Line } from 'react-konva';
 

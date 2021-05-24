@@ -4,7 +4,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { run, read } from '../api/api';
 import { AppContext } from '../AppContext';
 import SimulateMainForm from './form/SimulateMainForms';
-import InfoDialog from './dialogs/InfoDialog';
+import InfoDialog from './dialog/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import SimulateCanvas from './SimulateCanvas';
 import { IAnimData, IAttr, IPlotPayload, none_selected_key, singleAttrObj } from '../Wrapper';

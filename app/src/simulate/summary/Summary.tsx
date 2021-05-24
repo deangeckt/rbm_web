@@ -6,7 +6,7 @@ import MechProcItem from './MechProcItem';
 import SectionItem from './SectionItem';
 import { Autocomplete } from '@material-ui/lab';
 import TextField from '@material-ui/core/TextField';
-import { sectionKeyToLabel } from '../../utils/generalUtils';
+import { sectionKeyToLabel } from '../../util/generalUtils';
 import { SectionScheme } from '../../Wrapper';
 import './Summary.css';
 

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../../AppContext';
-import { infoTitle, infoContent, infoImg } from '../../utils/info';
+import { infoTitle, infoContent, infoImg } from '../../util/info';
 
 export function useDialogs() {
     const { state, setState } = useContext(AppContext);

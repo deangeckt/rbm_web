@@ -3,8 +3,8 @@ import { impKeys, singleAttrObj } from '../../Wrapper';
 import DynamicAttr from './DynamicAttr';
 import DynamicKeys from './DynamicKeys';
 import { useDynamicForms } from './useDynamicForm';
-import './DynamicForm.css';
 import SectionFormMulProcess from '../form/SectionFormMulProcess';
+import './DynamicForm.css';
 
 export interface IDynamicFormProps {
     mp: singleAttrObj;

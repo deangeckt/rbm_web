@@ -5,7 +5,7 @@ import SectionFormNavButton from './SectionFormNavButton';
 import SectionFormSegmentHeader from './SectionFormSegmentHeader';
 import SectionFormRecording from './SectionFormRecording';
 import SectionFormGeneral from './SectionFormGeneral';
-import { sectionKeyToLabel } from '../../utils/generalUtils';
+import { sectionKeyToLabel } from '../../util/generalUtils';
 import './Form.css';
 
 type SectionTab = 'process' | 'mech' | 'record' | 'general';

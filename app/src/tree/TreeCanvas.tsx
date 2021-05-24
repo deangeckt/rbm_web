@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
-import { lineRadiusAddition, neuronRadToSize } from '../utils/swcUtils';
+import { lineRadiusAddition, neuronRadToSize } from '../util/swcUtils';
 import { Stage, Layer, Circle, Line } from 'react-konva';
 import { AppContext } from '../AppContext';
 import { useDesignCanvas } from './useDesignCanvas';
 import { getStage, RenderILine, root_id, root_key } from '../Wrapper';
-import { neuron_color, section_color } from '../utils/colors';
+import { neuron_color, section_color } from '../util/colors';
 import { useSimulateCanvas } from './useSimulateCanvas';
 import { useTreeCanvasCommon } from './useTreeCanvasCommon';
 

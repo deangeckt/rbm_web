@@ -4,7 +4,7 @@ import ListItem from '@material-ui/core/ListItem';
 import { TextField, IconButton } from '@material-ui/core';
 import { useSectionForm } from './useSectionForm';
 import InfoIcon from '@material-ui/icons/Info';
-import { useDialogs } from '../dialogs/useDialogs';
+import { useDialogs } from '../dialog/useDialogs';
 
 function SectionFormGeneral() {
     const { onChangeGeneralAttr, getSectionGenenralAttr } = useSectionForm();

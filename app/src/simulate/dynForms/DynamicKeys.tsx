@@ -5,7 +5,7 @@ import { Button, IconButton } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import { useDynamicForms } from './useDynamicForm';
 import { impKeys } from '../../Wrapper';
-import { useDialogs } from '../dialogs/useDialogs';
+import { useDialogs } from '../dialog/useDialogs';
 
 export interface IKeyListProps {
     keys: string[];

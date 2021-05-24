@@ -5,7 +5,7 @@ import { makeStyles, Theme, createStyles, fade } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core';
 import { useTreeText } from './useTreeText';
 import { useSimulateCanvas } from './useSimulateCanvas';
-import { sectionKeyToLabel } from '../utils/generalUtils';
+import { sectionKeyToLabel } from '../util/generalUtils';
 
 const useTreeItemStyles = makeStyles((theme: Theme) => {
     return createStyles({

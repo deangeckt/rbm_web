@@ -3,7 +3,7 @@ import { Dialog, DialogTitle, Button, DialogActions, Checkbox, FormControlLabel,
 import { useDialogs } from './useDialogs';
 import { AppContext } from '../../AppContext';
 import DialogContent from '@material-ui/core/DialogContent';
-import { downloadJsonParams } from '../../utils/exportUtils';
+import { downloadJsonParams } from '../../util/exportUtils';
 import { useSimulate } from '../useSimulate';
 
 function ExportSeassionDialog() {

@@ -7,12 +7,12 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { downloadSwcFile, downloadPlots } from '../utils/exportUtils';
+import { downloadSwcFile, downloadPlots } from '../util/exportUtils';
 import { AppContext } from '../AppContext';
 import { useDesignCanvas } from '../tree/useDesignCanvas';
 import { useSimulate } from './useSimulate';
-import { useDialogs } from './dialogs/useDialogs';
-import ExportSeassionDialog from './dialogs/ExportSeassionDialog';
+import { useDialogs } from './dialog/useDialogs';
+import ExportSeassionDialog from './dialog/ExportSeassionDialog';
 
 export interface ISimulatePanelProps {
     running: boolean;

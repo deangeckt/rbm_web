@@ -7,7 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { IAttr, impKeys } from '../../Wrapper';
 import { useDynamicForms } from './useDynamicForm';
-import { useDialogs } from '../dialogs/useDialogs';
+import { useDialogs } from '../dialog/useDialogs';
 
 export interface IDynamicAttrProps {
     attrs: IAttr;

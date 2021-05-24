@@ -4,7 +4,7 @@ import FreeHandCanvas from './FreeHandCanvas';
 import { Autocomplete } from '@material-ui/lab';
 import { useTreeText } from '../../tree/useTreeText';
 import { root_key } from '../../Wrapper';
-import { sectionKeyToLabel } from '../../utils/generalUtils';
+import { sectionKeyToLabel } from '../../util/generalUtils';
 import './FreeHand.css';
 
 export interface FreeLine {

@@ -3,7 +3,7 @@ import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from './AppContext';
 import { init_app_state } from './Wrapper';
-import { importFile } from './utils/swcUtils';
+import { importFile } from './util/swcUtils';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 
