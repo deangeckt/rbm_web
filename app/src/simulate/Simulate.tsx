@@ -117,7 +117,7 @@ function Simulate() {
                                 <SimulateCanvas display={treeOrPlot === 'Tree'} />
                                 <Plot display={treeOrPlot === 'Plot'} />
                                 {/* <TreeCanvasAnimated display={treeOrPlot === 'Anim'} /> */}
-                                {treeOrPlot === 'Anim' && <FreeHandPlot />}
+                                <FreeHandPlot display={treeOrPlot === 'Anim'} />
                             </div>
                         </div>
                     </div>

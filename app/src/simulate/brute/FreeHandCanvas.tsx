@@ -25,6 +25,7 @@ const FreeHandCanvas = ({ lines, setLines }: IFreeHandCanvasProps) => {
         const stage = e.target.getStage();
         const point = stage.getPointerPosition();
         const lastLine = lines[lines.length - 1];
+        if (!lastLine) return;
         // add point
         lastLine.points = lastLine.points.concat([point.x, point.y]);
 
@@ -33,18 +34,19 @@ const FreeHandCanvas = ({ lines, setLines }: IFreeHandCanvasProps) => {
         setLines(lines.concat());
     };
 
-    const handleMouseUp = () => {
+    const stopDraw = () => {
         isDrawing.current = false;
     };
 
     return (
         <div>
             <Stage
-                width={window.innerWidth}
-                height={window.innerHeight}
+                width={500}
+                height={500}
                 onMouseDown={handleMouseDown}
                 onMousemove={handleMouseMove}
-                onMouseup={handleMouseUp}
+                onMouseup={stopDraw}
+                onTouchEnd={stopDraw}
             >
                 <Layer>
                     {lines.map((line, i) => (
