@@ -1,9 +1,11 @@
 import { Button, TextField } from '@material-ui/core';
-import React, { useContext } from 'react';
+import React from 'react';
 import FreeHandCanvas from './FreeHandCanvas';
+import { Autocomplete } from '@material-ui/lab';
+import { useTreeText } from '../../tree/useTreeText';
+import { root_key } from '../../Wrapper';
+import { sectionKeyToLabel } from '../../utils/generalUtils';
 import './FreeHand.css';
-import { IPlotPayload } from '../../Wrapper';
-import { AppContext } from '../../AppContext';
 
 export interface FreeLine {
     points: number[];
@@ -16,12 +18,22 @@ export interface IFreeHandPlotProps {
     display: boolean;
 }
 
+type SearchedSection = string | undefined;
+const noSearch: SearchedSection = undefined;
+
 function FreeHandPlot({ display }: IFreeHandPlotProps) {
     const [lines, setLines] = React.useState(init_lines);
     const [maxy, setMaxy] = React.useState(70);
     const [miny, setMiny] = React.useState(-70);
     const [time, setTime] = React.useState(100);
-    const { state, setState } = useContext(AppContext);
+    const [sectionKey, setSectionKey] = React.useState(noSearch);
+
+    const { getTreeChildrenRecur } = useTreeText();
+    const all: string[] = [root_key];
+
+    React.useEffect(() => {
+        getTreeChildrenRecur(root_key, all);
+    }, []);
 
     const handToVector = () => {
         const xVec: number[] = [];
@@ -38,44 +50,47 @@ function FreeHandPlot({ display }: IFreeHandPlotProps) {
                 yVec.push(maxy - scaled);
             }
         });
-        // tset
-        const volt: Record<string, number[]> = {};
-        volt['0_1_0_0.5'] = yVec;
-        const payload: IPlotPayload = {
-            time: xVec,
-            volt: volt,
-            current: {},
-        };
-
-        const plots = [...state.plots];
-        plots.push(payload);
-        setState({ ...state, plots: plots });
     };
 
     const validOneLine = (): boolean => {
-        return lines.length === 1;
+        return lines.length === 1 && sectionKey !== noSearch;
     };
 
     return (
         <div style={{ height: '100%', width: '100%', display: display ? 'flex' : 'none', flexDirection: 'column' }}>
             <div className="FreeHandPanel">
-                <Button
-                    className="NoCapsButton"
-                    variant="outlined"
-                    color="primary"
-                    onClick={() => setLines(init_lines)}
-                >
-                    Clear
-                </Button>
-                <Button
-                    disabled={!validOneLine()}
-                    className="NoCapsButton"
-                    variant="outlined"
-                    color="primary"
-                    onClick={() => handToVector()}
-                >
-                    Next
-                </Button>
+                <div>
+                    <Autocomplete
+                        options={all.map((sec_key) => {
+                            return { label: sectionKeyToLabel(sec_key), key: sec_key };
+                        })}
+                        getOptionLabel={(option) => option.label}
+                        getOptionSelected={(option, value) => option.key === value.key}
+                        onChange={(_event, value) => setSectionKey(value?.key ?? undefined)}
+                        style={{ width: 200 }}
+                        renderInput={(params) => <TextField {...params} label="Section" variant="outlined" />}
+                    />
+                    <TextField style={{ width: 100 }} label="Segment" variant="outlined" type="number" />
+                </div>
+                <div>
+                    <Button
+                        className="NoCapsButton"
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => setLines(init_lines)}
+                    >
+                        Clear
+                    </Button>
+                    <Button
+                        disabled={!validOneLine()}
+                        className="NoCapsButton"
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => handToVector()}
+                    >
+                        Next
+                    </Button>
+                </div>
             </div>
             <div className="FreeHandSketch">
                 <div className="FreeHandSketchRow">

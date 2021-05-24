@@ -15,7 +15,7 @@ import Plot from './plot/Plot';
 import TreeCanvasAnimated from '../tree/animate/TreeCanvasAnimated';
 import { useSimulateCanvas } from '../tree/useSimulateCanvas';
 import { useTreeText } from '../tree/useTreeText';
-import FreeHandPlot from './brute/FreeHandPlot';
+// import FreeHandPlot from './brute/FreeHandPlot';
 import './Simulate.css';
 
 export type TreeOrPlot = 'Tree' | 'Plot' | 'Anim';
@@ -116,8 +116,8 @@ function Simulate() {
                             <div className="RightSide">
                                 <SimulateCanvas display={treeOrPlot === 'Tree'} />
                                 <Plot display={treeOrPlot === 'Plot'} />
-                                {/* <TreeCanvasAnimated display={treeOrPlot === 'Anim'} /> */}
-                                <FreeHandPlot display={treeOrPlot === 'Anim'} />
+                                <TreeCanvasAnimated display={treeOrPlot === 'Anim'} />
+                                {/* <FreeHandPlot display={treeOrPlot === 'Anim'} /> */}
                             </div>
                         </div>
                     </div>

@@ -55,8 +55,9 @@ const FreeHandCanvas = ({ lines, setLines }: IFreeHandCanvasProps) => {
                             points={line.points}
                             stroke="#677be9"
                             strokeWidth={3}
-                            tension={1}
+                            tension={0.5}
                             lineCap="round"
+                            perfectDrawEnabled={true}
                             globalCompositeOperation={'source-over'}
                         />
                     ))}
