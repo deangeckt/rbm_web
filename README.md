@@ -20,6 +20,7 @@ and provides easy to use GUI.
 ![image](https://user-images.githubusercontent.com/24900065/119367674-de08f500-bcba-11eb-9bdc-d9f89081a413.png)
 
 - simulate and view the results in a heatmap animation
+
 ![anim](https://user-images.githubusercontent.com/24900065/119368763-152bd600-bcbc-11eb-98c6-ec6f9054b975.gif)
 
 
