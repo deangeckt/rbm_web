@@ -3,6 +3,7 @@ import { AppContext } from './AppContext';
 import config from '../src/config.json';
 import { readSchema } from './api/api';
 import { createMuiTheme, Theme } from '@material-ui/core/styles';
+import { brute_force_main } from './util/colors';
 
 export interface Dictionary<T> {
     [Key: string]: T;
@@ -187,7 +188,7 @@ export const defTheme = createMuiTheme();
 export const bruteTheme = createMuiTheme({
     palette: {
         primary: {
-            main: '#7700da',
+            main: brute_force_main,
         },
     },
 });

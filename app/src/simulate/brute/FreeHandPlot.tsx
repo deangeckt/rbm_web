@@ -7,12 +7,12 @@ import { root_key } from '../../Wrapper';
 import { sectionKeyToLabel } from '../../util/generalUtils';
 import './FreeHand.css';
 
-export interface FreeLine {
+export interface simpleLine {
     points: number[];
 }
-const init_lines: FreeLine[] = [];
+const init_lines: simpleLine[] = [];
 
-const canvasSize = 500;
+export const canvasSize = 500;
 
 type SearchedSection = string | undefined;
 const noSearch: SearchedSection = undefined;
@@ -129,7 +129,7 @@ function FreeHandPlot({ display }: IFreeHandPlotProps) {
                         />
                     </div>
                     <div className="FreeHandCanvas">
-                        <FreeHandCanvas lines={lines} setLines={setLines} />
+                        <FreeHandCanvas lines={lines} setLines={setLines} time={time} maxy={maxy} miny={miny} />
                     </div>
                 </div>
                 <div className="FreeHandXAxis">
@@ -139,6 +139,7 @@ function FreeHandPlot({ display }: IFreeHandPlotProps) {
                         type="number"
                         value={time}
                         onChange={(e) => setTime(Number(e.target.value))}
+                        InputProps={{ inputProps: { min: 0, max: 9999, step: 10 } }}
                     />
                 </div>
             </div>
