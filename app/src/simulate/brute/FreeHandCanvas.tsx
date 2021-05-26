@@ -9,9 +9,9 @@ interface gridText {
     y: number;
 }
 
-export const canvasSize = 500;
-export const canvasWrap = 50;
-const gridSize = 10;
+const canvasSize = 500;
+const canvasWrap = 50;
+const gridSize = 15;
 const textFontSize = 13;
 
 export interface IFreeHandCanvasProps {
@@ -57,23 +57,32 @@ const FreeHandCanvas = ({ lines, setLines, time, maxy, miny }: IFreeHandCanvasPr
         const res: gridText[] = [];
         const step = canvasSize / gridSize;
         const canvasWrapAdd = canvasWrap / 2;
-
+        const decimalFixedHoriz = time > 100 ? 0 : 1;
         for (let i = 0; i <= gridSize; i += 1) {
             const add = i * step + canvasWrapAdd;
             // horiz text
             res.push({
-                text: x_pixel_to_grid(add, time).toString(),
+                text: x_pixel_to_grid(add, time).toFixed(decimalFixedHoriz),
                 x: add,
                 y: canvasSize + canvasWrap - textFontSize,
             });
             // vertical text
             res.push({
-                text: y_pixel_to_grid(add, maxy, miny).toString(),
+                text: y_pixel_to_grid(add, maxy, miny).toFixed(0),
                 x: canvasWrapAdd - textFontSize - 8,
                 y: add - 5,
             });
         }
         return res;
+    };
+
+    const isPointInGrid = (point: { x: number; y: number }): boolean => {
+        const canvasWrapHalf = canvasWrap / 2;
+        if (point.x < canvasWrapHalf) return false;
+        if (point.x > canvasSize + canvasWrapHalf) return false;
+        if (point.y < canvasWrapHalf) return false;
+        if (point.y > canvasSize + canvasWrapHalf) return false;
+        return true;
     };
 
     const handleMouseDown = (e: any) => {
@@ -87,6 +96,8 @@ const FreeHandCanvas = ({ lines, setLines, time, maxy, miny }: IFreeHandCanvasPr
 
         const stage = e.target.getStage();
         const point = stage.getPointerPosition();
+        if (!isPointInGrid(point)) return;
+
         const lastLine = lines[lines.length - 1];
         if (!lastLine) return;
         lastLine.points = lastLine.points.concat([point.x, point.y]);
