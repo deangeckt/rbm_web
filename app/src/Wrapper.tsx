@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AppContext } from './AppContext';
 import config from '../src/config.json';
 import { readSchema } from './api/api';
+import { createMuiTheme, Theme } from '@material-ui/core/styles';
 
 export interface Dictionary<T> {
     [Key: string]: T;
@@ -139,6 +140,7 @@ export interface IAppState {
     addAnims: boolean;
     animations: Record<string, IAnimData[]>;
     bruteForceMode: boolean;
+    theme: Partial<Theme>;
 }
 
 export const getStage = (canvasId: string): IStageSize => {
@@ -181,6 +183,15 @@ export const design_init_root_line: ILine = {
 
 export const init_global_curr_key = 'general';
 
+export const defTheme = createMuiTheme();
+export const bruteTheme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#7700da',
+        },
+    },
+});
+
 export const init_app_state: IAppState = {
     stage: init_stage,
     designLines: {
@@ -206,6 +217,7 @@ export const init_app_state: IAppState = {
     addAnims: false,
     animations: {},
     bruteForceMode: false,
+    theme: defTheme,
 };
 
 const Wrapper = (props: any) => {

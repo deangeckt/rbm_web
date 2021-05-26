@@ -8,6 +8,7 @@ import { IconButton, Tooltip } from '@material-ui/core';
 import { AppContext } from '../../AppContext';
 import { iconSizeStyle } from '../SimulatePanel';
 import EventNoteIcon from '@material-ui/icons/EventNote';
+import { defTheme } from '../../Wrapper';
 
 export interface IBruteForceProps {
     running: boolean;
@@ -26,7 +27,7 @@ function BruteForcePanel({ running, start, setToggle, toggle }: IBruteForceProps
                     color="primary"
                     size="medium"
                     onClick={() => {
-                        setState({ ...state, bruteForceMode: false });
+                        setState({ ...state, bruteForceMode: false, theme: defTheme });
                         setToggle('Tree');
                     }}
                 >

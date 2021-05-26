@@ -16,8 +16,9 @@ import TreeCanvasAnimated from '../tree/animate/TreeCanvasAnimated';
 import { useSimulateCanvas } from '../tree/useSimulateCanvas';
 import { useTreeText } from '../tree/useTreeText';
 import FreeHandPlot from './brute/FreeHandPlot';
-import './Simulate.css';
 import BruteForcePanel from './brute/BruteForcePanel';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import './Simulate.css';
 
 export type toggleType = 'Tree' | 'Plot' | 'Anim' | 'FreeHand';
 const toggle_init: toggleType = 'Tree';
@@ -87,58 +88,60 @@ function Simulate() {
     }, []);
 
     return (
-        <div className="Simulate">
-            {readLoading ? (
-                <ReadLoading />
-            ) : (
-                <>
-                    <InfoDialog />
-                    <Summary />
-                    <Snackbar open={error !== ''} autoHideDuration={6000} onClose={closeError}>
-                        <Alert variant="outlined" severity="error" onClose={closeError}>
-                            {error}
-                        </Alert>
-                    </Snackbar>
+        <MuiThemeProvider theme={state.theme}>
+            <div className="Simulate">
+                {readLoading ? (
+                    <ReadLoading />
+                ) : (
+                    <>
+                        <InfoDialog />
+                        <Summary />
+                        <Snackbar open={error !== ''} autoHideDuration={6000} onClose={closeError}>
+                            <Alert variant="outlined" severity="error" onClose={closeError}>
+                                {error}
+                            </Alert>
+                        </Snackbar>
 
-                    <div className="SimulateContainer">
-                        <div className="SimulateTopPanel">
-                            {!state.bruteForceMode && (
-                                <SimulatePanel
-                                    running={running}
-                                    start={StartRunning}
-                                    onErr={updateError}
-                                    toggle={toggle}
-                                    setToggle={setToggle}
-                                />
-                            )}
-                            {state.bruteForceMode && (
-                                <BruteForcePanel
-                                    running={false}
-                                    start={() => null}
-                                    toggle={toggle}
-                                    setToggle={setToggle}
-                                />
-                            )}
-                        </div>
-                        <div className="SimulateCenter">
-                            <div className="LeftSide">
-                                <SimulateMainForm />
-                            </div>
-                            <div className="RightSide">
-                                <SimulateCanvas display={toggle === 'Tree'} />
+                        <div className="SimulateContainer">
+                            <div className="SimulateTopPanel">
                                 {!state.bruteForceMode && (
-                                    <>
-                                        <Plot display={toggle === 'Plot'} />
-                                        <TreeCanvasAnimated display={toggle === 'Anim'} />
-                                    </>
+                                    <SimulatePanel
+                                        running={running}
+                                        start={StartRunning}
+                                        onErr={updateError}
+                                        toggle={toggle}
+                                        setToggle={setToggle}
+                                    />
                                 )}
-                                {state.bruteForceMode && <FreeHandPlot display={toggle === 'FreeHand'} />}
+                                {state.bruteForceMode && (
+                                    <BruteForcePanel
+                                        running={false}
+                                        start={() => null}
+                                        toggle={toggle}
+                                        setToggle={setToggle}
+                                    />
+                                )}
+                            </div>
+                            <div className="SimulateCenter">
+                                <div className="LeftSide">
+                                    <SimulateMainForm />
+                                </div>
+                                <div className="RightSide">
+                                    <SimulateCanvas display={toggle === 'Tree'} />
+                                    {!state.bruteForceMode && (
+                                        <>
+                                            <Plot display={toggle === 'Plot'} />
+                                            <TreeCanvasAnimated display={toggle === 'Anim'} />
+                                        </>
+                                    )}
+                                    {state.bruteForceMode && <FreeHandPlot display={toggle === 'FreeHand'} />}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </>
-            )}
-        </div>
+                    </>
+                )}
+            </div>
+        </MuiThemeProvider>
     );
 }
 

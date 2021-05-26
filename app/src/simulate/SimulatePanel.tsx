@@ -15,6 +15,7 @@ import { useSimulate } from './useSimulate';
 import { useDialogs } from './dialog/useDialogs';
 import ExportSeassionDialog from './dialog/ExportSeassionDialog';
 import EventNoteIcon from '@material-ui/icons/EventNote';
+import { bruteTheme } from '../Wrapper';
 
 export interface ISimulatePanelProps {
     running: boolean;
@@ -111,7 +112,7 @@ function SimulatePanel({ running, start, onErr, setToggle, toggle }: ISimulatePa
                         color="primary"
                         size="medium"
                         onClick={() => {
-                            setState({ ...state, bruteForceMode: true });
+                            setState({ ...state, bruteForceMode: true, theme: bruteTheme });
                             setToggle('FreeHand');
                         }}
                     >
