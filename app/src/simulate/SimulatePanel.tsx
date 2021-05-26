@@ -14,6 +14,7 @@ import { useDesignCanvas } from '../tree/useDesignCanvas';
 import { useSimulate } from './useSimulate';
 import { useDialogs } from './dialog/useDialogs';
 import ExportSeassionDialog from './dialog/ExportSeassionDialog';
+import EventNoteIcon from '@material-ui/icons/EventNote';
 
 export interface ISimulatePanelProps {
     running: boolean;
@@ -48,14 +49,6 @@ function SimulatePanel({ running, start, onErr, setToggle, toggle }: ISimulatePa
                     <MenuIcon style={iconSizeStyle} />
                 </IconButton>
                 <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={closeMenu}>
-                    <MenuItem
-                        onClick={() => {
-                            setState({ ...state, summaryState: true });
-                            closeMenu();
-                        }}
-                    >
-                        Seassion summary
-                    </MenuItem>
                     <MenuItem>
                         Include heatmap
                         <Tooltip title="This will increase run time">
@@ -102,6 +95,17 @@ function SimulatePanel({ running, start, onErr, setToggle, toggle }: ISimulatePa
                         Export swc file
                     </MenuItem>
                 </Menu>
+                <Tooltip title="Seassion summary">
+                    <IconButton
+                        color="primary"
+                        size="medium"
+                        onClick={() => {
+                            setState({ ...state, summaryState: true });
+                        }}
+                    >
+                        <EventNoteIcon style={iconSizeStyle} />
+                    </IconButton>
+                </Tooltip>
                 <Tooltip title="Brute force">
                     <IconButton
                         color="primary"

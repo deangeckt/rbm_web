@@ -4,9 +4,10 @@ import ReadLoading from '../../anim/ReadLoading';
 import { toggleType } from '../Simulate';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 import { AppContext } from '../../AppContext';
 import { iconSizeStyle } from '../SimulatePanel';
+import EventNoteIcon from '@material-ui/icons/EventNote';
 
 export interface IBruteForceProps {
     running: boolean;
@@ -20,16 +21,29 @@ function BruteForcePanel({ running, start, setToggle, toggle }: IBruteForceProps
 
     return (
         <>
-            <IconButton
-                color="primary"
-                size="medium"
-                onClick={() => {
-                    setState({ ...state, bruteForceMode: false });
-                    setToggle('Tree');
-                }}
-            >
-                <ArrowBackIcon style={iconSizeStyle} />
-            </IconButton>
+            <div>
+                <IconButton
+                    color="primary"
+                    size="medium"
+                    onClick={() => {
+                        setState({ ...state, bruteForceMode: false });
+                        setToggle('Tree');
+                    }}
+                >
+                    <ArrowBackIcon style={iconSizeStyle} />
+                </IconButton>
+                <Tooltip title="Seassion summary">
+                    <IconButton
+                        color="primary"
+                        size="medium"
+                        onClick={() => {
+                            setState({ ...state, summaryState: true });
+                        }}
+                    >
+                        <EventNoteIcon style={iconSizeStyle} />
+                    </IconButton>
+                </Tooltip>
+            </div>
             <div style={{ marginLeft: '16px' }}>
                 <Button
                     className="NoCapsButton"
