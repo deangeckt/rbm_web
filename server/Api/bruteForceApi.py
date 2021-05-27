@@ -1,6 +1,7 @@
 from itertools import product
 import copy
 import numpy as np
+from scipy.stats import wasserstein_distance
 
 
 def __find_param_val(params, key: str):
@@ -22,38 +23,69 @@ def __remove_anim_if_exist(params):
     del params[idx]
 
 
+def __fill_list_for_product_aux(fill_params, list_values, list_keys, sec_key=None, sec_type=None):
+    for param_key in fill_params:
+        attrs = fill_params[param_key]['attrs']
+        for attr in attrs:
+            attr_obj = attrs[attr]
+            values = np.linspace(attr_obj['min'], attr_obj['max'], num=attr_obj['amount'])
+            list_values.append(values)
+            new_key = ('global', param_key, attr) if sec_key is None else (sec_key, sec_type, param_key, attr)
+            list_keys.append(new_key)
+
+
 def __fill_list_for_product(brute_params):
     list_values = []
     list_keys = []
 
-    global_brute = brute_params['global']
-    for param_key in global_brute:
-        attrs = global_brute[param_key]['attrs']
-        for attr in attrs:
-            attr_obj = attrs[attr]
-            vals = np.linspace(attr_obj['min'], attr_obj['max'], num=attr_obj['amount'])
-            list_values.append(vals)
-            list_keys.append(('global', param_key, attr))
+    __fill_list_for_product_aux(fill_params=brute_params['global'],
+                                list_values=list_values,
+                                list_keys=list_keys)
+    sections_brute = brute_params['sections']
+    for sec_key in sections_brute:
+        sections_params = sections_brute[sec_key]
+        __fill_list_for_product_aux(fill_params=sections_params['mechanism'],
+                                    list_values=list_values,
+                                    list_keys=list_keys,
+                                    sec_key=sec_key,
+                                    sec_type='mechanism')
+        __fill_list_for_product_aux(fill_params=sections_params['general'],
+                                    list_values=list_values,
+                                    list_keys=list_keys,
+                                    sec_key=sec_key,
+                                    sec_type='general')
 
-    return list_keys, list_keys
+    return list_keys, list_values
+
+
+def __update_new_attr_params(override_params, param_key, attr_key, value):
+    if param_key not in override_params:
+        override_params[param_key] = {"attrs": {attr_key: value}}
+    else:
+        override_params[param_key]["attrs"][attr_key] = value
 
 
 def __update_new_product_params(product_tuple, list_keys, new_params):
     for idx, param in enumerate(product_tuple):
         curr_key = list_keys[idx]
-        param_type = curr_key[0]
-        param_key = curr_key[1]
-        attr_key = curr_key[2]
-        if param_type == 'global':
+        if curr_key[0] == 'global':  # global or section_key
             global_params = __find_param_val(new_params, 'global')
-            if param_key not in global_params:
-                global_params[param_key] = {"attrs": {attr_key: param}}
-            else:
-                global_params[param_key]["attrs"][attr_key] = param
+            __update_new_attr_params(override_params=global_params,
+                                     param_key=curr_key[1],
+                                     attr_key=curr_key[2],
+                                     value=param)
+        else:
+            sec_key = curr_key[0]
+            param_type = curr_key[1]  # general or mechanism
+            section_params = __find_param_val(new_params, 'sections')
+            __update_new_attr_params(override_params=section_params[sec_key][param_type],
+                                     param_key=curr_key[2],
+                                     attr_key=curr_key[3],
+                                     value=param)
 
 
 def __compare_graph(gt, candidate):
-    return 0.0
+    return wasserstein_distance(gt, candidate)
 
 
 def brute_force_api(run, params, swc_path):

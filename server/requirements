@@ -3,3 +3,4 @@ flask
 flask-cors
 numpy
 matplotlib==3.3.2
+scipy
