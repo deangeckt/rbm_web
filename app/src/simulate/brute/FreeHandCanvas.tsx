@@ -57,7 +57,7 @@ const FreeHandCanvas = ({ lines, setLines, time, maxy, miny }: IFreeHandCanvasPr
         const res: gridText[] = [];
         const step = canvasSize / gridSize;
         const canvasWrapAdd = canvasWrap / 2;
-        const decimalFixedHoriz = time > 100 ? 0 : 1;
+        const decimalFixedHoriz = time >= 100 ? 0 : 1;
         for (let i = 0; i <= gridSize; i += 1) {
             const add = i * step + canvasWrapAdd;
             // horiz text

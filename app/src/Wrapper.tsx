@@ -193,6 +193,14 @@ export const bruteTheme = createMuiTheme({
     },
 });
 
+export interface IBruteForceParam {
+    min: number;
+    max: number;
+    step: number;
+}
+
+export type IBruteAttr = Record<string, IBruteForceParam>;
+
 export const init_app_state: IAppState = {
     stage: init_stage,
     designLines: {

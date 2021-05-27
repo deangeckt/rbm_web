@@ -54,6 +54,27 @@ def read():
         return "", 500
 
 
+@app.route('/api/v1/brute_force', methods=['POST'])
+def brute_force():
+    try:
+        params = request.get_json()
+        for p in params:
+            if 'id' not in p or 'value' not in p:
+                msg = "Data params - bad format"
+                raise ValueError(msg)
+
+        wrapper = NeuronWrapper(config_path=config_full_path)
+        res = wrapper.brute_force(params=params, swc_path=read_paths()[1])
+        return json.dumps(res), 200, {'Content-Type': 'application/json'}
+
+    except ValueError as e:
+        return str(e), 505,
+    except:
+        exctype, _, exctb = sys.exc_info()
+        print(str(traceback.format_tb(exctb)))
+        return "", 500
+
+
 if __name__ == "__main__":
     port = int(os.getenv("PORT", "8080"))
     app.run(host="0.0.0.0", port=port)

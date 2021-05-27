@@ -1,6 +1,8 @@
 import json
 from copy import deepcopy
 import numpy as np
+
+from Api.bruteForceApi import brute_force_api
 from Api.readApi import read_api
 from Api.schemaConvert import recording_type_to_ref, tid_to_type, recording_key, \
     section_key_to_id_tid, id_tid_to_section_key, recording_key_to_payload_type
@@ -101,7 +103,6 @@ class NeuronWrapper:
         vec_rec.record(h_ref)
         return vec_rec
 
-    # TODO: support recording type as a param: volt, i_na etc...
     def __record_all(self):
         for tid in range(1, 5):
             try:
@@ -181,3 +182,6 @@ class NeuronWrapper:
     def read(self, swc_path):
         self.__init_swc(swc_path)
         return read_api(self.h)
+
+    def brute_force(self, params, swc_path):
+        return brute_force_api(self.run, params, swc_path)
