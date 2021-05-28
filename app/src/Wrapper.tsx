@@ -55,13 +55,35 @@ export const section_short_labels: Dictionary<string> = {
 export const section_recording = ['volt', 'i_na', 'i_k'];
 
 export type RenderILine = Pick<ILine, 'id' | 'pid' | 'points' | 'children' | 'tid' | 'radius'>;
-export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
-export type singleAttrObj = Record<string, IMechanismProcess>;
-export type mulAttrObj = Record<string, IMechanismProcess[]>;
+
 export type SectionScheme = Omit<
     ISection,
     'mechanismCurrKey' | 'processCurrKey' | 'segmentCurrKey' | 'line' | 'generalChanged' | 'processCurrKeyCurrIdx'
 >;
+
+export type IAttr = Record<string, number>;
+export interface IMechanismProcess {
+    attrs: IAttr;
+    add?: boolean;
+}
+
+export interface IBruteForceParam {
+    min: number;
+    max: number;
+    amount: number;
+}
+
+export type IBruteAttr = Record<string, IBruteForceParam>;
+
+export interface IBruteMechanism {
+    attrs: IBruteAttr;
+    add?: boolean;
+}
+
+export type impKeys = 'pointMechanism' | 'pointProcess' | 'globalMechanism';
+export type singleAttrObj = Record<string, IMechanismProcess>;
+export type mulAttrObj = Record<string, IMechanismProcess[]>;
+export type singleBruteAttrObj = Record<string, IBruteMechanism>;
 
 export interface ISection {
     id: string;
@@ -75,6 +97,13 @@ export interface ISection {
     general: IAttr;
     generalChanged: boolean;
     line: RenderILine;
+}
+
+export interface IBruteSection {
+    id: string;
+    mechanism: singleBruteAttrObj;
+    general: IBruteAttr;
+    generalChanged: boolean;
 }
 
 export interface RenderTreeText {
@@ -93,20 +122,6 @@ export interface ILine {
     alpha: number;
     children: string[];
 }
-
-export type IAttr = Record<string, number>;
-export interface IMechanismProcess {
-    attrs: IAttr;
-    add?: boolean;
-}
-
-export interface IBruteForceParam {
-    min: number;
-    max: number;
-    amount: number;
-}
-
-export type IBruteAttr = Record<string, IBruteForceParam>;
 
 export interface IDialogs {
     infoState: boolean;
@@ -151,6 +166,8 @@ export interface IAppState {
     animations: Record<string, IAnimData[]>;
     bruteForceMode: boolean;
     theme: Partial<Theme>;
+    bruteGlobalMechanism: singleBruteAttrObj;
+    bruteSctions: Record<string, IBruteSection>;
 }
 
 export const getStage = (canvasId: string): IStageSize => {
@@ -229,6 +246,8 @@ export const init_app_state: IAppState = {
     animations: {},
     bruteForceMode: false,
     theme: defTheme,
+    bruteGlobalMechanism: {},
+    bruteSctions: {},
 };
 
 const Wrapper = (props: any) => {

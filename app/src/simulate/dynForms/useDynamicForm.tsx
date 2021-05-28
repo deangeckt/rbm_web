@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../../AppContext';
-import { IAttr, IMechanismProcess, impKeys, singleAttrObj, mulAttrObj } from '../../Wrapper';
+import { IAttr, IMechanismProcess, impKeys, singleAttrObj, mulAttrObj, singleBruteAttrObj } from '../../Wrapper';
 import { useDynamicFormShare } from './useDynnamicFormShare';
 
 export function useDynamicForms() {
@@ -151,10 +151,50 @@ export function useDynamicForms() {
         return { selectedKey, selectedAttrs, isSelectedKeyChecked };
     };
 
+    const setBruteKeyCheckedAux = (mechObj: singleBruteAttrObj, currKey: string, checked: boolean) => {
+        if (!mechObj[currKey]) mechObj[currKey] = { attrs: {}, add: false };
+        mechObj[currKey].add = checked;
+    };
+
+    const setBruteKeyChecked = (impKey: impKeys, checked: boolean) => {
+        if (impKey === 'globalMechanism') {
+            const globalMechanism = { ...state.bruteGlobalMechanism };
+            setBruteKeyCheckedAux(globalMechanism, state.globalMechanismCurrKey, checked);
+            setState({ ...state, bruteGlobalMechanism: globalMechanism });
+        } else {
+            const selectedSections = getAllSelectedSections();
+            const bruteSections = { ...state.bruteSctions };
+
+            selectedSections.forEach((sec) => {
+                const currKey = sec.mechanismCurrKey;
+                if (currKey === '') return;
+                if (!bruteSections[sec.id])
+                    bruteSections[sec.id] = { id: sec.id, mechanism: {}, general: {}, generalChanged: false };
+                setBruteKeyCheckedAux(bruteSections[sec.id].mechanism, currKey, checked);
+            });
+            setState({ ...state, bruteSctions: bruteSections });
+        }
+    };
+
+    const isBruteKeySelected = (impKey: impKeys): boolean => {
+        if (impKey === 'globalMechanism') {
+            const currKey = state.globalMechanismCurrKey;
+            return state.bruteGlobalMechanism[currKey]?.add ?? false;
+        } else {
+            const sec = getFirstSelectedSection();
+            if (!sec) return false;
+            const currKey = sec.mechanismCurrKey;
+            if (currKey === '') return false;
+            return state.bruteSctions[sec.id]?.mechanism[currKey]?.add ?? false;
+        }
+    };
+
     return {
         getDynamicFormProps,
         setCurrKey,
         setKeyChecked,
         onAttrChange,
+        setBruteKeyChecked,
+        isBruteKeySelected,
     };
 }

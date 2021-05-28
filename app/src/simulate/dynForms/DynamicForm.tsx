@@ -38,12 +38,7 @@ function DynamicForm({ mp, impKey }: IDynamicFormProps) {
                     />
                 )}
                 {state.bruteForceMode && (
-                    <DynamicAttrBrute
-                        impKey={impKey}
-                        attrs={selectedAttrs}
-                        attr_key={selectedKey}
-                        checked={isSelectedKeyChecked}
-                    />
+                    <DynamicAttrBrute impKey={impKey} attrs={selectedAttrs} attr_key={selectedKey} />
                 )}
             </div>
         </div>

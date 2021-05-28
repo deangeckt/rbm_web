@@ -5,7 +5,7 @@ import { TextField, IconButton } from '@material-ui/core';
 import { useSectionForm } from './useSectionForm';
 import InfoIcon from '@material-ui/icons/Info';
 import { useDialogs } from '../dialog/useDialogs';
-
+// TODO: support brute
 function SectionFormGeneral() {
     const { onChangeGeneralAttr, getSectionGenenralAttr } = useSectionForm();
     const attrs_list = Object.entries(getSectionGenenralAttr());

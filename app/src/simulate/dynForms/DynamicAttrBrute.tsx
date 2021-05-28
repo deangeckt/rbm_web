@@ -13,20 +13,18 @@ import BruteParamDialog from '../dialog/BruteParamDialog';
 export interface IDynamicAttrProps {
     attrs: IAttr;
     attr_key: string;
-    checked: boolean;
     impKey: impKeys;
 }
 
-function DynamicAttrBrute({ attrs, impKey, attr_key, checked }: IDynamicAttrProps) {
+function DynamicAttrBrute({ attrs, impKey, attr_key }: IDynamicAttrProps) {
     const [currAttr, setCurrAttr] = React.useState('');
-    const { updateInfo } = useDialogs();
-    // TODO: new key checked funcs based on new wrapper structures
-    const { setKeyChecked, onAttrChange } = useDynamicForms();
-    const { toggleBrute } = useDialogs();
+    const { setBruteKeyChecked, isBruteKeySelected } = useDynamicForms();
+    const { toggleBrute, updateInfo } = useDialogs();
 
     const operationStr = impKey.startsWith('global') ? 'Change' : 'Add';
     const exclude = ['sim_time', 'dt'];
     const attrs_list = Object.entries(attrs).filter(([attr]) => !exclude.includes(attr));
+    const checked = isBruteKeySelected(impKey);
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '12px' }}>
@@ -41,7 +39,7 @@ function DynamicAttrBrute({ attrs, impKey, attr_key, checked }: IDynamicAttrProp
                             <Checkbox
                                 color="primary"
                                 checked={checked}
-                                onChange={() => setKeyChecked(impKey, !checked)}
+                                onChange={() => setBruteKeyChecked(impKey, !checked)}
                             />
                         }
                         label={`${operationStr} ${attr_key}`}
