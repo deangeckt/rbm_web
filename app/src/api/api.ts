@@ -2,6 +2,8 @@ import axios, { AxiosResponse } from 'axios';
 import { IAnimData, IAttr, singleAttrObj, SectionScheme, IPlotPayload } from '../Wrapper';
 import readMocks from './readMock.json';
 
+const baseUrl = 'http://localhost:8080/api/v1/';
+
 export interface schema {
     id: string;
     value: any;
@@ -41,7 +43,7 @@ export const run = async (
         const data = prepareJsonParams(globalMech, sections);
         if (anim) data.push({ id: 'animation', value: true });
         const response = (await axios.request({
-            url: 'http://localhost:8080/api/v1/run',
+            url: baseUrl + 'run',
             method: 'POST',
             data: data,
         })) as AxiosResponse;
@@ -98,7 +100,7 @@ export const readSchema = (data: any): singleAttrObj => {
 export const read = async (setError: Function, setData: Function) => {
     try {
         const response = (await axios.request({
-            url: 'http://localhost:8080/api/v1/read',
+            url: baseUrl + 'read',
             method: 'GET',
         })) as AxiosResponse;
 

@@ -100,12 +100,21 @@ export interface IMechanismProcess {
     add?: boolean;
 }
 
+export interface IBruteForceParam {
+    min: number;
+    max: number;
+    amount: number;
+}
+
+export type IBruteAttr = Record<string, IBruteForceParam>;
+
 export interface IDialogs {
     infoState: boolean;
     infoTitle: string;
     infoContent: string;
     infoImage?: string;
     exportState: boolean;
+    bruteState: boolean;
 }
 
 export interface IPlotPayload {
@@ -193,14 +202,6 @@ export const bruteTheme = createMuiTheme({
     },
 });
 
-export interface IBruteForceParam {
-    min: number;
-    max: number;
-    step: number;
-}
-
-export type IBruteAttr = Record<string, IBruteForceParam>;
-
 export const init_app_state: IAppState = {
     stage: init_stage,
     designLines: {
@@ -216,6 +217,7 @@ export const init_app_state: IAppState = {
         infoTitle: '',
         infoContent: '',
         exportState: false,
+        bruteState: false,
     },
     summaryState: false,
     pointMechanism: {},

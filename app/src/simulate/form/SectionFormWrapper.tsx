@@ -30,6 +30,10 @@ function SectionFormWrapper() {
         else if (sectionTab === 'general') return <SectionFormGeneral />;
     };
 
+    React.useEffect(() => {
+        if ((state.bruteForceMode && sectionTab === 'process') || sectionTab === 'record') setSectionTab('general');
+    }, [state.bruteForceMode]);
+
     return (
         <div className="SectionForm">
             <div className="SctionFormNav">
@@ -43,16 +47,20 @@ function SectionFormWrapper() {
                     isSelected={sectionTab === 'mech'}
                     select={() => setSectionTab('mech')}
                 />
-                <SectionFormNavButton
-                    label={'Process'}
-                    isSelected={sectionTab === 'process'}
-                    select={() => setSectionTab('process')}
-                />
-                <SectionFormNavButton
-                    label={'Recording'}
-                    isSelected={sectionTab === 'record'}
-                    select={() => setSectionTab('record')}
-                />
+                {!state.bruteForceMode && (
+                    <>
+                        <SectionFormNavButton
+                            label={'Process'}
+                            isSelected={sectionTab === 'process'}
+                            select={() => setSectionTab('process')}
+                        />
+                        <SectionFormNavButton
+                            label={'Recording'}
+                            isSelected={sectionTab === 'record'}
+                            select={() => setSectionTab('record')}
+                        />
+                    </>
+                )}
             </div>
             <div className="SectionEditStr">{sectionListString}</div>
             {renderForm ? (

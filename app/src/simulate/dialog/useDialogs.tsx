@@ -5,17 +5,23 @@ import { infoTitle, infoContent, infoImg } from '../../util/info';
 export function useDialogs() {
     const { state, setState } = useContext(AppContext);
 
+    const toggleExport = (val: boolean) => {
+        const dialogs = { ...state.dialogs };
+        dialogs.exportState = val;
+        setState({ ...state, dialogs: dialogs });
+    };
+
+    const toggleBrute = (val: boolean) => {
+        const dialogs = { ...state.dialogs };
+        dialogs.bruteState = val;
+        setState({ ...state, dialogs: dialogs });
+    };
+
     const closeInfo = () => {
         const dialogs = { ...state.dialogs };
         dialogs.infoContent = '';
         dialogs.infoState = false;
         dialogs.infoTitle = '';
-        setState({ ...state, dialogs: dialogs });
-    };
-
-    const toggleExport = (val: boolean) => {
-        const dialogs = { ...state.dialogs };
-        dialogs.exportState = val;
         setState({ ...state, dialogs: dialogs });
     };
 
@@ -33,5 +39,5 @@ export function useDialogs() {
         setState({ ...state, dialogs: dialogs });
     };
 
-    return { closeInfo, updateInfo, toggleExport };
+    return { closeInfo, updateInfo, toggleExport, toggleBrute };
 }

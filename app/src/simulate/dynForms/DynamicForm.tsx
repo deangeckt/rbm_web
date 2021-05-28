@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { impKeys, singleAttrObj } from '../../Wrapper';
 import DynamicAttr from './DynamicAttr';
 import DynamicKeys from './DynamicKeys';
 import { useDynamicForms } from './useDynamicForm';
 import SectionFormMulProcess from '../form/SectionFormMulProcess';
+import { AppContext } from '../../AppContext';
+import DynamicAttrBrute from './DynamicAttrBrute';
 import './DynamicForm.css';
 
 export interface IDynamicFormProps {
@@ -12,6 +14,7 @@ export interface IDynamicFormProps {
 }
 
 function DynamicForm({ mp, impKey }: IDynamicFormProps) {
+    const { state } = useContext(AppContext);
     const { getDynamicFormProps } = useDynamicForms();
     const { selectedKey, selectedAttrs, isSelectedKeyChecked } = getDynamicFormProps(impKey);
 
@@ -26,12 +29,22 @@ function DynamicForm({ mp, impKey }: IDynamicFormProps) {
             </div>
             <div className="DynRightSide">
                 {impKey === 'pointProcess' ? <SectionFormMulProcess /> : null}
-                <DynamicAttr
-                    impKey={impKey}
-                    attrs={selectedAttrs}
-                    attr_key={selectedKey}
-                    checked={isSelectedKeyChecked}
-                />
+                {!state.bruteForceMode && (
+                    <DynamicAttr
+                        impKey={impKey}
+                        attrs={selectedAttrs}
+                        attr_key={selectedKey}
+                        checked={isSelectedKeyChecked}
+                    />
+                )}
+                {state.bruteForceMode && (
+                    <DynamicAttrBrute
+                        impKey={impKey}
+                        attrs={selectedAttrs}
+                        attr_key={selectedKey}
+                        checked={isSelectedKeyChecked}
+                    />
+                )}
             </div>
         </div>
     );
