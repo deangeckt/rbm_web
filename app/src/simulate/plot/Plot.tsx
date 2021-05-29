@@ -67,7 +67,12 @@ function Plot({ display }: IPlotProps) {
 
     return (
         <div style={{ height: '100%', display: display ? 'flex' : 'none', flexDirection: 'column' }}>
-            <Carousel autoPlay={false} stopAutoPlayOnHover={false} index={state.plots.length - 1}>
+            <Carousel
+                navButtonsAlwaysInvisible={true}
+                autoPlay={false}
+                stopAutoPlayOnHover={false}
+                index={state.plots.length - 1}
+            >
                 {state.plots.map((plot, i) => {
                     return (
                         <div key={i} id={'cccc'}>
