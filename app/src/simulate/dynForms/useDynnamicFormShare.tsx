@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../../AppContext';
-import { IBruteSection, ISection } from '../../Wrapper';
+import { ISection } from '../../Wrapper';
 
 export function useDynamicFormShare() {
     const { state, setState } = useContext(AppContext);

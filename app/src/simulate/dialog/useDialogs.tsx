@@ -11,10 +11,10 @@ export function useDialogs() {
         setState({ ...state, dialogs: dialogs });
     };
 
-    const toggleBrute = (val: boolean) => {
+    const toggleBrute = (val: boolean, attr: string) => {
         const dialogs = { ...state.dialogs };
         dialogs.bruteState = val;
-        setState({ ...state, dialogs: dialogs });
+        setState({ ...state, dialogs: dialogs, bruteCurrAttr: attr });
     };
 
     const closeInfo = () => {

@@ -168,6 +168,7 @@ export interface IAppState {
     theme: Partial<Theme>;
     bruteGlobalMechanism: singleBruteAttrObj;
     bruteSctions: Record<string, IBruteSection>;
+    bruteCurrAttr: string;
 }
 
 export const getStage = (canvasId: string): IStageSize => {
@@ -248,6 +249,7 @@ export const init_app_state: IAppState = {
     theme: defTheme,
     bruteGlobalMechanism: {},
     bruteSctions: {},
+    bruteCurrAttr: '',
 };
 
 const Wrapper = (props: any) => {

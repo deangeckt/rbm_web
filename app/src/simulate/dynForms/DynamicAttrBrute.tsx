@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { IconButton, Button } from '@material-ui/core';
@@ -9,6 +9,7 @@ import { IAttr, impKeys } from '../../Wrapper';
 import { useDynamicForms } from './useDynamicForm';
 import { useDialogs } from '../dialog/useDialogs';
 import BruteParamDialog from '../dialog/BruteParamDialog';
+import { AppContext } from '../../AppContext';
 
 export interface IDynamicAttrProps {
     attrs: IAttr;
@@ -17,7 +18,8 @@ export interface IDynamicAttrProps {
 }
 
 function DynamicAttrBrute({ attrs, impKey, attr_key }: IDynamicAttrProps) {
-    const [currAttr, setCurrAttr] = React.useState('');
+    const { state } = useContext(AppContext);
+    const currAttr = state.bruteCurrAttr;
     const { setBruteKeyChecked, isBruteKeySelected } = useDynamicForms();
     const { toggleBrute, updateInfo } = useDialogs();
 
@@ -28,7 +30,7 @@ function DynamicAttrBrute({ attrs, impKey, attr_key }: IDynamicAttrProps) {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '12px' }}>
-            <BruteParamDialog attrKey={currAttr} />
+            <BruteParamDialog attrKey={currAttr} impKey={impKey} />
 
             {attr_key === '' ? (
                 <div>Select Mechanism</div>
@@ -56,10 +58,7 @@ function DynamicAttrBrute({ attrs, impKey, attr_key }: IDynamicAttrProps) {
                                         className="NoCapsButton"
                                         variant="outlined"
                                         color="primary"
-                                        onClick={() => {
-                                            toggleBrute(true);
-                                            setCurrAttr(attr);
-                                        }}
+                                        onClick={() => toggleBrute(true, attr)}
                                     >
                                         {`${attr}: ${value}`}
                                     </Button>

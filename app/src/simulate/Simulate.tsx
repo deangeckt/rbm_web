@@ -25,7 +25,7 @@ const toggle_init: toggleType = 'Tree';
 
 function Simulate() {
     const { state, setState } = useContext(AppContext);
-    console.log(state);
+    console.log(state.bruteSctions);
     const { getChangedForm } = useSimulate();
     const { setSimulationTreeSections } = useSimulateCanvas();
     const { sectionsToTreeRender } = useTreeText();
@@ -66,18 +66,6 @@ function Simulate() {
     ) => {
         const { sections } = setSimulationTreeSections();
         const treeText = sectionsToTreeRender(sections);
-        // const bruteSctions: Record<string, IBruteSection> = {};
-
-        // Object.values(sections).forEach((sec) => {
-        //     bruteSctions[sec.id] = {
-        //         id: sec.id,
-        //         mechanism: {},
-        //         mechanismCurrKey: '',
-        //         general: {},
-        //         generalChanged: false,
-        //     };
-        // });
-
         const staticGloablMech = { ...state.globalMechanism };
         Object.entries(sectionGeneral).forEach(([sec_key, attr]) => {
             sections[sec_key].general = attr;
@@ -91,7 +79,6 @@ function Simulate() {
             sections: sections,
             sectionsTreeText: treeText,
             selectedId: none_selected_key,
-            // bruteSctions: bruteSctions,
         });
         setReadLoading(false);
     };
