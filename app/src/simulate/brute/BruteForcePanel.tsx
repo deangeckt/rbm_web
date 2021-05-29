@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
-import ReadLoading from '../../anim/ReadLoading';
 import { toggleType } from '../Simulate';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton, Tooltip } from '@material-ui/core';
 import { AppContext } from '../../AppContext';
@@ -11,13 +9,11 @@ import EventNoteIcon from '@material-ui/icons/EventNote';
 import { defTheme } from '../../Wrapper';
 
 export interface IBruteForceProps {
-    running: boolean;
-    start: () => void;
     setToggle: (key: toggleType) => void;
     toggle: toggleType;
 }
 
-function BruteForcePanel({ running, start, setToggle, toggle }: IBruteForceProps) {
+function BruteForcePanel({ setToggle, toggle }: IBruteForceProps) {
     const { state, setState } = useContext(AppContext);
 
     return (
@@ -62,23 +58,6 @@ function BruteForcePanel({ running, start, setToggle, toggle }: IBruteForceProps
                 >
                     Draw Plot
                 </Button>
-            </div>
-            <div style={{ marginRight: '16px' }}>
-                {!running ? (
-                    <Button
-                        className="NoCapsButton"
-                        variant="contained"
-                        color="primary"
-                        onClick={() => {
-                            start();
-                        }}
-                        startIcon={<PlayArrowIcon />}
-                    >
-                        Run
-                    </Button>
-                ) : (
-                    <ReadLoading />
-                )}
             </div>
         </>
     );

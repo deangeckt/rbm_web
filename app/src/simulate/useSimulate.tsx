@@ -8,6 +8,8 @@ import {
     singleAttrObj,
     mulAttrObj,
     SectionScheme,
+    SectionBruteScheme,
+    singleBruteAttrObj,
 } from '../Wrapper';
 
 export function useSimulate() {
@@ -111,6 +113,45 @@ export function useSimulate() {
         return { globalMechanism: filterGlobalMech, sections: filterSections };
     };
 
+    const filterBruteMech = (mechObj: singleBruteAttrObj) => {
+        const filtered: singleBruteAttrObj = {};
+        Object.entries(mechObj).forEach(([key, mech]) => {
+            if (mech.add) {
+                Object.entries(mech.attrs).forEach(([attrKey, attr]) => {
+                    if (attr.amount > 0) {
+                        filtered[key] = { attrs: {} };
+                        filtered[key].attrs[attrKey] = { ...attr };
+                    }
+                });
+            }
+        });
+        return filtered;
+    };
+
+    const getBruteChangedForm = (): {
+        bruteGlobalMechanism: singleBruteAttrObj;
+        bruteSections: Record<string, SectionBruteScheme>;
+    } => {
+        const filterGlobalMech: singleBruteAttrObj = filterBruteMech(state.bruteGlobalMechanism);
+        const filterSections: Record<string, SectionBruteScheme> = {};
+        const sectionEnts = Object.values(state.sections);
+        for (let i = 0; i < sectionEnts.length; i++) {
+            const sec = sectionEnts[i];
+            const bruteSec = state.bruteSections[sec.id];
+            const filterMechList = filterBruteMech(bruteSec?.mechanism ?? {});
+
+            if (bruteSec?.generalChanged || Object.keys(filterMechList).length) {
+                filterSections[sec.id] = {
+                    id: bruteSec.id,
+                    general: { ...bruteSec.general },
+                    mechanism: filterMechList,
+                };
+            }
+        }
+
+        return { bruteGlobalMechanism: filterGlobalMech, bruteSections: filterSections };
+    };
+
     const importJsonParams = async (e: any, onErr: Function) => {
         if (e?.target?.files?.length === 0) return;
         e.preventDefault();
@@ -155,5 +196,5 @@ export function useSimulate() {
         reader.readAsText(e?.target?.files[0]);
     };
 
-    return { getChangedForm, addNewSection, importJsonParams };
+    return { getChangedForm, getBruteChangedForm, addNewSection, importJsonParams };
 }

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
-import { run, read } from '../api/api';
+import { run, read, bruteForce } from '../api/api';
 import { AppContext } from '../AppContext';
 import SimulateMainForm from './form/SimulateMainForms';
 import InfoDialog from './dialog/InfoDialog';
@@ -25,10 +25,10 @@ const toggle_init: toggleType = 'Tree';
 
 function Simulate() {
     const { state, setState } = useContext(AppContext);
-    console.log(state);
-    const { getChangedForm } = useSimulate();
+    const { getChangedForm, getBruteChangedForm } = useSimulate();
     const { setSimulationTreeSections } = useSimulateCanvas();
     const { sectionsToTreeRender } = useTreeText();
+    console.log(state.sections);
 
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
@@ -47,10 +47,25 @@ function Simulate() {
         setRunning(false);
     };
 
-    const StartRunning = () => {
+    const simulateRun = () => {
         setRunning(true);
         const { globalMechanism, sections } = getChangedForm();
         run(updateRunData, updateError, globalMechanism, sections, state.addAnims);
+    };
+
+    const bruteForceRun = (draw: number[], section: string, segment: number, time: number) => {
+        // setRunning(true);
+        const { globalMechanism, sections } = getChangedForm(true);
+
+        if (!sections[section])
+            sections[section] = { id: section, records: {}, mechanism: {}, process: {}, general: {} };
+        sections[section].records[segment] = [0];
+
+        if (!globalMechanism['general']) globalMechanism['general'] = { attrs: {} };
+        globalMechanism['general'].attrs['sim_time'] = time;
+
+        const { bruteGlobalMechanism, bruteSections } = getBruteChangedForm();
+        bruteForce(updateError, globalMechanism, sections, bruteGlobalMechanism, bruteSections, draw);
     };
 
     const closeError = (_event?: React.SyntheticEvent, reason?: string) => {
@@ -107,20 +122,13 @@ function Simulate() {
                                 {!state.bruteForceMode && (
                                     <SimulatePanel
                                         running={running}
-                                        start={StartRunning}
+                                        start={simulateRun}
                                         onErr={updateError}
                                         toggle={toggle}
                                         setToggle={setToggle}
                                     />
                                 )}
-                                {state.bruteForceMode && (
-                                    <BruteForcePanel
-                                        running={false}
-                                        start={() => null}
-                                        toggle={toggle}
-                                        setToggle={setToggle}
-                                    />
-                                )}
+                                {state.bruteForceMode && <BruteForcePanel toggle={toggle} setToggle={setToggle} />}
                             </div>
                             <div className="SimulateCenter">
                                 <div className="LeftSide">
@@ -134,7 +142,9 @@ function Simulate() {
                                             <TreeCanvasAnimated display={toggle === 'Anim'} />
                                         </>
                                     )}
-                                    {state.bruteForceMode && <FreeHandPlot display={toggle === 'FreeHand'} />}
+                                    {state.bruteForceMode && (
+                                        <FreeHandPlot display={toggle === 'FreeHand'} run={bruteForceRun} />
+                                    )}
                                 </div>
                             </div>
                         </div>

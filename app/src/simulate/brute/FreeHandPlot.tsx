@@ -1,10 +1,11 @@
-import { Button, TextField } from '@material-ui/core';
 import React from 'react';
-import FreeHandCanvas, { x_pixel_to_grid, y_pixel_to_grid } from './FreeHandCanvas';
+import { Button, TextField } from '@material-ui/core';
+import FreeHandCanvas, { y_pixel_to_grid } from './FreeHandCanvas';
 import { Autocomplete } from '@material-ui/lab';
 import { useTreeText } from '../../tree/useTreeText';
 import { root_key } from '../../Wrapper';
 import { sectionKeyToLabel } from '../../util/generalUtils';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import './FreeHand.css';
 
 export interface simpleLine {
@@ -23,9 +24,10 @@ const searchOptions_init: SearchedSectionLabel[] = [];
 
 export interface IFreeHandPlotProps {
     display: boolean;
+    run: (draw: number[], section: string, segment: number, time: number) => void;
 }
 
-function FreeHandPlot({ display }: IFreeHandPlotProps) {
+function FreeHandPlot({ display, run }: IFreeHandPlotProps) {
     const [lines, setLines] = React.useState(init_lines);
     const [maxy, setMaxy] = React.useState(70);
     const [miny, setMiny] = React.useState(-70);
@@ -45,19 +47,17 @@ function FreeHandPlot({ display }: IFreeHandPlotProps) {
         );
     }, []);
 
-    const handToVector = () => {
-        const xVec: number[] = [];
+    const handToVector = (): number[] => {
         const yVec: number[] = [];
         const line = lines[lines.length - 1];
-        if (!line) return;
+        if (!line) return [];
         line.points.forEach((point, idx) => {
-            if (idx % 2 === 0) xVec.push(x_pixel_to_grid(point, time));
-            else yVec.push(y_pixel_to_grid(point, maxy, miny));
+            if (idx % 2 !== 0) yVec.push(y_pixel_to_grid(point, maxy, miny));
         });
-        console.log(yVec);
+        return yVec;
     };
 
-    const validOneLine = (): boolean => {
+    const isValid = (): boolean => {
         return lines.length === 1 && sectionKey !== noSearch;
     };
 
@@ -93,13 +93,18 @@ function FreeHandPlot({ display }: IFreeHandPlotProps) {
                         Clear
                     </Button>
                     <Button
-                        disabled={!validOneLine()}
+                        disabled={!isValid()}
                         className="NoCapsButton"
                         variant="outlined"
                         color="primary"
-                        onClick={() => handToVector()}
+                        onClick={() => {
+                            const yVec = handToVector();
+                            if (yVec.length === 0) return;
+                            run(yVec, sectionKey!, segment, time);
+                        }}
+                        startIcon={<PlayArrowIcon />}
                     >
-                        Next
+                        Run
                     </Button>
                 </div>
             </div>

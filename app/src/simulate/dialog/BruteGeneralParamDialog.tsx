@@ -13,7 +13,6 @@ function BruteGeneralParamDialog({ attrKey }: IBruteGeneralParamDialogProps) {
     const { toggleBrute } = useDialogs();
     const { getSectionGeneralAttr, setSectionGeneralAttr } = useBruteForce();
     const { state } = useContext(AppContext);
-    console.log('g dia');
 
     return (
         <Dialog onClose={() => toggleBrute(false, '')} open={state.dialogs.bruteState}>

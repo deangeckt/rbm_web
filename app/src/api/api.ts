@@ -1,5 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
-import { IAnimData, IAttr, singleAttrObj, SectionScheme, IPlotPayload } from '../Wrapper';
+import {
+    IAnimData,
+    IAttr,
+    singleAttrObj,
+    SectionScheme,
+    IPlotPayload,
+    singleBruteAttrObj,
+    SectionBruteScheme,
+} from '../Wrapper';
 import readMocks from './readMock.json';
 
 const baseUrl = 'http://localhost:8080/api/v1/';
@@ -130,5 +138,31 @@ export const read = async (setError: Function, setData: Function) => {
             );
         } else msg = error.response.data;
         setError('Failed to read Neuron attributes ' + msg);
+    }
+};
+
+export const bruteForce = async (
+    setError: Function,
+    globalMech: singleAttrObj,
+    sections: Record<string, SectionScheme>,
+    bruteGlobalMech: singleBruteAttrObj,
+    bruteSections: Record<string, SectionBruteScheme>,
+    draw: number[],
+) => {
+    try {
+        const data = prepareJsonParams(globalMech, sections);
+        const brute_params = { global: bruteGlobalMech, sections: bruteSections, plot: draw };
+        data.push({ id: 'brute_force', value: brute_params });
+
+        const response = (await axios.request({
+            url: baseUrl + 'brute_force',
+            method: 'POST',
+            data: data,
+        })) as AxiosResponse;
+        console.log(response);
+    } catch (error: any) {
+        console.error(error);
+        const msg = !error.response ? '' : error.response.data;
+        setError('Brute Force Failed ' + msg);
     }
 };

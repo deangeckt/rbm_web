@@ -15,7 +15,6 @@ function BruteMechParamDialog({ attrKey, impKey }: IBruteParamDialogProps) {
     const { toggleBrute } = useDialogs();
     const { getMechAttr, setMechAttr } = useBruteForce();
     const { state } = useContext(AppContext);
-    console.log('mech dia');
 
     return (
         <Dialog onClose={() => toggleBrute(false, '')} open={state.dialogs.bruteState}>

@@ -61,6 +61,8 @@ export type SectionScheme = Omit<
     'mechanismCurrKey' | 'processCurrKey' | 'segmentCurrKey' | 'line' | 'generalChanged' | 'processCurrKeyCurrIdx'
 >;
 
+export type SectionBruteScheme = Omit<IBruteSection, 'generalChanged'>;
+
 export type IAttr = Record<string, number>;
 export interface IMechanismProcess {
     attrs: IAttr;
