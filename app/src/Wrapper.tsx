@@ -167,7 +167,7 @@ export interface IAppState {
     bruteForceMode: boolean;
     theme: Partial<Theme>;
     bruteGlobalMechanism: singleBruteAttrObj;
-    bruteSctions: Record<string, IBruteSection>;
+    bruteSections: Record<string, IBruteSection>;
     bruteCurrAttr: string;
 }
 
@@ -248,7 +248,7 @@ export const init_app_state: IAppState = {
     bruteForceMode: false,
     theme: defTheme,
     bruteGlobalMechanism: {},
-    bruteSctions: {},
+    bruteSections: {},
     bruteCurrAttr: '',
 };
 

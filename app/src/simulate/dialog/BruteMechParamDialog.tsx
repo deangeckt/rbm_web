@@ -11,10 +11,11 @@ export interface IBruteParamDialogProps {
     impKey: impKeys;
 }
 
-function BruteParamDialog({ attrKey, impKey }: IBruteParamDialogProps) {
+function BruteMechParamDialog({ attrKey, impKey }: IBruteParamDialogProps) {
     const { toggleBrute } = useDialogs();
     const { getMechAttr, setMechAttr } = useBruteForce();
     const { state } = useContext(AppContext);
+    console.log('mech dia');
 
     return (
         <Dialog onClose={() => toggleBrute(false, '')} open={state.dialogs.bruteState}>
@@ -47,4 +48,4 @@ function BruteParamDialog({ attrKey, impKey }: IBruteParamDialogProps) {
     );
 }
 
-export default BruteParamDialog;
+export default BruteMechParamDialog;

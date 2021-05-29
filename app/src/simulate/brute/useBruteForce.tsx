@@ -33,8 +33,8 @@ export function useBruteForce() {
             if (!sec) return 0;
             const currKey = sec.mechanismCurrKey;
             if (currKey === '') return 0;
-            if (!state.bruteSctions[sec.id]) return 0;
-            attrs = getMechAttrObj(state.bruteSctions[sec.id].mechanism, currKey);
+            if (!state.bruteSections[sec.id]) return 0;
+            attrs = getMechAttrObj(state.bruteSections[sec.id].mechanism, currKey);
         }
         return getMechAttrAux(attrs, attrKey, attrType);
     };
@@ -54,7 +54,7 @@ export function useBruteForce() {
             setState({ ...state, bruteGlobalMechanism: globalMechanism });
         } else {
             const selectedSections = getAllSelectedSections();
-            const bruteSections = { ...state.bruteSctions };
+            const bruteSections = { ...state.bruteSections };
 
             selectedSections.forEach((sec) => {
                 const currKey = sec.mechanismCurrKey;
@@ -63,9 +63,40 @@ export function useBruteForce() {
                 const attrs = getMechAttrObj(bruteSections[sec.id].mechanism, currKey);
                 setMechAttrAux(attrs, attrKey, attrType, value);
             });
-            setState({ ...state, bruteSctions: bruteSections });
+            setState({ ...state, bruteSections: bruteSections });
         }
     };
 
-    return { getMechAttr, setMechAttr };
+    const getSectionGeneralAttr = (attrKey: string, attrType: attrType): number => {
+        const sec = getFirstSelectedSection();
+        if (!sec) return 0;
+        if (!state.bruteSections[sec.id]) return 0;
+        if (!state.bruteSections[sec.id].general) return 0;
+        if (!state.bruteSections[sec.id]?.general[attrKey]) return 0;
+        return (state.bruteSections[sec.id]?.general[attrKey] as any)[attrType];
+    };
+
+    const setSectionGeneralAttr = (attrKey: string, attrType: attrType, value: number) => {
+        const bruteSections = { ...state.bruteSections };
+        const selectedSections = getAllSelectedSections();
+        selectedSections.forEach((sec) => {
+            if (!bruteSections[sec.id])
+                bruteSections[sec.id] = {
+                    id: sec.id,
+                    mechanism: {},
+                    general: {},
+                    generalChanged: false,
+                };
+            if (!bruteSections[sec.id].general) bruteSections[sec.id].general = {};
+
+            if (!bruteSections[sec.id].general[attrKey])
+                bruteSections[sec.id].general[attrKey] = { min: 0, max: 0, amount: 0 };
+
+            (bruteSections[sec.id].general[attrKey] as any)[attrType] = value;
+            bruteSections[sec.id].generalChanged = true;
+        });
+        setState({ ...state, bruteSections: bruteSections });
+    };
+
+    return { getMechAttr, setMechAttr, getSectionGeneralAttr, setSectionGeneralAttr };
 }

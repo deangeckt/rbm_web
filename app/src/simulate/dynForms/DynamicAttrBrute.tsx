@@ -8,7 +8,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { IAttr, impKeys } from '../../Wrapper';
 import { useDynamicForms } from './useDynamicForm';
 import { useDialogs } from '../dialog/useDialogs';
-import BruteParamDialog from '../dialog/BruteParamDialog';
+import BruteMechParamDialog from '../dialog/BruteMechParamDialog';
 import { AppContext } from '../../AppContext';
 
 export interface IDynamicAttrProps {
@@ -30,7 +30,7 @@ function DynamicAttrBrute({ attrs, impKey, attr_key }: IDynamicAttrProps) {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '12px' }}>
-            <BruteParamDialog attrKey={currAttr} impKey={impKey} />
+            <BruteMechParamDialog attrKey={currAttr} impKey={impKey} />
 
             {attr_key === '' ? (
                 <div>Select Mechanism</div>

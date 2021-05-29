@@ -1030,5 +1030,15 @@
                 "usetable_km": 1.0
             }
         ]
+    },
+    "section_general": {
+        "0_1": {
+            "L": 1.0,
+            "Ra": 35.4,
+            "nseg": 1,
+            "rallbranch": 1.0,
+            "cm": 1.0,
+            "diam": 1.0
+        }
     }
 }

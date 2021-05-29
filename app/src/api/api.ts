@@ -118,11 +118,15 @@ export const read = async (setError: Function, setData: Function) => {
         let msg;
         if (!error.response) {
             msg = ' - Using mocks';
+            const section_general: Record<string, IAttr> = {};
+            Object.entries(readMocks.section_general).forEach(([sec_key, props]) => {
+                section_general[sec_key] = props as IAttr;
+            });
             setData(
                 readSchema(readMocks.point_mechanism),
                 readSchema(readMocks.global_mechanism),
                 readSchema(readMocks.point_processes),
-                {},
+                section_general,
             );
         } else msg = error.response.data;
         setError('Failed to read Neuron attributes ' + msg);

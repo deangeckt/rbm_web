@@ -6,6 +6,7 @@ import SectionFormSegmentHeader from './SectionFormSegmentHeader';
 import SectionFormRecording from './SectionFormRecording';
 import SectionFormGeneral from './SectionFormGeneral';
 import { sectionKeyToLabel } from '../../util/generalUtils';
+import SectionFormGeneralBrute from '../brute/SectionFormGeneralBrute';
 import './Form.css';
 
 type SectionTab = 'process' | 'mech' | 'record' | 'general';
@@ -27,7 +28,8 @@ function SectionFormWrapper() {
         if (sectionTab === 'mech') return <DynamicForm mp={state.pointMechanism} impKey={'pointMechanism'} />;
         else if (sectionTab === 'process') return <DynamicForm mp={state.pointProcess} impKey={'pointProcess'} />;
         else if (sectionTab === 'record') return <SectionFormRecording />;
-        else if (sectionTab === 'general') return <SectionFormGeneral />;
+        else if (sectionTab === 'general')
+            return state.bruteForceMode ? <SectionFormGeneralBrute /> : <SectionFormGeneral />;
     };
 
     React.useEffect(() => {

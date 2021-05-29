@@ -163,7 +163,7 @@ export function useDynamicForms() {
             setState({ ...state, bruteGlobalMechanism: globalMechanism });
         } else {
             const selectedSections = getAllSelectedSections();
-            const bruteSections = { ...state.bruteSctions };
+            const bruteSections = { ...state.bruteSections };
 
             selectedSections.forEach((sec) => {
                 const currKey = sec.mechanismCurrKey;
@@ -172,7 +172,7 @@ export function useDynamicForms() {
                     bruteSections[sec.id] = { id: sec.id, mechanism: {}, general: {}, generalChanged: false };
                 setBruteKeyCheckedAux(bruteSections[sec.id].mechanism, currKey, checked);
             });
-            setState({ ...state, bruteSctions: bruteSections });
+            setState({ ...state, bruteSections: bruteSections });
         }
     };
 
@@ -185,7 +185,7 @@ export function useDynamicForms() {
             if (!sec) return false;
             const currKey = sec.mechanismCurrKey;
             if (currKey === '') return false;
-            return state.bruteSctions[sec.id]?.mechanism[currKey]?.add ?? false;
+            return state.bruteSections[sec.id]?.mechanism[currKey]?.add ?? false;
         }
     };
 

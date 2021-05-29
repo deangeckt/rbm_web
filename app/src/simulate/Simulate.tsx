@@ -25,7 +25,7 @@ const toggle_init: toggleType = 'Tree';
 
 function Simulate() {
     const { state, setState } = useContext(AppContext);
-    console.log(state.bruteSctions);
+    console.log(state);
     const { getChangedForm } = useSimulate();
     const { setSimulationTreeSections } = useSimulateCanvas();
     const { sectionsToTreeRender } = useTreeText();
