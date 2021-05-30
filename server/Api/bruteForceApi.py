@@ -30,7 +30,8 @@ def __fill_list_for_product_aux(fill_params, list_values, list_keys, sec_key=Non
             attr_obj = attrs[attr]
             values = np.linspace(attr_obj['min'], attr_obj['max'], num=attr_obj['amount'])
             list_values.append(values)
-            new_key = ('global', param_key, attr) if sec_key is None else (sec_key, sec_type, param_key, attr)
+            new_key = ('global', param_key, attr) if sec_key is None else (
+                sec_key, sec_type, param_key, attr)
             list_keys.append(new_key)
 
 
@@ -88,19 +89,54 @@ def __compare_graph(gt, candidate):
     return wasserstein_distance(gt, candidate)
 
 
+def __prepare_result_scheme(scores, brute_params, list_keys):
+    result_amount = 3
+    result = []
+
+    scores.sort(key=lambda e: e['score'])
+    best_scores = scores[:result_amount]
+
+    for best_score in best_scores:
+        res_scheme = copy.deepcopy(brute_params)
+        res_scheme['plot'] = best_score['plot']
+
+        for idx, param in enumerate(best_score['params']):
+            curr_key = list_keys[idx]
+            if curr_key[0] == 'global':  # global or section_key
+                param_key = curr_key[1]
+                attr_key = curr_key[2]
+                res_scheme['global'][param_key]['attrs'][attr_key] = param
+            else:
+                sec_key = curr_key[0]
+                param_type = curr_key[1]  # general or mechanism
+                param_key = curr_key[2]
+                attr_key = curr_key[3]
+                res_scheme['sections'][sec_key][param_type][param_key]['attrs'][attr_key] = param
+
+        result.append(res_scheme)
+
+    return result
+
+
 def brute_force_api(run, params, swc_path):
     brute_params = __find_param_val(params, 'brute_force')
     __remove_anim_if_exist(params)
 
     gt = brute_params['plot']
-    product_results = []
+    scores = []
     list_keys, list_values = __fill_list_for_product(brute_params)
     products_params = list(product(*list_values))
 
+    print('Parameter key list:')
+    print(list_keys)
+
     for idx, product_tuple in enumerate(products_params):
-        print('Iteration: {}  params: {}'.format(idx, product_tuple))
         new_params = copy.deepcopy(params)
         __update_new_product_params(product_tuple, list_keys, new_params)
         volts = run(new_params, swc_path)['volt']
         candidate = next(iter(volts.values()))
-        product_results.append(__compare_graph(gt, candidate))
+        score = __compare_graph(gt, candidate)
+        scores.append({'score': score, 'params': product_tuple, 'plot': candidate})
+        print('Iteration: {}  score: {} params: {}'.format(idx, score, product_tuple))
+
+    return __prepare_result_scheme(scores, brute_params, list_keys)
