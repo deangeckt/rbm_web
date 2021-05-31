@@ -4,9 +4,9 @@ import { toggleType } from '../Simulate';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton, Tooltip } from '@material-ui/core';
 import { AppContext } from '../../AppContext';
-import { iconSizeStyle } from '../SimulatePanel';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import { defTheme } from '../../Wrapper';
+import { iconSizeStyle } from '../../util/generalUtils';
 
 export interface IBruteForceProps {
     setToggle: (key: toggleType) => void;
@@ -41,7 +41,7 @@ function BruteForcePanel({ setToggle, toggle }: IBruteForceProps) {
                     </IconButton>
                 </Tooltip>
             </div>
-            <div style={{ marginLeft: '16px' }}>
+            <div style={{ marginRight: '40%' }}>
                 <Button
                     className="NoCapsButton"
                     variant={toggle === 'Tree' ? 'contained' : 'outlined'}

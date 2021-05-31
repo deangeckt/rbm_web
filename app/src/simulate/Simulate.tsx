@@ -7,7 +7,7 @@ import SimulateMainForm from './form/SimulateMainForms';
 import InfoDialog from './dialog/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import SimulateCanvas from './SimulateCanvas';
-import { IAnimData, IAttr, IPlotPayload, none_selected_key, singleAttrObj } from '../Wrapper';
+import { IAnimData, IAttr, IBruteResult, IPlotPayload, none_selected_key, singleAttrObj } from '../Wrapper';
 import ReadLoading from '../anim/ReadLoading';
 import { useSimulate } from './useSimulate';
 import Summary from './summary/Summary';
@@ -18,6 +18,7 @@ import { useTreeText } from '../tree/useTreeText';
 import FreeHandPlot from './brute/FreeHandPlot';
 import BruteForcePanel from './brute/BruteForcePanel';
 import { MuiThemeProvider } from '@material-ui/core/styles';
+import BruteResults from './brute/BruteResults';
 import './Simulate.css';
 
 export type toggleType = 'Tree' | 'Plot' | 'Anim' | 'FreeHand';
@@ -28,16 +29,17 @@ function Simulate() {
     const { getChangedForm, getBruteChangedForm } = useSimulate();
     const { setSimulationTreeSections } = useSimulateCanvas();
     const { sectionsToTreeRender } = useTreeText();
-    console.log(state.sections);
+    console.log(state.bruteResults);
 
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
-    const [readLoading, setReadLoading] = React.useState(true);
+    const [blockLoading, setBlockLoading] = React.useState(true);
     const [toggle, setToggle] = React.useState(toggle_init);
 
     const updateRunData = (plotData: IPlotPayload, animData: Record<string, IAnimData[]>) => {
         const plots = [...state.plots];
         plots.push(plotData);
+        if (plots.length > 5) plots.shift();
         setState({ ...state, plots: plots, animations: JSON.parse(JSON.stringify(animData)) });
         setRunning(false);
     };
@@ -45,6 +47,7 @@ function Simulate() {
     const updateError = (err: string) => {
         setError(err);
         setRunning(false);
+        setBlockLoading(false);
     };
 
     const simulateRun = () => {
@@ -53,9 +56,14 @@ function Simulate() {
         run(updateRunData, updateError, globalMechanism, sections, state.addAnims);
     };
 
+    const updateBruteData = (res: IBruteResult[]) => {
+        setState({ ...state, bruteResults: JSON.parse(JSON.stringify(res)), bruteResultsShow: true });
+        setBlockLoading(false);
+    };
+
     const bruteForceRun = (draw: number[], section: string, segment: number, time: number) => {
-        // setRunning(true);
-        const { globalMechanism, sections } = getChangedForm(true);
+        setBlockLoading(true);
+        const { globalMechanism, sections } = getChangedForm(false, true);
 
         if (!sections[section])
             sections[section] = { id: section, records: {}, mechanism: {}, process: {}, general: {} };
@@ -65,7 +73,7 @@ function Simulate() {
         globalMechanism['general'].attrs['sim_time'] = time;
 
         const { bruteGlobalMechanism, bruteSections } = getBruteChangedForm();
-        bruteForce(updateError, globalMechanism, sections, bruteGlobalMechanism, bruteSections, draw);
+        bruteForce(updateBruteData, updateError, globalMechanism, sections, bruteGlobalMechanism, bruteSections, draw);
     };
 
     const closeError = (_event?: React.SyntheticEvent, reason?: string) => {
@@ -80,11 +88,11 @@ function Simulate() {
         sectionGeneral: Record<string, IAttr>,
     ) => {
         const { sections } = setSimulationTreeSections();
-        const treeText = sectionsToTreeRender(sections);
         const staticGloablMech = { ...state.globalMechanism };
         Object.entries(sectionGeneral).forEach(([sec_key, attr]) => {
-            sections[sec_key].general = attr;
+            if (sections[sec_key]) sections[sec_key].general = attr;
         });
+        const treeText = sectionsToTreeRender(sections);
 
         setState({
             ...state,
@@ -95,7 +103,7 @@ function Simulate() {
             sectionsTreeText: treeText,
             selectedId: none_selected_key,
         });
-        setReadLoading(false);
+        setBlockLoading(false);
     };
 
     React.useEffect(() => {
@@ -105,7 +113,7 @@ function Simulate() {
     return (
         <MuiThemeProvider theme={state.theme}>
             <div className="Simulate">
-                {readLoading ? (
+                {blockLoading ? (
                     <ReadLoading />
                 ) : (
                     <>
@@ -117,37 +125,41 @@ function Simulate() {
                             </Alert>
                         </Snackbar>
 
-                        <div className="SimulateContainer">
-                            <div className="SimulateTopPanel">
-                                {!state.bruteForceMode && (
-                                    <SimulatePanel
-                                        running={running}
-                                        start={simulateRun}
-                                        onErr={updateError}
-                                        toggle={toggle}
-                                        setToggle={setToggle}
-                                    />
-                                )}
-                                {state.bruteForceMode && <BruteForcePanel toggle={toggle} setToggle={setToggle} />}
-                            </div>
-                            <div className="SimulateCenter">
-                                <div className="LeftSide">
-                                    <SimulateMainForm />
-                                </div>
-                                <div className="RightSide">
-                                    <SimulateCanvas display={toggle === 'Tree'} />
+                        {state.bruteResultsShow ? (
+                            <BruteResults />
+                        ) : (
+                            <div className="SimulateContainer">
+                                <div className="SimulateTopPanel">
                                     {!state.bruteForceMode && (
-                                        <>
-                                            <Plot display={toggle === 'Plot'} />
-                                            <TreeCanvasAnimated display={toggle === 'Anim'} />
-                                        </>
+                                        <SimulatePanel
+                                            running={running}
+                                            start={simulateRun}
+                                            onErr={updateError}
+                                            toggle={toggle}
+                                            setToggle={setToggle}
+                                        />
                                     )}
-                                    {state.bruteForceMode && (
-                                        <FreeHandPlot display={toggle === 'FreeHand'} run={bruteForceRun} />
-                                    )}
+                                    {state.bruteForceMode && <BruteForcePanel toggle={toggle} setToggle={setToggle} />}
+                                </div>
+                                <div className="SimulateCenter">
+                                    <div className="LeftSide">
+                                        <SimulateMainForm />
+                                    </div>
+                                    <div className="RightSide">
+                                        <SimulateCanvas display={toggle === 'Tree'} />
+                                        {!state.bruteForceMode && (
+                                            <>
+                                                <Plot display={toggle === 'Plot'} />
+                                                <TreeCanvasAnimated display={toggle === 'Anim'} />
+                                            </>
+                                        )}
+                                        {state.bruteForceMode && (
+                                            <FreeHandPlot display={toggle === 'FreeHand'} run={bruteForceRun} />
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
                     </>
                 )}
             </div>

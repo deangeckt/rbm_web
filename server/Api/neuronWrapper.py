@@ -169,10 +169,12 @@ class NeuronWrapper:
         self.neuron_dy.run(self.general_params['sim_time'])
 
         time_vec = np.array(trec).tolist()
-        result = {'time': time_vec, 'current': {}, 'volt': {}}
+        result = {}
+        plot_obj = {'time': time_vec, 'current': {}, 'volt': {}}
         for record_key in self.recordings:
             payload_type = recording_key_to_payload_type(record_key)
-            result[payload_type][record_key] = np.array(self.recordings[record_key]).tolist()
+            plot_obj[payload_type][record_key] = np.array(self.recordings[record_key]).tolist()
+        result['plot'] = plot_obj
 
         if 'animation' in self.input:
             result['animation'] = create_animations(self.anim_recordings, time_vec)

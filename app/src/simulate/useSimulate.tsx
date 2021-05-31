@@ -67,6 +67,7 @@ export function useSimulate() {
 
     const getChangedForm = (
         ignoreSectionsProcess = false,
+        ignoreSectionsRecords = false,
     ): {
         globalMechanism: singleAttrObj;
         sections: Record<string, SectionScheme>;
@@ -105,7 +106,7 @@ export function useSimulate() {
                     general: { ...currSection.general },
                     process: ignoreSectionsProcess ? {} : filterProcList,
                     mechanism: filterMechList,
-                    records: ignoreSectionsProcess ? {} : filterRecords,
+                    records: ignoreSectionsRecords ? {} : filterRecords,
                 };
             }
         }

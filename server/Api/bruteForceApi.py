@@ -133,10 +133,10 @@ def brute_force_api(run, params, swc_path):
     for idx, product_tuple in enumerate(products_params):
         new_params = copy.deepcopy(params)
         __update_new_product_params(product_tuple, list_keys, new_params)
-        volts = run(new_params, swc_path)['volt']
-        candidate = next(iter(volts.values()))
+        plot = run(new_params, swc_path)['plot']
+        candidate = next(iter(plot['volt'].values()))
         score = __compare_graph(gt, candidate)
-        scores.append({'score': score, 'params': product_tuple, 'plot': candidate})
+        scores.append({'score': score, 'params': product_tuple, 'plot': plot})
         print('Iteration: {}  score: {} params: {}'.format(idx, score, product_tuple))
 
     return __prepare_result_scheme(scores, brute_params, list_keys)

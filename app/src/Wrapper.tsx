@@ -108,6 +108,12 @@ export interface IBruteSection {
     generalChanged: boolean;
 }
 
+export interface IBruteResult {
+    plot: IPlotPayload;
+    sections: Record<string, SectionScheme>;
+    global: singleAttrObj;
+}
+
 export interface RenderTreeText {
     id: string;
     children?: RenderTreeText[];
@@ -171,6 +177,8 @@ export interface IAppState {
     bruteGlobalMechanism: singleBruteAttrObj;
     bruteSections: Record<string, IBruteSection>;
     bruteCurrAttr: string;
+    bruteResults: IBruteResult[];
+    bruteResultsShow: false;
 }
 
 export const getStage = (canvasId: string): IStageSize => {
@@ -252,6 +260,8 @@ export const init_app_state: IAppState = {
     bruteGlobalMechanism: {},
     bruteSections: {},
     bruteCurrAttr: '',
+    bruteResults: [],
+    bruteResultsShow: false,
 };
 
 const Wrapper = (props: any) => {

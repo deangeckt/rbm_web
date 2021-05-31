@@ -7,6 +7,7 @@ import {
     IPlotPayload,
     singleBruteAttrObj,
     SectionBruteScheme,
+    IBruteResult,
 } from '../Wrapper';
 import readMocks from './readMock.json';
 
@@ -40,6 +41,29 @@ export const parseJsonParams = (
     return { sections, globalMechanism };
 };
 
+const readPlotPayload = (data: any): IPlotPayload => {
+    const plotData: IPlotPayload = {
+        time: [],
+        volt: {},
+        current: {},
+    };
+    Object.entries(data).forEach(([key, props]) => {
+        if (key === 'time') {
+            plotData.time = props as number[];
+        } else if (key === 'volt') {
+            Object.entries(props as any).forEach(([name, payload]) => {
+                plotData.volt[name] = payload as number[];
+            });
+        } else if (key === 'current') {
+            Object.entries(props as any).forEach(([name, payload]) => {
+                plotData.current[name] = payload as number[];
+            });
+        }
+    });
+
+    return plotData;
+};
+
 export const run = async (
     setData: Function,
     setError: Function,
@@ -56,30 +80,15 @@ export const run = async (
             data: data,
         })) as AxiosResponse;
 
-        const plotData: IPlotPayload = {
-            time: [],
-            volt: {},
-            current: {},
-        };
         const animData: Record<string, IAnimData[]> = {};
         for (const key in response.data) {
             if (key === 'animation') {
                 Object.entries(response.data['animation']).forEach(([sec_key, props]) => {
                     animData[sec_key] = props as IAnimData[];
                 });
-            } else if (key === 'time') {
-                plotData.time = response.data[key];
-            } else if (key === 'volt') {
-                Object.entries(response.data['volt']).forEach(([name, payload]) => {
-                    plotData.volt[name] = payload as number[];
-                });
-            } else if (key === 'current') {
-                Object.entries(response.data['current']).forEach(([name, payload]) => {
-                    plotData.current[name] = payload as number[];
-                });
             }
         }
-        setData(plotData, animData);
+        setData(readPlotPayload(response.data['plot']), animData);
     } catch (error: any) {
         console.error(error);
         const msg = !error.response ? '' : error.response.data;
@@ -142,6 +151,7 @@ export const read = async (setError: Function, setData: Function) => {
 };
 
 export const bruteForce = async (
+    setData: Function,
     setError: Function,
     globalMech: singleAttrObj,
     sections: Record<string, SectionScheme>,
@@ -159,7 +169,31 @@ export const bruteForce = async (
             method: 'POST',
             data: data,
         })) as AxiosResponse;
-        console.log(response);
+
+        const res: IBruteResult[] = [];
+        Object.entries(response.data).forEach(([, props]) => {
+            const plotData: IPlotPayload = {
+                time: [],
+                volt: {},
+                current: {},
+            };
+            const res_obj: IBruteResult = { plot: plotData, sections: {}, global: {} };
+            Object.entries(props as any).forEach(([key, props_res]) => {
+                if (key === 'global') {
+                    res_obj.global = props_res as singleAttrObj;
+                } else if (key === 'plot') {
+                    res_obj.plot = readPlotPayload(props_res);
+                } else if (key === 'sections') {
+                    Object.entries(props_res as any).forEach(([sec_key, sec]) => {
+                        res_obj.sections[sec_key] = sec as SectionScheme;
+                        res_obj.sections[sec_key].process = {};
+                        res_obj.sections[sec_key].records = {};
+                    });
+                }
+            });
+            res.push(res_obj);
+        });
+        setData(res);
     } catch (error: any) {
         console.error(error);
         const msg = !error.response ? '' : error.response.data;

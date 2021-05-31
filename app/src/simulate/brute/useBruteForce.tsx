@@ -58,7 +58,6 @@ export function useBruteForce() {
 
             selectedSections.forEach((sec) => {
                 const currKey = sec.mechanismCurrKey;
-                console.log(currKey);
                 if (currKey === '') return;
                 const attrs = getMechAttrObj(bruteSections[sec.id].mechanism, currKey);
                 setMechAttrAux(attrs, attrKey, attrType, value);

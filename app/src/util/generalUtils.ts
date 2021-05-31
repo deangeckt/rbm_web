@@ -6,3 +6,5 @@ export const sectionKeyToLabel = (sectionKey: string): string => {
     const tid = keys[1];
     return `${section_short_labels[tid]}[${cid}]`;
 };
+
+export const iconSizeStyle = { width: '30px', height: '30px' };

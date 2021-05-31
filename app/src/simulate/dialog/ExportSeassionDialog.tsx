@@ -38,7 +38,7 @@ function ExportSeassionDialog() {
                     variant={'outlined'}
                     color="primary"
                     onClick={() => {
-                        const { globalMechanism, sections } = getChangedForm(!check);
+                        const { globalMechanism, sections } = getChangedForm(!check, !check);
                         downloadJsonParams(globalMechanism, sections, desc);
                     }}
                 >

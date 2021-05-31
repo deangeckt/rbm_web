@@ -1,0 +1,45 @@
+.BruteResults {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.BruteResultsPanel {
+    width: 100%;
+    /* flex-basis: 10%; */
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #efefef;
+}
+
+.BruteResultsContainer {
+    width: 100%;
+    flex-basis: 90%;
+    display: flex;
+    flex-direction: row;
+}
+
+.BruteResultsList {
+    padding-top: 32px;
+    min-width: 8%;
+    height: 100%;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #efefef;
+}
+
+.BruteResultsParams {
+    padding-top: 32px;
+    margin-left: 32px;
+    min-width: 35%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #efefef;
+}
+
+.BruteResultsPlot {
+    padding-top: 32px;
+}

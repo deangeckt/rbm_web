@@ -16,6 +16,7 @@ import { useDialogs } from './dialog/useDialogs';
 import ExportSeassionDialog from './dialog/ExportSeassionDialog';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import { bruteTheme } from '../Wrapper';
+import { iconSizeStyle } from '../util/generalUtils';
 
 export interface ISimulatePanelProps {
     running: boolean;
@@ -24,8 +25,6 @@ export interface ISimulatePanelProps {
     setToggle: (key: toggleType) => void;
     toggle: toggleType;
 }
-
-export const iconSizeStyle = { width: '30px', height: '30px' };
 
 function SimulatePanel({ running, start, onErr, setToggle, toggle }: ISimulatePanelProps) {
     const { state, setState } = useContext(AppContext);
