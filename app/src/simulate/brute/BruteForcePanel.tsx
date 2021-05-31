@@ -41,7 +41,7 @@ function BruteForcePanel({ setToggle, toggle }: IBruteForceProps) {
                     </IconButton>
                 </Tooltip>
             </div>
-            <div style={{ marginRight: '40%' }}>
+            <div style={{ marginLeft: '16px' }}>
                 <Button
                     className="NoCapsButton"
                     variant={toggle === 'Tree' ? 'contained' : 'outlined'}
@@ -52,11 +52,30 @@ function BruteForcePanel({ setToggle, toggle }: IBruteForceProps) {
                 </Button>
                 <Button
                     className="NoCapsButton"
+                    variant={toggle === 'Plot' ? 'contained' : 'outlined'}
+                    color="primary"
+                    onClick={() => setToggle('Plot')}
+                >
+                    Plot
+                </Button>
+                <Button
+                    className="NoCapsButton"
                     variant={toggle === 'FreeHand' ? 'contained' : 'outlined'}
                     color="primary"
                     onClick={() => setToggle('FreeHand')}
                 >
                     Draw Plot
+                </Button>
+            </div>
+            <div style={{ marginRight: '16px' }}>
+                <Button
+                    disabled={state.bruteResults.length === 0}
+                    className="NoCapsButton"
+                    variant={'contained'}
+                    color="primary"
+                    onClick={() => setState({ ...state, bruteResultsShow: true })}
+                >
+                    Results
                 </Button>
             </div>
         </>

@@ -147,12 +147,9 @@ function Simulate() {
                                     </div>
                                     <div className="RightSide">
                                         <SimulateCanvas display={toggle === 'Tree'} />
-                                        {!state.bruteForceMode && (
-                                            <>
-                                                <Plot display={toggle === 'Plot'} />
-                                                <TreeCanvasAnimated display={toggle === 'Anim'} />
-                                            </>
-                                        )}
+                                        <Plot display={toggle === 'Plot'} />
+
+                                        {!state.bruteForceMode && <TreeCanvasAnimated display={toggle === 'Anim'} />}
                                         {state.bruteForceMode && (
                                             <FreeHandPlot display={toggle === 'FreeHand'} run={bruteForceRun} />
                                         )}
