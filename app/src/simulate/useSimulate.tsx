@@ -118,9 +118,9 @@ export function useSimulate() {
         const filtered: singleBruteAttrObj = {};
         Object.entries(mechObj).forEach(([key, mech]) => {
             if (mech.add) {
+                filtered[key] = { attrs: {} };
                 Object.entries(mech.attrs).forEach(([attrKey, attr]) => {
                     if (attr.amount > 0) {
-                        filtered[key] = { attrs: {} };
                         filtered[key].attrs[attrKey] = { ...attr };
                     }
                 });

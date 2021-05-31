@@ -29,7 +29,7 @@ function Simulate() {
     const { getChangedForm, getBruteChangedForm } = useSimulate();
     const { setSimulationTreeSections } = useSimulateCanvas();
     const { sectionsToTreeRender } = useTreeText();
-    console.log(state.bruteResults);
+    // console.log(state.bruteGlobalMechanism);
 
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
