@@ -23,15 +23,24 @@ def __remove_anim_if_exist(params):
     del params[idx]
 
 
-def __fill_list_for_product_aux(fill_params, list_values, list_keys, sec_key=None, sec_type=None):
-    for param_key in fill_params:
-        attrs = fill_params[param_key]['attrs']
-        for attr in attrs:
-            attr_obj = attrs[attr]
+def __fill_list_for_product_aux(fill_params, list_values, list_keys, sec_key=None, sec_type=None,
+                                attr_layer=True):
+    if attr_layer:
+        for param_key in fill_params:
+            attrs = fill_params[param_key]['attrs']
+            for attr in attrs:
+                attr_obj = attrs[attr]
+                values = np.linspace(attr_obj['min'], attr_obj['max'], num=attr_obj['amount'])
+                list_values.append(values)
+                new_key = ('global', param_key, attr) if sec_key is None else (
+                    sec_key, sec_type, param_key, attr)
+                list_keys.append(new_key)
+    else:
+        for attr in fill_params:
+            attr_obj = fill_params[attr]
             values = np.linspace(attr_obj['min'], attr_obj['max'], num=attr_obj['amount'])
             list_values.append(values)
-            new_key = ('global', param_key, attr) if sec_key is None else (
-                sec_key, sec_type, param_key, attr)
+            new_key = (sec_key, 'general', 'general', attr)
             list_keys.append(new_key)
 
 
@@ -54,16 +63,20 @@ def __fill_list_for_product(brute_params):
                                     list_values=list_values,
                                     list_keys=list_keys,
                                     sec_key=sec_key,
-                                    sec_type='general')
+                                    sec_type='general',
+                                    attr_layer=False)
 
     return list_keys, list_values
 
 
-def __update_new_attr_params(override_params, param_key, attr_key, value):
-    if param_key not in override_params:
-        override_params[param_key] = {"attrs": {attr_key: value}}
+def __update_new_attr_params(override_params, param_key, attr_key, value, attr_layer=True):
+    if attr_layer:
+        if param_key not in override_params:
+            override_params[param_key] = {"attrs": {attr_key: value}}
+        else:
+            override_params[param_key]["attrs"][attr_key] = value
     else:
-        override_params[param_key]["attrs"][attr_key] = value
+        override_params[attr_key] = value
 
 
 def __update_new_product_params(product_tuple, list_keys, new_params):
@@ -82,7 +95,8 @@ def __update_new_product_params(product_tuple, list_keys, new_params):
             __update_new_attr_params(override_params=section_params[sec_key][param_type],
                                      param_key=curr_key[2],
                                      attr_key=curr_key[3],
-                                     value=param)
+                                     value=param,
+                                     attr_layer=(param_type != 'general'))
 
 
 def __compare_graph(gt, candidate):
@@ -111,7 +125,11 @@ def __prepare_result_scheme(scores, brute_params, list_keys):
                 param_type = curr_key[1]  # general or mechanism
                 param_key = curr_key[2]
                 attr_key = curr_key[3]
-                res_scheme['sections'][sec_key][param_type][param_key]['attrs'][attr_key] = param
+                if param_key == 'general':
+                    res_scheme['sections'][sec_key][param_type][attr_key] = param
+                else:
+                    res_scheme['sections'][sec_key][param_type][param_key]['attrs'][
+                        attr_key] = param
 
         result.append(res_scheme)
 
