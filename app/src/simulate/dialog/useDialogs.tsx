@@ -17,6 +17,12 @@ export function useDialogs() {
         setState({ ...state, dialogs: dialogs, bruteCurrAttr: attr });
     };
 
+    const toggleBruteResults = (val: boolean) => {
+        const dialogs = { ...state.dialogs };
+        dialogs.bruteResultsShow = val;
+        setState({ ...state, dialogs: dialogs });
+    };
+
     const closeInfo = () => {
         const dialogs = { ...state.dialogs };
         dialogs.infoContent = '';
@@ -39,5 +45,5 @@ export function useDialogs() {
         setState({ ...state, dialogs: dialogs });
     };
 
-    return { closeInfo, updateInfo, toggleExport, toggleBrute };
+    return { closeInfo, updateInfo, toggleExport, toggleBrute, toggleBruteResults };
 }

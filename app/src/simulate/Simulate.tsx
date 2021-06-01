@@ -29,7 +29,7 @@ function Simulate() {
     const { getChangedForm, getBruteChangedForm } = useSimulate();
     const { setSimulationTreeSections } = useSimulateCanvas();
     const { sectionsToTreeRender } = useTreeText();
-    console.log(state.bruteSections);
+    // console.log(state.bruteSections);
 
     const [error, setError] = React.useState('');
     const [running, setRunning] = React.useState(false);
@@ -57,7 +57,9 @@ function Simulate() {
     };
 
     const updateBruteData = (res: IBruteResult[]) => {
-        setState({ ...state, bruteResults: JSON.parse(JSON.stringify(res)), bruteResultsShow: true });
+        const dialogs = { ...state.dialogs };
+        dialogs.bruteResultsShow = true;
+        setState({ ...state, bruteResults: JSON.parse(JSON.stringify(res)), dialogs: dialogs });
         setBlockLoading(false);
     };
 
@@ -117,6 +119,7 @@ function Simulate() {
                     <ReadLoading />
                 ) : (
                     <>
+                        <BruteResults />
                         <InfoDialog />
                         <Summary />
                         <Snackbar open={error !== ''} autoHideDuration={6000} onClose={closeError}>
@@ -125,38 +128,34 @@ function Simulate() {
                             </Alert>
                         </Snackbar>
 
-                        {state.bruteResultsShow ? (
-                            <BruteResults />
-                        ) : (
-                            <div className="SimulateContainer">
-                                <div className="SimulateTopPanel">
-                                    {!state.bruteForceMode && (
-                                        <SimulatePanel
-                                            running={running}
-                                            start={simulateRun}
-                                            onErr={updateError}
-                                            toggle={toggle}
-                                            setToggle={setToggle}
-                                        />
-                                    )}
-                                    {state.bruteForceMode && <BruteForcePanel toggle={toggle} setToggle={setToggle} />}
+                        <div className="SimulateContainer">
+                            <div className="SimulateTopPanel">
+                                {!state.bruteForceMode && (
+                                    <SimulatePanel
+                                        running={running}
+                                        start={simulateRun}
+                                        onErr={updateError}
+                                        toggle={toggle}
+                                        setToggle={setToggle}
+                                    />
+                                )}
+                                {state.bruteForceMode && <BruteForcePanel toggle={toggle} setToggle={setToggle} />}
+                            </div>
+                            <div className="SimulateCenter">
+                                <div className="LeftSide">
+                                    <SimulateMainForm />
                                 </div>
-                                <div className="SimulateCenter">
-                                    <div className="LeftSide">
-                                        <SimulateMainForm />
-                                    </div>
-                                    <div className="RightSide">
-                                        <SimulateCanvas display={toggle === 'Tree'} />
-                                        <Plot display={toggle === 'Plot'} />
+                                <div className="RightSide">
+                                    <SimulateCanvas display={toggle === 'Tree'} />
+                                    <Plot display={toggle === 'Plot'} />
 
-                                        {!state.bruteForceMode && <TreeCanvasAnimated display={toggle === 'Anim'} />}
-                                        {state.bruteForceMode && (
-                                            <FreeHandPlot display={toggle === 'FreeHand'} run={bruteForceRun} />
-                                        )}
-                                    </div>
+                                    {!state.bruteForceMode && <TreeCanvasAnimated display={toggle === 'Anim'} />}
+                                    {state.bruteForceMode && (
+                                        <FreeHandPlot display={toggle === 'FreeHand'} run={bruteForceRun} />
+                                    )}
                                 </div>
                             </div>
-                        )}
+                        </div>
                     </>
                 )}
             </div>

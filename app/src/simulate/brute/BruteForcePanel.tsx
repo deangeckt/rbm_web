@@ -7,6 +7,7 @@ import { AppContext } from '../../AppContext';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import { defTheme } from '../../Wrapper';
 import { iconSizeStyle } from '../../util/generalUtils';
+import { useDialogs } from '../dialog/useDialogs';
 
 export interface IBruteForceProps {
     setToggle: (key: toggleType) => void;
@@ -15,6 +16,7 @@ export interface IBruteForceProps {
 
 function BruteForcePanel({ setToggle, toggle }: IBruteForceProps) {
     const { state, setState } = useContext(AppContext);
+    const { toggleBruteResults } = useDialogs();
 
     return (
         <>
@@ -73,7 +75,7 @@ function BruteForcePanel({ setToggle, toggle }: IBruteForceProps) {
                     className="NoCapsButton"
                     variant={'contained'}
                     color="primary"
-                    onClick={() => setState({ ...state, bruteResultsShow: true })}
+                    onClick={() => toggleBruteResults(true)}
                 >
                     Results
                 </Button>

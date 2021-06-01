@@ -138,6 +138,7 @@ export interface IDialogs {
     infoImage?: string;
     exportState: boolean;
     bruteState: boolean;
+    bruteResultsShow: boolean;
 }
 
 export interface IPlotPayload {
@@ -178,7 +179,6 @@ export interface IAppState {
     bruteSections: Record<string, IBruteSection>;
     bruteCurrAttr: string;
     bruteResults: IBruteResult[];
-    bruteResultsShow: false;
 }
 
 export const getStage = (canvasId: string): IStageSize => {
@@ -246,6 +246,7 @@ export const init_app_state: IAppState = {
         infoContent: '',
         exportState: false,
         bruteState: false,
+        bruteResultsShow: false,
     },
     summaryState: false,
     pointMechanism: {},
@@ -261,7 +262,6 @@ export const init_app_state: IAppState = {
     bruteSections: {},
     bruteCurrAttr: '',
     bruteResults: [],
-    bruteResultsShow: false,
 };
 
 const Wrapper = (props: any) => {
