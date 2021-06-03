@@ -157,11 +157,11 @@ export const bruteForce = async (
     sections: Record<string, SectionScheme>,
     bruteGlobalMech: singleBruteAttrObj,
     bruteSections: Record<string, SectionBruteScheme>,
-    draw: number[],
+    plot: number[],
 ) => {
     try {
         const data = prepareJsonParams(globalMech, sections);
-        const brute_params = { global: bruteGlobalMech, sections: bruteSections, plot: draw };
+        const brute_params = { global: bruteGlobalMech, sections: bruteSections, plot: plot };
         data.push({ id: 'brute_force', value: brute_params });
 
         const response = (await axios.request({

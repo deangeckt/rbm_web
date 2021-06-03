@@ -17,17 +17,20 @@ import { useSimulateCanvas } from '../tree/useSimulateCanvas';
 import { useTreeText } from '../tree/useTreeText';
 import FreeHandPlot from './brute/FreeHandPlot';
 import BruteForcePanel from './brute/BruteForcePanel';
+import BruteForceConsent from './brute/BruteForceConsent';
 import { createStyles, makeStyles, MuiThemeProvider, Theme } from '@material-ui/core/styles';
 import BruteResults from './brute/BruteResults';
-import './Simulate.css';
 import { Backdrop, CircularProgress } from '@material-ui/core';
+import { useBruteForce } from './brute/useBruteForce';
+import './Simulate.css';
 
 export type toggleType = 'Tree' | 'Plot' | 'Anim' | 'FreeHand';
 const toggle_init: toggleType = 'Tree';
 
 function Simulate() {
     const { state, setState } = useContext(AppContext);
-    const { getChangedForm, getBruteChangedForm } = useSimulate();
+    const { getChangedForm } = useSimulate();
+    const { getBruteChangedForm } = useBruteForce();
     const { setSimulationTreeSections } = useSimulateCanvas();
     const { sectionsToTreeRender } = useTreeText();
     // console.log(state.bruteSections);
@@ -62,23 +65,52 @@ function Simulate() {
     const updateBruteData = (res: IBruteResult[]) => {
         const dialogs = { ...state.dialogs };
         dialogs.bruteResultsShow = true;
+        dialogs.bruteConsent = false;
         setState({ ...state, bruteResults: JSON.parse(JSON.stringify(res)), dialogs: dialogs });
         setBruting(false);
     };
 
-    const bruteForceRun = (draw: number[], section: string, segment: number, time: number) => {
+    const bruteForceSetConsent = (draw: number[], section: string, segment: number, time: number) => {
+        const bruteInput = { ...state.bruteInput };
+        const dialogs = { ...state.dialogs };
+        dialogs.bruteConsent = true;
+
+        bruteInput.plot = draw;
+        bruteInput.section = section;
+        bruteInput.segment = segment;
+        bruteInput.time = time;
+        setState({ ...state, dialogs: dialogs, bruteInput: bruteInput });
+    };
+
+    const bruteForceRun = () => {
         setBruting(true);
+
+        const bruteInput = { ...state.bruteInput };
         const { globalMechanism, sections } = getChangedForm(false, true);
 
-        if (!sections[section])
-            sections[section] = { id: section, records: {}, mechanism: {}, process: {}, general: {} };
-        sections[section].records[segment] = [0];
+        if (!sections[bruteInput.section])
+            sections[bruteInput.section] = {
+                id: bruteInput.section,
+                records: {},
+                mechanism: {},
+                process: {},
+                general: {},
+            };
+        sections[bruteInput.section].records[bruteInput.segment] = [0];
 
         if (!globalMechanism['general']) globalMechanism['general'] = { attrs: {} };
-        globalMechanism['general'].attrs['sim_time'] = time;
+        globalMechanism['general'].attrs['sim_time'] = bruteInput.time;
 
         const { bruteGlobalMechanism, bruteSections } = getBruteChangedForm();
-        bruteForce(updateBruteData, updateError, globalMechanism, sections, bruteGlobalMechanism, bruteSections, draw);
+        bruteForce(
+            updateBruteData,
+            updateError,
+            globalMechanism,
+            sections,
+            bruteGlobalMechanism,
+            bruteSections,
+            bruteInput.plot,
+        );
     };
 
     const closeError = (_event?: React.SyntheticEvent, reason?: string) => {
@@ -137,6 +169,7 @@ function Simulate() {
                             <CircularProgress color="inherit" />
                         </Backdrop>
                         <BruteResults />
+                        <BruteForceConsent run={bruteForceRun} />
                         <InfoDialog />
                         <Summary />
                         <Snackbar open={error !== ''} autoHideDuration={6000} onClose={closeError}>
@@ -169,7 +202,7 @@ function Simulate() {
                                     {!state.bruteForceMode && <TreeCanvasAnimated display={toggle === 'Anim'} />}
                                     <FreeHandPlot
                                         display={state.bruteForceMode && toggle === 'FreeHand'}
-                                        run={bruteForceRun}
+                                        run={bruteForceSetConsent}
                                     />
                                 </div>
                             </div>

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../../AppContext';
-import { IBruteAttr, impKeys, singleBruteAttrObj } from '../../Wrapper';
+import { IBruteAttr, impKeys, SectionBruteScheme, singleBruteAttrObj } from '../../Wrapper';
 import { useDynamicFormShare } from '../dynForms/useDynnamicFormShare';
 
 export type attrType = 'min' | 'max' | 'amount';
@@ -97,5 +97,51 @@ export function useBruteForce() {
         setState({ ...state, bruteSections: bruteSections });
     };
 
-    return { getMechAttr, setMechAttr, getSectionGeneralAttr, setSectionGeneralAttr };
+    const filterBruteMech = (mechObj: singleBruteAttrObj): { filtered: singleBruteAttrObj; amount: number } => {
+        const filtered: singleBruteAttrObj = {};
+        let amount = 1;
+        Object.entries(mechObj).forEach(([key, mech]) => {
+            if (mech.add) {
+                filtered[key] = { attrs: {} };
+                Object.entries(mech.attrs).forEach(([attrKey, attr]) => {
+                    if (attr.amount > 0) {
+                        filtered[key].attrs[attrKey] = { ...attr };
+                        amount *= attr.amount;
+                    }
+                });
+            }
+        });
+        return { filtered, amount };
+    };
+
+    const getBruteChangedForm = (): {
+        bruteGlobalMechanism: singleBruteAttrObj;
+        bruteSections: Record<string, SectionBruteScheme>;
+        amount: number;
+    } => {
+        let totalAmount = 1;
+        const { filtered, amount } = filterBruteMech(state.bruteGlobalMechanism);
+        const filterGlobalMech = filtered;
+        totalAmount *= amount;
+        const filterSections: Record<string, SectionBruteScheme> = {};
+        const sectionEnts = Object.values(state.sections);
+        for (let i = 0; i < sectionEnts.length; i++) {
+            const sec = sectionEnts[i];
+            const bruteSec = state.bruteSections[sec.id];
+            const { filtered, amount } = filterBruteMech(bruteSec?.mechanism ?? {});
+            const filterMechList = filtered;
+            totalAmount *= amount;
+            if (bruteSec?.generalChanged || Object.keys(filterMechList).length) {
+                filterSections[sec.id] = {
+                    id: bruteSec.id,
+                    general: { ...bruteSec.general },
+                    mechanism: filterMechList,
+                };
+            }
+        }
+
+        return { bruteGlobalMechanism: filterGlobalMech, bruteSections: filterSections, amount: totalAmount };
+    };
+
+    return { getMechAttr, setMechAttr, getSectionGeneralAttr, setSectionGeneralAttr, getBruteChangedForm };
 }

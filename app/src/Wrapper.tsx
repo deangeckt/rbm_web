@@ -115,6 +115,13 @@ export interface IBruteResult {
     score: number;
 }
 
+export interface IBruteInput {
+    plot: number[];
+    section: string;
+    segment: number;
+    time: number;
+}
+
 export interface RenderTreeText {
     id: string;
     children?: RenderTreeText[];
@@ -181,6 +188,7 @@ export interface IAppState {
     bruteSections: Record<string, IBruteSection>;
     bruteCurrAttr: string;
     bruteResults: IBruteResult[];
+    bruteInput: IBruteInput;
 }
 
 export const getStage = (canvasId: string): IStageSize => {
@@ -265,6 +273,12 @@ export const init_app_state: IAppState = {
     bruteSections: {},
     bruteCurrAttr: '',
     bruteResults: [],
+    bruteInput: {
+        plot: [],
+        section: '',
+        segment: 0,
+        time: 0,
+    },
 };
 
 const Wrapper = (props: any) => {
