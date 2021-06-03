@@ -23,6 +23,12 @@ export function useDialogs() {
         setState({ ...state, dialogs: dialogs });
     };
 
+    const toggleBruteConsent = (val: boolean) => {
+        const dialogs = { ...state.dialogs };
+        dialogs.bruteConsent = val;
+        setState({ ...state, dialogs: dialogs });
+    };
+
     const closeInfo = () => {
         const dialogs = { ...state.dialogs };
         dialogs.infoContent = '';
@@ -45,5 +51,5 @@ export function useDialogs() {
         setState({ ...state, dialogs: dialogs });
     };
 
-    return { closeInfo, updateInfo, toggleExport, toggleBrute, toggleBruteResults };
+    return { closeInfo, updateInfo, toggleExport, toggleBrute, toggleBruteResults, toggleBruteConsent };
 }

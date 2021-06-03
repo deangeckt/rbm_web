@@ -13,7 +13,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { useDialogs } from '../dialog/useDialogs';
 import './brute.css';
 
-function BruteResults() {
+function BruteConsent() {
     const { state } = useContext(AppContext);
     const { toggleBruteResults } = useDialogs();
     const { getPlotOptions } = usePlots();
@@ -21,9 +21,9 @@ function BruteResults() {
     const currResObj = state.bruteResults[currIdx];
 
     return (
-        <Dialog fullScreen={true} open={state.dialogs.bruteResultsShow}>
+        <Dialog fullScreen={true} onClose={() => toggleBruteResults(false)} open={state.dialogs.bruteResultsShow}>
             <DialogTitle> Brute Force Results </DialogTitle>
-            <DialogContent style={{ overflowX: 'hidden', overflowY: 'hidden' }}>
+            <DialogContent>
                 <div className="BruteResults">
                     <div className="BruteResultsPanel">
                         <IconButton
@@ -39,9 +39,7 @@ function BruteResults() {
 
                     <div className="BruteResultsContainer">
                         <div className="BruteResultsList">
-                            <div className="BruteScoreText">Score</div>
-
-                            {state.bruteResults.map((brute_obj, idx) => {
+                            {state.bruteResults.map((_brute_obj, idx) => {
                                 return (
                                     <Button
                                         key={idx}
@@ -50,7 +48,7 @@ function BruteResults() {
                                         color="primary"
                                         onClick={() => setCurrIdx(idx)}
                                     >
-                                        {brute_obj.score.toFixed(2)}
+                                        {idx}
                                     </Button>
                                 );
                             })}
@@ -80,4 +78,4 @@ function BruteResults() {
     );
 }
 
-export default BruteResults;
+export default BruteConsent;

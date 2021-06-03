@@ -113,6 +113,7 @@ def __prepare_result_scheme(scores, brute_params, list_keys):
     for best_score in best_scores:
         res_scheme = copy.deepcopy(brute_params)
         res_scheme['plot'] = best_score['plot']
+        res_scheme['score'] = best_score['score']
 
         for idx, param in enumerate(best_score['params']):
             curr_key = list_keys[idx]

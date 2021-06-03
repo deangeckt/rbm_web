@@ -177,12 +177,14 @@ export const bruteForce = async (
                 volt: {},
                 current: {},
             };
-            const res_obj: IBruteResult = { plot: plotData, sections: {}, global: {} };
+            const res_obj: IBruteResult = { plot: plotData, sections: {}, global: {}, score: 0 };
             Object.entries(props as any).forEach(([key, props_res]) => {
                 if (key === 'global') {
                     res_obj.global = props_res as singleAttrObj;
                 } else if (key === 'plot') {
                     res_obj.plot = readPlotPayload(props_res);
+                } else if (key === 'score') {
+                    res_obj.score = props_res as number;
                 } else if (key === 'sections') {
                     Object.entries(props_res as any).forEach(([sec_key, sec]) => {
                         res_obj.sections[sec_key] = sec as SectionScheme;

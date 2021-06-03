@@ -112,6 +112,7 @@ export interface IBruteResult {
     plot: IPlotPayload;
     sections: Record<string, SectionScheme>;
     global: singleAttrObj;
+    score: number;
 }
 
 export interface RenderTreeText {
@@ -139,6 +140,7 @@ export interface IDialogs {
     exportState: boolean;
     bruteState: boolean;
     bruteResultsShow: boolean;
+    bruteConsent: boolean;
 }
 
 export interface IPlotPayload {
@@ -247,6 +249,7 @@ export const init_app_state: IAppState = {
         exportState: false,
         bruteState: false,
         bruteResultsShow: false,
+        bruteConsent: false,
     },
     summaryState: false,
     pointMechanism: {},

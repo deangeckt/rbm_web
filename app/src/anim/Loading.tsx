@@ -1,7 +1,7 @@
 import React from 'react';
 import './Anims.css';
 
-function ReadLoading() {
+function Loading() {
     return (
         <>
             <div className="lds-roller">
@@ -18,4 +18,4 @@ function ReadLoading() {
     );
 }
 
-export default ReadLoading;
+export default Loading;

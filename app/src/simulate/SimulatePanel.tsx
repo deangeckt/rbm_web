@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import { Button, Checkbox, Tooltip } from '@material-ui/core';
-import ReadLoading from '../anim/ReadLoading';
+import Loading from '../anim/Loading';
 import { toggleType } from './Simulate';
 import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton } from '@material-ui/core';
@@ -160,7 +160,7 @@ function SimulatePanel({ running, start, onErr, setToggle, toggle }: ISimulatePa
                         Run
                     </Button>
                 ) : (
-                    <ReadLoading />
+                    <Loading />
                 )}
             </div>
         </>

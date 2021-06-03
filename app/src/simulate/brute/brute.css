@@ -7,10 +7,8 @@
 
 .BruteResultsPanel {
     width: 100%;
-    /* flex-basis: 10%; */
     display: flex;
     flex-direction: row;
-    border-bottom: 1px solid #efefef;
 }
 
 .BruteResultsContainer {
@@ -18,6 +16,8 @@
     flex-basis: 90%;
     display: flex;
     flex-direction: row;
+    border: solid #efefef;
+    border-width: 1px 1px 0px 1px;
 }
 
 .BruteResultsList {
@@ -27,6 +27,13 @@
     display: flex;
     flex-direction: column;
     border-right: 1px solid #efefef;
+    align-items: center;
+}
+
+.BruteScoreText {
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 24px;
 }
 
 .BruteResultsParams {

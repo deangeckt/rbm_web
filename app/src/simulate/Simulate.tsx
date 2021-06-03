@@ -8,7 +8,7 @@ import InfoDialog from './dialog/InfoDialog';
 import SimulatePanel from './SimulatePanel';
 import SimulateCanvas from './SimulateCanvas';
 import { IAnimData, IAttr, IBruteResult, IPlotPayload, none_selected_key, singleAttrObj } from '../Wrapper';
-import ReadLoading from '../anim/ReadLoading';
+import Loading from '../anim/Loading';
 import { useSimulate } from './useSimulate';
 import Summary from './summary/Summary';
 import Plot from './plot/Plot';
@@ -17,9 +17,10 @@ import { useSimulateCanvas } from '../tree/useSimulateCanvas';
 import { useTreeText } from '../tree/useTreeText';
 import FreeHandPlot from './brute/FreeHandPlot';
 import BruteForcePanel from './brute/BruteForcePanel';
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import { createStyles, makeStyles, MuiThemeProvider, Theme } from '@material-ui/core/styles';
 import BruteResults from './brute/BruteResults';
 import './Simulate.css';
+import { Backdrop, CircularProgress } from '@material-ui/core';
 
 export type toggleType = 'Tree' | 'Plot' | 'Anim' | 'FreeHand';
 const toggle_init: toggleType = 'Tree';
@@ -32,8 +33,9 @@ function Simulate() {
     // console.log(state.bruteSections);
 
     const [error, setError] = React.useState('');
+    const [reading, setReading] = React.useState(true);
     const [running, setRunning] = React.useState(false);
-    const [blockLoading, setBlockLoading] = React.useState(true);
+    const [bruting, setBruting] = React.useState(false);
     const [toggle, setToggle] = React.useState(toggle_init);
 
     const updateRunData = (plotData: IPlotPayload, animData: Record<string, IAnimData[]>) => {
@@ -47,7 +49,8 @@ function Simulate() {
     const updateError = (err: string) => {
         setError(err);
         setRunning(false);
-        setBlockLoading(false);
+        setBruting(false);
+        setReading(false);
     };
 
     const simulateRun = () => {
@@ -60,11 +63,11 @@ function Simulate() {
         const dialogs = { ...state.dialogs };
         dialogs.bruteResultsShow = true;
         setState({ ...state, bruteResults: JSON.parse(JSON.stringify(res)), dialogs: dialogs });
-        setBlockLoading(false);
+        setBruting(false);
     };
 
     const bruteForceRun = (draw: number[], section: string, segment: number, time: number) => {
-        setBlockLoading(true);
+        setBruting(true);
         const { globalMechanism, sections } = getChangedForm(false, true);
 
         if (!sections[section])
@@ -105,20 +108,34 @@ function Simulate() {
             sectionsTreeText: treeText,
             selectedId: none_selected_key,
         });
-        setBlockLoading(false);
+        setReading(false);
     };
 
     React.useEffect(() => {
         read(updateError, updateSimulation);
     }, []);
 
+    const useStyles = makeStyles((theme: Theme) =>
+        createStyles({
+            backdrop: {
+                zIndex: theme.zIndex.drawer + 1,
+                color: '#fff',
+            },
+        }),
+    );
+
+    const backDropClass = useStyles();
+
     return (
         <MuiThemeProvider theme={state.theme}>
             <div className="Simulate">
-                {blockLoading ? (
-                    <ReadLoading />
+                {reading ? (
+                    <Loading />
                 ) : (
                     <>
+                        <Backdrop open={bruting} className={backDropClass.backdrop}>
+                            <CircularProgress color="inherit" />
+                        </Backdrop>
                         <BruteResults />
                         <InfoDialog />
                         <Summary />
@@ -150,9 +167,10 @@ function Simulate() {
                                     <Plot display={toggle === 'Plot'} />
 
                                     {!state.bruteForceMode && <TreeCanvasAnimated display={toggle === 'Anim'} />}
-                                    {state.bruteForceMode && (
-                                        <FreeHandPlot display={toggle === 'FreeHand'} run={bruteForceRun} />
-                                    )}
+                                    <FreeHandPlot
+                                        display={state.bruteForceMode && toggle === 'FreeHand'}
+                                        run={bruteForceRun}
+                                    />
                                 </div>
                             </div>
                         </div>
