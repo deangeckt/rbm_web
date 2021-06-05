@@ -5,7 +5,7 @@ import Loading from '../anim/Loading';
 import { toggleType } from './Simulate';
 import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton } from '@material-ui/core';
-import SportsMmaIcon from '@material-ui/icons/SportsMma';
+import SearchIcon from '@material-ui/icons/Search';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { downloadSwcFile, downloadPlots } from '../util/exportUtils';
@@ -15,7 +15,6 @@ import { useSimulate } from './useSimulate';
 import { useDialogs } from './dialog/useDialogs';
 import ExportSeassionDialog from './dialog/ExportSeassionDialog';
 import EventNoteIcon from '@material-ui/icons/EventNote';
-import { bruteTheme } from '../Wrapper';
 import { iconSizeStyle } from '../util/generalUtils';
 
 export interface ISimulatePanelProps {
@@ -111,11 +110,11 @@ function SimulatePanel({ running, start, onErr, setToggle, toggle }: ISimulatePa
                         color="primary"
                         size="medium"
                         onClick={() => {
-                            setState({ ...state, bruteForceMode: true, theme: bruteTheme });
+                            setState({ ...state, bruteForceMode: true });
                             setToggle('FreeHand');
                         }}
                     >
-                        <SportsMmaIcon style={iconSizeStyle} />
+                        <SearchIcon style={iconSizeStyle} />
                     </IconButton>
                 </Tooltip>
             </div>

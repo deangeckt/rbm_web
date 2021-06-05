@@ -18,10 +18,11 @@ import { useTreeText } from '../tree/useTreeText';
 import FreeHandPlot from './brute/FreeHandPlot';
 import BruteForcePanel from './brute/BruteForcePanel';
 import BruteForceConsent from './brute/BruteForceConsent';
-import { createStyles, makeStyles, MuiThemeProvider, Theme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import BruteResults from './brute/BruteResults';
 import { Backdrop, CircularProgress } from '@material-ui/core';
 import { useBruteForce } from './brute/useBruteForce';
+import { backDropStyle, bruteTheme } from '../util/generalUtils';
 import './Simulate.css';
 
 export type toggleType = 'Tree' | 'Plot' | 'Anim' | 'FreeHand';
@@ -33,6 +34,8 @@ function Simulate() {
     const { getBruteChangedForm } = useBruteForce();
     const { setSimulationTreeSections } = useSimulateCanvas();
     const { sectionsToTreeRender } = useTreeText();
+    const backDropClass = backDropStyle();
+
     // console.log(state.bruteSections);
 
     const [error, setError] = React.useState('');
@@ -147,19 +150,8 @@ function Simulate() {
         read(updateError, updateSimulation);
     }, []);
 
-    const useStyles = makeStyles((theme: Theme) =>
-        createStyles({
-            backdrop: {
-                zIndex: theme.zIndex.drawer + 1,
-                color: '#fff',
-            },
-        }),
-    );
-
-    const backDropClass = useStyles();
-
     return (
-        <MuiThemeProvider theme={state.theme}>
+        <MuiThemeProvider theme={state.bruteForceMode ? bruteTheme : createMuiTheme()}>
             <div className="Simulate">
                 {reading ? (
                     <Loading />

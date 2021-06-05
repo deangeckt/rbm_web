@@ -5,7 +5,6 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { IconButton, Tooltip } from '@material-ui/core';
 import { AppContext } from '../../AppContext';
 import EventNoteIcon from '@material-ui/icons/EventNote';
-import { defTheme } from '../../Wrapper';
 import { iconSizeStyle } from '../../util/generalUtils';
 import { useDialogs } from '../dialog/useDialogs';
 
@@ -25,7 +24,7 @@ function BruteForcePanel({ setToggle, toggle }: IBruteForceProps) {
                     color="primary"
                     size="medium"
                     onClick={() => {
-                        setState({ ...state, bruteForceMode: false, theme: defTheme });
+                        setState({ ...state, bruteForceMode: false });
                         setToggle('Tree');
                     }}
                 >
