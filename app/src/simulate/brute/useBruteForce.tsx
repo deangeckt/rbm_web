@@ -143,5 +143,10 @@ export function useBruteForce() {
         return { bruteGlobalMechanism: filterGlobalMech, bruteSections: filterSections, amount: totalAmount };
     };
 
-    return { getMechAttr, setMechAttr, getSectionGeneralAttr, setSectionGeneralAttr, getBruteChangedForm };
+    const isRunValid = (): boolean => {
+        const brutePlotInput = { ...state.brutePlotInput };
+        return brutePlotInput.plot.length > 0 && brutePlotInput.section !== undefined && brutePlotInput.section !== '';
+    };
+
+    return { isRunValid, getMechAttr, setMechAttr, getSectionGeneralAttr, setSectionGeneralAttr, getBruteChangedForm };
 }

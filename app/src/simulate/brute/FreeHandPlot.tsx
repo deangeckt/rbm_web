@@ -1,11 +1,7 @@
 import React from 'react';
 import { Button, TextField } from '@material-ui/core';
-import FreeHandCanvas, { y_pixel_to_grid } from './FreeHandCanvas';
-import { Autocomplete } from '@material-ui/lab';
-import { useTreeText } from '../../tree/useTreeText';
-import { root_key } from '../../Wrapper';
-import { sectionKeyToLabel } from '../../util/generalUtils';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import FreeHandCanvas from './FreeHandCanvas';
+import { useFreeHandPlot } from './useFreeHandPlot';
 import './FreeHand.css';
 
 export interface simpleLine {
@@ -13,102 +9,28 @@ export interface simpleLine {
 }
 const init_lines: simpleLine[] = [];
 
-type SearchedSection = string | undefined;
-const noSearch: SearchedSection = undefined;
+function FreeHandPlot() {
+    const { getTime, setTime, clearPlot, setPlot } = useFreeHandPlot();
 
-interface SearchedSectionLabel {
-    label: string;
-    key: string;
-}
-const searchOptions_init: SearchedSectionLabel[] = [];
-
-export interface IFreeHandPlotProps {
-    display: boolean;
-    run: (draw: number[], section: string, segment: number, time: number) => void;
-}
-
-function FreeHandPlot({ display, run }: IFreeHandPlotProps) {
     const [lines, setLines] = React.useState(init_lines);
     const [maxy, setMaxy] = React.useState(70);
     const [miny, setMiny] = React.useState(-70);
-    const [time, setTime] = React.useState(100);
-    const [sectionKey, setSectionKey] = React.useState(noSearch);
-    const [segment, setSegment] = React.useState(0.5);
-    const [options, setOptions] = React.useState(searchOptions_init);
-    const { getTreeChildrenRecur } = useTreeText();
-
-    React.useEffect(() => {
-        const all: string[] = [root_key];
-        getTreeChildrenRecur(root_key, all);
-        setOptions(
-            all.map((sec_key) => {
-                return { label: sectionKeyToLabel(sec_key), key: sec_key };
-            }),
-        );
-    }, []);
-
-    const handToVector = (): number[] => {
-        const yVec: number[] = [];
-        const line = lines[lines.length - 1];
-        if (!line) return [];
-        line.points.forEach((point, idx) => {
-            if (idx % 2 !== 0) yVec.push(y_pixel_to_grid(point, maxy, miny));
-        });
-        return yVec;
-    };
-
-    const isValid = (): boolean => {
-        return lines.length === 1 && sectionKey !== noSearch;
-    };
+    const time = getTime();
 
     return (
-        <div style={{ height: '100%', width: '100%', display: display ? 'flex' : 'none', flexDirection: 'column' }}>
-            <div className="FreeHandPanel">
-                <div style={{ display: 'flex' }}>
-                    <Autocomplete
-                        options={options}
-                        getOptionLabel={(option) => option.label}
-                        getOptionSelected={(option, value) => option.key === value.key}
-                        onChange={(_event, value) => setSectionKey(value?.key ?? undefined)}
-                        style={{ width: 200 }}
-                        renderInput={(params) => <TextField {...params} label="Section" variant="outlined" />}
-                    />
-                    <TextField
-                        style={{ width: 100 }}
-                        value={segment}
-                        onChange={(e) => setSegment(Number(e.target.value))}
-                        label="Segment"
-                        variant="outlined"
-                        type="number"
-                        InputProps={{ inputProps: { min: 0, max: 1, step: 0.1 } }}
-                    />
-                </div>
-                <div>
-                    <Button
-                        className="NoCapsButton"
-                        variant="outlined"
-                        color="primary"
-                        onClick={() => setLines(init_lines)}
-                    >
-                        Clear
-                    </Button>
-                    <Button
-                        disabled={!isValid()}
-                        className="NoCapsButton"
-                        variant="outlined"
-                        color="primary"
-                        onClick={() => {
-                            const yVec = handToVector();
-                            if (yVec.length === 0) return;
-                            run(yVec, sectionKey!, segment, time);
-                        }}
-                        startIcon={<PlayArrowIcon />}
-                    >
-                        Run
-                    </Button>
-                </div>
-            </div>
+        <div style={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column' }}>
             <div className="FreeHandSketch">
+                <Button
+                    className="NoCapsButton"
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => {
+                        setLines(init_lines);
+                        clearPlot();
+                    }}
+                >
+                    Clear draw
+                </Button>
                 <div className="FreeHandSketchRow">
                     <div className="FreeHandYAxis">
                         <TextField
@@ -116,14 +38,20 @@ function FreeHandPlot({ display, run }: IFreeHandPlotProps) {
                             variant="filled"
                             type="number"
                             value={maxy}
-                            onChange={(e) => setMaxy(Number(e.target.value))}
+                            onChange={(e) => {
+                                setMaxy(Number(e.target.value));
+                                setPlot(lines, maxy, miny);
+                            }}
                         />
                         <TextField
                             label={'Min voltage [mV]'}
                             variant="filled"
                             type="number"
                             value={miny}
-                            onChange={(e) => setMiny(Number(e.target.value))}
+                            onChange={(e) => {
+                                setMiny(Number(e.target.value));
+                                setPlot(lines, maxy, miny);
+                            }}
                         />
                     </div>
                     <div>

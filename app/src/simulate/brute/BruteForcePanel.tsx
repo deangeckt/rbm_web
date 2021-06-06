@@ -7,6 +7,8 @@ import { AppContext } from '../../AppContext';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import { iconSizeStyle } from '../../util/generalUtils';
 import { useDialogs } from '../dialog/useDialogs';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import { useBruteForce } from './useBruteForce';
 
 export interface IBruteForceProps {
     setToggle: (key: toggleType) => void;
@@ -15,7 +17,8 @@ export interface IBruteForceProps {
 
 function BruteForcePanel({ setToggle, toggle }: IBruteForceProps) {
     const { state, setState } = useContext(AppContext);
-    const { toggleBruteResults } = useDialogs();
+    const { toggleBruteResults, toggleBruteConsent } = useDialogs();
+    const { isRunValid } = useBruteForce();
 
     return (
         <>
@@ -61,11 +64,11 @@ function BruteForcePanel({ setToggle, toggle }: IBruteForceProps) {
                 </Button>
                 <Button
                     className="NoCapsButton"
-                    variant={toggle === 'FreeHand' ? 'contained' : 'outlined'}
+                    variant={toggle === 'Brute' ? 'contained' : 'outlined'}
                     color="primary"
-                    onClick={() => setToggle('FreeHand')}
+                    onClick={() => setToggle('Brute')}
                 >
-                    Draw Plot
+                    Brute Force
                 </Button>
             </div>
             <div style={{ marginRight: '16px' }}>
@@ -77,6 +80,16 @@ function BruteForcePanel({ setToggle, toggle }: IBruteForceProps) {
                     onClick={() => toggleBruteResults(true)}
                 >
                     Results
+                </Button>
+                <Button
+                    disabled={!isRunValid()}
+                    className="NoCapsButton"
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => toggleBruteConsent(true)}
+                    startIcon={<PlayArrowIcon />}
+                >
+                    Run
                 </Button>
             </div>
         </>

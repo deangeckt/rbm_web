@@ -111,7 +111,7 @@ function SimulatePanel({ running, start, onErr, setToggle, toggle }: ISimulatePa
                         size="medium"
                         onClick={() => {
                             setState({ ...state, bruteForceMode: true });
-                            setToggle('FreeHand');
+                            setToggle('Brute');
                         }}
                     >
                         <SearchIcon style={iconSizeStyle} />

@@ -2,6 +2,7 @@ import React from 'react';
 import { Stage, Layer, Line, Text } from 'react-konva';
 import { brute_force_main, border_color } from '../../util/colors';
 import { simpleLine } from './FreeHandPlot';
+import { useFreeHandPlot } from './useFreeHandPlot';
 
 interface gridText {
     text: string;
@@ -38,6 +39,7 @@ export const y_pixel_to_grid = (pixel: number, maxy: number, miny: number): numb
 
 const FreeHandCanvas = ({ lines, setLines, time, maxy, miny }: IFreeHandCanvasProps) => {
     const isDrawing = React.useRef(false);
+    const { setPlot } = useFreeHandPlot();
 
     const createGridLines = (): simpleLine[] => {
         const res: simpleLine[] = [];
@@ -88,7 +90,7 @@ const FreeHandCanvas = ({ lines, setLines, time, maxy, miny }: IFreeHandCanvasPr
     const handleMouseDown = (e: any) => {
         isDrawing.current = true;
         const pos = e.target.getStage().getPointerPosition();
-        setLines([...lines, { points: [pos.x, pos.y] }]);
+        setLines([{ points: [pos.x, pos.y] }]);
     };
 
     const handleMouseMove = (e: any) => {
@@ -106,8 +108,9 @@ const FreeHandCanvas = ({ lines, setLines, time, maxy, miny }: IFreeHandCanvasPr
         setLines(lines.concat());
     };
 
-    const stopDraw = () => {
+    const handleMouseUp = () => {
         isDrawing.current = false;
+        setPlot(lines, maxy, miny);
     };
 
     return (
@@ -117,8 +120,8 @@ const FreeHandCanvas = ({ lines, setLines, time, maxy, miny }: IFreeHandCanvasPr
                 height={canvasSize + canvasWrap}
                 onMouseDown={handleMouseDown}
                 onMousemove={handleMouseMove}
-                onMouseup={stopDraw}
-                onTouchEnd={stopDraw}
+                onMouseup={handleMouseUp}
+                onTouchEnd={handleMouseUp}
             >
                 <Layer>
                     {createGridLines().map((line, i) => (

@@ -15,7 +15,7 @@ import Plot from './plot/Plot';
 import TreeCanvasAnimated from '../tree/animate/TreeCanvasAnimated';
 import { useSimulateCanvas } from '../tree/useSimulateCanvas';
 import { useTreeText } from '../tree/useTreeText';
-import FreeHandPlot from './brute/FreeHandPlot';
+import BruteForcePlot from './brute/BruteForcePlot';
 import BruteForcePanel from './brute/BruteForcePanel';
 import BruteForceConsent from './brute/BruteForceConsent';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -25,7 +25,7 @@ import { useBruteForce } from './brute/useBruteForce';
 import { backDropStyle, bruteTheme } from '../util/generalUtils';
 import './Simulate.css';
 
-export type toggleType = 'Tree' | 'Plot' | 'Anim' | 'FreeHand';
+export type toggleType = 'Tree' | 'Plot' | 'Anim' | 'Brute';
 const toggle_init: toggleType = 'Tree';
 
 function Simulate() {
@@ -36,7 +36,7 @@ function Simulate() {
     const { sectionsToTreeRender } = useTreeText();
     const backDropClass = backDropStyle();
 
-    // console.log(state.bruteSections);
+    // console.log(state.brutePlotInput.plot);
 
     const [error, setError] = React.useState('');
     const [reading, setReading] = React.useState(true);
@@ -73,33 +73,22 @@ function Simulate() {
         setBruting(false);
     };
 
-    const bruteForceSetConsent = (draw: number[], section: string, segment: number, time: number) => {
-        const bruteInput = { ...state.bruteInput };
-        const dialogs = { ...state.dialogs };
-        dialogs.bruteConsent = true;
-
-        bruteInput.plot = draw;
-        bruteInput.section = section;
-        bruteInput.segment = segment;
-        bruteInput.time = time;
-        setState({ ...state, dialogs: dialogs, bruteInput: bruteInput });
-    };
-
     const bruteForceRun = () => {
         setBruting(true);
 
-        const bruteInput = { ...state.bruteInput };
+        const bruteInput = { ...state.brutePlotInput };
+        const section = bruteInput.section!;
         const { globalMechanism, sections } = getChangedForm(false, true);
 
-        if (!sections[bruteInput.section])
-            sections[bruteInput.section] = {
-                id: bruteInput.section,
+        if (!sections[section])
+            sections[section] = {
+                id: section,
                 records: {},
                 mechanism: {},
                 process: {},
                 general: {},
             };
-        sections[bruteInput.section].records[bruteInput.segment] = [0];
+        sections[section].records[bruteInput.segment] = [0];
 
         if (!globalMechanism['general']) globalMechanism['general'] = { attrs: {} };
         globalMechanism['general'].attrs['sim_time'] = bruteInput.time;
@@ -192,10 +181,7 @@ function Simulate() {
                                     <Plot display={toggle === 'Plot'} />
 
                                     {!state.bruteForceMode && <TreeCanvasAnimated display={toggle === 'Anim'} />}
-                                    <FreeHandPlot
-                                        display={state.bruteForceMode && toggle === 'FreeHand'}
-                                        run={bruteForceSetConsent}
-                                    />
+                                    <BruteForcePlot display={state.bruteForceMode && toggle === 'Brute'} />
                                 </div>
                             </div>
                         </div>

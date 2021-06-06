@@ -113,9 +113,9 @@ export interface IBruteResult {
     score: number;
 }
 
-export interface IBruteInput {
+export interface IBrutePlotInput {
     plot: number[];
-    section: string;
+    section: string | undefined;
     segment: number;
     time: number;
 }
@@ -185,7 +185,7 @@ export interface IAppState {
     bruteSections: Record<string, IBruteSection>;
     bruteCurrAttr: string;
     bruteResults: IBruteResult[];
-    bruteInput: IBruteInput;
+    brutePlotInput: IBrutePlotInput;
 }
 
 export const getStage = (canvasId: string): IStageSize => {
@@ -260,11 +260,11 @@ export const init_app_state: IAppState = {
     bruteSections: {},
     bruteCurrAttr: '',
     bruteResults: [],
-    bruteInput: {
+    brutePlotInput: {
         plot: [],
         section: '',
-        segment: 0,
-        time: 0,
+        segment: 0.5,
+        time: 50,
     },
 };
 
