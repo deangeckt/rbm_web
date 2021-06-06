@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import DynamicForm from '../dynForms/DynamicForm';
 import { AppContext } from '../../AppContext';
-import SectionFormNavButton from './SectionFormNavButton';
 import SectionFormSegmentHeader from './SectionFormSegmentHeader';
 import SectionFormRecording from './SectionFormRecording';
 import SectionFormGeneral from './SectionFormGeneral';
 import { sectionKeyToLabel } from '../../util/generalUtils';
 import SectionFormGeneralBrute from '../brute/SectionFormGeneralBrute';
+import NavButton from '../../util/NavButton';
 import './Form.css';
 
 type SectionTab = 'process' | 'mech' | 'record' | 'general';
@@ -39,24 +39,24 @@ function SectionFormWrapper() {
     return (
         <div className="SectionForm">
             <div className="SctionFormNav">
-                <SectionFormNavButton
+                <NavButton
                     label={'General'}
                     isSelected={sectionTab === 'general'}
                     select={() => setSectionTab('general')}
                 />
-                <SectionFormNavButton
+                <NavButton
                     label={'Mechanism'}
                     isSelected={sectionTab === 'mech'}
                     select={() => setSectionTab('mech')}
                 />
                 {!state.bruteForceMode && (
                     <>
-                        <SectionFormNavButton
+                        <NavButton
                             label={'Process'}
                             isSelected={sectionTab === 'process'}
                             select={() => setSectionTab('process')}
                         />
-                        <SectionFormNavButton
+                        <NavButton
                             label={'Recording'}
                             isSelected={sectionTab === 'record'}
                             select={() => setSectionTab('record')}

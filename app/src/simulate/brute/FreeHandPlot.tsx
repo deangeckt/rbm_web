@@ -18,19 +18,21 @@ function FreeHandPlot() {
     const time = getTime();
 
     return (
-        <div style={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div className="FreeHandMain">
             <div className="FreeHandSketch">
-                <Button
-                    className="NoCapsButton"
-                    variant="outlined"
-                    color="primary"
-                    onClick={() => {
-                        setLines(init_lines);
-                        clearPlot();
-                    }}
-                >
-                    Clear draw
-                </Button>
+                <div className="FreeHandClearBtn">
+                    <Button
+                        className="NoCapsButton"
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => {
+                            setLines(init_lines);
+                            clearPlot();
+                        }}
+                    >
+                        Clear draw
+                    </Button>
+                </div>
                 <div className="FreeHandSketchRow">
                     <div className="FreeHandYAxis">
                         <TextField

@@ -1,13 +1,13 @@
 import React from 'react';
 import Chip from '@material-ui/core/Chip';
 
-export interface ISectionFormProcessHeaderProps {
+export interface INavButtonProps {
     label: string;
     isSelected: boolean;
     select: Function;
 }
 
-function SectionFormNavButton({ label, isSelected, select }: ISectionFormProcessHeaderProps) {
+function NavButton({ label, isSelected, select }: INavButtonProps) {
     return (
         <Chip
             label={label}
@@ -19,4 +19,4 @@ function SectionFormNavButton({ label, isSelected, select }: ISectionFormProcess
     );
 }
 
-export default SectionFormNavButton;
+export default NavButton;

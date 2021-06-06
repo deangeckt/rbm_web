@@ -1,0 +1,12 @@
+.BruteForcePlotPanelMain {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid #efefef;
+}
+
+.BruteForcePanelTextFields {
+    display: flex;
+}
+

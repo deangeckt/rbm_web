@@ -11,7 +11,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Dialog, DialogTitle } from '@material-ui/core';
 import DialogContent from '@material-ui/core/DialogContent';
 import { useDialogs } from '../dialog/useDialogs';
-import './brute.css';
+import './bruteResults.css';
 
 function BruteResults() {
     const { state } = useContext(AppContext);

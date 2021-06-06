@@ -6,7 +6,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { useDialogs } from '../dialog/useDialogs';
 import { useBruteForce } from './useBruteForce';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import './brute.css';
 
 export interface IBruteConsentProps {
     run: Function;
