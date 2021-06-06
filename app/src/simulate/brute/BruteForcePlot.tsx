@@ -1,5 +1,6 @@
 import React from 'react';
 import BruteForcePlotPanel from './BruteForcePlotPanel';
+import BrutePlotImport from './BrutePlotImport';
 import FreeHandPlot from './FreeHandPlot';
 
 export interface IBruteForcePlotProps {
@@ -15,7 +16,7 @@ function BruteForcePlot({ display }: IBruteForcePlotProps) {
     return (
         <div style={{ height: '100%', width: '100%', display: display ? 'flex' : 'none', flexDirection: 'column' }}>
             <BruteForcePlotPanel tab={tab} setTab={setTab} />
-            {tab === 'import' && <div>Import</div>}
+            {tab === 'import' && <BrutePlotImport />}
             {tab === 'draw' && <FreeHandPlot />}
         </div>
     );

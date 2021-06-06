@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, TextField } from '@material-ui/core';
 import FreeHandCanvas from './FreeHandCanvas';
-import { useFreeHandPlot } from './useFreeHandPlot';
+import { useBruteForcePlot } from './useBruteForcePlot';
 import './FreeHand.css';
 
 export interface simpleLine {
@@ -10,7 +10,7 @@ export interface simpleLine {
 const init_lines: simpleLine[] = [];
 
 function FreeHandPlot() {
-    const { getTime, setTime, clearPlot, setPlot } = useFreeHandPlot();
+    const { getTime, setTime, clearPlot, setDrawPlot } = useBruteForcePlot();
 
     const [lines, setLines] = React.useState(init_lines);
     const [maxy, setMaxy] = React.useState(70);
@@ -42,7 +42,7 @@ function FreeHandPlot() {
                             value={maxy}
                             onChange={(e) => {
                                 setMaxy(Number(e.target.value));
-                                setPlot(lines, maxy, miny);
+                                setDrawPlot(lines, maxy, miny);
                             }}
                         />
                         <TextField
@@ -52,7 +52,7 @@ function FreeHandPlot() {
                             value={miny}
                             onChange={(e) => {
                                 setMiny(Number(e.target.value));
-                                setPlot(lines, maxy, miny);
+                                setDrawPlot(lines, maxy, miny);
                             }}
                         />
                     </div>
