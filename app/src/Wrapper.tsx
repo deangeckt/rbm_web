@@ -115,7 +115,7 @@ export interface IBruteResult {
 
 export interface IBrutePlotInput {
     plot: number[];
-    section: string | undefined;
+    section?: string;
     segment: number;
     time: number;
 }
@@ -262,7 +262,6 @@ export const init_app_state: IAppState = {
     bruteResults: [],
     brutePlotInput: {
         plot: [],
-        section: '',
         segment: 0.5,
         time: 50,
     },

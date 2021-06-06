@@ -145,7 +145,7 @@ export function useBruteForce() {
 
     const isRunValid = (): boolean => {
         const brutePlotInput = { ...state.brutePlotInput };
-        return brutePlotInput.plot.length > 0 && brutePlotInput.section !== undefined && brutePlotInput.section !== '';
+        return brutePlotInput.plot.length > 0 && brutePlotInput.section !== undefined;
     };
 
     return { isRunValid, getMechAttr, setMechAttr, getSectionGeneralAttr, setSectionGeneralAttr, getBruteChangedForm };
