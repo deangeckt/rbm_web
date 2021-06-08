@@ -15,7 +15,7 @@ const emptyPayload: IPlotPayload = {
 };
 
 function BrutePlotImport() {
-    const { setPlot } = useBruteForcePlot();
+    const { setPlot, clearPlot } = useBruteForcePlot();
     const { getPlotOptions, parsePlotName } = usePlots();
 
     const [payloadList, setPayloadList] = React.useState(emptyPayloadList);
@@ -30,6 +30,7 @@ function BrutePlotImport() {
             if (text) {
                 const payload = JSON.parse(text as string) as IPlotPayload[];
                 setPayloadList(payload);
+                clearPlot();
             }
         };
         reader.readAsText(e?.target?.files[0]);
@@ -41,8 +42,12 @@ function BrutePlotImport() {
         const payload = payloadList[Number(idx)];
         const record_key = key.substring(2, key.length);
         setCurrPayload(payload);
-        setPlot(payload.volt[record_key]);
+        setPlot(payload.volt[record_key], payload.time.slice(-1)[0]);
     };
+
+    React.useEffect(() => {
+        clearPlot();
+    }, []);
 
     return (
         <div className="BruteFoceImport">
@@ -51,38 +56,38 @@ function BrutePlotImport() {
                     Import
                     <input type="file" accept={'.json'} hidden onChange={(e) => uploadBrutePlot(e)} />
                 </Button>
-                {payloadList.length === 0 ? (
-                    <div>We support json files in the format given when exporting a plot via the menu</div>
-                ) : (
-                    <div className="BruteFoceImportMiddle">
-                        <div className="BruteFoceImportList">
-                            <RadioGroup onChange={handleChange}>
-                                {payloadList.map((payload, i) => {
-                                    return (
-                                        <div key={i} className="BruteFoceImportListItem">
-                                            {Object.keys(payload.volt).map((key) => (
-                                                <FormControlLabel
-                                                    key={`${i}_${key}`}
-                                                    value={`${i}_${key}`}
-                                                    control={<Radio />}
-                                                    label={parsePlotName(key)}
-                                                />
-                                            ))}
-                                            <Divider />
-                                        </div>
-                                    );
-                                })}
-                            </RadioGroup>
-                        </div>
-                        <div className="BruteFoceImportPlot">
-                            <HighchartsReact
-                                highcharts={Highcharts}
-                                options={getPlotOptions(currPayload.volt, currPayload.time, 'Voltage [mV]')}
-                            />
-                        </div>
-                    </div>
-                )}
             </div>
+            {payloadList.length === 0 ? (
+                <div>We support json files in the format given when exporting a plot via the menu</div>
+            ) : (
+                <div className="BruteFoceImportMiddle">
+                    <div className="BruteFoceImportList">
+                        <RadioGroup onChange={handleChange}>
+                            {payloadList.map((payload, i) => {
+                                return (
+                                    <div key={i} className="BruteFoceImportListItem">
+                                        {Object.keys(payload.volt).map((key) => (
+                                            <FormControlLabel
+                                                key={`${i}_${key}`}
+                                                value={`${i}_${key}`}
+                                                control={<Radio />}
+                                                label={parsePlotName(key)}
+                                            />
+                                        ))}
+                                        <Divider />
+                                    </div>
+                                );
+                            })}
+                        </RadioGroup>
+                    </div>
+                    <div className="BruteFoceImportPlot">
+                        <HighchartsReact
+                            highcharts={Highcharts}
+                            options={getPlotOptions(currPayload.volt, currPayload.time, 'Voltage [mV]')}
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

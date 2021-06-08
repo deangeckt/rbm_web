@@ -17,6 +17,10 @@ function FreeHandPlot() {
     const [miny, setMiny] = React.useState(-70);
     const time = getTime();
 
+    React.useEffect(() => {
+        clearPlot();
+    }, []);
+
     return (
         <div className="FreeHandMain">
             <div className="FreeHandSketch">

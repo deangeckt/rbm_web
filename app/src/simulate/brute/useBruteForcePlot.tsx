@@ -47,9 +47,10 @@ export function useBruteForcePlot() {
         setState({ ...state, brutePlotInput: brutePlotInput });
     };
 
-    const setPlot = (plot: number[]) => {
+    const setPlot = (plot: number[], time: number) => {
         const brutePlotInput = { ...state.brutePlotInput };
         brutePlotInput.plot = plot;
+        brutePlotInput.time = time;
         setState({ ...state, brutePlotInput: brutePlotInput });
     };
 
