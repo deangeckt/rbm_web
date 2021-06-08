@@ -54,5 +54,5 @@ export function usePlots() {
         };
     };
 
-    return { getPlotOptions };
+    return { getPlotOptions, parsePlotName };
 }
