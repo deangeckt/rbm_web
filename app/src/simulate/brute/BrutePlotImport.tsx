@@ -5,6 +5,7 @@ import { IPlotPayload } from '../../Wrapper';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
 import { usePlots } from '../plot/usePlot';
+import { brute_force_main } from '../../util/colors';
 import './bruteForcePlot.css';
 
 const emptyPayloadList: IPlotPayload[] = [];
@@ -70,7 +71,7 @@ function BrutePlotImport() {
                                             <FormControlLabel
                                                 key={`${i}_${key}`}
                                                 value={`${i}_${key}`}
-                                                control={<Radio />}
+                                                control={<Radio style={{ color: brute_force_main }} />}
                                                 label={parsePlotName(key)}
                                             />
                                         ))}
