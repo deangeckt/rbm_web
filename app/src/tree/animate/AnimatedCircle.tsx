@@ -19,7 +19,7 @@ const AnimatedCircle = ({ animProps, start, radius, x, y, durScale }: AnimatedCi
     };
 
     const renderNoneAnim = () => {
-        return <Circle radius={radius} draggable={false} fill={animProps[0].from} x={x} y={y} />;
+        return <Circle radius={radius} draggable={false} fill={'black'} x={x} y={y} />;
     };
 
     const renderNewAnim = (idx: number) => {
@@ -60,10 +60,11 @@ const AnimatedCircle = ({ animProps, start, radius, x, y, durScale }: AnimatedCi
 
     const [animList, setAnimList] = React.useState(propsToAnims());
     const [speeds, setSpeed] = React.useState(propsToSpeed());
-    const [anim, setAnim] = React.useState(animList[0]);
+    const initAnim = animList.length ? animList[0] : <></>;
+    const [anim, setAnim] = React.useState(initAnim);
 
     React.useEffect(() => {
-        if (!start) {
+        if (!start && animList.length) {
             setAnim(animList[0]);
         }
     }, [start]);

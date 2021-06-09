@@ -24,7 +24,7 @@ const AnimatedLine = ({ line, animProps, start, durScale }: AnimatedLinedProps) 
                 strokeWidth={line.radius + lineRadiusAddition}
                 draggable={false}
                 perfectDrawEnabled={false}
-                stroke={animProps[0].from}
+                stroke={'black'}
             />
         );
     };
@@ -66,10 +66,11 @@ const AnimatedLine = ({ line, animProps, start, durScale }: AnimatedLinedProps) 
 
     const [animList, setAnimList] = React.useState(propsToAnims());
     const [speeds, setSpeed] = React.useState(propsToSpeed());
-    const [anim, setAnim] = React.useState(animList[0]);
+    const initAnim = animList.length ? animList[0] : <></>;
+    const [anim, setAnim] = React.useState(initAnim);
 
     React.useEffect(() => {
-        if (!start) {
+        if (!start && animList.length) {
             setAnim(animList[0]);
         }
     }, [start]);
