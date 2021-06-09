@@ -129,6 +129,7 @@ export function useSimulate() {
 
                     const currSections = { ...state.sections };
                     Object.entries(sections).forEach(([key, val]) => {
+                        if (!currSections[key]) return;
                         currSections[key].general = val.general;
                         currSections[key].mechanism = val.mechanism;
                         currSections[key].mechanismCurrKey = '';
