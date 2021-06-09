@@ -101,14 +101,14 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
                             <Line
                                 key={l.id}
                                 id={l.id}
-                                stroke={section_color[l.tid]}
+                                stroke={state.selectedId === l.id ? 'black' : section_color[l.tid]}
                                 points={[...l.points]}
                                 perfectDrawEnabled={false}
                                 isSelected={l.id === state.selectedId}
                                 onClick={() => setSelectedId(l.id)}
-                                opacity={state.selectedId === l.id ? 1 : 0.5}
+                                opacity={state.selectedId === l.id ? 0.6 : 1}
                                 draggable={false}
-                                strokeWidth={l.radius + lineRadiusAddition}
+                                strokeWidth={state.selectedId === l.id ? 23 : l.radius + lineRadiusAddition}
                             />
                         );
                     })}
