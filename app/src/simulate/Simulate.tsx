@@ -36,7 +36,7 @@ function Simulate() {
     const { sectionsToTreeRender } = useTreeText();
     const backDropClass = backDropStyle();
 
-    // console.log(state.brutePlotInput);
+    // console.log(state.sections);
 
     const [error, setError] = React.useState('');
     const [reading, setReading] = React.useState(true);

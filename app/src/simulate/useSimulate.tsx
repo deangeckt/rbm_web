@@ -130,16 +130,30 @@ export function useSimulate() {
                     const currSections = { ...state.sections };
                     Object.entries(sections).forEach(([key, val]) => {
                         currSections[key].general = val.general;
-                        currSections[key].records = val.records;
                         currSections[key].mechanism = val.mechanism;
+                        currSections[key].mechanismCurrKey = '';
+
                         currSections[key].process = val.process;
-                        const attrKeys = Object.keys(Object.values(val.process)[0]);
-                        if (attrKeys.length > 0) {
-                            const procCurrKey = attrKeys[0];
-                            currSections[key].processCurrKeyCurrIdx[procCurrKey] = 0;
-                            currSections[key].processCurrKey = procCurrKey;
+                        const proc = Object.values(val.process);
+                        if (proc.length) {
+                            const attrKeys = Object.keys(proc[0]);
+                            if (attrKeys.length > 0) {
+                                const procCurrKey = attrKeys[0];
+                                currSections[key].processCurrKeyCurrIdx[procCurrKey] = 0;
+                                currSections[key].processCurrKey = procCurrKey;
+                            }
+                            currSections[key].segmentCurrKey = Number(Object.keys(val.process)[0]);
+                        } else {
+                            currSections[key].process = { 0.5: {} };
+                            currSections[key].segmentCurrKey = 0.5;
+                            currSections[key].processCurrKey = '';
+                            currSections[key].processCurrKeyCurrIdx = {};
                         }
-                        currSections[key].segmentCurrKey = Number(Object.keys(val.process)[0]);
+
+                        currSections[key].records = val.records;
+                        if (!Object.keys(val.records).length) {
+                            currSections[key].records = { 0.5: [] };
+                        }
                     });
 
                     setState({
@@ -149,6 +163,7 @@ export function useSimulate() {
                         sections: currSections,
                     });
                 } catch (err: any) {
+                    console.log(err);
                     onErr('Failed to import session - make sure its matchs the swc file loaded');
                 }
             }
