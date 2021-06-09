@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Divider, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
+import { Button, Divider, FormControlLabel, Radio, RadioGroup, Snackbar } from '@material-ui/core';
 import { useBruteForcePlot } from './useBruteForcePlot';
 import { IPlotPayload } from '../../Wrapper';
 import HighchartsReact from 'highcharts-react-official';
@@ -7,6 +7,7 @@ import Highcharts from 'highcharts';
 import { usePlots } from '../plot/usePlot';
 import { brute_force_main } from '../../util/colors';
 import './bruteForcePlot.css';
+import { Alert } from '@material-ui/lab';
 
 const emptyPayloadList: IPlotPayload[] = [];
 const emptyPayload: IPlotPayload = {
@@ -21,6 +22,12 @@ function BrutePlotImport() {
 
     const [payloadList, setPayloadList] = React.useState(emptyPayloadList);
     const [currPayload, setCurrPayload] = React.useState(emptyPayload);
+    const [error, setError] = React.useState('');
+
+    const closeError = (_event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') return;
+        setError('');
+    };
 
     const uploadBrutePlot = async (e: any) => {
         if (e?.target?.files?.length === 0) return;
@@ -29,9 +36,17 @@ function BrutePlotImport() {
         reader.onload = async (e) => {
             const text = e?.target?.result;
             if (text) {
-                const payload = JSON.parse(text as string) as IPlotPayload[];
-                setPayloadList(payload);
-                clearPlot();
+                try {
+                    const payload = JSON.parse(text as string) as IPlotPayload[];
+                    if (payload.length === 0 || !payload[0].volt || !payload[0].time) {
+                        setError('Unsupported plot json file');
+                        return;
+                    }
+                    setPayloadList(payload);
+                    clearPlot();
+                } catch (e) {
+                    setError('Unsupported plot json file');
+                }
             }
         };
         reader.readAsText(e?.target?.files[0]);
@@ -52,6 +67,11 @@ function BrutePlotImport() {
 
     return (
         <div className="BruteFoceImport">
+            <Snackbar open={error !== ''} autoHideDuration={6000} onClose={closeError}>
+                <Alert variant="outlined" severity="error" onClose={closeError}>
+                    {error}
+                </Alert>
+            </Snackbar>
             <div className="BruteFoceImportPanel">
                 <Button className="Button" variant="outlined" color="primary" component="label">
                     Import
