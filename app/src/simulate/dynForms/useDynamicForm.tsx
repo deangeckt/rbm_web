@@ -51,7 +51,7 @@ export function useDynamicForms() {
     };
 
     const onAttrSectionChangeMech = (mp: singleAttrObj, currKey: string, attr: string, value: number) => {
-        if (currKey === '') return;
+        if (currKey === '' || !mp[currKey]) return;
         mp[currKey].attrs[attr] = value;
     };
 
