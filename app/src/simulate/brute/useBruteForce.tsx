@@ -138,6 +138,13 @@ export function useBruteForce() {
                     mechanism: filterMechList,
                 };
             }
+            if (bruteSec?.generalChanged) {
+                Object.values(bruteSec.general).forEach((param) => {
+                    if (param.amount > 0) {
+                        totalAmount *= param.amount;
+                    }
+                });
+            }
         }
 
         return { bruteGlobalMechanism: filterGlobalMech, bruteSections: filterSections, amount: totalAmount };
