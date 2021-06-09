@@ -7,7 +7,7 @@ from flask_cors import CORS
 import os
 
 from Api.neuronWrapper import NeuronWrapper
-from config import config_full_path, read_paths
+from config import read_absolute_paths, get_shared_config_path, change_to_neuron_path
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -22,8 +22,8 @@ def run():
                 msg = "Data params - bad format"
                 raise ValueError(msg)
 
-        wrapper = NeuronWrapper(config_path=config_full_path)
-        res = wrapper.run(params=params, swc_path=read_paths()[1])
+        wrapper = NeuronWrapper(config_path=get_shared_config_path())
+        res = wrapper.run(params=params, swc_path=read_absolute_paths()[1])
         return json.dumps(res), 200, {'Content-Type': 'application/json'}
 
     except ValueError as e:
@@ -37,13 +37,9 @@ def run():
 @app.route('/api/v1/read', methods=['GET'])
 def read():
     try:
-        neuron_path = read_paths()[0]
-        if neuron_path is not None:
-            print('Changing dir to: ', neuron_path)
-            os.chdir(neuron_path)
-
-        wrapper = NeuronWrapper(config_full_path)
-        res = wrapper.read(swc_path=read_paths()[1])
+        change_to_neuron_path()
+        wrapper = NeuronWrapper(get_shared_config_path())
+        res = wrapper.read(swc_path=read_absolute_paths()[1])
         return json.dumps(res), 200, {'Content-Type': 'application/json'}
 
     except ValueError as e:
@@ -63,8 +59,8 @@ def brute_force():
                 msg = "Data params - bad format"
                 raise ValueError(msg)
 
-        wrapper = NeuronWrapper(config_path=config_full_path)
-        res = wrapper.brute_force(params=params, swc_path=read_paths()[1])
+        wrapper = NeuronWrapper(config_path=get_shared_config_path())
+        res = wrapper.brute_force(params=params, swc_path=read_absolute_paths()[1])
         return json.dumps(res), 200, {'Content-Type': 'application/json'}
 
     except ValueError as e:

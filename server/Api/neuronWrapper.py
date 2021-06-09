@@ -61,10 +61,13 @@ class NeuronWrapper:
         h_ref = tid_to_type(tid_, self.h)[id_]
         mechanism = section['mechanism']
         for mech in mechanism:
-            h_ref.insert(mech)
-            attrs = mechanism[mech]['attrs']
-            for attr in attrs:
-                setattr(h_ref, attr, attrs[attr])
+            try:
+                h_ref.insert(mech)
+                attrs = mechanism[mech]['attrs']
+                for attr in attrs:
+                    setattr(h_ref, attr, attrs[attr])
+            except:
+                raise ValueError('Failed to insert mech: {} to id: {} with tid: {}'.format(mech, id_, tid_))
 
     def __add_section_process(self, section: dict):
         id_, tid_ = section_key_to_id_tid(section['id'])

@@ -1,7 +1,7 @@
 [
 	{
 		"id": "description",
-		"value": "example using this session params in python"
+		"value": "try2 - add apic mech"
 	},
 	{
 		"id": "global",
@@ -12,14 +12,20 @@
 		"value": {
 			"0_1": {
 				"id": "0_1",
-				"general": {},
+				"general": {
+					"L": 1,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 20
+				},
 				"process": {
-					"0.6": {
+					"0.5": {
 						"IClamp": [
 							{
 								"attrs": {
-									"delay": 20,
-									"dur": 20,
+									"dur": 50,
 									"amp": 0.5
 								},
 								"add": true
@@ -28,18 +34,6103 @@
 					}
 				},
 				"mechanism": {
-					"hh": {
+					"hh3": {
 						"attrs": {
-							"gnabar_hh": 0.13
+							"gnabar_hh3": 0.005,
+							"gkbar_hh3": 0.6,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.3
+						},
+						"add": true
+					},
+					"Kdr": {
+						"attrs": {},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 20
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.1
+						},
+						"add": true
+					},
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
 						},
 						"add": true
 					}
 				},
 				"records": {
-					"0.6": [
+					"0.5": [
 						0
 					]
 				}
+			},
+			"1_1": {
+				"id": "1_1",
+				"general": {
+					"L": 33.42963930575261,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 20
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"0_2": {
+				"id": "0_2",
+				"general": {
+					"L": 200,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"0_3": {
+				"id": "0_3",
+				"general": {
+					"L": 485.35751518270089,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"1_3": {
+				"id": "1_3",
+				"general": {
+					"L": 135.4661926101164,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"2_3": {
+				"id": "2_3",
+				"general": {
+					"L": 238.61567433404489,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"3_3": {
+				"id": "3_3",
+				"general": {
+					"L": 160.46239444149053,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"4_3": {
+				"id": "4_3",
+				"general": {
+					"L": 323.4350633682436,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"5_3": {
+				"id": "5_3",
+				"general": {
+					"L": 35.839667608339748,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"6_3": {
+				"id": "6_3",
+				"general": {
+					"L": 98.16051771345856,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"7_3": {
+				"id": "7_3",
+				"general": {
+					"L": 114.6463979539017,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"8_3": {
+				"id": "8_3",
+				"general": {
+					"L": 242.96040529779899,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"9_3": {
+				"id": "9_3",
+				"general": {
+					"L": 64.70020728030993,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"10_3": {
+				"id": "10_3",
+				"general": {
+					"L": 84.97433682265522,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 0.9999999999999999
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"11_3": {
+				"id": "11_3",
+				"general": {
+					"L": 358.9756977661478,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"12_3": {
+				"id": "12_3",
+				"general": {
+					"L": 118.29289066714391,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"13_3": {
+				"id": "13_3",
+				"general": {
+					"L": 221.09837661254856,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"14_3": {
+				"id": "14_3",
+				"general": {
+					"L": 57.143624409748479,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"15_3": {
+				"id": "15_3",
+				"general": {
+					"L": 109.12509761137555,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"16_3": {
+				"id": "16_3",
+				"general": {
+					"L": 333.9940215228123,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"17_3": {
+				"id": "17_3",
+				"general": {
+					"L": 139.09326987331606,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 0.9999999999999999
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"18_3": {
+				"id": "18_3",
+				"general": {
+					"L": 102.10382727022564,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 0.9999999999999999
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"19_3": {
+				"id": "19_3",
+				"general": {
+					"L": 78.6712337114503,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"20_3": {
+				"id": "20_3",
+				"general": {
+					"L": 49.45032266618687,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"21_3": {
+				"id": "21_3",
+				"general": {
+					"L": 52.01918525509004,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"22_3": {
+				"id": "22_3",
+				"general": {
+					"L": 253.51824940424266,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"23_3": {
+				"id": "23_3",
+				"general": {
+					"L": 62.483330730483157,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"0_4": {
+				"id": "0_4",
+				"general": {
+					"L": 16.8944348594245,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"1_4": {
+				"id": "1_4",
+				"general": {
+					"L": 27.29103912034215,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"2_4": {
+				"id": "2_4",
+				"general": {
+					"L": 3,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"3_4": {
+				"id": "3_4",
+				"general": {
+					"L": 42.27290796773599,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"4_4": {
+				"id": "4_4",
+				"general": {
+					"L": 26.186542584881413,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"5_4": {
+				"id": "5_4",
+				"general": {
+					"L": 32.284924251231547,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"6_4": {
+				"id": "6_4",
+				"general": {
+					"L": 38.40886185911011,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"7_4": {
+				"id": "7_4",
+				"general": {
+					"L": 62.42664138276747,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"8_4": {
+				"id": "8_4",
+				"general": {
+					"L": 6,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"9_4": {
+				"id": "9_4",
+				"general": {
+					"L": 55.36928144060173,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"10_4": {
+				"id": "10_4",
+				"general": {
+					"L": 58.47917992421934,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 0.9999999999999999
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"11_4": {
+				"id": "11_4",
+				"general": {
+					"L": 233.00136066079217,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 0.9999999999999999
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"12_4": {
+				"id": "12_4",
+				"general": {
+					"L": 93,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"13_4": {
+				"id": "13_4",
+				"general": {
+					"L": 491.13266659837077,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"14_4": {
+				"id": "14_4",
+				"general": {
+					"L": 38.01930984646145,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"15_4": {
+				"id": "15_4",
+				"general": {
+					"L": 30.311919901021974,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"16_4": {
+				"id": "16_4",
+				"general": {
+					"L": 89.36562255411489,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"17_4": {
+				"id": "17_4",
+				"general": {
+					"L": 349.6369770496394,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"18_4": {
+				"id": "18_4",
+				"general": {
+					"L": 28.67905399177983,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"19_4": {
+				"id": "19_4",
+				"general": {
+					"L": 179.47598164784822,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"20_4": {
+				"id": "20_4",
+				"general": {
+					"L": 148.27629296607894,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"21_4": {
+				"id": "21_4",
+				"general": {
+					"L": 193.4394779830699,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"22_4": {
+				"id": "22_4",
+				"general": {
+					"L": 464.85602905711019,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"23_4": {
+				"id": "23_4",
+				"general": {
+					"L": 63.630930876764988,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"24_4": {
+				"id": "24_4",
+				"general": {
+					"L": 207.7744900506098,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"25_4": {
+				"id": "25_4",
+				"general": {
+					"L": 83.92927493667365,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"26_4": {
+				"id": "26_4",
+				"general": {
+					"L": 117.47442539528822,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"27_4": {
+				"id": "27_4",
+				"general": {
+					"L": 96.36727746685786,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 0.9999999999999999
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"28_4": {
+				"id": "28_4",
+				"general": {
+					"L": 270.93084286796866,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"29_4": {
+				"id": "29_4",
+				"general": {
+					"L": 87.30392115734367,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"30_4": {
+				"id": "30_4",
+				"general": {
+					"L": 153.60692003522252,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"31_4": {
+				"id": "31_4",
+				"general": {
+					"L": 193.42674070671209,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"32_4": {
+				"id": "32_4",
+				"general": {
+					"L": 295.14369627889587,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 0.9999999999999999
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"33_4": {
+				"id": "33_4",
+				"general": {
+					"L": 129.42364690456552,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"34_4": {
+				"id": "34_4",
+				"general": {
+					"L": 72.71556589940123,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"35_4": {
+				"id": "35_4",
+				"general": {
+					"L": 59.14867809382884,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"36_4": {
+				"id": "36_4",
+				"general": {
+					"L": 527.5893185887743,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"37_4": {
+				"id": "37_4",
+				"general": {
+					"L": 80.19082124654212,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"38_4": {
+				"id": "38_4",
+				"general": {
+					"L": 165.52311310591393,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 0.9999999999999999
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"39_4": {
+				"id": "39_4",
+				"general": {
+					"L": 161.4610258825585,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"40_4": {
+				"id": "40_4",
+				"general": {
+					"L": 24.606917304010684,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 0.9999999999999999
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"41_4": {
+				"id": "41_4",
+				"general": {
+					"L": 143.74845924508916,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"42_4": {
+				"id": "42_4",
+				"general": {
+					"L": 159.4715752701508,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"43_4": {
+				"id": "43_4",
+				"general": {
+					"L": 23.55984748819893,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"44_4": {
+				"id": "44_4",
+				"general": {
+					"L": 81.21406724280432,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"45_4": {
+				"id": "45_4",
+				"general": {
+					"L": 69.18015475720078,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"46_4": {
+				"id": "46_4",
+				"general": {
+					"L": 101.71791425731861,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"47_4": {
+				"id": "47_4",
+				"general": {
+					"L": 255.62370731838406,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"48_4": {
+				"id": "48_4",
+				"general": {
+					"L": 98.54347397069718,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"49_4": {
+				"id": "49_4",
+				"general": {
+					"L": 56.936100737334459,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 0.9999999999999999
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"50_4": {
+				"id": "50_4",
+				"general": {
+					"L": 159.94722878223306,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"51_4": {
+				"id": "51_4",
+				"general": {
+					"L": 109.00151899274009,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"52_4": {
+				"id": "52_4",
+				"general": {
+					"L": 128.21998164376255,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"53_4": {
+				"id": "53_4",
+				"general": {
+					"L": 28.37727281058291,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 0.9999999999999999
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"54_4": {
+				"id": "54_4",
+				"general": {
+					"L": 23.512728640695415,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"55_4": {
+				"id": "55_4",
+				"general": {
+					"L": 210.0139550412192,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"56_4": {
+				"id": "56_4",
+				"general": {
+					"L": 189.17447943819867,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 0.9999999999999999
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"57_4": {
+				"id": "57_4",
+				"general": {
+					"L": 3.162537795050471,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"58_4": {
+				"id": "58_4",
+				"general": {
+					"L": 259.4550687996854,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 0.9999999999999999
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"59_4": {
+				"id": "59_4",
+				"general": {
+					"L": 305.79332775647478,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"60_4": {
+				"id": "60_4",
+				"general": {
+					"L": 75.02677419729271,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"61_4": {
+				"id": "61_4",
+				"general": {
+					"L": 66.66993606287918,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"62_4": {
+				"id": "62_4",
+				"general": {
+					"L": 40.7418916970142,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"63_4": {
+				"id": "63_4",
+				"general": {
+					"L": 213.60075754682735,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"64_4": {
+				"id": "64_4",
+				"general": {
+					"L": 211.8818069128327,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"65_4": {
+				"id": "65_4",
+				"general": {
+					"L": 125.2223397766381,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"66_4": {
+				"id": "66_4",
+				"general": {
+					"L": 45.87676383770938,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"67_4": {
+				"id": "67_4",
+				"general": {
+					"L": 69.66263849210925,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"68_4": {
+				"id": "68_4",
+				"general": {
+					"L": 51.69548473488879,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"69_4": {
+				"id": "69_4",
+				"general": {
+					"L": 31.63409260905974,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"70_4": {
+				"id": "70_4",
+				"general": {
+					"L": 152.29350029803377,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"71_4": {
+				"id": "71_4",
+				"general": {
+					"L": 164.25224830750248,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
+			},
+			"72_4": {
+				"id": "72_4",
+				"general": {
+					"L": 41.783408920078638,
+					"Ra": 80,
+					"nseg": 7,
+					"rallbranch": 1,
+					"cm": 1,
+					"diam": 1
+				},
+				"process": {},
+				"mechanism": {
+					"pas": {
+						"attrs": {
+							"g_pas": 0.00005
+						},
+						"add": true
+					},
+					"kca": {
+						"attrs": {},
+						"add": true
+					},
+					"kap": {
+						"attrs": {
+							"gkabar_kap": 0.003
+						},
+						"add": true
+					},
+					"km": {
+						"attrs": {
+							"gbar_km": 0
+						},
+						"add": true
+					},
+					"hh3": {
+						"attrs": {
+							"gnabar_hh3": 0.004,
+							"gkbar_hh3": 0,
+							"gl_hh3": 0,
+							"gkbar2_hh3": 0.0001
+						},
+						"add": true
+					},
+					"sca": {
+						"attrs": {
+							"gbar_sca": 0.4
+						},
+						"add": true
+					},
+					"it2": {
+						"attrs": {
+							"gcabar_it2": 0
+						},
+						"add": true
+					},
+					"kdr": {
+						"attrs": {},
+						"add": true
+					}
+				},
+				"records": {}
 			}
 		}
 	}

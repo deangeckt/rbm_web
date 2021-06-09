@@ -1,11 +1,23 @@
 import os
-
-base_cwd = os.getcwd()
-config_path = '../app/src/config.json'
-config_full_path = os.path.join(base_cwd, config_path)
+import configparser
+from pkg_resources import resource_filename
 
 
-def read_paths():
+# Please fill absolute path to your files
+def read_absolute_paths():
     neuron_path = 'C:/Users/t-deangeckt/Desktop/NEURON 7.8 AMD64/larkumEtAl2009_2'
     swc_path = 'C:/Users/t-deangeckt/Downloads/TracesNumber_121-129Final2.swc'
     return neuron_path, swc_path
+
+
+def get_shared_config_path():
+    config = configparser.ConfigParser()
+    config.read(resource_filename(__name__, 'config.ini'))
+    return resource_filename(__name__, config['DEFAULT']['shared_config_path'])
+
+
+def change_to_neuron_path():
+    neuron_path = read_absolute_paths()[0]
+    if neuron_path is not None:
+        print('Changing dir to: ', neuron_path)
+        os.chdir(neuron_path)
