@@ -145,10 +145,10 @@ class NeuronWrapper:
             if tid_ == 1 and id_ > 0:
                 continue
 
+            self.__add_section_general_params(section)
             self.__add_section_mech(section)
             self.__add_section_process(section)
             self.__add_section_record(section)
-            self.__add_section_general_params(section)
 
         if self.recordings == {}:
             raise ValueError('Missing Recordings')
