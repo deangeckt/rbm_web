@@ -16,6 +16,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 @app.route('/api/v1/run', methods=['POST'])
 def run():
     try:
+        change_to_neuron_path()
         params = request.get_json()
         for p in params:
             if 'id' not in p or 'value' not in p:
@@ -53,6 +54,7 @@ def read():
 @app.route('/api/v1/brute_force', methods=['POST'])
 def brute_force():
     try:
+        change_to_neuron_path()
         params = request.get_json()
         for p in params:
             if 'id' not in p or 'value' not in p:

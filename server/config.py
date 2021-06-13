@@ -7,6 +7,7 @@ from pkg_resources import resource_filename
 def read_absolute_paths():
     neuron_path = 'C:/Users/t-deangeckt/Desktop/NEURON 7.8 AMD64/larkumEtAl2009_2'
     swc_path = 'C:/Users/t-deangeckt/Downloads/TracesNumber_121-129Final2.swc'
+    # swc_path = 'C:/Users/t-deangeckt/Downloads/no_tuft.swc'
     return neuron_path, swc_path
 
 
@@ -18,6 +19,6 @@ def get_shared_config_path():
 
 def change_to_neuron_path():
     neuron_path = read_absolute_paths()[0]
-    if neuron_path is not None:
+    if neuron_path is not None and os.getcwd() != os.path.normpath(neuron_path):
         print('Changing dir to: ', neuron_path)
         os.chdir(neuron_path)

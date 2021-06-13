@@ -30,6 +30,8 @@ def __fill_list_for_product_aux(fill_params, list_values, list_keys, sec_key=Non
             attrs = fill_params[param_key]['attrs']
             for attr in attrs:
                 attr_obj = attrs[attr]
+                if attr_obj['amount'] == 0:
+                    continue
                 values = np.linspace(attr_obj['min'], attr_obj['max'], num=attr_obj['amount'])
                 list_values.append(values)
                 new_key = ('global', param_key, attr) if sec_key is None else (
@@ -38,6 +40,8 @@ def __fill_list_for_product_aux(fill_params, list_values, list_keys, sec_key=Non
     else:
         for attr in fill_params:
             attr_obj = fill_params[attr]
+            if attr_obj['amount'] == 0:
+                continue
             values = np.linspace(attr_obj['min'], attr_obj['max'], num=attr_obj['amount'])
             list_values.append(values)
             new_key = (sec_key, 'general', 'general', attr)
@@ -92,6 +96,12 @@ def __update_new_product_params(product_tuple, list_keys, new_params):
             sec_key = curr_key[0]
             param_type = curr_key[1]  # general or mechanism
             section_params = __find_param_val(new_params, 'sections')
+            if sec_key not in section_params:
+                section_params[sec_key] = {'id': sec_key,
+                                           'mechanism': {},
+                                           'general': {},
+                                           'process': {0.5: {}},
+                                           'records': {0.5: []}}
             __update_new_attr_params(override_params=section_params[sec_key][param_type],
                                      param_key=curr_key[2],
                                      attr_key=curr_key[3],
