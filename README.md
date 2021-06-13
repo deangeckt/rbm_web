@@ -2,14 +2,15 @@
 This software wraps Neuron software (https://neuron.yale.edu/neuron/)
 and provides easy to use GUI.
 
-# features:
+# features
 - visualize, edit, import and export swc files in 2D
 - full simulation: from user paramets (e.g mechanism, process etc) to plots
+- brute force - search for a set of parameters by specifying the ouput plot result.
 - heatmap animation
 - session management: export and import session files to manage your simulations.
 - continue to work on python: looking for complex simulations and other neuron features, you can load exported seassion / plots to our python app
 
-# examples:
+# examples
 - find a section by using the tree and navigation 
 ![image](https://user-images.githubusercontent.com/24900065/119366961-296ed380-bcba-11eb-908c-41193990820e.png)
 
@@ -23,6 +24,16 @@ and provides easy to use GUI.
 
 ![anim](https://user-images.githubusercontent.com/24900065/119368763-152bd600-bcbc-11eb-98c6-ec6f9054b975.gif)
 
+- brute force:
+1. specify the output plot - using draw or import a 2d vector
+  ![bf_draw](https://user-images.githubusercontent.com/24900065/121807221-eae68c00-cc5b-11eb-802d-849a39ba9022.JPG)
+  
+2. specify the parameters, e.g: diam of axon[0] will range from 0 to 90 (can change as much you like)
+
+3. explore the results
+  ![bf_res](https://user-images.githubusercontent.com/24900065/121807402-a27b9e00-cc5c-11eb-8f33-87a42c5e3beb.JPG)
+
+
 
 # install
 - client:
@@ -30,7 +41,7 @@ and provides easy to use GUI.
 - server:
   install python 
 
-# Run:
+# Run
 - client:
   * first time and on every git pull run on cmd: 'npm install' in app/ dir
   * run on cmd: 'npm start' in app/ dir
