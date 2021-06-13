@@ -123,6 +123,7 @@ export function useBruteForce() {
         const { filtered, amount } = filterBruteMech(state.bruteGlobalMechanism);
         const filterGlobalMech = filtered;
         totalAmount *= amount;
+
         const filterSections: Record<string, SectionBruteScheme> = {};
         const sectionEnts = Object.values(state.sections);
         for (let i = 0; i < sectionEnts.length; i++) {
@@ -131,19 +132,23 @@ export function useBruteForce() {
             const { filtered, amount } = filterBruteMech(bruteSec?.mechanism ?? {});
             const filterMechList = filtered;
             totalAmount *= amount;
-            if (bruteSec?.generalChanged || Object.keys(filterMechList).length) {
-                filterSections[sec.id] = {
-                    id: bruteSec.id,
-                    general: { ...bruteSec.general },
-                    mechanism: filterMechList,
-                };
-            }
+
+            const filterSectionGeneral: IBruteAttr = {};
             if (bruteSec?.generalChanged) {
-                Object.values(bruteSec.general).forEach((param) => {
+                Object.entries(bruteSec.general).forEach(([key, param]) => {
                     if (param.amount > 0) {
                         totalAmount *= param.amount;
+                        filterSectionGeneral[key] = param;
                     }
                 });
+            }
+
+            if (Object.keys(filterSectionGeneral).length || Object.keys(filterMechList).length) {
+                filterSections[sec.id] = {
+                    id: bruteSec.id,
+                    general: filterSectionGeneral,
+                    mechanism: filterMechList,
+                };
             }
         }
 
