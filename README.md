@@ -3,12 +3,12 @@ This software wraps Neuron software (https://neuron.yale.edu/neuron/)
 and provides easy to use GUI.
 
 # features
-- visualize, edit, import and export swc files in 2D
-- full simulation: from user paramets (e.g mechanism, process etc) to plots
+- visualize, edit, import and export swc files in 2D.
+- full simulation: from user paramets (e.g mechanism, process etc) to plots.
 - brute force - search for a set of parameters by specifying the ouput plot result.
-- heatmap animation
+- heatmap animation.
 - session management: export and import session files to manage your simulations.
-- continue to work on python: looking for complex simulations and other neuron features, you can load exported seassion / plots to our python app
+- continue to work on python: looking for complex simulations and other neuron features, you can load exported seassion / plots to our python app.
 
 # examples
 - find a section by using the tree and navigation 
@@ -48,3 +48,5 @@ and provides easy to use GUI.
 - server:
   * edit server/config.py with path to swc file and neuron folder
   * run 'python app.py' in server/ dir or use an IDE and start app.py
+ 
+note: in the beta version we run locally both the client and backend so we suggest closing other application running on localhost (port 8080).
