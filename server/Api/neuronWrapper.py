@@ -158,8 +158,9 @@ class NeuronWrapper:
         self.__init_global()
         self.__init_section()
 
-        # --- Inject complex code here ---
-        range_apic_values_segments(self.h, 'diam', 8, 2)
+        # --- Inject complex params here ---
+        range_apic_values_segments(self.h, 'diam', 10, 4)
+        # --- Inject complex params here ---
 
         trec = self.h.Vector()
         trec.record(self.h._ref_t)
