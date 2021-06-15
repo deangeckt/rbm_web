@@ -8,7 +8,8 @@ and provides easy to use GUI.
 - brute force - search for a set of parameters by specifying the ouput plot result.
 - heatmap animation.
 - session management: export and import session files to manage your simulations.
-- continue to work on python: looking for complex simulations and other neuron features, you can load exported seassion / plots to our python app.
+- continue to work on python: looking for complex simulations and other neuron features, you can load exported seassion / plots to our python app. 
+  we also added a complexParams.py that you can use inside run API
 
 # examples
 - find a section by using the tree and navigation 
