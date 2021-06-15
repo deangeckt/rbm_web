@@ -6,8 +6,8 @@ from pkg_resources import resource_filename
 # Please fill absolute path to your files
 def read_absolute_paths():
     neuron_path = 'C:/Users/t-deangeckt/Desktop/NEURON 7.8 AMD64/larkumEtAl2009_2'
-    swc_path = 'C:/Users/t-deangeckt/Downloads/TracesNumber_121-129Final2.swc'
-    # swc_path = 'C:/Users/t-deangeckt/Downloads/no_tuft.swc'
+    # swc_path = 'C:/Users/t-deangeckt/Downloads/TracesNumber_121-129Final2.swc'
+    swc_path = 'C:/Users/t-deangeckt/Downloads/tree_with_2axons.swc'
     return neuron_path, swc_path
 
 
