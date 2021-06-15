@@ -7,6 +7,7 @@ from Api.readApi import read_api
 from Api.schemaConvert import recording_type_to_ref, tid_to_type, recording_key, \
     section_key_to_id_tid, id_tid_to_section_key, recording_key_to_payload_type
 from Utils.animations import create_animations
+from Utils.complexParams import range_apic_values_segments, range_apic_values
 
 
 class NeuronWrapper:
@@ -67,7 +68,8 @@ class NeuronWrapper:
                 for attr in attrs:
                     setattr(h_ref, attr, attrs[attr])
             except:
-                raise ValueError('Failed to insert mech: {} to id: {} with tid: {}'.format(mech, id_, tid_))
+                raise ValueError(
+                    'Failed to insert mech: {} to id: {} with tid: {}'.format(mech, id_, tid_))
 
     def __add_section_process(self, section: dict):
         id_, tid_ = section_key_to_id_tid(section['id'])
@@ -141,10 +143,6 @@ class NeuronWrapper:
         for section_key in sections:
             section = sections[section_key]
 
-            id_, tid_ = section_key_to_id_tid(section['id'])
-            if tid_ == 1 and id_ > 0:
-                continue
-
             self.__add_section_general_params(section)
             self.__add_section_mech(section)
             self.__add_section_process(section)
@@ -159,6 +157,9 @@ class NeuronWrapper:
         self.__init_swc(swc_path)
         self.__init_global()
         self.__init_section()
+
+        # --- Inject complex code here ---
+        range_apic_values_segments(self.h, 'diam', 8, 2)
 
         trec = self.h.Vector()
         trec.record(self.h._ref_t)
