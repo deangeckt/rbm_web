@@ -159,7 +159,14 @@ class NeuronWrapper:
         self.__init_section()
 
         # --- Inject complex params here ---
-        range_apic_values_segments(self.h, 'diam', 10, 4)
+        apic_trunk = list(range(0, 13))
+        apic_obliq = [55, 56, 57, 60, 61, 62, 66, 65, 67, 68, 69, 72]
+        apic_obliq2 = [58, 59, 63, 64, 70, 71]
+
+        # range_apic_values_segments(self.h, apic_trunk, 'diam', 10, 4)
+        range_apic_values_segments(self.h, apic_obliq, 'diam', 0.5, 0.2)
+        range_apic_values_segments(self.h, apic_obliq2, 'diam', 0.2, 0.2)
+
         # --- Inject complex params here ---
 
         trec = self.h.Vector()
