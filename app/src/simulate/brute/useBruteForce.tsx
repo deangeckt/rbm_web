@@ -19,7 +19,7 @@ export function useBruteForce() {
     const getMechAttrAux = (attrs: IBruteAttr | null, attrKey: string, attrType: attrType): number => {
         if (!attrs) return 0;
         if (attrKey === '') return 0;
-        if (!attrs[attrKey]) attrs[attrKey] = { min: 0, max: 0, amount: 0 };
+        if (!attrs[attrKey]) return 0;
         return (attrs[attrKey] as any)[attrType];
     };
 
@@ -41,7 +41,7 @@ export function useBruteForce() {
 
     const setMechAttrAux = (attrs: IBruteAttr | null, attrKey: string, attrType: attrType, value: number) => {
         if (!attrs) return;
-        if (!attrs[attrKey]) return;
+        if (!attrs[attrKey]) attrs[attrKey] = { min: 0, max: 0, amount: 0 };
         (attrs[attrKey] as any)[attrType] = value;
     };
 
