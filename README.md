@@ -9,7 +9,7 @@ and provides easy to use GUI.
 - heatmap animation.
 - session management: export and import session files to manage your simulations.
 - continue to work on python: looking for complex simulations and other neuron features, you can load exported seassion / plots to our python app. 
-  we also added a complexParams.py that you can use inside run API
+  we also added a complexParams.py under server folder with an example of a more complex parameter settings, its for you to change!
 
 # examples
 - find a section by using the tree and navigation 
