@@ -40,7 +40,8 @@ and provides easy to use GUI.
 - client:
   install node/npm: https://nodejs.org/en/download/
 - server:
-  install python 
+  install python 3.7+
+  pip install -r requirements
 
 # Run
 - client:
