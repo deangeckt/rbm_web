@@ -7,7 +7,7 @@ from Api.readApi import read_api
 from Api.schemaConvert import recording_type_to_ref, tid_to_type, recording_key, \
     section_key_to_id_tid, id_tid_to_section_key, recording_key_to_payload_type
 from Utils.animations import create_animations
-from Utils.complexParams import range_apic_values_segments, range_apic_values
+from Utils.complexParams import inject
 
 
 class NeuronWrapper:
@@ -158,23 +158,7 @@ class NeuronWrapper:
         self.__init_global()
         self.__init_section()
 
-        # --- Inject complex params here ---
-        apic_tuft1 = list(range(14, 29))
-        apic_tuft2 = list(range(37, 42))
-        apic_trunk = list(range(0, 13))
-        apic_obliq = [55, 56, 57, 60, 61, 62, 66, 65, 67, 68, 69, 72]
-        apic_obliq2 = [58, 59, 63, 64, 70, 71]
-        apic_hotzone = [13, 36]
-
-        range_apic_values_segments(self.h, apic_trunk, 'diam', 5, 4.5)
-        range_apic_values_segments(self.h, apic_obliq, 'diam', 0.5, 0.2)
-        range_apic_values_segments(self.h, apic_obliq2, 'diam', 0.5, 0.2)
-        range_apic_values_segments(self.h, apic_hotzone, 'diam', 3, 3 * 0.7)
-
-        # range_apic_values(self.h, apic_tuft1, 'diam', 2.1, 0.8)
-        # range_apic_values(self.h, apic_tuft2, 'diam', 2.1, 0.8)
-
-        # --- Inject complex params here ---
+        inject(self.h)
 
         trec = self.h.Vector()
         trec.record(self.h._ref_t)
