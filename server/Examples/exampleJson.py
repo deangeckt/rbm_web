@@ -11,7 +11,7 @@ if __name__ == "__main__":
     change_to_neuron_path()
 
     wrapper = NeuronWrapper(config_path=get_shared_config_path())
-    res = wrapper.run(params=params, swc_path=read_absolute_paths()[1])
+    res = wrapper.run(params={}, swc_path=read_absolute_paths()[1])
 
     r_key = recording_key(recording_type_=0, tid_=1, id_=0, section_=0.5)
     volt_res = res['plot']['volt']

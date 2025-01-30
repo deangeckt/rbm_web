@@ -1,6 +1,5 @@
-NEURON==7.8
 flask
 flask-cors
 numpy
-matplotlib==3.3.2
+matplotlib
 scipy

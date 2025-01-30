@@ -120,8 +120,7 @@ def read_api(h):
 
     exclude_point_proc = exclude_mechanism
     exclude_point_proc.extend(['glutamate', 'ampa'])
-    point_mechanism_dict = __parse_point_mech_str(point_mechanism_str,
-                                                  exclude_mechanism)
+    point_mechanism_dict = __parse_point_mech_str(point_mechanism_str, exclude_mechanism)
     result['point_processes'] = point_processes_dict
     result['point_mechanism'] = point_mechanism_dict
     result['global_mechanism'] = mechanism_global_dict
