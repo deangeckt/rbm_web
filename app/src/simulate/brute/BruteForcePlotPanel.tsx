@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextField } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import Autocomplete from '@mui/material/Autocomplete';
 import { useTreeText } from '../../tree/useTreeText';
 import { root_key } from '../../Wrapper';
 import { sectionKeyToLabel } from '../../util/generalUtils';
@@ -41,7 +41,7 @@ function BruteForcePlotPanel({ tab, setTab }: IBruteForcePlotPanelProps) {
                 <Autocomplete
                     options={options}
                     getOptionLabel={(option) => option.label}
-                    getOptionSelected={(option, value) => option.key === value.key}
+                    // getOptionSelected={(option, value) => option.key === value.key}
                     onChange={(_event, value) => setSection(value?.key ?? undefined)}
                     style={{ width: 200 }}
                     renderInput={(params) => <TextField {...params} label="Section" variant="outlined" />}

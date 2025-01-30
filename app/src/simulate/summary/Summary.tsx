@@ -4,10 +4,11 @@ import { AppContext } from '../../AppContext';
 import { useSimulate } from '../useSimulate';
 import MechProcItem from './MechProcItem';
 import SectionItem from './SectionItem';
-import { Autocomplete } from '@material-ui/lab';
 import TextField from '@material-ui/core/TextField';
 import { sectionKeyToLabel } from '../../util/generalUtils';
 import { SectionScheme } from '../../Wrapper';
+import Autocomplete from '@mui/material/Autocomplete';
+
 import './Summary.css';
 
 type SearchedSection = SectionScheme | undefined;
@@ -34,7 +35,7 @@ function Summary() {
                         <Autocomplete
                             options={section_ids}
                             getOptionLabel={(option) => option.label}
-                            getOptionSelected={(option, value) => option.sec.id === value.sec.id}
+                            // getOptionSelected={(option, value) => option.sec.id === value.sec.id}
                             onChange={(_event, value) => setSearch(value?.sec ?? undefined)}
                             style={{ width: 200 }}
                             renderInput={(params) => (

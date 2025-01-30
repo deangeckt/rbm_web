@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { Spring, animated } from '@react-spring/konva';
 import { lineRadiusAddition } from '../../util/swcUtils';
@@ -31,22 +32,23 @@ const AnimatedLine = ({ line, animProps, start, durScale }: AnimatedLinedProps) 
 
     const renderNewAnim = (idx: number) => {
         return (
-            <Spring
-                from={{ stroke: animProps[idx].from }}
-                to={{ stroke: animProps[idx].to }}
-                config={{ duration: animProps[idx].dur }}
-                onRest={() => advanceAnim(idx + 1)}
-            >
-                {(props) => (
-                    <animated.Line
-                        {...props}
-                        points={[...line.points]}
-                        strokeWidth={line.radius + lineRadiusAddition}
-                        draggable={false}
-                        perfectDrawEnabled={false}
-                    />
-                )}
-            </Spring>
+            // <Spring
+            //     from={{ stroke: animProps[idx].from }}
+            //     to={{ stroke: animProps[idx].to }}
+            //     config={{ duration: animProps[idx].dur }}
+            //     onRest={() => advanceAnim(idx + 1)}
+            // >
+            //     {(props) => (
+            //         <animated.Line
+            //             {...props}
+            //             points={[...line.points]}
+            //             strokeWidth={line.radius + lineRadiusAddition}
+            //             draggable={false}
+            //             perfectDrawEnabled={false}
+            //         />
+            //     )}
+            // </Spring>
+            <p>help {idx}</p>
         );
     };
 

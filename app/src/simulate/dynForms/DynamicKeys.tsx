@@ -2,7 +2,7 @@ import React from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { Button, IconButton } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
+import InfoIcon from '@mui/icons-material/Info';
 import { useDynamicForms } from './useDynamicForm';
 import { impKeys } from '../../Wrapper';
 import { useDialogs } from '../dialog/useDialogs';

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Button, InputAdornment, MenuItem, TextField } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { AppContext } from '../AppContext';
 import { none_selected_id, section_types, root_id, default_alpha } from '../Wrapper';
 import { useDesignCanvas } from '../tree/useDesignCanvas';

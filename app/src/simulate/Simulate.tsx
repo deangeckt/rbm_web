@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
 import { run, read, bruteForce } from '../api/api';
 import { AppContext } from '../AppContext';
@@ -18,11 +17,13 @@ import { useTreeText } from '../tree/useTreeText';
 import BruteForcePlot from './brute/BruteForcePlot';
 import BruteForcePanel from './brute/BruteForcePanel';
 import BruteForceConsent from './brute/BruteForceConsent';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 import BruteResults from './brute/BruteResults';
 import { Backdrop, CircularProgress } from '@material-ui/core';
 import { useBruteForce } from './brute/useBruteForce';
 import { backDropStyle, bruteTheme } from '../util/generalUtils';
+import { Alert } from '@mui/material';
 import './Simulate.css';
 
 export type toggleType = 'Tree' | 'Plot' | 'Anim' | 'Brute';
@@ -138,7 +139,7 @@ function Simulate() {
     }, []);
 
     return (
-        <MuiThemeProvider theme={state.bruteForceMode ? bruteTheme : createMuiTheme()}>
+        <MuiThemeProvider theme={state.bruteForceMode ? bruteTheme : createTheme()}>
             <div className="Simulate">
                 {reading ? (
                     <Loading />

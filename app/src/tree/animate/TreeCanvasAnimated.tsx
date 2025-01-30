@@ -8,8 +8,8 @@ import { Button, Checkbox, FormControlLabel, IconButton } from '@material-ui/cor
 import { AppContext } from '../../AppContext';
 import AnimatedCircle from './AnimatedCircle';
 import { neuronRadToSize } from '../../util/swcUtils';
-import FastForwardIcon from '@material-ui/icons/FastForward';
-import FastRewindIcon from '@material-ui/icons/FastRewind';
+import FastForwardIcon from '@mui/icons-material/FastForward';
+import FastRewindIcon from '@mui/icons-material/FastRewind';
 import './Animate.css';
 
 export interface ITreeCanvasAnimatedProps {

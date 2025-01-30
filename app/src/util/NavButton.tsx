@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import React from 'react';
 import Chip from '@material-ui/core/Chip';
 

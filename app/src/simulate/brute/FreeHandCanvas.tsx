@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import React from 'react';
 import { Stage, Layer, Line, Text } from 'react-konva';
 import { brute_force_main, border_color } from '../../util/colors';

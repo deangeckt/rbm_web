@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import CallSplitIcon from '@material-ui/icons/CallSplit';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import CallSplitIcon from '@mui/icons-material/CallSplit';
 import { useDesignTreeNavigation } from './useDesignTreeNavigation';
 import { ITreeCanvasProps } from './TreeCanvas';
 import { useSimulateTreeNavigation } from './useSimulateTreeNavigation';

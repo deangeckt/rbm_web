@@ -1,16 +1,14 @@
 import React, { useContext } from 'react';
-import { Button } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 import { AppContext } from './AppContext';
 import { init_app_state } from './Wrapper';
 import { importFile } from './util/swcUtils';
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
-
+import { Alert, Button, Snackbar } from '@mui/material';
 import './App.css';
 
 function App(): JSX.Element {
-    const history = useHistory();
+    const navigate = useNavigate();
     const { state, setState } = useContext(AppContext);
     const [error, setError] = React.useState('');
 
@@ -23,15 +21,15 @@ function App(): JSX.Element {
         if (e?.target?.files?.length === 0) return;
         e.preventDefault();
         const reader = new FileReader();
-        reader.onload = async (e) => {
+        reader.onload = async (e: any) => {
             const text = e?.target?.result;
             if (text) {
                 try {
                     const r = importFile(text as string, state.stage.rootX, state.stage.rootY);
                     setState({ ...state, ...r });
-                    history.push({ pathname: '/design' });
+                    navigate({ pathname: '/design' });
                 } catch (e) {
-                    setError(e.message);
+                    setError((e as Error).message);
                 }
             }
         };
@@ -40,7 +38,7 @@ function App(): JSX.Element {
 
     return (
         <div className="App">
-            <Snackbar open={error !== ''} autoHideDuration={6000} onClose={closeError}>
+            <Snackbar open={error !== ''} autoHideDuration={6000}>
                 <Alert variant="outlined" severity="error" onClose={closeError}>
                     {error}
                 </Alert>
@@ -52,7 +50,7 @@ function App(): JSX.Element {
                     color="primary"
                     onClick={() => {
                         setState({ ...state, ...init_app_state });
-                        history.push({ pathname: '/design' });
+                        navigate({ pathname: '/design' });
                     }}
                 >
                     New Neuron

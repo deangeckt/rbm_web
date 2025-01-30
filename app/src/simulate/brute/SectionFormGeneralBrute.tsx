@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { Button, IconButton } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
+import InfoIcon from '@mui/icons-material/Info';
 import { useDialogs } from '../dialog/useDialogs';
 import { useSectionForm } from '../form/useSectionForm';
 import BruteGeneralParamDialog from '../dialog/BruteGeneralParamDialog';

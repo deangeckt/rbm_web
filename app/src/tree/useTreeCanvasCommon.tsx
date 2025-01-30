@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
+
 export function useTreeCanvasCommon() {
     const handleWheel = (e: any, setStageCoord: Function, setStageScale: Function) => {
         e.evt.preventDefault();

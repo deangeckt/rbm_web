@@ -14,6 +14,7 @@ export function useSectionForm() {
         const selectedSections = getAllSelectedSections();
         selectedSections.forEach((sec) => {
             const records = sec.records[sec.segmentCurrKey];
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             add && records.push(val);
             if (!add) {
                 const idx = records.indexOf(val);

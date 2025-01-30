@@ -107,6 +107,7 @@ export function useDynamicForms() {
         const isSelectedKeyChecked = mp?.add ?? false;
 
         // set only the changed attrs by user. mp.attrs.len <= defaultAtts.len
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         mp &&
             Object.entries(mp.attrs).forEach(([attr, val]) => {
                 defaultAttrs[attr] = val;

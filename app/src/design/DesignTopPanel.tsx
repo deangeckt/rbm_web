@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 import { AppContext } from '../AppContext';
 import { useDesignCanvas } from '../tree/useDesignCanvas';
 import { downloadSwcFile } from '../util/exportUtils';
@@ -8,7 +9,7 @@ import { downloadSwcFile } from '../util/exportUtils';
 function DesignTopPanel() {
     const { state } = useContext(AppContext);
     const { getLinesArrayNoRoot } = useDesignCanvas();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     return (
         <>
@@ -27,7 +28,7 @@ function DesignTopPanel() {
                 color="primary"
                 variant="contained"
                 onClick={() => {
-                    history.push({ pathname: '/simulate' });
+                    navigate({ pathname: '/simulate' });
                 }}
                 style={{ marginRight: '24px' }}
             >

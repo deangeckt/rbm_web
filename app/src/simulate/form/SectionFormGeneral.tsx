@@ -3,7 +3,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { TextField, IconButton } from '@material-ui/core';
 import { useSectionForm } from './useSectionForm';
-import InfoIcon from '@material-ui/icons/Info';
+import InfoIcon from '@mui/icons-material/Info';
 import { useDialogs } from '../dialog/useDialogs';
 
 function SectionFormGeneral() {

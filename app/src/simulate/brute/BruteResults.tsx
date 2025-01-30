@@ -7,7 +7,7 @@ import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
 import { usePlots } from '../plot/usePlot';
 import { iconSizeStyle } from '../../util/generalUtils';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Dialog, DialogTitle } from '@material-ui/core';
 import DialogContent from '@material-ui/core/DialogContent';
 import { useDialogs } from '../dialog/useDialogs';

@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { Button, Checkbox, Tooltip } from '@material-ui/core';
 import Loading from '../anim/Loading';
 import { toggleType } from './Simulate';
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
 import { IconButton } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from '@mui/icons-material/Search';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { downloadSwcFile, downloadPlots } from '../util/exportUtils';
@@ -14,7 +14,7 @@ import { useDesignCanvas } from '../tree/useDesignCanvas';
 import { useSimulate } from './useSimulate';
 import { useDialogs } from './dialog/useDialogs';
 import ExportSeassionDialog from './dialog/ExportSeassionDialog';
-import EventNoteIcon from '@material-ui/icons/EventNote';
+import EventNoteIcon from '@mui/icons-material/EventNote';
 import { iconSizeStyle } from '../util/generalUtils';
 
 export interface ISimulatePanelProps {

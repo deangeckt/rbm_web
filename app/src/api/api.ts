@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import axios, { AxiosResponse } from 'axios';
 import {
     IAnimData,

@@ -135,6 +135,7 @@ export interface ILine {
     length: number;
     alpha: number;
     children: string[];
+    z: number;
 }
 
 export interface IDialogs {
@@ -215,15 +216,19 @@ export const default_section_value = 0.5;
 const init_stage = getStage('Canvas');
 const static_global_form = readSchema(config.static_global_form);
 
-export const design_init_root_line: ILine = {
-    id: root_id,
-    pid: '-1',
-    points: [-1, -1, init_stage.rootX, init_stage.rootY],
-    children: [],
-    tid: 1,
-    radius: default_neuron_rad,
-    length: 0,
-    alpha: 0,
+export const design_init_root_line = () => {
+    const stage = getStage('Canvas');
+    return {
+        id: root_id,
+        pid: '-1',
+        points: [-1, -1, stage.rootX, stage.rootY],
+        children: [],
+        tid: 1,
+        radius: default_neuron_rad,
+        length: 0,
+        alpha: 0,
+        z: 0, // unused; just to keep the original z data when exporting
+    };
 };
 
 export const init_global_curr_key = 'general';
@@ -231,7 +236,7 @@ export const init_global_curr_key = 'general';
 export const init_app_state: IAppState = {
     stage: init_stage,
     designLines: {
-        1: design_init_root_line,
+        1: design_init_root_line(),
     },
     sections: {},
     checkedSections: {},

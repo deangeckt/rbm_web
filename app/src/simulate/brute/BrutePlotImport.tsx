@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Divider, FormControlLabel, Radio, RadioGroup, Snackbar } from '@material-ui/core';
+import { Button, Divider, FormControlLabel, Radio, RadioGroup, Snackbar } from '@mui/material';
 import { useBruteForcePlot } from './useBruteForcePlot';
 import { IPlotPayload } from '../../Wrapper';
 import HighchartsReact from 'highcharts-react-official';
@@ -7,7 +7,7 @@ import Highcharts from 'highcharts';
 import { usePlots } from '../plot/usePlot';
 import { brute_force_main } from '../../util/colors';
 import './bruteForcePlot.css';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/material';
 
 const emptyPayloadList: IPlotPayload[] = [];
 const emptyPayload: IPlotPayload = {
@@ -45,6 +45,7 @@ function BrutePlotImport() {
                     setPayloadList(payload);
                     clearPlot();
                 } catch (e) {
+                    console.error(e);
                     setError('Unsupported plot json file');
                 }
             }
@@ -67,7 +68,7 @@ function BrutePlotImport() {
 
     return (
         <div className="BruteFoceImport">
-            <Snackbar open={error !== ''} autoHideDuration={6000} onClose={closeError}>
+            <Snackbar open={error !== ''} autoHideDuration={6000}>
                 <Alert variant="outlined" severity="error" onClose={closeError}>
                     {error}
                 </Alert>

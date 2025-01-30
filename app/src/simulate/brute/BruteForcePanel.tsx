@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { Button } from '@material-ui/core';
 import { toggleType } from '../Simulate';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { IconButton, Tooltip } from '@material-ui/core';
 import { AppContext } from '../../AppContext';
-import EventNoteIcon from '@material-ui/icons/EventNote';
+import EventNoteIcon from '@mui/icons-material/EventNote';
 import { iconSizeStyle } from '../../util/generalUtils';
 import { useDialogs } from '../dialog/useDialogs';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { useBruteForce } from './useBruteForce';
 
 export interface IBruteForceProps {

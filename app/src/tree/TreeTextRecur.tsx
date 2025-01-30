@@ -1,12 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useContext } from 'react';
-import TreeView from '@material-ui/lab/TreeView';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { makeStyles } from '@material-ui/core/styles';
 import TreeTextRecurItem from './TreeTextRecurItem';
 import { RenderTreeText, root_key } from '../Wrapper';
 import { AppContext } from '../AppContext';
 import { useTreeText } from './useTreeText';
+// import { TreeView } from '@mui/lab';
+// import { TreeView } from '@mui/x-tree-view/TreeView';
+import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 
 const useStyles = makeStyles({
     root: {
@@ -26,20 +29,23 @@ export default function TreeTextRecur() {
     }, []);
 
     const renderTree = (nodes: RenderTreeText) => (
-        <TreeTextRecurItem key={nodes.id} nodeId={nodes.id}>
-            {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
-        </TreeTextRecurItem>
+        console.log('nodes', state.sectionsTreeText),
+        (
+            <TreeTextRecurItem key={nodes.id} nodeId={nodes.id} itemId={nodes.id}>
+                {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
+            </TreeTextRecurItem>
+        )
     );
 
     return (
-        <TreeView
+        <SimpleTreeView
             className={classes.root}
-            defaultCollapseIcon={<ExpandMoreIcon />}
-            defaultExpanded={all}
-            defaultExpandIcon={<ChevronRightIcon />}
-            selected={[state.selectedId]}
+            // defaultCollapseIcon={<ExpandMoreIcon />}
+            // defaultExpanded={all}
+            // defaultExpandIcon={<ChevronRightIcon />}
+            // selected={[state.selectedId]}
         >
             {renderTree(state.sectionsTreeText)}
-        </TreeView>
+        </SimpleTreeView>
     );
 }

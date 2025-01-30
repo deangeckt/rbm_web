@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import React from 'react';
 import { Spring, animated } from '@react-spring/konva';
 import { Circle } from 'react-konva';
@@ -24,23 +26,24 @@ const AnimatedCircle = ({ animProps, start, radius, x, y, durScale }: AnimatedCi
 
     const renderNewAnim = (idx: number) => {
         return (
-            <Spring
-                from={{ fill: animProps[idx].from }}
-                to={{ fill: animProps[idx].to }}
-                config={{ duration: animProps[idx].dur }}
-                onRest={() => advanceAnim(idx + 1)}
-            >
-                {(props) => (
-                    <animated.Circle
-                        {...props}
-                        x={x}
-                        y={y}
-                        radius={radius}
-                        draggable={false}
-                        perfectDrawEnabled={false}
-                    />
-                )}
-            </Spring>
+            // <Spring
+            //     from={{ fill: animProps[idx].from }}
+            //     to={{ fill: animProps[idx].to }}
+            //     config={{ duration: animProps[idx].dur }}
+            //     onRest={() => advanceAnim(idx + 1)}
+            // >
+            //     {(props) => (
+            //         <animated.Circle
+            //             {...props}
+            //             x={x}
+            //             y={y}
+            //             radius={radius}
+            //             draggable={false}
+            //             perfectDrawEnabled={false}
+            //         />
+            //     )}
+            // </Spring>
+            <p>help</p>
         );
     };
 

@@ -7,8 +7,11 @@
       "esnext"
     ],
     "plugins": [
-      { "name": "typescript-eslint-plugin" }
+      {
+        "name": "typescript-eslint-plugin"
+      }
     ],
+    "baseUrl": "./",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -24,6 +27,7 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "src",
+    "custom.d.ts"
   ]
 }

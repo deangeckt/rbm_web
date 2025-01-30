@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import React, { useContext } from 'react';
 import { Button, DialogActions } from '@material-ui/core';
 import { AppContext } from '../../AppContext';

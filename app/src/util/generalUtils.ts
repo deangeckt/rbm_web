@@ -1,6 +1,7 @@
-import { makeStyles, Theme, createStyles, createMuiTheme } from '@material-ui/core';
+import { makeStyles, Theme, createStyles } from '@material-ui/core';
 import { section_short_labels } from '../Wrapper';
 import { brute_force_main } from './colors';
+import { createTheme } from '@material-ui/core/styles';
 
 export const sectionKeyToLabel = (sectionKey: string): string => {
     const keys = sectionKey.split('_');
@@ -20,7 +21,7 @@ export const backDropStyle = makeStyles((theme: Theme) =>
     }),
 );
 
-export const bruteTheme = createMuiTheme({
+export const bruteTheme = createTheme({
     palette: {
         primary: {
             main: brute_force_main,

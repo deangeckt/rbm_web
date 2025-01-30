@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useContext } from 'react';
 import { parseJsonParams } from '../api/api';
 import { AppContext } from '../AppContext';
