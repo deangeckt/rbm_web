@@ -20,7 +20,6 @@ const routing = (
 );
 
 const rootElement = document.getElementById('root');
-console.log(rootElement);
 if (rootElement) {
     const root = createRoot(rootElement);
     root.render(routing);

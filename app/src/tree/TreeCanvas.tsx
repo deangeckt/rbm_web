@@ -4,7 +4,7 @@ import { Stage, Layer, Circle, Line } from 'react-konva';
 import { AppContext } from '../AppContext';
 import { useDesignCanvas } from './useDesignCanvas';
 import { getStage, RenderILine, root_id, root_key } from '../Wrapper';
-import { neuron_color, section_color } from '../util/colors';
+import { neuron_color, section_color, selected_color } from '../util/colors';
 import { useSimulateCanvas } from './useSimulateCanvas';
 import { useTreeCanvasCommon } from './useTreeCanvasCommon';
 
@@ -22,9 +22,6 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
     const { handleWheel } = useTreeCanvasCommon();
 
     const widSize = window.document.getElementById('Canvas')?.offsetWidth;
-    const [camera, setCamera] = React.useState({ x: 0, y: 0 });
-    const [stageScale, setStageScale] = React.useState(1);
-    const [stageCoord, setStageCoord] = React.useState({ x: 0, y: 0 });
 
     useEffect(() => {
         if (widSize && widSize !== state.stage.width) {
@@ -42,24 +39,14 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
         }
     }, [setState, state, state.designLines, widSize]);
 
-    const handleDragEnd = (e: any) => {
-        setCamera({
-            x: -e.target.x(),
-            y: -e.target.y(),
-        });
+    const onMouseLeave = (e: any) => {
+        const container = e.target.getStage().container();
+        container.style.cursor = 'default';
     };
 
-    const handleWheelLocal = (e: any) => {
-        if (design) return;
-        handleWheel(e, setStageCoord, setStageScale);
-    };
-
-    const isOutWidth = (x: number): boolean => {
-        return x < camera.x || x > camera.x + state.stage.width;
-    };
-
-    const isOutHeight = (y: number): boolean => {
-        return y < camera.y || y > camera.y + state.stage.height;
+    const onMouseEnter = (e: any) => {
+        const container = e.target.getStage().container();
+        container.style.cursor = 'pointer';
     };
 
     return (
@@ -71,12 +58,11 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
                 draggable
                 onMouseDown={checkDeselect}
                 onTouchStart={checkDeselect}
-                onDragEnd={handleDragEnd}
-                onWheel={handleWheelLocal}
-                scaleX={stageScale}
-                scaleY={stageScale}
-                x={stageCoord.x}
-                y={stageCoord.y}
+                onWheel={handleWheel}
+                scaleX={state.stageScale}
+                scaleY={state.stageScale}
+                x={state.stageCoord.x}
+                y={state.stageCoord.y}
             >
                 <Layer>
                     <Circle
@@ -89,26 +75,21 @@ function TreeCanvas({ design }: ITreeCanvasProps) {
                         onClick={() => setSelectedId(root)}
                     />
                     {getLinesArrayNoRoot().map((l: RenderILine) => {
-                        if (design) {
-                            if (isOutWidth(l.points[0]) || isOutWidth(l.points[2])) {
-                                return null;
-                            }
-                            if (isOutHeight(l.points[1]) || isOutHeight(l.points[3])) {
-                                return null;
-                            }
-                        }
                         return (
                             <Line
                                 key={l.id}
                                 id={l.id}
-                                stroke={state.selectedId === l.id ? 'black' : section_color[l.tid]}
+                                stroke={state.selectedId === l.id ? selected_color : section_color[l.tid]}
                                 points={[...l.points]}
                                 perfectDrawEnabled={false}
                                 isSelected={l.id === state.selectedId}
                                 onClick={() => setSelectedId(l.id)}
-                                opacity={state.selectedId === l.id ? 0.6 : 1}
+                                // onTouchEnd={() => setSelectedId(l.id)}
+                                opacity={state.selectedId === l.id ? 0.5 : 1}
                                 draggable={false}
                                 strokeWidth={state.selectedId === l.id ? 23 : l.radius + lineRadiusAddition}
+                                onMouseEnter={onMouseEnter}
+                                onMouseLeave={onMouseLeave}
                             />
                         );
                     })}

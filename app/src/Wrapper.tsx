@@ -161,6 +161,11 @@ export interface IAnimData {
     dur: number;
 }
 
+export interface IStageCoord {
+    x: number;
+    y: number;
+}
+
 // section key: cid_tid
 // design line key: swc id
 // simulate line key: cid_tid
@@ -187,6 +192,9 @@ export interface IAppState {
     bruteCurrAttr: string;
     bruteResults: IBruteResult[];
     brutePlotInput: IBrutePlotInput;
+    // canvas
+    stageScale: number;
+    stageCoord: IStageCoord;
 }
 
 export const getStage = (canvasId: string): IStageSize => {
@@ -270,6 +278,8 @@ export const init_app_state: IAppState = {
         segment: 0.5,
         time: 50,
     },
+    stageCoord: { x: 0, y: 0 },
+    stageScale: 1,
 };
 
 const Wrapper = (props: any) => {

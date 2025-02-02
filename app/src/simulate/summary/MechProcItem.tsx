@@ -30,3 +30,5 @@ function MechProcItem({ id, item }: IMechProcItemProps) {
 }
 
 export default MechProcItem;
+// TODO: comments and warnings
+// TODO: fix SWC utils from other repo, check normal swc.

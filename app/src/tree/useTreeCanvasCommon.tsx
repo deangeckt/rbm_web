@@ -1,10 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unsafe-function-type */
+import { useContext } from 'react';
+import { AppContext } from 'src/AppContext';
 
 export function useTreeCanvasCommon() {
-    const handleWheel = (e: any, setStageCoord: Function, setStageScale: Function) => {
-        e.evt.preventDefault();
+    const { state, setState } = useContext(AppContext);
 
-        const scaleBy = 1.1;
+    const handleWheel = (e: any) => {
+        e.evt.preventDefault();
+        const scaleBy = 1.15;
         const stage = e.target.getStage();
         const oldScale = stage.scaleX();
         const mousePointTo = {
@@ -13,11 +15,11 @@ export function useTreeCanvasCommon() {
         };
 
         const newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
-        setStageCoord({
+        const newStageCoord = {
             x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
             y: -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale,
-        });
-        setStageScale(newScale);
+        };
+        setState({ ...state, stageScale: newScale, stageCoord: newStageCoord });
     };
 
     return { handleWheel };

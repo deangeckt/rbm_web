@@ -21,9 +21,6 @@ const TreeCanvasAnimated = ({ display }: ITreeCanvasAnimatedProps) => {
     const { handleWheel } = useTreeCanvasCommon();
     const { getLinesArrayNoRoot } = useSimulateCanvas();
 
-    const [stageScale, setStageScale] = React.useState(1);
-    const [stageCoord, setStageCoord] = React.useState({ x: 0, y: 0 });
-
     const [startAnim, setStartAnim] = React.useState(false);
     const [speed, setSpeed] = React.useState(1);
     const lines = getLinesArrayNoRoot();
@@ -81,11 +78,11 @@ const TreeCanvasAnimated = ({ display }: ITreeCanvasAnimatedProps) => {
                                 width={window.innerWidth}
                                 height={window.innerHeight}
                                 draggable
-                                onWheel={(e) => handleWheel(e, setStageCoord, setStageScale)}
-                                scaleX={stageScale}
-                                scaleY={stageScale}
-                                x={stageCoord.x}
-                                y={stageCoord.y}
+                                onWheel={(e) => handleWheel(e)}
+                                scaleX={state.stageScale}
+                                scaleY={state.stageScale}
+                                x={state.stageCoord.x}
+                                y={state.stageCoord.y}
                             >
                                 <Layer>
                                     {anims[root_key] && (

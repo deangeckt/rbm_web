@@ -29,12 +29,9 @@ export default function TreeTextRecur() {
     }, []);
 
     const renderTree = (nodes: RenderTreeText) => (
-        console.log('nodes', state.sectionsTreeText),
-        (
-            <TreeTextRecurItem key={nodes.id} nodeId={nodes.id} itemId={nodes.id}>
-                {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
-            </TreeTextRecurItem>
-        )
+        <TreeTextRecurItem key={nodes.id} nodeId={nodes.id} itemId={nodes.id}>
+            {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
+        </TreeTextRecurItem>
     );
 
     return (
